@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Student Sign Up{% endblock %}
+{% block body %}
+<div class="auth-wrap">
+  <div class="auth-card" style="max-width:520px">
+    <h2>🎓 Student Sign Up</h2>
+    <p class="auth-sub">Create your student account</p>
+
+    <form method="POST">
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" name="name" placeholder="e.g. Arjun Kumar" required>
+        </div>
+        <div class="form-group">
+          <label>Student ID / Roll No.</label>
+          <input type="text" name="student_code" placeholder="e.g. 042 (matches CSV)" required>
+        </div>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Class</label>
+          <select name="class_">
+            <option>8th</option><option>9th</option><option>10th</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Section</label>
+          <select name="section">
+            <option>A</option><option>B</option><option>C</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Your Teacher (optional)</label>
+        <select name="teacher_id">
+          <option value="">— Select teacher —</option>
+          {% for t in teachers %}
+          <option value="{{ t.id }}">{{ t.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Choose a username" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" required>
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" name="confirm" required>
+        </div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-bottom:14px">
+        💡 Your Student ID must match the one in your school's database so we can find your records.
+      </p>
+      <button class="btn btn-primary btn-round" style="width:100%;margin-top:4px" type="submit">Create Account</button>
+    </form>
+
+    <div class="auth-footer">Already have an account? <a href="/login">Log in</a></div>
+  </div>
+</div>
+{% endblock %}

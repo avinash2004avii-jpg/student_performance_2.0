@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block title %}Predict Student{% endblock %}
+{% block body %}
+<style>
+/* 🎨 Moderate Proportions (Balanced Middle Ground) */
+:root {
+    --primary: #7c3aed;
+    --sidebar-bg: #140024;
+    --topbar-bg: #9333ea;
+    --topbar-height: 65px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0a0016;
+    color: #e2e8f0;
+    font-size: 15px;
+}
+
+.topbar { 
+    background: var(--topbar-bg) !important; 
+    height: var(--topbar-height) !important;
+    padding: 0 30px !important; 
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: space-between !important;
+    position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 1100;
+}
+.topbar-brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 20px; color: #fff; }
+.topbar-right { display: flex; align-items: center; gap: 18px; }
+.topbar-user { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; color: #fff; }
+
+.sidebar { 
+    background: var(--sidebar-bg); width: 250px; position: fixed;
+    top: var(--topbar-height); left: 0; height: calc(100vh - var(--topbar-height));
+    z-index: 1000; padding-top: 25px; border-right: 1px solid rgba(255,255,255,0.05);
+}
+.sidebar-logo { text-align: center; font-weight: 700; color: #fff; font-size: 17px; padding-bottom: 25px; text-transform: uppercase; }
+.sidebar a { display: flex; align-items: center; gap: 12px; padding: 15px 28px; font-size: 14px; color: #cbd5f5; text-decoration: none; border-left: 4px solid transparent; }
+.sidebar a.active { background: linear-gradient(90deg, rgba(124, 58, 237, 0.25), transparent); color: #fff; border-left-color: #a855f7; }
+
+.page { margin-left: 250px; margin-top: var(--topbar-height); padding: 35px; }
+.container { max-width: 1000px; margin: 0 auto; }
+
+.section { background: rgba(255,255,255,0.02); border-radius: 18px; padding: 30px; border: 1px solid rgba(255,255,255,0.05); }
+
+/* Form styling */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 20px; }
+.form-group label { display: block; font-size: 13px; color: #a855f7; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
+.form-group input, .form-group select { 
+    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+    padding: 12px; border-radius: 10px; color: #fff; outline: none; font-size: 14px;
+}
+.form-group input:focus { border-color: #a855f7; }
+.form-header { font-size: 18px; font-weight: 800; color: #a855f7; margin: 30px 0 15px; text-transform: uppercase; border-bottom: 1px solid rgba(168, 85, 247, 0.2); padding-bottom: 8px; }
+</style>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <span style="font-size: 26px">🎓</span>
+    <span>Student Performance System</span>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-user">
+        <span style="font-size: 24px">🧑‍🏫</span>
+        <span>{{ session.username }}</span>
+    </div>
+    <a href="/logout" style="background:rgba(255,255,255,0.1); color:#fff; padding:6px 18px; border-radius:18px; border:1px solid rgba(255,255,255,0.2); font-weight:700; text-decoration:none; font-size:13px">Logout</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">Teacher Panel</div>
+    <a href="/teacher">📊 Dashboard</a>
+    <a href="/teacher/analytics">📈 Analytics</a>
+    <a href="/teacher/predict" class="active">🔮 Predict Student</a>
+    <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
+    <a href="/teacher/students">👨‍🎓 All Students</a>
+    <a href="/teacher/add-student">➕ Add Student</a>
+    <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <h1 style="font-size:32px; margin-bottom:6px">🔮 Predict Single Student</h1>
+      <p class="page-sub" style="font-size:17px; margin-bottom:35px">Enter the student's data to get an AI prediction and improvement suggestions.</p>
+
+      <div class="section">
+        <form action="/teacher/predict" method="POST">
+          <div class="form-header">Academic Scores</div>
+          <div class="form-grid">
+            <div class="form-group">
+                <label>Internal Test 1 (0–100)</label>
+                <input type="number" name="internal1" placeholder="e.g. 65" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label>Internal Test 2 (0–100)</label>
+                <input type="number" name="internal2" placeholder="e.g. 70" step="0.1" required>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+                <label>Assignment Score (0–100)</label>
+                <input type="number" name="assignment" placeholder="e.g. 80" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label>Previous Exam Score (0–100)</label>
+                <input type="number" name="previous" placeholder="e.g. 72" step="0.1" required>
+            </div>
+          </div>
+
+          <div class="form-header">Study & Attendance</div>
+          <div class="form-grid">
+            <div class="form-group">
+                <label>Attendance (%)</label>
+                <input type="number" name="attendance" placeholder="e.g. 85" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label>Study Hours / Day</label>
+                <input type="number" name="study_hours" placeholder="e.g. 4" step="0.1" required>
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+                <label>Sleep Hours / Day</label>
+                <input type="number" name="sleep_hours" value="7" step="0.1" required>
+            </div>
+          </div>
+
+          <div class="form-header">Health</div>
+          <div class="form-group" style="margin-bottom: 30px">
+              <label>Health Issues</label>
+              <select name="health">
+                  <option value="None">None</option>
+                  <option value="Minor">Minor</option>
+                  <option value="Chronic">Chronic</option>
+              </select>
+          </div>
+
+          <button type="submit" style="width:100%; background:var(--primary); color:#fff; padding:15px; border-radius:15px; border:none; font-weight:700; font-size:16px; cursor:pointer; box-shadow:0 8px 20px rgba(124,58,237,0.3); transition:0.3s">🔮 Run Prediction</button>
+        </form>
+      </div>
+
+      {% if result %}
+      <div class="section" style="margin-top: 40px; background: rgba(124, 58, 237, 0.1); border-color: #7c3aed">
+        <h2 style="color: #fff; margin-bottom: 20px">Prediction Results</h2>
+        <div style="font-size: 20px; margin-bottom: 15px">Predicted Final Score: <b style="color: #a855f7">{{ score }}</b></div>
+        <div style="font-size: 18px; margin-bottom: 25px">Status: <span style="padding: 5px 15px; border-radius: 20px; font-weight: 800; background: {% if result == 'Safe' %}#10b981{% else %}#ef4444{% endif %}; color: #fff">{{ result }}</span></div>
+        
+        <h3 style="color: #a855f7; margin-bottom: 15px">Improvement Suggestions:</h3>
+        <ul style="line-height: 1.8; color: #cbd5f5">
+            {% for title, tip in suggestions %}
+            <li><b>{{ title }}:</b> {{ tip }}</li>
+            {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

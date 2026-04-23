@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Bulk Predict{% endblock %}
+{% block body %}
+<style>
+/* 🎨 Moderate Proportions (Balanced Middle Ground) */
+:root {
+    --primary: #7c3aed;
+    --sidebar-bg: #140024;
+    --topbar-bg: #9333ea;
+    --topbar-height: 65px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0a0016;
+    color: #e2e8f0;
+    font-size: 15px;
+}
+
+.topbar { 
+    background: var(--topbar-bg) !important; 
+    height: var(--topbar-height) !important;
+    padding: 0 30px !important; 
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: space-between !important;
+    position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 1100;
+}
+.topbar-brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 20px; color: #fff; }
+.topbar-right { display: flex; align-items: center; gap: 18px; }
+.topbar-user { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; color: #fff; }
+
+.sidebar { 
+    background: var(--sidebar-bg); width: 250px; position: fixed;
+    top: var(--topbar-height); left: 0; height: calc(100vh - var(--topbar-height));
+    z-index: 1000; padding-top: 25px; border-right: 1px solid rgba(255,255,255,0.05);
+}
+.sidebar-logo { text-align: center; font-weight: 700; color: #fff; font-size: 17px; padding-bottom: 25px; text-transform: uppercase; }
+.sidebar a { display: flex; align-items: center; gap: 12px; padding: 15px 28px; font-size: 14px; color: #cbd5f5; text-decoration: none; border-left: 4px solid transparent; }
+.sidebar a.active { background: linear-gradient(90deg, rgba(124, 58, 237, 0.25), transparent); color: #fff; border-left-color: #a855f7; }
+
+.page { margin-left: 250px; margin-top: var(--topbar-height); padding: 35px; }
+.container { max-width: 1000px; margin: 0 auto; }
+
+.section { background: rgba(255,255,255,0.02); border-radius: 18px; padding: 30px; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+
+.upload-box { border: 2px dashed rgba(168, 85, 247, 0.3); padding: 40px; border-radius: 20px; background: rgba(255,255,255,0.01); transition: 0.3s; margin-bottom: 30px; }
+.upload-box:hover { border-color: #a855f7; background: rgba(124, 58, 237, 0.05); }
+.file-input { margin: 20px 0; }
+</style>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <span style="font-size: 26px">🎓</span>
+    <span>Student Performance System</span>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-user">
+        <span style="font-size: 24px">🧑‍🏫</span>
+        <span>{{ session.username }}</span>
+    </div>
+    <a href="/logout" style="background:rgba(255,255,255,0.1); color:#fff; padding:6px 18px; border-radius:18px; border:1px solid rgba(255,255,255,0.2); font-weight:700; text-decoration:none; font-size:13px">Logout</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">Teacher Panel</div>
+    <a href="/teacher">📊 Dashboard</a>
+    <a href="/teacher/analytics">📈 Analytics</a>
+    <a href="/teacher/predict">🔮 Predict Student</a>
+    <a href="/teacher/bulk-predict" class="active">📂 Bulk Predict</a>
+    <a href="/teacher/students">👨‍🎓 All Students</a>
+    <a href="/teacher/add-student">➕ Add Student</a>
+    <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <h1 style="font-size:32px; margin-bottom:6px">📂 Bulk Performance Predictor</h1>
+      <p class="page-sub" style="font-size:17px; margin-bottom:35px">Upload a CSV file containing multiple student records to generate predictions in bulk.</p>
+
+      <div class="section">
+        <form action="/teacher/bulk-predict" method="POST" enctype="multipart/form-data">
+            <div class="upload-box">
+                <span style="font-size: 50px; display: block; margin-bottom: 20px">📥</span>
+                <h3 style="margin-bottom: 10px">Choose CSV File</h3>
+                <p style="color: #888; font-size: 14px; margin-bottom: 20px">Format: Student_ID, Attendence, Study_hours, Internal_Tests, etc.</p>
+                <input type="file" name="file" accept=".csv" required class="file-input">
+            </div>
+            <button type="submit" style="background:var(--primary); color:#fff; padding:15px 40px; border-radius:12px; border:none; font-weight:700; font-size:16px; cursor:pointer; box-shadow:0 8px 20px rgba(124,58,237,0.3)">🚀 Upload and Predict</button>
+        </form>
+      </div>
+
+      {% if has_results %}
+      <div class="section" style="margin-top: 40px; background: rgba(16, 185, 129, 0.1); border-color: #10b981">
+        <h2 style="color: #fff; margin-bottom: 15px">Bulk Processing Complete!</h2>
+        <p style="margin-bottom: 25px">We have processed all records and generated the predictions.</p>
+        <a href="/teacher/bulk-predict/download" class="btn" style="background:#10b981; color:#fff; padding:12px 30px; border-radius:10px; font-weight:700; text-decoration:none; display:inline-block">📥 Download Results (.csv)</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block body %}
+<div class="topbar">
+  <span class="topbar-brand">🎓 Student Performance System</span>
+  <div class="topbar-right">
+    <span class="topbar-user">🛠 {{ session.username }}</span>
+    <a href="/logout" class="btn btn-outline btn-sm btn-round">Logout</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">Admin Panel</div>
+    <a href="/admin" class="active">📊 Dashboard</a>
+    <a href="/admin/students">👨‍🎓 Students</a>
+    <a href="/admin/add-student">➕ Add Student</a>
+    <div class="divider"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <h1>Admin Dashboard</h1>
+      <p class="page-sub">Overview of the entire system</p>
+
+      <div class="stat-grid">
+        <a href="/admin/students">
+          <div class="stat-card"><div class="label">Total Students</div><div class="value">{{ total_students }}</div></div>
+        </a>
+        <div class="stat-card"><div class="label">Total Teachers</div><div class="value">{{ total_teachers }}</div></div>
+        <div class="stat-card" style="background:linear-gradient(135deg,#8b0000,#c0392b)">
+          <div class="label">At-Risk Students</div><div class="value">{{ risk_count }}</div>
+        </div>
+        <div class="stat-card"><div class="label">Total Users</div><div class="value">{{ users|length }}</div></div>
+      </div>
+
+      <!-- Teachers -->
+      <div class="section">
+        <h2>👨‍🏫 Registered Teachers</h2>
+        {% if teachers %}
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Name</th><th>Subject</th><th>Username</th><th>Email</th><th>Joined</th><th>Action</th></tr></thead>
+            <tbody>
+              {% for t in teachers %}
+              <tr>
+                <td><b>{{ t.name }}</b></td>
+                <td>{{ t.subject }}</td>
+                <td>{{ t.username }}</td>
+                <td>{{ t.email }}</td>
+                <td style="color:var(--muted);font-size:12px">{{ t.created_at[:10] }}</td>
+                <td><a href="/admin/delete-user/{{ t.user_id if t.user_id else '' }}"
+                       onclick="return confirm('Delete this teacher?')"
+                       class="btn btn-danger btn-sm">Delete</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="empty">No teachers registered yet. Teachers can sign up at /signup/teacher</div>
+        {% endif %}
+      </div>
+
+      <!-- All Users -->
+      <div class="section">
+        <h2>👥 All Users</h2>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Username</th><th>Email</th><th>Role</th><th>Joined</th><th>Action</th></tr></thead>
+            <tbody>
+              {% for u in users %}
+              <tr>
+                <td style="color:var(--muted)">{{ u.id }}</td>
+                <td><b>{{ u.username }}</b></td>
+                <td>{{ u.email }}</td>
+                <td>
+                  {% if u.role == 'admin' %}<span class="badge badge-safe">admin</span>
+                  {% elif u.role == 'teacher' %}<span class="badge badge-avg">teacher</span>
+                  {% else %}<span class="badge" style="background:rgba(123,44,255,.15);color:#c4a8ff;border:1px solid var(--purple2)">student</span>
+                  {% endif %}
+                </td>
+                <td style="color:var(--muted);font-size:12px">{{ u.created_at[:10] }}</td>
+                <td>
+                  {% if u.id != session.user_id %}
+                  <a href="/admin/delete-user/{{ u.id }}"
+                     onclick="return confirm('Delete user {{ u.username }}?')"
+                     class="btn btn-danger btn-sm">Delete</a>
+                  {% else %}
+                  <span style="color:var(--muted);font-size:12px">You</span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

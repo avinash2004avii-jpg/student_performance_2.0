@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Teacher Sign Up{% endblock %}
+{% block body %}
+<div class="auth-wrap">
+  <div class="auth-card" style="max-width:500px">
+    <h2>👨‍🏫 Teacher Sign Up</h2>
+    <p class="auth-sub">Create your teacher account</p>
+
+    <form method="POST">
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" name="name" placeholder="e.g. Priya Nair" required>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" name="subject" placeholder="e.g. Mathematics">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Choose a unique username" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Min 6 characters" required>
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" name="confirm" placeholder="Repeat password" required>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-round" style="width:100%;margin-top:6px" type="submit">Create Account</button>
+    </form>
+
+    <div class="auth-footer">Already have an account? <a href="/login">Log in</a></div>
+  </div>
+</div>
+{% endblock %}

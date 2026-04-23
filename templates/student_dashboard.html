@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard{% endblock %}
+{% block body %}
+<div class="topbar">
+  <span class="topbar-brand">🎓 Student Performance System</span>
+  <div class="topbar-right">
+    <span class="topbar-user">🎓 {{ session.username }}</span>
+    <a href="/logout" class="btn btn-outline btn-sm btn-round">Logout</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">Student Portal</div>
+    <a href="/student" class="active">📊 My Dashboard</a>
+    <div class="divider"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <h1>Hello, {{ student.name if student else session.username }} 👋</h1>
+      <p class="page-sub">Here's your personalised performance report</p>
+
+      {% if row %}
+
+      <div class="sd-grid">
+
+        <!-- Score card -->
+        <div class="section" style="text-align:center">
+          <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Predicted Final Score</p>
+
+          {% if score < 70 %}
+            <div class="score-circle circle-risk">{{ score }}</div>
+            <div class="sd-result-label sd-risk">⚠ At Risk</div>
+            <p class="sd-result-sub">You need immediate improvement.</p>
+          {% elif score < 80 %}
+            <div class="score-circle circle-avg">{{ score }}</div>
+            <div class="sd-result-label sd-avg">📈 Average</div>
+            <p class="sd-result-sub">There is room to grow.</p>
+          {% else %}
+            <div class="score-circle circle-safe">{{ score }}</div>
+            <div class="sd-result-label sd-safe">✅ Good Performance</div>
+            <p class="sd-result-sub">You're on track — keep it up!</p>
+          {% endif %}
+        </div>
+
+        <!-- Stats grid -->
+        <div class="section">
+          <h3 style="margin-bottom:16px">📋 Your Academic Data</h3>
+          <div class="sd-stats">
+            {% set items = [
+              ("Attendance",       row.Attendence|string + "%"),
+              ("Study Hours/Day",  row.Study_hours),
+              ("Sleep Hours/Day",  row.Sleep_hours),
+              ("Internal Test 1",  row["internal_test 1"]),
+              ("Internal Test 2",  row["internal_test 2"]),
+              ("Assignment Score", row.Assignment_score),
+              ("Previous Score",   row.Previous_Exam_Score),
+              ("Final Score",      row.Final_Exam_Score),
+              ("Health Issues",    row.Health_Issues),
+            ] %}
+            {% for label, val in items %}
+            <div class="sd-stat-cell">
+              <div class="sd-stat-label">{{ label }}</div>
+              <div class="sd-stat-value">{{ val }}</div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Suggestions -->
+      {% if suggestions %}
+      <div class="section">
+        <h2 style="margin-bottom:16px">💡 Personalised Improvement Tips</h2>
+        {% for title, body in suggestions %}
+        <div class="tip">
+          <div class="tip-title">{{ title }}</div>
+          <div class="tip-body">{{ body }}</div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="section" style="text-align:center;padding:30px">
+        <div style="font-size:36px;margin-bottom:10px">🎉</div>
+        <div style="font-weight:bold;color:var(--green);font-size:16px;margin-bottom:6px">Great Performance!</div>
+        <p style="color:var(--muted);font-size:13px">No improvement tips needed right now. Keep studying consistently!</p>
+      </div>
+      {% endif %}
+
+      {% else %}
+      <!-- Student not found in CSV -->
+      <div class="section" style="text-align:center;padding:40px">
+        <div style="font-size:40px;margin-bottom:12px">🔍</div>
+        <h3>Your data hasn't been added yet</h3>
+        <p style="color:var(--muted);font-size:13px;margin-top:8px">
+          Your Student ID <b>{{ student.student_code if student else '—' }}</b>
+          was not found in the database.<br>
+          Please ask your teacher or admin to add your records.
+        </p>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+<style>
+.sd-grid            { display: grid; grid-template-columns: 220px 1fr; gap: 24px; margin-bottom: 24px; align-items: start; }
+.sd-result-label    { font-weight: bold; font-size: 16px; margin-bottom: 4px; }
+.sd-result-sub      { font-size: 12px; color: var(--muted); }
+.sd-risk            { color: var(--red); }
+.sd-avg             { color: var(--amber); }
+.sd-safe            { color: var(--green); }
+.sd-stats           { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.sd-stat-cell       { background: var(--surface2); padding: 14px; border-radius: 8px; text-align: center; }
+.sd-stat-label      { font-size: 11px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .5px; }
+.sd-stat-value      { font-size: 20px; font-weight: bold; }
+</style>
+<!-- Chatbot Button -->
+<div id="chatbot-icon" onclick="toggleChat()">
+💬
+</div>
+
+<!-- Chatbot Icon -->
+<div id="chatbot-icon" onclick="toggleChat()">💬</div>
+
+<!-- Chatbot Box -->
+<div id="chatbot-box" style="display:none;">
+
+    <div id="chat-header">AI Assistant</div>
+
+    <!-- Messages -->
+    <div id="chat-body"></div>
+
+    <!-- ✅ Footer (FIXED) -->
+    <div id="chat-footer">
+        <input type="text" id="user-input" placeholder="Ask something..."
+               onkeypress="handleKey(event)">
+        <button onclick="sendMessage()">➤</button>
+    </div>
+
+</div>
+
+<style>
+#chatbot-icon{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    background:#7b2cff;
+    color:white;
+    padding:18px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:20px;
+    box-shadow:0 0 15px rgba(123,44,255,0.6);
+    z-index:1000;
+}
+
+/* Chatbot box */
+#chatbot-box{
+    position:fixed;
+    bottom:90px;
+    right:25px;
+    width:420px;
+    height:550px;
+    background:#140024;
+    border-radius:20px;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 0 25px rgba(123,44,255,0.5);
+    z-index:1000;
+}
+
+/* Header */
+#chat-header{
+    background:linear-gradient(90deg,#7b2cff,#9d4edd);
+    padding:15px;
+    font-weight:bold;
+    text-align:center;
+    font-size:18px;
+    border-radius:20px 20px 0 0;
+}
+
+/* Chat body */
+#chat-body{
+    flex:1;
+    overflow-y:auto;
+    padding:15px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+/* Footer (FIXED AT BOTTOM) */
+#chat-footer{
+    display:flex;
+    align-items:center;
+    padding:10px;
+    background:#1e0033;
+    border-top:1px solid #333;
+}
+
+/* ✅ FIXED INPUT ID */
+#user-input{
+    flex:1;
+    padding:12px;
+    border:none;
+    outline:none;
+    background:#1e0033;
+    color:white;
+    font-size:14px;
+    border-radius:8px;
+}
+
+/* Button */
+#chat-footer button{
+    background:#7b2cff;
+    border:none;
+    color:white;
+    padding:10px 16px;
+    margin-left:8px;
+    cursor:pointer;
+    font-size:16px;
+    border-radius:8px;
+}
+
+#chat-footer button:hover{
+    background:#9d4edd;
+}
+</style>
+
+<script>
+function toggleChat(){
+    let box = document.getElementById("chatbot-box");
+    box.style.display = box.style.display === "none" ? "flex" : "none";
+}
+
+function handleKey(event){
+    if(event.key === "Enter"){
+        sendMessage();
+    }
+}
+
+function sendMessage(){
+    let input = document.getElementById("user-input");
+    let message = input.value;
+
+    if(message === "") return;
+
+    let chatBody = document.getElementById("chat-body");
+
+    chatBody.innerHTML += "<div><b>You:</b> " + message + "</div>";
+
+    fetch("/chatbot", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({message: message})
+    })
+    .then(res => res.json())
+    .then(data => {
+        chatBody.innerHTML += "<div><b>Bot:</b> " + data.reply + "</div>";
+        chatBody.scrollTop = chatBody.scrollHeight;
+    });
+
+    input.value = "";
+}
+</script>
+{% endblock %}

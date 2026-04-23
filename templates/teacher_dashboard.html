@@ -1,0 +1,299 @@
+{% extends "base.html" %}
+{% block title %}Teacher Dashboard{% endblock %}
+{% block body %}
+<style>
+/* 🎨 Moderate Proportions (Balanced Middle Ground) */
+:root {
+    --primary: #7c3aed;
+    --sidebar-bg: #140024;
+    --topbar-bg: #9333ea;
+    --topbar-height: 65px; /* Moderate height */
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0a0016;
+    color: #e2e8f0;
+    transition: background 0.3s, color 0.3s;
+    overflow-x: hidden;
+    font-size: 15px; /* Moderate base font */
+}
+
+/* ☀ Light Mode Overrides */
+body.light-mode { background: #f8fafc; color: #1e293b; }
+body.light-mode .topbar { background: #fff !important; color: #1e293b; border-bottom: 1px solid #e2e8f0 !important; }
+body.light-mode .sidebar { background: #fff; border-right: 1px solid #e2e8f0; }
+body.light-mode .sidebar-logo { color: #1e293b !important; }
+body.light-mode .sidebar a { color: #64748b !important; }
+body.light-mode .sidebar a.active, body.light-mode .sidebar a:hover { background: rgba(124, 58, 237, 0.1); color: #7c3aed !important; }
+body.light-mode .page { background: #f8fafc; }
+body.light-mode .section { background: #fff; border: 1px solid #e2e8f0; }
+body.light-mode .filter-row { background: #f1f5f9; border: 1px solid #e2e8f0; }
+body.light-mode .filter-select { background: #fff; color: #1e293b; border-color: #cbd5e1; }
+
+/* 🔷 Topbar */
+.topbar { 
+    background: var(--topbar-bg) !important; 
+    height: var(--topbar-height) !important;
+    padding: 0 30px !important; 
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: space-between !important;
+    position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 1100;
+}
+
+.topbar-brand { 
+    display: flex; align-items: center; gap: 12px; font-weight: 700;
+    font-size: 20px; color: #fff;
+}
+
+.topbar-right { display: flex; align-items: center; gap: 18px; }
+
+.theme-toggle {
+    background: rgba(255,255,255,0.12); padding: 6px 15px; border-radius: 20px;
+    cursor: pointer; display: flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255,255,255,0.2); font-size: 13px;
+}
+.theme-toggle .sun-icon { width: 12px; height: 12px; background: #ffaa00; border-radius: 50%; box-shadow: 0 0 8px #ffaa00; }
+
+.topbar-user { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; color: #fff; }
+
+.logout-btn {
+    background: rgba(255,255,255,0.1); color: #fff; padding: 6px 18px;
+    border-radius: 18px; border: 1px solid rgba(255,255,255,0.2);
+    font-weight: 700; text-decoration: none; font-size: 13px;
+}
+
+/* 📂 Sidebar */
+.sidebar { 
+    background: var(--sidebar-bg); width: 250px !important; 
+    position: fixed; top: var(--topbar-height); left: 0;
+    height: calc(100vh - var(--topbar-height)); z-index: 1000;
+    padding-top: 25px !important; border-right: 1px solid rgba(255,255,255,0.05);
+}
+
+.sidebar-logo { 
+    text-align: center; font-weight: 700; color: #fff; font-size: 17px; 
+    padding-bottom: 25px !important; text-transform: uppercase; letter-spacing: 1px;
+}
+
+.sidebar a { 
+    display: flex; align-items: center; gap: 12px; padding: 15px 28px; 
+    font-size: 14px; color: #cbd5f5; text-decoration: none;
+    border-left: 4px solid transparent; transition: 0.2s;
+}
+
+.sidebar a.active, .sidebar a:hover {
+    background: linear-gradient(90deg, rgba(124, 58, 237, 0.25), transparent);
+    color: #fff; border-left-color: #a855f7;
+}
+
+/* 📄 Page Content */
+.page { 
+    margin-left: 250px; margin-top: var(--topbar-height); padding: 35px; 
+}
+
+.container { max-width: 1150px; margin: 0 auto; }
+
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-bottom: 35px; }
+.stat-card { padding: 25px !important; border-radius: 18px !important; transition: 0.3s !important; cursor: pointer; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+.stat-card:hover { transform: translateY(-6px); filter: brightness(1.1); }
+.stat-card.total { background: linear-gradient(135deg, #a855f7, #7c3aed); }
+.stat-card.risk  { background: linear-gradient(135deg, #ef4444, #dc2626); }
+.stat-card.safe  { background: linear-gradient(135deg, #22c55e, #16a34a); }
+.stat-card.avg   { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+.stat-card .label { font-size: 14px; opacity: 0.9; margin-bottom: 10px; font-weight: 500; color: #fff; }
+.stat-card .value { font-size: 36px; font-weight: 800; color: #fff; }
+
+.insight { background: rgba(147, 51, 234, 0.1); border-left: 5px solid #9333ea; padding: 18px 25px; border-radius: 12px; margin-bottom: 35px; color: #eee; font-size: 15px; }
+
+/* Filters Row */
+.filter-row { display: flex; gap: 15px; align-items: center; margin-bottom: 35px; background: rgba(255,255,255,0.03); padding: 12px 22px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); }
+.filter-group { display: flex; align-items: center; gap: 10px; }
+.filter-group label { font-size: 12px; color: #888; font-weight: 700; text-transform: uppercase; }
+.filter-select { background: #1f0035; border: 1px solid #444; color: #fff; padding: 8px 15px; border-radius: 10px; min-width: 160px; outline: none; font-size: 14px; }
+.btn-reset { background: rgba(255,255,255,0.05); border: 1px solid #444; color: #fff; padding: 8px 20px; border-radius: 10px; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: 600; }
+</style>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <span style="font-size: 26px">🎓</span>
+    <span>Student Performance System</span>
+  </div>
+
+  <div class="topbar-right">
+    <div class="theme-toggle" onclick="toggleMode()">
+        <div class="sun-icon"></div>
+        <span>Light</span>
+    </div>
+
+    <div class="topbar-user">
+        <span style="font-size: 24px">🧑‍🏫</span>
+        <span>{{ session.username }}</span>
+    </div>
+
+    <a href="/logout" class="logout-btn">Logout</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">Teacher Panel</div>
+    <a href="/teacher" class="active">📊 Dashboard</a>
+    <a href="/teacher/analytics">📈 Analytics</a>
+    <a href="/teacher/predict">🔮 Predict Student</a>
+    <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
+    <a href="/teacher/students">👨‍🎓 All Students</a>
+    <a href="/teacher/add-student">➕ Add Student</a>
+    <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <h1 style="font-size:32px; margin-bottom:6px; font-weight:800">Welcome, {{ (teacher.name if teacher else session.username).title() }} 👋</h1>
+      <p class="page-sub" style="margin-bottom:35px; opacity:0.7; font-size:17px">Here's your class overview</p>
+
+      <!-- Filters Row -->
+      <form action="/teacher" method="GET" class="filter-row">
+        <div class="filter-group">
+            <label>Class</label>
+            <select name="class" class="filter-select" onchange="this.form.submit()">
+                <option value="">All Classes</option>
+                {% for c in classes %}
+                <option value="{{ c }}" {% if sel_class == c|string %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="filter-group" style="margin-left: 15px">
+            <label>Section</label>
+            <select name="section" class="filter-select" onchange="this.form.submit()">
+                <option value="">All Sections</option>
+                {% for s in sections %}
+                <option value="{{ s }}" {% if sel_section == s|string %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <a href="/teacher" class="btn-reset" style="margin-left: 15px">Reset</a>
+      </form>
+
+      <!-- Stat Cards -->
+      <div class="stat-grid">
+        <div class="stat-card total" onclick="location.href='/teacher/students'">
+            <div class="label">Total Students</div><div class="value">{{ total }}</div>
+        </div>
+        <div class="stat-card risk" onclick="location.href='/teacher/students?risk=1'">
+          <div class="label">At Risk</div><div class="value">{{ at_risk }}</div>
+        </div>
+        <div class="stat-card safe" onclick="location.href='/teacher/students?risk=0'">
+          <div class="label">Safe Students</div><div class="value">{{ total - at_risk }}</div>
+        </div>
+        <div class="stat-card avg" onclick="location.href='/teacher/analytics'">
+          <div class="label">Class Average</div><div class="value">{{ avg_score }}</div>
+        </div>
+      </div>
+
+      <div class="insight">
+        📊 Class average score is <b style="color: #a855f7">{{ avg_score }}/100</b> with <b style="color: #a855f7">{{ avg_att }}%</b> average attendance.
+        <b style="color:#ef4444">{{ risk_pct }}%</b> of students are at risk.
+      </div>
+
+      <!-- Quick actions -->
+      <div style="display:flex; gap:15px; margin-bottom:40px">
+        <a href="/teacher/predict" class="btn" style="background:#7c3aed; color:#fff; padding:15px 28px; border-radius:12px; font-weight:700; display:flex; align-items:center; gap:10px; text-decoration:none; transition:0.3s; box-shadow:0 8px 20px rgba(124,58,237,0.3); font-size:14px">🔮 Predict Single Student</a>
+        <a href="/teacher/bulk-predict" class="btn" style="background:#10b981; color:#fff; padding:15px 28px; border-radius:12px; font-weight:700; display:flex; align-items:center; gap:10px; text-decoration:none; transition:0.3s; box-shadow:0 8px 20px rgba(16, 185, 129, 0.3); font-size:14px">📂 Bulk Predict (Upload CSV)</a>
+        <a href="/teacher/students" class="btn" style="background:transparent; border:2px solid #7c3aed; color:#a78bfa; padding:15px 28px; border-radius:12px; font-weight:700; display:flex; align-items:center; gap:10px; text-decoration:none; transition:0.3s; font-size:14px">🏆 View All Students</a>
+      </div>
+
+      <!-- At-risk table -->
+      <div class="section" style="background: rgba(255,255,255,0.02); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05)">
+        <h2 style="font-size: 22px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; font-weight: 800">
+            <span style="color: #ef4444; font-size: 26px">⚠</span> At-Risk Students 
+            <span style="font-size:14px;color:#888;font-weight:normal">(score &lt; 70)</span>
+        </h2>
+        {% if risk_students %}
+        <div class="tbl-wrap">
+          <table style="width: 100%; border-collapse: separate; border-spacing: 0 8px">
+            <thead>
+                <tr style="text-align: left; background: rgba(147, 51, 234, 0.12)">
+                    <th style="padding: 12px 18px; border-radius: 12px 0 0 12px; color: #a855f7; font-size: 13px">STUDENT ID</th>
+                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">SCORE</th>
+                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">ATTENDANCE</th>
+                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">STUDY HRS</th>
+                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">IT1</th>
+                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">IT2</th>
+                    <th style="padding: 12px 18px; border-radius: 0 12px 12px 0; color: #a855f7; font-size: 13px">ASGN</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for s in risk_students %}
+              <tr style="background: rgba(255,255,255,0.03); transition: 0.2s">
+                <td style="padding: 12px 18px; border-radius: 12px 0 0 12px"><b>{{ s.Student_ID }}</b></td>
+                <td style="padding: 12px 18px"><span class="badge" style="background: #ef4444; color: #fff; padding: 4px 14px; border-radius: 18px; font-weight: 800; font-size: 13px">{{ s.Final_Exam_Score }}</span></td>
+                <td style="padding: 12px 18px">{{ s.Attendence }}%</td>
+                <td style="padding: 12px 18px">{{ s.Study_hours }}</td>
+                <td style="padding: 12px 18px">{{ s["internal_test 1"] }}</td>
+                <td style="padding: 12px 18px">{{ s["internal_test 2"] }}</td>
+                <td style="padding: 12px 18px; border-radius: 0 12px 12px 0">{{ s.Assignment_score }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="empty" style="padding: 50px; text-align: center; opacity: 0.5; font-size: 16px">✅ No at-risk students right now.</div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Chatbot UI -->
+<div id="chatbot-icon" onclick="toggleChat()" style="position:fixed; bottom:30px; right:30px; background:#7c3aed; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:26px; box-shadow:0 10px 25px rgba(124,58,237,0.5); z-index:2000">💬</div>
+<div id="chatbot-box" style="position:fixed; bottom:105px; right:30px; width:400px; height:520px; background:#140024; border:1px solid rgba(124, 58, 237, 0.2); border-radius:20px; display:none; flex-direction:column; box-shadow:0 15px 40px rgba(0,0,0,0.6); z-index:2000; overflow:hidden">
+    <div id="chat-header" style="background:linear-gradient(90deg, #7c3aed, #9333ea); padding:18px; font-weight:bold; text-align:center; font-size:17px; color: #fff">AI Academic Assistant</div>
+    <div id="chat-body" style="flex:1; padding:18px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; color: #fff"></div>
+    <div id="chat-footer" style="padding:15px; display:flex; gap:10px; background:rgba(0,0,0,0.3)">
+        <input type="text" id="user-input" placeholder="Ask about student performance..." onkeypress="handleKey(event)" style="flex:1; background:transparent; border:none; color:#fff; outline:none; font-size:14px">
+        <button onclick="sendMessage()" style="background:#7c3aed; border:none; color:#fff; padding:8px 18px; border-radius:10px; cursor:pointer; font-weight:bold; font-size:14px">Send</button>
+    </div>
+</div>
+
+<script>
+function toggleChat(){
+    let box = document.getElementById("chatbot-box");
+    box.style.display = box.style.display === "none" ? "flex" : "none";
+}
+function handleKey(event){ if(event.key === "Enter") sendMessage(); }
+function sendMessage(){
+    let input = document.getElementById("user-input");
+    let message = input.value;
+    if(!message) return;
+    let chatBody = document.getElementById("chat-body");
+    chatBody.innerHTML += `<div style='align-self:flex-end; background:#7c3aed; padding:12px 16px; border-radius:18px 18px 0 18px; max-width:85%; font-size:14px'>${message}</div>`;
+    input.value = "";
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    fetch("/chatbot", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({message: message})
+    })
+    .then(res => res.json())
+    .then(data => {
+        chatBody.innerHTML += `<div style='align-self:flex-start; background:rgba(255,255,255,0.08); padding:12px 16px; border-radius:18px 18px 18px 0; max-width:85%; font-size:14px; line-height:1.5'>${data.reply}</div>`;
+        chatBody.scrollTop = chatBody.scrollHeight;
+    });
+}
+function toggleMode(){
+    document.body.classList.toggle("light-mode");
+    localStorage.setItem("theme", document.body.classList.contains("light-mode") ? "light" : "dark");
+}
+window.onload = function(){
+    if(localStorage.getItem("theme") === "light") document.body.classList.add("light-mode");
+}
+</script>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Add Student{% endblock %}
+{% block body %}
+<div class="topbar">
+  <span class="topbar-brand">🎓 Student Performance System</span>
+  <div class="topbar-right">
+    <span class="topbar-user">🛠 {{ session.username }}</span>
+    <a href="/logout" class="btn btn-outline btn-sm btn-round">Logout</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">Admin Panel</div>
+    <a href="/admin">📊 Dashboard</a>
+    <a href="/admin/students">👨‍🎓 Students</a>
+    <a href="/admin/add-student" class="active">➕ Add Student</a>
+    <div class="divider"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <h1>➕ Add New Student</h1>
+      <p class="page-sub">Manually enter a student's data into the database.</p>
+
+      <div class="section" style="max-width:720px">
+        <form method="POST" action="/admin/add-student">
+
+          <div class="form-section-title">Identity</div>
+          <div class="form-grid-3">
+            <div class="form-group"><label>Student ID</label>
+              <input type="text" name="student_id" required placeholder="e.g. 901"></div>
+            <div class="form-group"><label>Class</label>
+              <select name="class_"><option>8th</option><option>9th</option><option>10th</option></select></div>
+            <div class="form-group"><label>Section</label>
+              <select name="section"><option>A</option><option>B</option><option>C</option></select></div>
+          </div>
+          <div class="form-grid-3">
+            <div class="form-group"><label>Age</label>
+              <input type="number" name="age" min="10" max="20" placeholder="14"></div>
+            <div class="form-group"><label>Gender</label>
+              <select name="gender"><option>Male</option><option>Female</option></select></div>
+            <div class="form-group"><label>Parent Education</label>
+              <select name="parent_edu">
+                <option>Primary</option><option>High School</option>
+                <option>PUC</option><option>Degree</option><option>Postgraduate</option>
+              </select></div>
+          </div>
+
+          <div class="form-section-title">Academic Scores</div>
+          <div class="form-grid-3">
+            <div class="form-group"><label>Internal Test 1</label>
+              <input type="number" name="internal1" min="0" max="100" placeholder="0–100"></div>
+            <div class="form-group"><label>Internal Test 2</label>
+              <input type="number" name="internal2" min="0" max="100" placeholder="0–100"></div>
+            <div class="form-group"><label>Assignment Score</label>
+              <input type="number" name="assignment" min="0" max="100" placeholder="0–100"></div>
+          </div>
+          <div class="form-grid-3">
+            <div class="form-group"><label>Previous Exam Score</label>
+              <input type="number" name="previous" min="0" max="100" placeholder="0–100"></div>
+            <div class="form-group"><label>Final Exam Score</label>
+              <input type="number" name="final_score" min="0" max="100" placeholder="0–100"></div>
+            <div class="form-group"><label>Attendance (%)</label>
+              <input type="number" name="attendance" min="0" max="100" placeholder="0–100"></div>
+          </div>
+
+          <div class="form-section-title">Study Behaviour</div>
+          <div class="form-grid-3">
+            <div class="form-group"><label>Study Hours/Day</label>
+              <input type="number" step="0.5" name="study_hours" placeholder="e.g. 3.5"></div>
+            <div class="form-group"><label>Sleep Hours/Day</label>
+              <input type="number" step="0.5" name="sleep_hours" placeholder="e.g. 7"></div>
+            <div class="form-group"><label>Health Issues</label>
+              <select name="health"><option>None</option><option>Minor</option><option>Frequent</option></select></div>
+          </div>
+
+          <div class="form-section-title">Other</div>
+          <div class="form-grid-2">
+            <div class="form-group"><label>Internet Access</label>
+              <select name="internet"><option>Yes</option><option>No</option></select></div>
+            <div class="form-group"><label>Extracurricular</label>
+              <select name="extra"><option>Yes</option><option>No</option></select></div>
+          </div>
+
+          <div style="display:flex;gap:12px;margin-top:8px">
+            <button class="btn btn-primary" type="submit">➕ Add Student</button>
+            <a href="/admin/students" class="btn btn-outline">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

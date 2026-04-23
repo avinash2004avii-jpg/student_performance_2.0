@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% block title %}All Students{% endblock %}
+{% block body %}
+<style>
+:root {
+    --primary: #7c3aed;
+    --topbar-bg: #9333ea;
+    --topbar-height: 65px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0a0016;
+    color: #e2e8f0;
+    font-size: 15px;
+}
+
+.topbar { 
+    background: var(--topbar-bg) !important; 
+    height: var(--topbar-height) !important;
+    padding: 0 30px !important; 
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: space-between !important;
+    position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 1100;
+}
+.topbar-brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 20px; color: #fff; }
+.topbar-right { display: flex; align-items: center; gap: 18px; }
+
+.page { margin-top: var(--topbar-height); padding: 40px 60px; min-height: calc(100vh - var(--topbar-height)); }
+.container { max-width: 100%; margin: 0 auto; }
+
+.section { background: rgba(255,255,255,0.02); border-radius: 18px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); }
+
+/* Table styling */
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+th { text-align: left; background: rgba(147, 51, 234, 0.12); padding: 12px 18px; color: #a855f7; font-size: 13px; text-transform: uppercase; }
+td { padding: 12px 18px; background: rgba(255,255,255,0.02); transition: 0.2s; font-size: 14px; }
+tr:hover td { background: rgba(255,255,255,0.05); }
+.badge { padding: 4px 12px; border-radius: 15px; font-weight: 800; font-size: 12px; display: inline-flex; align-items: center; gap: 6px; }
+
+/* Search bar area */
+.filter-row { 
+    display: flex; gap: 15px; align-items: center; margin-bottom: 30px; 
+    background: rgba(255,255,255,0.03); padding: 15px 25px; border-radius: 15px; 
+}
+.search-input { 
+    flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+    padding: 12px 20px; border-radius: 12px; color: #fff; outline: none; font-size: 15px;
+}
+.search-input:focus { border-color: #a855f7; }
+
+.select-box {
+    background: #1f0035; border: 1px solid rgba(255,255,255,0.1); 
+    color: #fff; padding: 12px 15px; border-radius: 10px; outline: none; font-size: 14px;
+    min-width: 150px;
+}
+</style>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <span style="font-size: 26px">🎓</span>
+    <span>Student Performance System</span>
+  </div>
+  <div class="topbar-right">
+    <a href="/{{ session.role }}" style="background:rgba(255,255,255,0.1); color:#fff; padding:8px 25px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); font-weight:700; text-decoration:none; font-size:14px;">Back</a>
+  </div>
+</div>
+
+<div class="page">
+  <div class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px">
+      <h1 style="font-size:32px; margin:0; font-weight: 800">🧑‍🎓 All Students</h1>
+      <div style="display: flex; gap: 12px; align-items: center;">
+          <a href="/teacher/add-student" style="background:var(--primary); color:#fff; padding:10px 22px; border-radius:10px; font-weight:700; text-decoration:none; font-size: 14px">➕ Add Student</a>
+          <form action="/teacher/upload-students" method="POST" enctype="multipart/form-data" style="display: flex; gap: 12px; align-items: center;">
+              <input type="file" name="file" id="csvFile" style="display: none;" onchange="this.form.submit()">
+              <label for="csvFile" style="background:rgba(255,255,255,0.05); color:#fff; padding:10px 22px; border-radius:10px; border:1px solid rgba(255,255,255,0.2); cursor:pointer; font-size: 14px; white-space: nowrap;">Choose File <span style="opacity: 0.6; margin-left: 5px; font-weight: 400;">No file chosen</span></label>
+              <button type="submit" style="background:#10b981; color:#fff; padding:10px 22px; border-radius:10px; border:none; font-weight:700; cursor:pointer; font-size: 14px; white-space: nowrap;">⬆️ Upload CSV</button>
+          </form>
+      </div>
+    </div>
+
+    <form action="/teacher/students" method="GET" id="searchForm" class="filter-row">
+        <input type="text" name="q" value="{{ q }}" id="searchInput" placeholder="Search Student ID..." class="search-input" autocomplete="off">
+        
+        <select name="class" id="classSelect" class="select-box">
+            <option value="">All</option>
+            {% for c in classes %}
+            <option value="{{ c }}" {% if sel_class == c|string %}selected{% endif %}>{{ c }}</option>
+            {% endfor %}
+        </select>
+
+        <select name="section" id="sectionSelect" class="select-box">
+            <option value="">All</option>
+            {% for s in sections %}
+            <option value="{{ s }}" {% if sel_section == s|string %}selected{% endif %}>{{ s }}</option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <div class="section">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+              <tr>
+                  <th style="border-radius: 12px 0 0 12px">Student ID</th>
+                  <th>Class</th>
+                  <th>Section</th>
+                  <th>Attendance</th>
+                  <th>IT1</th>
+                  <th>IT2</th>
+                  <th>Assignment</th>
+                  <th>Previous</th>
+                  <th>Final Score</th>
+                  <th>Risk</th>
+                  <th style="border-radius: 0 12px 12px 0">Report</th>
+              </tr>
+          </thead>
+          <tbody id="studentsTableBody">
+            {% include 'students_rows.html' %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const searchInput = document.getElementById('searchInput');
+const classSelect = document.getElementById('classSelect');
+const sectionSelect = document.getElementById('sectionSelect');
+const tableBody = document.getElementById('studentsTableBody');
+
+let debounceTimer;
+
+function updateTable() {
+    const q = searchInput.value;
+    const cls = classSelect.value;
+    const sec = sectionSelect.value;
+    
+    // Maintain URL state without reload
+    const url = new URL(window.location);
+    url.searchParams.set('q', q);
+    url.searchParams.set('class', cls);
+    url.searchParams.set('section', sec);
+    window.history.pushState({}, '', url);
+
+    fetch(`/teacher/students?q=${q}&class=${cls}&section=${sec}`, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.text())
+    .then(html => {
+        tableBody.innerHTML = html;
+    });
+}
+
+searchInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(updateTable, 300);
+});
+
+classSelect.addEventListener('change', updateTable);
+sectionSelect.addEventListener('change', updateTable);
+
+// Prevent form submission reload
+document.getElementById('searchForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    updateTable();
+});
+</script>
+{% endblock %}

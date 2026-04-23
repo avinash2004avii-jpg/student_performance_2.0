@@ -1,0 +1,26 @@
+{% for s in students %}
+<tr>
+  <td style="border-radius: 12px 0 0 12px"><b>{{ s.Student_ID }}</b></td>
+  <td>{{ s.Class }}</td>
+  <td>{{ s.section }}</td>
+  <td>{{ s.Attendence }}%</td>
+  <td>{{ s['internal_test 1'] }}</td>
+  <td>{{ s['internal_test 2'] }}</td>
+  <td>{{ s.Assignment_score }}</td>
+  <td>{{ s.Previous_Exam_Score }}</td>
+  <td>{{ s.Final_Exam_Score }}</td>
+  <td>
+      <span class="badge" style="background: {% if s.risk == 'Safe' %}rgba(16, 185, 129, 0.2){% else %}rgba(239, 68, 68, 0.2){% endif %}; color: {% if s.risk == 'Safe' %}#10b981{% else %}#ef4444{% endif %}; border: 1px solid {% if s.risk == 'Safe' %}#10b981{% else %}#ef4444{% endif %}">
+          {% if s.risk == 'Safe' %}✅ Safe{% else %}⚠ At Risk{% endif %}
+      </span>
+  </td>
+  <td style="border-radius: 0 12px 12px 0">
+      <a href="/teacher/student-report/{{ s.Student_ID }}" style="background: #7c3aed; color: #fff; padding: 6px 15px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 600;">Download PDF</a>
+  </td>
+</tr>
+{% endfor %}
+{% if not students %}
+<tr>
+    <td colspan="11" style="text-align:center; padding:50px; opacity:0.5">No students found.</td>
+</tr>
+{% endif %}

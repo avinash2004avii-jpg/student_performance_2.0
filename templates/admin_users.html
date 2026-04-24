@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block title %}User Management{% endblock %}
+{% block body %}
+<div class="topbar">
+  <span class="topbar-brand">🎓 Student Performance System</span>
+  <div class="topbar-right">
+    <span class="topbar-user">🛠 {{ session.username }}</span>
+    <a href="/logout" class="btn btn-outline btn-sm btn-round">Logout</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">Admin Panel</div>
+    <a href="/admin">📊 Dashboard</a>
+    <a href="/admin/users" class="active">👥 User Management</a>
+    <a href="/admin/students">👨‍🎓 Students</a>
+    <a href="/admin/add-student">➕ Add Student</a>
+    <div class="divider"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <h1>User Management</h1>
+      <p class="page-sub">Approve, deactivate, or manage user accounts</p>
+
+      <!-- Users Table -->
+      <div class="section">
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Joined</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for u in users %}
+              <tr>
+                <td><b>{{ u.username }}</b></td>
+                <td>{{ u.email }}</td>
+                <td>
+                  {% if u.role == 'admin' %}<span class="badge badge-safe">admin</span>
+                  {% elif u.role == 'teacher' %}<span class="badge badge-avg">teacher</span>
+                  {% else %}<span class="badge" style="background:rgba(123,44,255,.15);color:#c4a8ff;border:1px solid var(--purple2)">student</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if u.status == 'active' %}
+                  <span class="badge badge-safe">Active</span>
+                  {% elif u.status == 'pending' %}
+                  <span class="badge" style="background:#f59e0b; border-color:#d97706; color:#ffffff; font-weight:800">Pending</span>
+                  {% else %}
+                  <span class="badge badge-risk">Deactivated</span>
+                  {% endif %}
+                </td>
+                <td style="color:var(--muted);font-size:12px">{{ u.created_at[:10] }}</td>
+                <td>
+                  <div style="display: flex; gap: 5px">
+                    {% if u.id != session.user_id %}
+                        {% if u.status == 'pending' %}
+                        <form action="/admin/user-action/{{ u.id }}" method="POST" style="display:inline">
+                            <input type="hidden" name="action" value="approve">
+                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                        </form>
+                        {% elif u.status == 'active' %}
+                        <form action="/admin/user-action/{{ u.id }}" method="POST" style="display:inline">
+                            <input type="hidden" name="action" value="deactivate">
+                            <button type="submit" class="btn btn-warning btn-sm">Deactivate</button>
+                        </form>
+                        {% elif u.status == 'deactivated' %}
+                        <form action="/admin/user-action/{{ u.id }}" method="POST" style="display:inline">
+                            <input type="hidden" name="action" value="activate">
+                            <button type="submit" class="btn btn-success btn-sm">Activate</button>
+                        </form>
+                        {% endif %}
+
+                        <button onclick="showResetModal('{{ u.id }}', '{{ u.username }}')" class="btn btn-outline btn-sm">Reset Pass</button>
+
+                        <form action="/admin/user-action/{{ u.id }}" method="POST" style="display:inline" onsubmit="return confirm('Delete user {{ u.username }} permanently?')">
+                            <input type="hidden" name="action" value="delete">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    {% else %}
+                        <span style="color:var(--muted);font-size:12px">You</span>
+                    {% endif %}
+                  </div>
+                </td>
+              </tr>
+              {% else %}
+              <tr>
+                <td colspan="6" style="text-align: center; padding: 50px; color: var(--muted)">
+                    <div style="font-size: 20px; margin-bottom: 10px">📭 No users found</div>
+                    <p style="margin-bottom: 20px">There are currently no users matching this filter.</p>
+                    <a href="/admin/users" class="btn btn-primary btn-sm">Show All Users</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Password Reset Modal (Simple JS Prompt for now to keep it clean) -->
+<script>
+function showResetModal(userId, username) {
+    const newPass = prompt(`Enter new password for ${username}:`);
+    if (newPass) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/admin/user-action/${userId}`;
+        
+        const actionInput = document.createElement('input');
+        actionInput.type = 'hidden';
+        actionInput.name = 'action';
+        actionInput.value = 'reset';
+        form.appendChild(actionInput);
+        
+        const passInput = document.createElement('input');
+        passInput.type = 'hidden';
+        passInput.name = 'new_password';
+        passInput.value = newPass;
+        form.appendChild(passInput);
+        
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
+
+<style>
+.btn-warning { background: #f59e0b; color: white; }
+.btn-warning:hover { opacity: 0.8; }
+</style>
+{% endblock %}

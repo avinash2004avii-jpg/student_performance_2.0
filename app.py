@@ -14,6 +14,9 @@ import traceback
 from dotenv import load_dotenv
 import os
 from google import genai
+import matplotlib
+matplotlib.use('Agg') # Necessary for non-GUI environments
+import matplotlib.pyplot as plt
 
 load_dotenv()  # ✅ MUST come first
 
@@ -37,12 +40,11 @@ MDL_DIR   = os.path.join(BASE, "models")
 def load_model():
     p = os.path.join(MDL_DIR, "student_model.pkl")
     if not os.path.exists(p):
-        return None, None, None
+        return None, None
     return (joblib.load(os.path.join(MDL_DIR, "student_model.pkl")),
-            joblib.load(os.path.join(MDL_DIR, "model_columns.pkl")),
-            joblib.load(os.path.join(MDL_DIR, "le_health.pkl")))
+            joblib.load(os.path.join(MDL_DIR, "model_columns.pkl")))
 
-model, model_columns, le_health = load_model()
+model, model_columns = load_model()
 
 db.create_tables()
 
@@ -71,43 +73,83 @@ def ival(form, key, default=0):
 def risk_label(score):
     if score is None: return "Unknown"
     if score < 70:    return "At Risk"
-    if score < 80:    return "Average"
+    if score < 85:    return "Average Performance"
     return "Safe"
 
-def safe_encode_health(val):
-    v = str(val) if val else "None"
-    if v not in le_health.classes_: v = "None"
-    return int(le_health.transform([v])[0])
 
 def build_features(row):
+    # Extract numerical inputs (handle both CSV and Form keys)
     it1  = float(row.get("internal_test 1",  row.get("internal1",  0)))
     it2  = float(row.get("internal_test 2",  row.get("internal2",  0)))
     asgn = float(row.get("Assignment_score", row.get("assignment", 0)))
-    prev = float(row.get("Previous_Exam_Score", row.get("previous_score", 0)))
+    prev = float(row.get("Previous_Exam_Score", row.get("previous", 0)))
     att  = float(row.get("Attendence",  row.get("attendance",  75)))
     sh   = float(row.get("Study_hours", row.get("study_hours", 3)))
     slp  = float(row.get("Sleep_hours", row.get("sleep_hours", 7)))
-    hlth = row.get("Health_Issues", row.get("health", "None"))
-    feats = {
-        "Study_hours": sh, "Health_Issues": safe_encode_health(hlth),
-        "Attendence": att, "internal_test 1": it1, "internal_test 2": it2,
+
+    # Required Features by user
+    total_internal = it1 + it2
+    avg_internal   = total_internal / 2
+
+    # Build numeric dictionary
+    data = {
+        "Study_hours": sh, "Sleep_hours": slp, "Attendence": att,
+        "internal_test 1": it1, "internal_test 2": it2,
         "Assignment_score": asgn, "Previous_Exam_Score": prev,
-        "internal_avg": (it1+it2)/2, "internal_diff": abs(it1-it2),
-        "academic_score": (it1+it2+asgn)/3,
-        "study_x_attendance": sh*att/100,
-        "total_score": it1+it2+asgn+prev,
-        "study_efficiency": sh/(slp+1),
-        "high_study": 1 if sh>4 else 0,
+        "total_internal": total_internal,
+        "avg_internal": avg_internal,
+        "study_x_attendance": sh * att / 100,
+        "total_score": it1 + it2 + asgn + prev,
+        "study_efficiency": sh / (slp + 1),
+        "high_study": 1 if sh > 4 else 0,
     }
-    return pd.DataFrame([feats])[model_columns]
+
+    # Handle Categorical variables via manual dummy creation for consistency
+    # This ensures we match the columns expected by the model
+    hlth = row.get("Health_Issues", row.get("health", "None"))
+    gender = row.get("Gender", "Male")
+    internet = row.get("Internet_Access", "Yes")
+    extra = row.get("Extracurricular_Activities", "No")
+
+    # Add raw strings to data for pd.get_dummies
+    data["Health_Issues"] = hlth
+    data["Gender"] = gender
+    data["Internet_Access"] = internet
+    data["Extracurricular_Activities"] = extra
+
+    df_row = pd.DataFrame([data])
+    cols_to_encode = ["Health_Issues", "Gender", "Internet_Access", "Extracurricular_Activities"]
+    df_encoded = pd.get_dummies(df_row, columns=cols_to_encode)
+
+    # ALIGNMENT: Ensure all columns from training exist and are in the correct order
+    # Any missing dummy column is set to 0
+    final_features = pd.DataFrame(0, index=[0], columns=model_columns)
+    for col in model_columns:
+        if col in df_encoded.columns:
+            final_features[col] = df_encoded[col].values
+        elif col in data:
+            final_features[col] = data[col]
+
+    return final_features
 
 def predict_score(row):
     if model is None: return None
     return round(float(model.predict(build_features(row))[0]), 1)
 
-def generate_suggestions(score, row):
+def get_student_by_id(student_id):
+    """Fetch student dictionary from CSV based on Student_ID."""
+    try:
+        df = load_csv()
+        # Student_ID in CSV is numeric (or string depending on pandas)
+        match = df[df["Student_ID"].astype(str) == str(student_id)]
+        if match.empty:
+            return None
+        return match.iloc[0].to_dict()
+    except Exception:
+        return None
+
+def generate_suggestions(score, row, class_avg=None):
     """Return list of personalised improvement tips based on student data."""
-    tips = []
     att  = float(row.get("Attendence", row.get("attendance", 100)))
     sh   = float(row.get("Study_hours", row.get("study_hours", 3)))
     it1  = float(row.get("internal_test 1", row.get("internal1", 0)))
@@ -115,31 +157,44 @@ def generate_suggestions(score, row):
     asgn = float(row.get("Assignment_score", row.get("assignment", 0)))
     slp  = float(row.get("Sleep_hours", row.get("sleep_hours", 7)))
 
+    # 1. Handle "At Risk" students with specific static-style tips as requested
+    if score < 70:
+        return [
+            ("Attendance", f"Your attendance is quite low right now ({att}%). This can seriously affect your understanding of subjects. Try to attend classes regularly — even improving to 75–85% can make a big difference in your performance."),
+            ("Academics (Low Marks)", "Your current scores show that some concepts may not be clear. Start revising basic topics daily and focus on understanding rather than memorizing. Even 1–2 hours of focused study can improve your marks significantly."),
+            ("Study Hours", f"Studying {sh} hours is a good start, but increasing it slightly with proper focus can boost your performance. Try creating a simple daily study plan and stick to it."),
+            ("Motivation / Overall", "Right now you are in the ‘At Risk’ category, but this is not permanent. With small consistent efforts, you can improve your performance step by step. Start with one subject at a time and build confidence.")
+        ]
+
+    # 2. Dynamic tips for Average/Safe students
+    tips = []
     if att < 75:
-        tips.append(("📅 Attendance", f"Attendance is {att}% — below the 75% minimum. "
-                     "Missing class directly correlates with lower scores. "
-                     "Aim for at least 85% attendance."))
+        tips.append(("Attendance", f"Attendance is {att}% — below the 75% minimum. Missing class directly correlates with lower scores. Aim for at least 85% attendance."))
+    
+    if class_avg and score < class_avg:
+        diff = round(class_avg - score, 1)
+        tips.append(("Benchmark", f"Your predicted score is {diff} marks below the class average ({class_avg}). Try to identify subjects where you are losing marks and seek extra guidance."))
+
     if sh < 2:
-        tips.append(("📚 Study Time", f"Only {sh} hours of study per day is very low. "
-                     "Increasing to at least 3–4 hours daily can significantly improve performance."))
+        tips.append(("Study Time", f"Only {sh} hours of study per day is very low. Increasing to at least 3–4 hours daily can significantly improve performance."))
     elif sh < 3:
-        tips.append(("📚 Study Time", f"{sh} hours of study is below average. "
-                     "Try adding one focused study session per day."))
+        tips.append(("Study Time", f"{sh} hours of study is below average. Try adding one focused study session per day."))
+    
     if it2 < it1:
-        tips.append(("📉 Declining Trend", f"Internal Test 2 ({it2}) is lower than Internal Test 1 ({it1}). "
-                     "Performance is declining — review test 2 topics thoroughly and seek teacher help."))
+        tips.append(("Declining Trend", f"Internal Test 2 ({it2}) is lower than Internal Test 1 ({it1}). Performance is declining — review test 2 topics thoroughly and seek teacher help."))
+    
     if asgn < 50:
-        tips.append(("📝 Assignments", f"Assignment score is only {asgn}/100. "
-                     "Completing assignments consistently is one of the easiest ways to improve your grade."))
+        tips.append(("Assignments", f"Assignment score is only {asgn}/100. Completing assignments consistently is one of the easiest ways to improve your grade."))
+    
     if slp < 6:
-        tips.append(("😴 Sleep", f"Only {slp} hours of sleep affects memory and focus. "
-                     "7–8 hours of sleep helps retain what you study."))
+        tips.append(("Sleep", f"Only {slp} hours of sleep affects memory and focus. 7–8 hours of sleep helps retain what you study."))
+    
     if it1 < 50 and it2 < 50:
-        tips.append(("📖 Core Concepts", "Both internal tests are below 50. "
-                     "Focus on understanding fundamentals rather than memorising — consider extra tutoring."))
-    if score < 70 and not tips:
-        tips.append(("💡 General", "Review your weakest subjects first. "
-                     "Create a weekly study schedule and stick to it."))
+        tips.append(("Core Concepts", "Both internal tests are below 50. Focus on understanding fundamentals rather than memorising — consider extra tutoring."))
+    
+    if not tips:
+        tips.append(("Achievement", "Keep up the great work and maintain consistency!"))
+
     return tips
 
 def login_required(role=None):
@@ -187,6 +242,9 @@ def login_admin():
         password = request.form["password"]
         user = db.login_user(username, password)
         if user and user["role"] == "admin":
+            if user["status"] != "active":
+                flash(f"Admin account is {user['status']}. Please check database.", "danger")
+                return redirect(url_for("login_page"))
             session["user_id"]  = user["id"]
             session["username"] = user["username"]
             session["role"]     = user["role"]
@@ -201,6 +259,12 @@ def login_teacher():
         password = request.form["password"]
         user = db.login_user(username, password)
         if user and user["role"] == "teacher":
+            if user["status"] == "pending":
+                flash("Your account is pending admin approval.", "warning")
+                return redirect(url_for("login_page"))
+            if user["status"] == "deactivated":
+                flash("Your account has been deactivated.", "danger")
+                return redirect(url_for("login_page"))
             session["user_id"]  = user["id"]
             session["username"] = user["username"]
             session["role"]     = user["role"]
@@ -215,6 +279,9 @@ def login_student():
         password = request.form["password"]
         user = db.login_user(username, password)
         if user and user["role"] == "student":
+            if user["status"] == "deactivated":
+                flash("Your account has been deactivated.", "danger")
+                return redirect(url_for("login_page"))
             session["user_id"]  = user["id"]
             session["username"] = user["username"]
             session["role"]     = user["role"]
@@ -240,11 +307,11 @@ def signup_teacher():
         elif db.email_exists(email):
             flash("Email already registered.", "danger")
         else:
-            ok, msg = db.signup_teacher(username, email, password, name, subject)
-            if ok:
-                flash("Account created! Please log in.", "success")
-                return redirect(url_for("login_teacher"))
-            flash(msg, "danger")
+            success, msg = db.signup_teacher(username, email, password, name, subject)
+        if success:
+            flash("Registration successful! Your account is pending admin approval.", "success")
+            return redirect(url_for("login_page"))
+        flash(msg, "danger")
     return render_template("signup_teacher.html")
 
 
@@ -269,16 +336,23 @@ def signup_student():
         elif db.email_exists(email):
             flash("Email already registered.", "danger")
         else:
-            ok, msg = db.signup_student(username, email, password, name,
-                                        student_code, class_, section, teacher_id)
-            if ok:
-                flash("Account created! Please log in.", "success")
-                return redirect(url_for("login_student"))
-            # Give a clear message for the most common failure
-            if "student_code" in msg or "UNIQUE" in msg:
-                flash("That Student ID is already registered. Check your roll number.", "danger")
+            # ✅ Check if Student ID exists in the master school database (CSV)
+            df = load_csv()
+            if student_code not in df["Student_ID"].astype(str).values:
+                flash(f"Student ID {student_code} was not found in our records. Please ensure it matches exactly with school records.", "danger")
             else:
-                flash(msg, "danger")
+                ok, msg = db.signup_student(username, email, password, name,
+                                            student_code, class_, section, teacher_id)
+                if ok:
+                    flash("Account created! Please log in.", "success")
+                    return redirect(url_for("login_student"))
+                
+                # Give a clear message for the most common failure
+                if "student_code" in msg or "UNIQUE" in msg:
+                    flash("That Student ID is already registered. Check your roll number.", "danger")
+                else:
+                    flash(msg, "danger")
+
     return render_template("signup_student.html", teachers=teachers)
 
 
@@ -294,6 +368,66 @@ def logout():
 @app.route("/admin")
 @login_required("admin")
 def admin_dashboard():
+    # 1. User stats
+    all_users = db.get_all_users()
+    pending_count = len([u for u in all_users if u["status"] == "pending"])
+    total_teachers = len([u for u in all_users if u["role"] == "teacher"])
+    
+    # 2. Student performance stats
+    df = load_csv()
+    total_students = len(df)
+    
+    # Risk calculation using project standard thresholds (<70 is Risk, >85 is Safe)
+    risk_count = len(df[df["Final_Exam_Score"] < 70])
+    safe_count = len(df[df["Final_Exam_Score"] >= 85])
+    avg_score = round(df["Final_Exam_Score"].mean(), 1) if not df.empty else 0
+    
+    return render_template("admin_dashboard.html", 
+                           pending_count=pending_count,
+                           total_students=total_students,
+                           total_teachers=total_teachers,
+                           risk_count=risk_count,
+                           safe_count=safe_count,
+                           avg_score=avg_score)
+
+@app.route("/admin/users")
+@login_required("admin")
+def admin_users():
+    role_filter = request.args.get("role")
+    status_filter = request.args.get("status")
+    
+    users = db.get_all_users()
+    if role_filter:
+        users = [u for u in users if u["role"] == role_filter]
+    if status_filter:
+        users = [u for u in users if u["status"] == status_filter]
+        
+    return render_template("admin_users.html", users=users)
+
+@app.route("/admin/user-action/<int:user_id>", methods=["POST"])
+@login_required("admin")
+def admin_user_action(user_id):
+    action = request.form.get("action")
+    if action == "approve":
+        db.update_user_status(user_id, "active")
+        flash("User approved successfully.", "success")
+    elif action == "deactivate":
+        db.update_user_status(user_id, "deactivated")
+        flash("User deactivated successfully.", "warning")
+    elif action == "activate":
+        db.update_user_status(user_id, "active")
+        flash("User activated successfully.", "success")
+    elif action == "delete":
+        db.delete_user(user_id)
+        flash("User deleted successfully.", "danger")
+    elif action == "reset":
+        new_pass = request.form.get("new_password")
+        if new_pass:
+            db.reset_user_password(user_id, new_pass)
+            flash("Password reset successfully.", "success")
+        else:
+            flash("New password cannot be empty.", "warning")
+    return redirect(url_for("admin_users"))
     df = load_csv()
     df["risk"] = np.where(df["Final_Exam_Score"] < 70, "At Risk", "Safe")
     return render_template("admin_dashboard.html",
@@ -320,9 +454,11 @@ def admin_students():
     q = request.args.get("q", "")
     sel_class = request.args.get("class", "")
     sel_section = request.args.get("section", "")
+    sel_filter = request.args.get("filter", "")
     
     df = load_csv()
-    df["risk"] = np.where(df["Final_Exam_Score"] < 70, "At Risk", "Safe")
+    df["risk"] = np.where(df["Final_Exam_Score"] < 70, "At Risk", 
+                          np.where(df["Final_Exam_Score"] < 85, "Average Performance", "Safe"))
     
     # Get unique values for filters
     classes = sorted(df["Class"].dropna().unique().tolist())
@@ -334,7 +470,12 @@ def admin_students():
         df = df[df["Class"].astype(str) == sel_class]
     if sel_section:
         df = df[df["section"].astype(str) == sel_section]
-        
+    if sel_filter == "risk":
+        df = df[df["Final_Exam_Score"] < 70]
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template("students_rows.html", students=df.to_dict(orient="records"))
+
     return render_template("students_table.html",
                            students=df.to_dict(orient="records"), 
                            q=q, classes=classes, sections=sections,
@@ -418,10 +559,11 @@ def teacher_dashboard():
     if sel_section:
         df = df[df["section"].astype(str) == sel_section]
         
-    df["risk"] = np.where(df["Final_Exam_Score"] < 70, "At Risk", "Safe")
+    df["risk"] = np.where(df["Final_Exam_Score"] < 70, "At Risk", 
+                          np.where(df["Final_Exam_Score"] < 85, "Average Performance", "Safe"))
     
     total = len(df)
-    at_risk_count = len(df[df["risk"] == "At Risk"])
+    at_risk_count = len(df[df["Final_Exam_Score"] < 70])
     avg_score = round(df["Final_Exam_Score"].mean(), 1) if not df.empty else 0
     avg_att = round(df["Attendence"].mean(), 1) if not df.empty else 0
     risk_pct = round((at_risk_count / total * 100), 1) if total > 0 else 0
@@ -451,14 +593,63 @@ def teacher_predict():
     suggestions = []
     if request.method == "POST":
         try:
+            # Server-side validation for negative numbers
+            for field in ['internal1', 'internal2', 'assignment', 'previous', 'attendance', 'study_hours', 'sleep_hours']:
+                val = fval(request.form, field)
+                if val < 0:
+                    flash(f"Invalid input: {field.replace('_', ' ').title()} cannot be negative.", "danger")
+                    return render_template("predict_single.html", result=None, score=None, suggestions=[], f=request.form)
+
             score  = predict_score(request.form)
             result = risk_label(score)
-            if score is not None and score < 80:
-                suggestions = generate_suggestions(score, request.form)
+            if score is not None:
+                df = load_csv()
+                class_avg = round(float(df["Final_Exam_Score"].mean()), 1) if not df.empty else 0
+                suggestions = generate_suggestions(score, request.form, class_avg=class_avg)
         except Exception as e:
             flash(f"Prediction error: {e}", "danger")
     return render_template("predict_single.html",
-                           result=result, score=score, suggestions=suggestions)
+                           result=result, score=score, suggestions=suggestions,
+                           f=request.form if request.method == 'POST' else {})
+
+@app.route("/teacher/auto_predict", methods=["GET", "POST"])
+@login_required("teacher")
+def teacher_auto_predict():
+    result = None
+    score  = None
+    suggestions = []
+    student = None
+    
+    if request.method == "POST":
+        sid = request.form.get("student_id", "").strip()
+        student = get_student_by_id(sid)
+        
+        if student:
+            try:
+                # Use model directly for 2 decimal places as requested
+                raw_pred = float(model.predict(build_features(student))[0])
+                score = round(raw_pred, 2)
+                
+                # User requested thresholds for this feature: <60, 60-75, >75
+                if score < 60:
+                    result = "At Risk"
+                elif score <= 75:
+                    result = "Average Performance"
+                else:
+                    result = "Safe"
+                
+                df = load_csv()
+                class_avg = round(float(df["Final_Exam_Score"].mean()), 1) if not df.empty else 0
+                suggestions = generate_suggestions(score, student, class_avg=class_avg)
+            except Exception as e:
+                flash(f"Prediction error: {e}", "danger")
+        else:
+            if sid:
+                flash(f"Student ID '{sid}' not found in our records.", "warning")
+                
+    return render_template("auto_predict.html",
+                           result=result, score=score, 
+                           suggestions=suggestions, student=student)
 
 @app.route("/teacher/bulk-predict", methods=["GET", "POST"])
 @login_required("teacher")
@@ -533,7 +724,8 @@ def teacher_students():
     
     df = load_csv()
     df["risk_val"] = np.where(df["Final_Exam_Score"] < 70, "1", "0")
-    df["risk"] = np.where(df["Final_Exam_Score"] < 70, "At Risk", "Safe")
+    df["risk"] = np.where(df["Final_Exam_Score"] < 70, "At Risk", 
+                          np.where(df["Final_Exam_Score"] < 85, "Average Performance", "Safe"))
     
     # Get unique values for filters
     classes = sorted(df["Class"].dropna().unique().tolist())
@@ -555,6 +747,15 @@ def teacher_students():
                            students=df.to_dict(orient="records"), 
                            q=q, classes=classes, sections=sections,
                            sel_class=sel_class, sel_section=sel_section)
+
+@app.route("/teacher/delete-student/<sid>")
+@login_required("teacher")
+def teacher_delete_student(sid):
+    df = load_csv()
+    df = df[df["Student_ID"].astype(str) != str(sid)]
+    df.to_csv(DATA_FILE, index=False)
+    flash(f"Student {sid} removed successfully.", "success")
+    return redirect(url_for("teacher_students"))
 
 
 # ════════════════════════════════════════════════════════════════════
@@ -618,6 +819,89 @@ def teacher_upload_students():
     flash(f"Uploaded {len(new_df)} student(s).", "success")
     return redirect(url_for("teacher_students"))
 
+@app.route("/teacher/upload_csv", methods=["POST"])
+@login_required("teacher")
+def teacher_upload_csv():
+    file = request.files.get("file")
+    if not file or file.filename == "":
+        flash("No file selected for upload.", "danger")
+        return redirect(url_for("teacher_add_student"))
+    
+    if not file.filename.lower().endswith(".csv"):
+        flash("Only CSV files are allowed.", "danger")
+        return redirect(url_for("teacher_add_student"))
+
+    try:
+        df_new = pd.read_csv(file)
+        
+        # Required columns mapping (CSV headers to project column names)
+        # Using a dictionary to normalize headers if they are slightly different
+        col_map = {
+            'student_id': 'Student_ID',
+            'class': 'Class',
+            'section': 'section',
+            'attendance': 'Attendence',
+            'internal_test_1': 'internal_test 1',
+            'internal_test_2': 'internal_test 2',
+            'assignment_score': 'Assignment_score',
+            'previous_exam_score': 'Previous_Exam_Score',
+            'study_hours': 'Study_hours',
+            'sleep_hours': 'Sleep_hours',
+            'health_issues': 'Health_Issues'
+        }
+        
+        # Check if required columns (keys in col_map) exist in uploaded CSV
+        # We'll be flexible and allow case-insensitive matches
+        df_new.columns = [c.lower().strip() for c in df_new.columns]
+        missing = [c for c in col_map.keys() if c not in df_new.columns]
+        
+        if missing:
+            flash(f"CSV is missing required columns: {', '.join(missing)}", "danger")
+            return redirect(url_for("teacher_add_student"))
+
+        # Rename to match our data schema
+        df_new = df_new.rename(columns=col_map)
+        
+        # Select only relevant columns
+        cols_to_keep = list(col_map.values())
+        df_new = df_new[cols_to_keep]
+
+        # Data Cleaning
+        df_new['Health_Issues'] = df_new['Health_Issues'].fillna("None")
+        df_new['Final_Exam_Score'] = 0 # Default if unknown
+        
+        # Numeric conversion and default 0
+        numeric_cols = ['Attendence', 'internal_test 1', 'internal_test 2', 'Assignment_score', 
+                        'Previous_Exam_Score', 'Study_hours', 'Sleep_hours', 'Final_Exam_Score']
+        for col in numeric_cols:
+            if col in df_new.columns:
+                df_new[col] = pd.to_numeric(df_new[col], errors='coerce').fillna(0)
+
+        # Merge with existing data
+        df_existing = load_csv()
+        
+        # Avoid duplicate student IDs - keep newest
+        df_combined = pd.concat([df_existing, df_new], ignore_index=True)
+        df_combined = df_combined.drop_duplicates(subset=["Student_ID"], keep="last")
+        
+        df_combined.to_csv(DATA_FILE, index=False)
+        flash(f"Successfully processed {len(df_new)} students from CSV.", "success")
+        
+    except Exception as e:
+        flash(f"Error processing CSV: {e}", "danger")
+        
+    return redirect(url_for("teacher_students"))
+
+@app.route("/teacher/sample_csv")
+@login_required("teacher")
+def teacher_sample_csv():
+    headers = "student_id,class,section,attendance,internal_test_1,internal_test_2,assignment_score,previous_exam_score,study_hours,sleep_hours,health_issues\n"
+    sample_row = "S9999,10th,A,85.5,70,75,80,72,4,7,None"
+    output = io.BytesIO()
+    output.write((headers + sample_row).encode('utf-8'))
+    output.seek(0)
+    return send_file(output, mimetype="text/csv", as_attachment=True, download_name="sample_students.csv")
+
 
 # ════════════════════════════════════════════════════════════════════
 # STUDENT
@@ -674,12 +958,45 @@ def explain_prediction(row):
     return reasons
 
 import io
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
 from reportlab.lib.styles import getSampleStyleSheet
+
+def create_performance_graph(student_id, row):
+    """Generates a performance bar chart for the student."""
+    components = ['IT 1', 'IT 2', 'Assignment', 'Previous', 'Final']
+    marks = [
+        float(row.get('internal_test 1', 0)),
+        float(row.get('internal_test 2', 0)),
+        float(row.get('Assignment_score', 0)),
+        float(row.get('Previous_Exam_Score', 0)),
+        float(row.get('Final_Exam_Score', 0))
+    ]
+    
+    plt.figure(figsize=(6, 4))
+    colors = ['#7b2cff', '#a64cff', '#f59e0b', '#10b981', '#ef4444']
+    plt.bar(components, marks, color=colors)
+    plt.xlabel('Academic Components')
+    plt.ylabel('Marks')
+    plt.title('Student Performance Graph')
+    plt.ylim(0, 110)
+    
+    # Add values on top of bars
+    for i, v in enumerate(marks):
+        plt.text(i, v + 2, f"{v:.1f}", ha='center', fontweight='bold', fontsize=9)
+        
+    # Ensure temp directory exists
+    temp_dir = os.path.join(BASE, "static", "temp_reports")
+    if not os.path.exists(temp_dir):
+        os.makedirs(temp_dir)
+        
+    img_path = os.path.join(temp_dir, f"performance_{student_id}.png")
+    plt.savefig(img_path, bbox_inches='tight', dpi=100)
+    plt.close()
+    return img_path
 
 def build_student_report_pdf(student_id, row, predicted_score, risk,
                              suggestions, class_avg,
-                             benchmark_diff, pct_below):
+                             benchmark_diff, pct_below, graph_path=None):
 
     buffer = io.BytesIO()
     doc = SimpleDocTemplate(buffer)
@@ -719,6 +1036,16 @@ def build_student_report_pdf(student_id, row, predicted_score, risk,
 
     content.append(Spacer(1, 12))
 
+    # 📊 Performance Graph
+    if graph_path and os.path.exists(graph_path):
+        content.append(Paragraph("<b>Performance Visual Analysis</b>", styles["Heading2"]))
+        try:
+            img = Image(graph_path, width=400, height=250)
+            content.append(img)
+        except Exception as e:
+            content.append(Paragraph(f"<i>(Graph could not be loaded: {e})</i>", styles["Normal"]))
+        content.append(Spacer(1, 12))
+
     # 💡 Suggestions
     content.append(Paragraph("<b>Suggestions</b>", styles["Heading2"]))
 
@@ -756,13 +1083,16 @@ def student_report(student_id):
     predicted = predict_score(row)
     risk = risk_label(predicted)
 
-    # ✅ Suggestions
-    suggestions = generate_suggestions(predicted, row) if predicted and predicted < 80 else []
-
     # ✅ Benchmark
     class_avg = round(float(df["Final_Exam_Score"].mean()), 1)
     benchmark_diff = round(predicted - class_avg, 1) if predicted else None
     pct_below = round(float((df["Final_Exam_Score"] <= predicted).mean() * 100), 1) if predicted else None
+
+    # ✅ Suggestions
+    suggestions = generate_suggestions(predicted, row, class_avg=class_avg) if predicted else []
+
+    # ✅ Generate Performance Graph
+    graph_path = create_performance_graph(student_id, row)
 
     # ✅ USE YOUR FORMATTED FUNCTION
     pdf_buf = build_student_report_pdf(
@@ -774,7 +1104,15 @@ def student_report(student_id):
         class_avg=class_avg,
         benchmark_diff=benchmark_diff,
         pct_below=pct_below,
+        graph_path=graph_path
     )
+
+    # ✅ Cleanup temp graph image
+    if graph_path and os.path.exists(graph_path):
+        try:
+            os.remove(graph_path)
+        except:
+            pass
 
     return send_file(
         pdf_buf,

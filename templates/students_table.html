@@ -116,7 +116,8 @@ tr:hover td { background: rgba(255,255,255,0.05); }
                   <th>Previous</th>
                   <th>Final Score</th>
                   <th>Risk</th>
-                  <th style="border-radius: 0 12px 12px 0">Report</th>
+                  <th>Report</th>
+                  <th style="border-radius: 0 12px 12px 0">Action</th>
               </tr>
           </thead>
           <tbody id="studentsTableBody">
@@ -148,7 +149,8 @@ function updateTable() {
     url.searchParams.set('section', sec);
     window.history.pushState({}, '', url);
 
-    fetch(`/teacher/students?q=${q}&class=${cls}&section=${sec}`, {
+    const role = "{{ session.role }}";
+    fetch(`/${role}/students?q=${q}&class=${cls}&section=${sec}`, {
         headers: {
             'X-Requested-With': 'XMLHttpRequest'
         }
@@ -172,5 +174,12 @@ document.getElementById('searchForm').addEventListener('submit', (e) => {
     e.preventDefault();
     updateTable();
 });
+
+function confirmDelete(sid) {
+    const role = "{{ session.role }}";
+    if (confirm(`Are you sure you want to delete student ${sid}? This action cannot be undone.`)) {
+        window.location.href = `/${role}/delete-student/${sid}`;
+    }
+}
 </script>
 {% endblock %}

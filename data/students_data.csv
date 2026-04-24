@@ -900,6 +900,3 @@ Student_ID,Class,section,Age,Gender,Study_hours,Sleep_hours,Parent_Education_Lev
 899,9th,B,14,Female,4.9,9.0,High School,Frequent,No,95.0,73.0,65.0,54.0,Yes,52.0,75.0
 900,8th,C,14,Male,3.1,9.0,Postgraduate,Frequent,Yes,78.0,54.0,41.0,69.0,Yes,47.0,64.0
 901,8th,A,14,Male,2.0,89.0,Primary,None,Yes,98.0,87.0,90.0,100.0,Yes,89.0,0.0
-S8012,8th,A,15,Male,6.0,4.0,PUC,Minor,Yes,9.0,78.0,67.0,89.0,Yes,78.0,0.0
-S801,8th,A,14,Female,7.0,7.0,Primary,Minor,No,56.0,56.0,78.0,89.0,Yes,67.0,0.0
-s903,9th,B,14,Female,4.0,7.0,High School,Minor,No,89.0,34.0,24.0,46.0,No,34.0,0.0

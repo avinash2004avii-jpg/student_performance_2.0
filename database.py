@@ -34,6 +34,7 @@ def create_tables():
         email        TEXT    UNIQUE NOT NULL,
         password     TEXT    NOT NULL,
         role         TEXT    NOT NULL CHECK(role IN ('admin','teacher','student')),
+        status       TEXT    DEFAULT 'pending' CHECK(status IN ('pending','active','deactivated')),
         created_at   TEXT    DEFAULT (datetime('now'))
     );
 
@@ -55,6 +56,12 @@ def create_tables():
     );
     """)
 
+    # migrate existing db if status column missing
+    try:
+        c.execute("ALTER TABLE users ADD COLUMN status TEXT DEFAULT 'active' CHECK(status IN ('pending','active','deactivated'))")
+    except sqlite3.OperationalError:
+        pass
+
     # seed admin if not exists
     admin_exists = c.execute(
         "SELECT 1 FROM users WHERE role='admin'"
@@ -62,8 +69,8 @@ def create_tables():
 
     if not admin_exists:
         c.execute(
-            "INSERT INTO users (username,email,password,role) VALUES (?,?,?,?)",
-            ("admin", "admin@school.com", hash_password("admin123"), "admin")
+            "INSERT INTO users (username,email,password,role,status) VALUES (?,?,?,?,?)",
+            ("admin", "admin@school.com", hash_password("admin123"), "admin", "active")
         )
         print("✅ Default admin created  →  username: admin  password: admin123")
 
@@ -102,8 +109,8 @@ def signup_teacher(username, email, password, name, subject="General"):
     conn = get_conn()
     try:
         conn.execute(
-            "INSERT INTO users (username,email,password,role) VALUES (?,?,?,?)",
-            (username, email, hash_password(password), "teacher")
+            "INSERT INTO users (username,email,password,role,status) VALUES (?,?,?,?,?)",
+            (username, email, hash_password(password), "teacher", "pending")
         )
         user_id = conn.execute(
             "SELECT id FROM users WHERE username=?", (username,)
@@ -125,8 +132,8 @@ def signup_student(username, email, password, name, student_code,
     conn = get_conn()
     try:
         conn.execute(
-            "INSERT INTO users (username,email,password,role) VALUES (?,?,?,?)",
-            (username, email, hash_password(password), "student")
+            "INSERT INTO users (username,email,password,role,status) VALUES (?,?,?,?,?)",
+            (username, email, hash_password(password), "student", "active")
         )
         user_id = conn.execute(
             "SELECT id FROM users WHERE username=?", (username,)
@@ -177,10 +184,23 @@ def get_student_by_user_id(user_id):
 def get_all_users():
     conn = get_conn()
     rows = conn.execute(
-        "SELECT id,username,email,role,created_at FROM users ORDER BY created_at DESC"
+        "SELECT id,username,email,role,status,created_at FROM users ORDER BY created_at DESC"
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
+
+def update_user_status(user_id: int, status: str):
+    conn = get_conn()
+    conn.execute("UPDATE users SET status=? WHERE id=?", (status, user_id))
+    conn.commit()
+    conn.close()
+
+def reset_user_password(user_id: int, new_password: str):
+    conn = get_conn()
+    conn.execute("UPDATE users SET password=? WHERE id=?", 
+                 (hash_password(new_password), user_id))
+    conn.commit()
+    conn.close()
 
 def delete_user(user_id: int):
     conn = get_conn()

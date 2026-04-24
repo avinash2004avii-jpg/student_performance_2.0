@@ -76,6 +76,7 @@ body {
     <a href="/teacher">📊 Dashboard</a>
     <a href="/teacher/analytics">📈 Analytics</a>
     <a href="/teacher/predict">🔮 Predict Student</a>
+    <a href="/teacher/auto_predict">⚡ Auto Predict</a>
     <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
     <a href="/teacher/students">👨‍🎓 All Students</a>
     <a href="/teacher/add-student" class="active">➕ Add Student</a>
@@ -108,7 +109,7 @@ body {
             </div>
             <div class="form-group">
                 <label>Attendance (%)</label>
-                <input type="number" name="attendance" value="90" step="0.1" required>
+                <input type="number" name="attendance" value="90" step="0.1" min="0" max="100" required>
             </div>
           </div>
 
@@ -116,28 +117,61 @@ body {
           <div class="form-grid">
             <div class="form-group">
                 <label>Internal 1</label>
-                <input type="number" name="internal1" value="0" step="0.1">
+                <input type="number" name="internal1" value="0" step="0.1" min="0" max="100">
             </div>
             <div class="form-group">
                 <label>Internal 2</label>
-                <input type="number" name="internal2" value="0" step="0.1">
+                <input type="number" name="internal2" value="0" step="0.1" min="0" max="100">
             </div>
           </div>
           <div class="form-grid">
             <div class="form-group">
                 <label>Assignment Score</label>
-                <input type="number" name="assignment" value="0" step="0.1">
+                <input type="number" name="assignment" value="0" step="0.1" min="0" max="100">
             </div>
             <div class="form-group">
                 <label>Final Exam Score (If known)</label>
-                <input type="number" name="final_score" value="0" step="0.1">
+                <input type="number" name="final_score" value="0" step="0.1" min="0" max="100">
             </div>
           </div>
 
           <button type="submit" style="width:100%; background:var(--primary); color:#fff; padding:15px; border-radius:15px; border:none; font-weight:700; font-size:16px; cursor:pointer; margin-top:30px; box-shadow:0 8px 20px rgba(124,58,237,0.3)">➕ Add Student to Database</button>
         </form>
+      <div class="section" style="margin-top: 35px;">
+        <h2 style="font-size:24px; margin-bottom:10px; color:#a855f7">📁 Bulk Upload via CSV</h2>
+        <p style="opacity:0.7; margin-bottom:25px">Upload multiple students at once using a CSV file. <a href="/teacher/sample_csv" style="color:#a855f7; font-weight:700">Download sample format here.</a></p>
+        
+        <form action="/teacher/upload_csv" method="POST" enctype="multipart/form-data" style="display: flex; gap: 15px; align-items: center;">
+            <input type="file" name="file" accept=".csv" required style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; color: #fff;">
+            <button type="submit" style="background:#10b981; color:#fff; padding:12px 30px; border-radius:12px; border:none; font-weight:700; cursor:pointer; box-shadow:0 8px 20px rgba(16, 185, 129, 0.3)">⬆️ Upload CSV</button>
+        </form>
       </div>
     </div>
   </div>
 </div>
+<script>
+    // Strictly prevent typing negative signs, 'e' (scientific notation) in number inputs
+    document.querySelectorAll('input[type="number"]').forEach(input => {
+        input.addEventListener('keydown', function(e) {
+            if (e.key === '-' || e.key === 'e' || e.key === 'E' || e.key === '+') {
+                e.preventDefault();
+            }
+        });
+        
+        // Prevent pasting negative numbers
+        input.addEventListener('paste', function(e) {
+            const pasteData = (e.clipboardData || window.clipboardData).getData('text');
+            if (pasteData.includes('-') || pasteData.toLowerCase().includes('e')) {
+                e.preventDefault();
+            }
+        });
+
+        // Final safety check on input change
+        input.addEventListener('input', function() {
+            if (this.value < 0) {
+                this.value = 0;
+            }
+        });
+    });
+</script>
 {% endblock %}

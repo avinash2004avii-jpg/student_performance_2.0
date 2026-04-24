@@ -1,67 +1,83 @@
 """
 train_model.py
-Run once:  python train_model.py
-Saves to:  models/student_model.pkl
-           models/model_columns.pkl
-           models/le_health.pkl
+Refined training script with data cleaning, feature engineering, and RandomForestRegressor.
 """
 
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.ensemble import ExtraTreesRegressor
-from sklearn.preprocessing import LabelEncoder
-from sklearn.metrics import mean_absolute_error
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_absolute_error, r2_score
 import joblib, os
 
-DATA_FILE = os.path.join(os.path.dirname(__file__), "data", "students_data.csv")
+# File paths
+BASE_DIR = os.path.dirname(__file__)
+DATA_FILE = os.path.join(BASE_DIR, "data", "students_data.csv")
+MODELS_DIR = os.path.join(BASE_DIR, "models")
+os.makedirs(MODELS_DIR, exist_ok=True)
 
-print("Loading dataset...")
+print("--- Step 1: Loading & Cleaning Data ---")
 df = pd.read_csv(DATA_FILE)
+
+# 1. Handle missing values
 df["Health_Issues"] = df["Health_Issues"].fillna("None")
-print(f"  {df.shape[0]} students loaded")
 
-# ── Feature engineering ───────────────────────────────────────────
-df["internal_avg"]       = (df["internal_test 1"] + df["internal_test 2"]) / 2
-df["internal_diff"]      = abs(df["internal_test 1"] - df["internal_test 2"])
-df["academic_score"]     = (df["internal_test 1"] + df["internal_test 2"] + df["Assignment_score"]) / 3
+# 2. Remove unrealistic values
+df = df[df["Sleep_hours"] <= 10]
+df = df[df["Attendence"] <= 100]
+
+# 3. Drop unnecessary columns
+if "Student_ID" in df.columns:
+    df = df.drop(columns=["Student_ID"])
+
+# Optional: drop other non-numeric columns that aren't specified for encoding
+# Keeping Class, section, Age, Gender, Parent_Education_Level, etc. for dummies if they exist
+# Actually, the user's previous FEATURE_COLS were specific. I'll stick to a defined set.
+
+print("--- Step 2: Feature Engineering ---")
+# Required by user
+df["total_internal"] = df["internal_test 1"] + df["internal_test 2"]
+df["avg_internal"]   = df["total_internal"] / 2
+
+# Additional helpful features (from previous version)
 df["study_x_attendance"] = df["Study_hours"] * df["Attendence"] / 100
-df["total_score"]        = (df["internal_test 1"] + df["internal_test 2"]
-                             + df["Assignment_score"] + df["Previous_Exam_Score"])
-df["study_efficiency"]   = df["Study_hours"] / (df["Sleep_hours"] + 1)
-df["high_study"]         = (df["Study_hours"] > 4).astype(int)
+df["total_score"]        = (df["internal_test 1"] + df["internal_test 2"] + 
+                            df["Assignment_score"] + df["Previous_Exam_Score"])
 
-# ── Only features that matter (>1% importance) ────────────────────
-FEATURE_COLS = [
-    "Study_hours", "Health_Issues", "Attendence",
-    "internal_test 1", "internal_test 2",
-    "Assignment_score", "Previous_Exam_Score",
-    "internal_avg", "internal_diff", "academic_score",
-    "study_x_attendance", "total_score",
-    "study_efficiency", "high_study",
-]
+print("--- Step 3: Encoding Categorical Variables ---")
+# We'll encode Health_Issues and potentially other categorical columns
+categorical_cols = ["Health_Issues", "Gender", "Internet_Access", "Extracurricular_Activities"]
+# Only encode if they exist in the dataframe
+cols_to_encode = [c for c in categorical_cols if c in df.columns]
+
+df_encoded = pd.get_dummies(df, columns=cols_to_encode, drop_first=True)
+
+print("--- Step 4: Model Training ---")
+# Define features and target
 TARGET = "Final_Exam_Score"
+# We exclude the target and any non-numeric columns that weren't encoded (like Class/section if we don't want them)
+# To be safe, let's only take numeric columns as features
+X = df_encoded.select_dtypes(include=[np.number]).drop(columns=[TARGET], errors='ignore')
+y = df_encoded[TARGET]
 
-le_health = LabelEncoder()
-df["Health_Issues"] = le_health.fit_transform(df["Health_Issues"].astype(str))
+# Save column structure for inference alignment
+model_columns = list(X.columns)
 
-X, y = df[FEATURE_COLS], df[TARGET]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-print("Training ExtraTreesRegressor (500 trees)...")
-model = ExtraTreesRegressor(n_estimators=500, random_state=42, n_jobs=-1)
+model = RandomForestRegressor(n_estimators=200, max_depth=10, random_state=42)
 model.fit(X_train, y_train)
 
-r2  = round(model.score(X_test, y_test) * 100, 2)
-mae = round(mean_absolute_error(y_test, model.predict(X_test)), 2)
-cv  = round(cross_val_score(model, X, y, cv=5, scoring="r2").mean() * 100, 2)
-print(f"  Test R²  : {r2}%")
-print(f"  CV   R²  : {cv}%")
-print(f"  MAE      : {mae} marks avg error")
+print("--- Step 5: Evaluation ---")
+y_pred = model.predict(X_test)
+r2 = r2_score(y_test, y_pred)
+mae = mean_absolute_error(y_test, y_pred)
 
-os.makedirs(os.path.join(os.path.dirname(__file__), "models"), exist_ok=True)
-MODEL_DIR = os.path.join(os.path.dirname(__file__), "models")
-joblib.dump(model,        os.path.join(MODEL_DIR, "student_model.pkl"))
-joblib.dump(FEATURE_COLS, os.path.join(MODEL_DIR, "model_columns.pkl"))
-joblib.dump(le_health,    os.path.join(MODEL_DIR, "le_health.pkl"))
-print("Saved to models/")
+print(f"  Accuracy (R2 Score): {r2*100:.2f}%")
+print(f"  Mean Absolute Error: {mae:.2f} marks")
+
+print("--- Step 6: Saving Model & Metadata ---")
+joblib.dump(model, os.path.join(MODELS_DIR, "student_model.pkl"))
+joblib.dump(model_columns, os.path.join(MODELS_DIR, "model_columns.pkl"))
+
+print("Training complete! Model and columns saved.")

@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block title %}Automatic Prediction{% endblock %}
+{% block body %}
+<style>
+:root {
+    --primary: #7c3aed;
+    --sidebar-bg: #140024;
+    --topbar-bg: #9333ea;
+    --topbar-height: 65px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0a0016;
+    color: #e2e8f0;
+    font-size: 15px;
+}
+
+.topbar { 
+    background: var(--topbar-bg) !important; 
+    height: var(--topbar-height) !important;
+    padding: 0 30px !important; 
+    display: flex !important; 
+    align-items: center !important; 
+    justify-content: space-between !important;
+    position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 1100;
+}
+.topbar-brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 20px; color: #fff; }
+.topbar-right { display: flex; align-items: center; gap: 18px; }
+.topbar-user { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; color: #fff; }
+
+.sidebar { 
+    background: var(--sidebar-bg); width: 250px; position: fixed;
+    top: var(--topbar-height); left: 0; height: calc(100vh - var(--topbar-height));
+    z-index: 1000; padding-top: 25px; border-right: 1px solid rgba(255,255,255,0.05);
+}
+.sidebar-logo { text-align: center; font-weight: 700; color: #fff; font-size: 17px; padding-bottom: 25px; text-transform: uppercase; }
+.sidebar a { display: flex; align-items: center; gap: 12px; padding: 15px 28px; font-size: 14px; color: #cbd5f5; text-decoration: none; border-left: 4px solid transparent; }
+.sidebar a.active { background: linear-gradient(90deg, rgba(124, 58, 237, 0.25), transparent); color: #fff; border-left-color: #a855f7; }
+
+.page { margin-left: 250px; margin-top: var(--topbar-height); padding: 40px 60px; }
+.container { max-width: 1200px; margin: 0 auto; }
+
+.section { background: rgba(255,255,255,0.02); border-radius: 20px; padding: 30px; border: 1px solid rgba(255,255,255,0.05); height: 100%; }
+
+/* Form styling */
+.form-group label { display: block; font-size: 12px; color: #a855f7; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+.form-group input { 
+    width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); 
+    padding: 14px 18px; border-radius: 12px; color: #fff; outline: none; font-size: 16px; transition: 0.2s;
+}
+.form-group input:focus { border-color: #a855f7; background: rgba(255,255,255,0.08); }
+
+/* Result side styling */
+.score-circle {
+    width: 160px; height: 160px; border-radius: 50%;
+    border: 6px solid #10b981; display: flex; align-items: center; justify-content: center;
+    font-size: 44px; font-weight: 800; margin: 0 auto 20px;
+    background: rgba(16, 185, 129, 0.03);
+}
+.score-risk { border-color: #ef4444; color: #ef4444; background: rgba(239, 68, 68, 0.03); }
+.score-avg { border-color: #f59e0b; color: #f59e0b; background: rgba(245, 158, 11, 0.03); }
+.score-safe { border-color: #10b981; color: #10b981; background: rgba(16, 185, 129, 0.03); }
+
+.status-badge {
+    padding: 8px 16px; border-radius: 10px; font-weight: 800; font-size: 16px;
+    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px;
+}
+.status-safe { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+.status-avg { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.2); }
+.status-risk { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+
+.suggestion-item {
+    background: rgba(255,255,255,0.03); padding: 12px 18px; border-radius: 12px; margin-bottom: 10px;
+    border-left: 4px solid #a855f7; font-size: 14px;
+}
+
+.data-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.data-label { color: #888; font-size: 13px; }
+.data-value { font-weight: 600; color: #fff; }
+</style>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <span style="font-size: 26px">🎓</span>
+    <span>Student Performance System</span>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-user">
+        <span style="font-size: 24px">🧑‍🏫</span>
+        <span>{{ session.username }}</span>
+    </div>
+    <a href="/logout" style="background:rgba(255,255,255,0.1); color:#fff; padding:6px 18px; border-radius:18px; border:1px solid rgba(255,255,255,0.2); font-weight:700; text-decoration:none; font-size:13px">Logout</a>
+  </div>
+</div>
+
+<nav class="sidebar">
+  <div class="sidebar-logo">Teacher Panel</div>
+  <a href="/teacher">📊 Dashboard</a>
+  <a href="/teacher/analytics">📈 Analytics</a>
+  <a href="/teacher/predict">🔮 Predict Student</a>
+  <a href="/teacher/auto_predict" class="active">⚡ Auto Predict</a>
+  <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
+  <a href="/teacher/students">👨‍🎓 All Students</a>
+  <a href="/teacher/add-student">➕ Add Student</a>
+  <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
+  <a href="/logout">🚪 Logout</a>
+</nav>
+
+<div class="page">
+    <div class="container">
+      <h1 style="font-size:32px; margin-bottom:6px; font-weight: 800">⚡ Automatic Prediction</h1>
+      <p class="page-sub" style="font-size:17px; margin-bottom:35px; opacity: 0.7">Enter a Student ID to automatically fetch records and generate an AI prediction.</p>
+
+      <div style="display: grid; grid-template-columns: 1fr 450px; gap: 30px; align-items: start;">
+        <div class="left-side">
+            <div class="section" style="margin-bottom: 30px;">
+                <form action="/teacher/auto_predict" method="POST">
+                  <div class="form-group" style="margin-bottom: 20px">
+                      <label>Enter Student ID</label>
+                      <div style="display: flex; gap: 10px;">
+                          <input type="text" name="student_id" value="{{ student.Student_ID if student else '' }}" placeholder="e.g. 101" required style="flex: 1">
+                          <button type="submit" style="background:var(--primary); color:#fff; padding:0 30px; border-radius:12px; border:none; font-weight:800; font-size:16px; cursor:pointer; box-shadow:0 8px 20px rgba(124,58,237,0.3); transition:0.3s">Fetch & Predict</button>
+                      </div>
+                  </div>
+                </form>
+            </div>
+
+            {% if student %}
+            <div class="section">
+                <h3 style="color: #a855f7; margin-bottom: 20px; font-weight: 800; text-transform: uppercase; font-size: 14px; letter-spacing: 1px">Fetched Student Details</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <div class="data-row"><span class="data-label">Student ID</span> <span class="data-value">{{ student.Student_ID }}</span></div>
+                        <div class="data-row"><span class="data-label">Class / Section</span> <span class="data-value">{{ student.Class }} - {{ student.section }}</span></div>
+                        <div class="data-row"><span class="data-label">Attendance</span> <span class="data-value">{{ student.Attendence }}%</span></div>
+                        <div class="data-row"><span class="data-label">Study Hours</span> <span class="data-value">{{ student.Study_hours }} hrs/day</span></div>
+                    </div>
+                    <div>
+                        <div class="data-row"><span class="data-label">Internal Test 1</span> <span class="data-value">{{ student['internal_test 1'] }}</span></div>
+                        <div class="data-row"><span class="data-label">Internal Test 2</span> <span class="data-value">{{ student['internal_test 2'] }}</span></div>
+                        <div class="data-row"><span class="data-label">Assignment Score</span> <span class="data-value">{{ student.Assignment_score }}</span></div>
+                        <div class="data-row"><span class="data-label">Previous Exam</span> <span class="data-value">{{ student.Previous_Exam_Score }}</span></div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="result-side">
+            {% if score is not none %}
+            <div class="section" style="text-align: center; border-color: {% if result == 'Safe' %}rgba(16, 185, 129, 0.3){% elif result == 'Average Performance' %}rgba(245, 158, 11, 0.3){% else %}rgba(239, 68, 68, 0.3){% endif %}">
+                <h3 style="color: #cbd5f5; margin-bottom: 25px; opacity: 0.8; font-size: 18px">Predicted Final Score</h3>
+                
+                <div class="score-circle {% if result == 'Safe' %}score-safe{% elif result == 'Average Performance' %}score-avg{% else %}score-risk{% endif %}">
+                    {{ score }}
+                </div>
+
+                <div class="status-badge {% if result == 'Safe' %}status-safe{% elif result == 'Average Performance' %}status-avg{% else %}status-risk{% endif %}">
+                    {% if result == 'Safe' %}✅ Good Performance{% elif result == 'Average Performance' %}📊 Average Performance{% else %}⚠ At Risk{% endif %}
+                </div>
+                
+                <div style="text-align: left; margin-top: 30px">
+                    <h4 style="color: #a855f7; margin-bottom: 15px; font-weight: 800; text-transform: uppercase; font-size: 13px; letter-spacing: 1px">Improvement Suggestions</h4>
+                    {% if suggestions %}
+                        {% for title, tip in suggestions %}
+                        <div class="suggestion-item">
+                            <b style="color: #a855f7">{{ title }}:</b> {{ tip }}
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p style="opacity: 0.5; font-size: 14px">No specific suggestions for this score.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% else %}
+            <div class="section" style="display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0.5; padding: 60px 20px">
+                <div style="font-size: 64px; margin-bottom: 20px">⚡</div>
+                <h3 style="margin-bottom: 10px">Ready to Predict</h3>
+                <p style="text-align: center">Enter a Student ID and click "Fetch & Predict" to see AI-driven results here.</p>
+            </div>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

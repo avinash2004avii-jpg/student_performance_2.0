@@ -146,8 +146,16 @@ body.light-mode .filter-select { background: #fff; color: #1e293b; border-color:
     <a href="/teacher/predict">🔮 Predict Student</a>
     <a href="/teacher/auto_predict">⚡ Auto Predict</a>
     <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
+    <a href="/teacher/feedback" style="position: relative;">
+        👪 Parent Feedback
+        {% if open_feedback_count > 0 %}
+        <span style="position: absolute; top: 12px; right: 20px; background: #ef4444; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold; box-shadow: 0 0 10px rgba(239,68,68,0.5);">{{ open_feedback_count }}</span>
+        {% endif %}
+    </a>
     <a href="/teacher/students">👨‍🎓 All Students</a>
+    <a href="/teacher/email_alerts">📧 Email Alerts</a>
     <a href="/teacher/add-student">➕ Add Student</a>
+    <a href="/teacher/guidance">🚀 Success Guidance</a>
     <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
     <a href="/logout">🚪 Logout</a>
   </nav>
@@ -212,7 +220,7 @@ body.light-mode .filter-select { background: #fff; color: #1e293b; border-color:
       <div class="section" style="background: rgba(255,255,255,0.02); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05)">
         <h2 style="font-size: 22px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; font-weight: 800">
             <span style="color: #ef4444; font-size: 26px">⚠</span> At-Risk Students 
-            <span style="font-size:14px;color:#888;font-weight:normal">(score &lt; 70)</span>
+            <span style="font-size:14px;color:#888;font-weight:normal">(score &lt; 60)</span>
         </h2>
         {% if risk_students %}
         <div class="tbl-wrap">
@@ -248,6 +256,50 @@ body.light-mode .filter-select { background: #fff; color: #1e293b; border-color:
         {% endif %}
       </div>
 
+      <!-- Parent Feedback Section -->
+      <div class="section" style="background: rgba(255,255,255,0.02); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); margin-top: 30px;">
+        <h2 style="font-size: 22px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; font-weight: 800">
+            <span style="color: #a855f7; font-size: 26px">👪</span> Parent Feedback & Concerns
+        </h2>
+        {% if feedback_list %}
+        <div class="tbl-wrap">
+          <table style="width: 100%; border-collapse: separate; border-spacing: 0 8px">
+            <thead>
+                <tr style="text-align: left; background: rgba(147, 51, 234, 0.12)">
+                    <th style="padding: 12px 18px; border-radius: 12px 0 0 12px; color: #a855f7; font-size: 13px">PARENT NAME</th>
+                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">STUDENT (ID)</th>
+                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">MESSAGE</th>
+                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">DATE</th>
+                    <th style="padding: 12px 18px; border-radius: 0 12px 12px 0; color: #a855f7; font-size: 13px">ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for f in feedback_list %}
+              <tr style="background: rgba(255,255,255,0.03); transition: 0.2s">
+                <td style="padding: 12px 18px; border-radius: 12px 0 0 12px"><b>{{ f.parent_name }}</b></td>
+                <td style="padding: 12px 18px">{{ f.student_code }}</td>
+                <td style="padding: 12px 18px; max-width: 300px; white-space: normal;">{{ f.message }}</td>
+                <td style="padding: 12px 18px; font-size: 12px; opacity: 0.7;">{{ f.created_at[:10] }}</td>
+                <td style="padding: 12px 18px; border-radius: 0 12px 12px 0">
+                    <div style="display:flex; gap:8px;">
+                        <form action="/teacher/resolve-feedback/{{ f.id }}" method="POST">
+                            <button type="submit" class="btn btn-sm btn-round" style="background: rgba(34,197,94,0.2); color: #22c55e; border: 1px solid #22c55e; padding: 4px 10px;">Resolve</button>
+                        </form>
+                        <form action="/teacher/delete-feedback/{{ f.id }}" method="POST" onsubmit="return confirm('Delete message?')">
+                            <button type="submit" class="btn btn-sm" style="background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid #ef4444; padding: 6px 10px; border-radius: 6px;" title="Delete Message">🗑️</button>
+                        </form>
+                    </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="empty" style="padding: 50px; text-align: center; opacity: 0.5; font-size: 16px">💬 No parent feedback received yet.</div>
+        {% endif %}
+      </div>
+
     </div>
   </div>
 </div>
@@ -255,27 +307,82 @@ body.light-mode .filter-select { background: #fff; color: #1e293b; border-color:
 <!-- Chatbot UI -->
 <div id="chatbot-icon" onclick="toggleChat()" style="position:fixed; bottom:30px; right:30px; background:#7c3aed; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:26px; box-shadow:0 10px 25px rgba(124,58,237,0.5); z-index:2000">💬</div>
 <div id="chatbot-box" style="position:fixed; bottom:105px; right:30px; width:400px; height:520px; background:#140024; border:1px solid rgba(124, 58, 237, 0.2); border-radius:20px; display:none; flex-direction:column; box-shadow:0 15px 40px rgba(0,0,0,0.6); z-index:2000; overflow:hidden">
-    <div id="chat-header" style="background:linear-gradient(90deg, #7c3aed, #9333ea); padding:18px; font-weight:bold; text-align:center; font-size:17px; color: #fff">AI Academic Assistant</div>
+    <div id="chat-header" style="background:linear-gradient(90deg, #7c3aed, #9333ea); padding:18px; font-weight:bold; text-align:center; font-size:17px; color: #fff; display: flex; align-items: center; justify-content: center; gap: 10px;">
+        <span>🤖</span>
+        AI Academic Assistant
+    </div>
     <div id="chat-body" style="flex:1; padding:18px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; color: #fff"></div>
     <div id="chat-footer" style="padding:15px; display:flex; gap:10px; background:rgba(0,0,0,0.3)">
         <input type="text" id="user-input" placeholder="Ask about student performance..." onkeypress="handleKey(event)" style="flex:1; background:transparent; border:none; color:#fff; outline:none; font-size:14px">
-        <button onclick="sendMessage()" style="background:#7c3aed; border:none; color:#fff; padding:8px 18px; border-radius:10px; cursor:pointer; font-weight:bold; font-size:14px">Send</button>
-    </div>
-</div>
-
-<script>
+        <button onclick="sendMessage()" style="background:#7c3aed; border:none; color:#fff; padding:8px 18px; border<script>
 function toggleChat(){
     let box = document.getElementById("chatbot-box");
-    box.style.display = box.style.display === "none" ? "flex" : "none";
+    let isOpening = box.style.display === "none";
+    box.style.display = isOpening ? "flex" : "none";
+    
+    // Add welcome message if empty
+    let chatBody = document.getElementById("chat-body");
+    if (isOpening && chatBody.innerHTML.trim() === "") {
+        setTimeout(() => {
+            addMessage("🤖 Hello! I am your AI Assistant. I have analyzed your student data and I am ready to help you improve. What would you like to know?", "bot");
+            addQuickActions();
+        }, 300);
+    }
 }
+
+function addQuickActions() {
+    let chatBody = document.getElementById("chat-body");
+    let actions = [
+        { label: "📊 My Score", text: "What is my predicted final score?" },
+        { label: "💡 How to Improve?", text: "Give me suggestions to improve my performance." },
+        { label: "📉 Risk Analysis", text: "Am I at risk of failing?" },
+        { label: "📅 Attendance", text: "How is my attendance affecting my marks?" }
+    ];
+    
+    let html = `<div id="quick-actions" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px">`;
+    actions.forEach(a => {
+        html += `<button onclick="sendQuickMessage('${a.text}')" style="background:rgba(124,58,237,0.1); border:1px solid rgba(124,58,237,0.3); color:#a78bfa; padding:6px 12px; border-radius:15px; font-size:12px; cursor:pointer; transition:0.2s" onmouseover="this.style.background='rgba(124,58,237,0.2)'" onmouseout="this.style.background='rgba(124,58,237,0.1)'">${a.label}</button>`;
+    });
+    html += `</div>`;
+    chatBody.innerHTML += html;
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function sendQuickMessage(text) {
+    document.getElementById("quick-actions")?.remove();
+    addMessage(text, "user");
+    fetchReply(text);
+}
+
 function handleKey(event){ if(event.key === "Enter") sendMessage(); }
+
 function sendMessage(){
     let input = document.getElementById("user-input");
     let message = input.value;
     if(!message) return;
-    let chatBody = document.getElementById("chat-body");
-    chatBody.innerHTML += `<div style='align-self:flex-end; background:#7c3aed; padding:12px 16px; border-radius:18px 18px 0 18px; max-width:85%; font-size:14px'>${message}</div>`;
+    
+    document.getElementById("quick-actions")?.remove();
+    addMessage(message, "user");
     input.value = "";
+    fetchReply(message);
+}
+
+function addMessage(text, sender) {
+    let chatBody = document.getElementById("chat-body");
+    if (sender === "user") {
+        chatBody.innerHTML += `<div style='align-self:flex-end; background:#7c3aed; padding:12px 16px; border-radius:18px 18px 0 18px; max-width:85%; font-size:14px; box-shadow:0 4px 12px rgba(0,0,0,0.2)'>${text}</div>`;
+    } else {
+        chatBody.innerHTML += `<div style='align-self:flex-start; background:rgba(255,255,255,0.08); padding:12px 16px; border-radius:18px 18px 18px 0; max-width:85%; font-size:14px; line-height:1.5; border:1px solid rgba(255,255,255,0.05)'>${text}</div>`;
+    }
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function fetchReply(message) {
+    let chatBody = document.getElementById("chat-body");
+    
+    // Typing indicator
+    let loaderId = "loader-" + Date.now();
+    chatBody.innerHTML += `<div id="${loaderId}" style='align-self:flex-start; background:rgba(255,255,255,0.05); padding:10px 16px; border-radius:15px; font-size:12px; font-style:italic; color:#aaa'>AI is thinking...</div>`;
     chatBody.scrollTop = chatBody.scrollHeight;
 
     fetch("/chatbot", {
@@ -285,7 +392,15 @@ function sendMessage(){
     })
     .then(res => res.json())
     .then(data => {
-        chatBody.innerHTML += `<div style='align-self:flex-start; background:rgba(255,255,255,0.08); padding:12px 16px; border-radius:18px 18px 18px 0; max-width:85%; font-size:14px; line-height:1.5'>${data.reply}</div>`;
+        document.getElementById(loaderId).remove();
+        addMessage(data.reply, "bot");
+    })
+    .catch(err => {
+        document.getElementById(loaderId).remove();
+        addMessage("❌ Error: Could not connect to AI assistant.", "bot");
+    });
+}
+-height:1.5'>${data.reply}</div>`;
         chatBody.scrollTop = chatBody.scrollHeight;
     });
 }

@@ -64,12 +64,13 @@ body {
 .score-safe { border-color: #10b981; color: #10b981; background: rgba(16, 185, 129, 0.03); }
 
 .status-badge {
-    padding: 8px 16px; border-radius: 10px; font-weight: 800; font-size: 16px;
-    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px;
+    padding: 8px 24px; border-radius: 50px; font-weight: 800; font-size: 16px;
+    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 15px;
+    text-transform: uppercase; letter-spacing: 0.5px;
 }
-.status-safe { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
-.status-avg { background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.2); }
-.status-risk { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+.status-safe { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 2px solid #10b981; }
+.status-avg { background: #2d1a0a; color: #ffaa00; border: 2px solid #ffaa00; }
+.status-risk { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 2px solid #ef4444; }
 
 .suggestion-item {
     background: rgba(255,255,255,0.03); padding: 12px 18px; border-radius: 12px; margin-bottom: 10px;
@@ -102,8 +103,16 @@ body {
   <a href="/teacher/predict">🔮 Predict Student</a>
   <a href="/teacher/auto_predict" class="active">⚡ Auto Predict</a>
   <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
+  <a href="/teacher/feedback" style="position: relative;">
+      👪 Parent Feedback
+      {% if open_feedback_count > 0 %}
+      <span style="position: absolute; top: 12px; right: 20px; background: #ef4444; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold; box-shadow: 0 0 10px rgba(239,68,68,0.5);">{{ open_feedback_count }}</span>
+      {% endif %}
+  </a>
   <a href="/teacher/students">👨‍🎓 All Students</a>
+  <a href="/teacher/email_alerts">📧 Email Alerts</a>
   <a href="/teacher/add-student">➕ Add Student</a>
+  <a href="/teacher/guidance">🚀 Success Guidance</a>
   <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
   <a href="/logout">🚪 Logout</a>
 </nav>
@@ -158,7 +167,7 @@ body {
                 </div>
 
                 <div class="status-badge {% if result == 'Safe' %}status-safe{% elif result == 'Average Performance' %}status-avg{% else %}status-risk{% endif %}">
-                    {% if result == 'Safe' %}✅ Good Performance{% elif result == 'Average Performance' %}📊 Average Performance{% else %}⚠ At Risk{% endif %}
+                    {% if result == 'Safe' %}✅ Safe{% elif result == 'Average Performance' %}📊 Average{% else %}⚠ At Risk{% endif %}
                 </div>
                 
                 <div style="text-align: left; margin-top: 30px">
@@ -172,6 +181,14 @@ body {
                     {% else %}
                         <p style="opacity: 0.5; font-size: 14px">No specific suggestions for this score.</p>
                     {% endif %}
+                </div>
+
+                <div style="margin-top: 30px">
+                    <a href="/teacher/download-report?student_id={{ student.Student_ID }}" 
+                       class="download-btn"
+                       style="display: flex; align-items: center; justify-content: center; gap: 10px; background: #10b981; color: #fff; padding: 14px; border-radius: 12px; font-weight: 700; text-decoration: none; transition: 0.3s; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2)">
+                        <span>📄</span> Download Report PDF
+                    </a>
                 </div>
             </div>
             {% else %}

@@ -8,26 +8,29 @@
   <td>{{ s['internal_test 2'] }}</td>
   <td>{{ s.Assignment_score }}</td>
   <td>{{ s.Previous_Exam_Score }}</td>
-  <td>{{ s.Final_Exam_Score }}</td>
+  <td>{{ s.display_score }}</td>
   <td>
-      {% if s.risk == 'Safe' %}
-      <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid #10b981">✅ Safe</span>
+      {% if s.risk == 'At Risk' %}
+      <span class="badge" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; padding: 5px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 8px; font-weight: 700;">
+        <span>⚠</span> At Risk
+      </span>
       {% elif s.risk == 'Average Performance' %}
-      <span class="badge" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid #f59e0b">📊 Average</span>
+      <span class="badge" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 10px; padding: 5px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 8px; font-weight: 700;">
+        <span>📊</span> Average
+      </span>
       {% else %}
-      <span class="badge" style="background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444">⚠ At Risk</span>
+      <span class="badge" style="background: rgba(34, 197, 94, 0.1); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 10px; padding: 5px 14px; font-size: 12px; display: inline-flex; align-items: center; gap: 8px; font-weight: 700;">
+        <span>✅</span> Safe
+      </span>
       {% endif %}
   </td>
-  <td>
-      <a href="/teacher/student-report/{{ s.Student_ID }}" style="background: #7c3aed; color: #fff; padding: 6px 15px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 600;">Download PDF</a>
-  </td>
   <td style="border-radius: 0 12px 12px 0">
-      <button onclick="confirmDelete('{{ s.Student_ID }}')" style="background: #ef4444; color: #fff; padding: 6px 15px; border-radius: 6px; border: none; cursor: pointer; font-size: 12px; font-weight: 600; transition: 0.2s;" onmouseover="this.style.background='#dc2626'" onmouseout="this.style.background='#ef4444'">Delete</button>
+      <a href="/teacher/student-report/{{ s.Student_ID }}" style="background: #4f46e5; color: #fff; padding: 7px 15px; border-radius: 6px; text-decoration: none; font-size: 11px; font-weight: 700; display: inline-block; width: 100%; text-align: center;">Download PDF</a>
   </td>
 </tr>
 {% endfor %}
 {% if not students %}
 <tr>
-    <td colspan="12" style="text-align:center; padding:50px; opacity:0.5">No students found.</td>
+    <td colspan="11" style="text-align:center; padding:50px; opacity:0.5">No students found.</td>
 </tr>
 {% endif %}

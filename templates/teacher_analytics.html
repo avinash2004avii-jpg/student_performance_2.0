@@ -28,7 +28,12 @@ body {
 .topbar-brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 20px; color: #fff; }
 .topbar-right { display: flex; align-items: center; gap: 18px; }
 
-.page { margin-top: var(--topbar-height); padding: 40px 60px; min-height: calc(100vh - var(--topbar-height)); }
+.sidebar { background: #140024; width: 250px; position: fixed; top: var(--topbar-height); left: 0; height: calc(100vh - var(--topbar-height)); z-index: 1000; padding-top: 25px; border-right: 1px solid rgba(255,255,255,0.05); }
+.sidebar-logo { text-align: center; font-weight: 700; color: #fff; font-size: 17px; padding-bottom: 25px; text-transform: uppercase; }
+.sidebar a { display: flex; align-items: center; gap: 12px; padding: 15px 28px; font-size: 14px; color: #cbd5f5; text-decoration: none; border-left: 4px solid transparent; }
+.sidebar a.active, .sidebar a:hover { background: linear-gradient(90deg, rgba(124, 58, 237, 0.25), transparent); color: #fff; border-left-color: #a855f7; }
+
+.page { margin-left: 250px; margin-top: var(--topbar-height); padding: 40px 60px; min-height: calc(100vh - var(--topbar-height)); }
 .container { max-width: 1400px; margin: 0 auto; }
 
 .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; margin-bottom: 35px; }
@@ -73,9 +78,35 @@ tr:hover td { background: rgba(255,255,255,0.05); }
     <span>Student Performance System</span>
   </div>
   <div class="topbar-right">
-    <a href="/teacher" style="background:rgba(255,255,255,0.1); color:#fff; padding:8px 25px; border-radius:8px; border:1px solid rgba(255,255,255,0.2); font-weight:700; text-decoration:none; font-size:14px;">Back</a>
+    <div class="topbar-user">
+        <span style="font-size: 24px">🧑‍🏫</span>
+        <span>{{ session.username }}</span>
+    </div>
+    <a href="/logout" style="background:rgba(255,255,255,0.1); color:#fff; padding:6px 18px; border-radius:18px; border:1px solid rgba(255,255,255,0.2); font-weight:700; text-decoration:none; font-size:13px">Logout</a>
   </div>
 </div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">Teacher Panel</div>
+    <a href="/teacher">📊 Dashboard</a>
+    <a href="/teacher/analytics" class="active">📈 Analytics</a>
+    <a href="/teacher/predict">🔮 Predict Student</a>
+    <a href="/teacher/auto_predict">⚡ Auto Predict</a>
+    <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
+    <a href="/teacher/feedback" style="position: relative;">
+        👪 Parent Feedback
+        {% if open_feedback_count > 0 %}
+        <span style="position: absolute; top: 12px; right: 20px; background: #ef4444; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold; box-shadow: 0 0 10px rgba(239,68,68,0.5);">{{ open_feedback_count }}</span>
+        {% endif %}
+    </a>
+    <a href="/teacher/students">👨‍🎓 All Students</a>
+    <a href="/teacher/email_alerts">📧 Email Alerts</a>
+    <a href="/teacher/add-student">➕ Add Student</a>
+    <a href="/teacher/guidance">🚀 Success Guidance</a>
+    <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
 
 <div class="page">
   <div class="container">
@@ -166,6 +197,7 @@ tr:hover td { background: rgba(255,255,255,0.05); }
         </div>
     </div>
   </div>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

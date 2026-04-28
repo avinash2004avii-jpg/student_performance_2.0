@@ -72,8 +72,16 @@ body {
     <a href="/teacher/predict">🔮 Predict Student</a>
     <a href="/teacher/auto_predict">⚡ Auto Predict</a>
     <a href="/teacher/bulk-predict" class="active">📂 Bulk Predict</a>
+    <a href="/teacher/feedback" style="position: relative;">
+        👪 Parent Feedback
+        {% if open_feedback_count > 0 %}
+        <span style="position: absolute; top: 12px; right: 20px; background: #ef4444; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold; box-shadow: 0 0 10px rgba(239,68,68,0.5);">{{ open_feedback_count }}</span>
+        {% endif %}
+    </a>
     <a href="/teacher/students">👨‍🎓 All Students</a>
+    <a href="/teacher/email_alerts">📧 Email Alerts</a>
     <a href="/teacher/add-student">➕ Add Student</a>
+    <a href="/teacher/guidance">🚀 Success Guidance</a>
     <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
     <a href="/logout">🚪 Logout</a>
   </nav>
@@ -89,6 +97,7 @@ body {
                 <span style="font-size: 50px; display: block; margin-bottom: 20px">📥</span>
                 <h3 style="margin-bottom: 10px">Choose CSV File</h3>
                 <p style="color: #888; font-size: 14px; margin-bottom: 20px">Format: Student_ID, Attendence, Study_hours, Internal_Tests, etc.</p>
+                <a href="/teacher/bulk-predict-template" style="display: inline-block; color: #a855f7; text-decoration: none; font-weight: 700; margin-bottom: 20px; font-size: 14px; background: rgba(168, 85, 247, 0.1); padding: 8px 15px; border-radius: 8px; border: 1px solid rgba(168, 85, 247, 0.2)">📥 Download Sample Template</a>
                 <input type="file" name="file" accept=".csv" required class="file-input">
             </div>
             <button type="submit" style="background:var(--primary); color:#fff; padding:15px 40px; border-radius:12px; border:none; font-weight:700; font-size:16px; cursor:pointer; box-shadow:0 8px 20px rgba(124,58,237,0.3)">🚀 Upload and Predict</button>
@@ -96,10 +105,62 @@ body {
       </div>
 
       {% if has_results %}
-      <div class="section" style="margin-top: 40px; background: rgba(16, 185, 129, 0.1); border-color: #10b981">
-        <h2 style="color: #fff; margin-bottom: 15px">Bulk Processing Complete!</h2>
-        <p style="margin-bottom: 25px">We have processed all records and generated the predictions.</p>
-        <a href="/teacher/bulk-predict/download" class="btn" style="background:#10b981; color:#fff; padding:12px 30px; border-radius:10px; font-weight:700; text-decoration:none; display:inline-block">📥 Download Results (.csv)</a>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; margin-bottom: 30px">
+          <div class="section" style="padding: 20px">
+              <div style="font-size: 13px; color: #888; text-transform: uppercase; font-weight: 800; margin-bottom: 5px">Total Processed</div>
+              <div style="font-size: 28px; font-weight: 800">{{ total }}</div>
+          </div>
+          <div class="section" style="padding: 20px; border-color: rgba(239, 68, 68, 0.2)">
+              <div style="font-size: 13px; color: #ef4444; text-transform: uppercase; font-weight: 800; margin-bottom: 5px">At Risk</div>
+              <div style="font-size: 28px; font-weight: 800; color: #ef4444">{{ at_risk }}</div>
+          </div>
+          <div class="section" style="padding: 20px; border-color: rgba(124, 58, 237, 0.2)">
+              <div style="font-size: 13px; color: #a855f7; text-transform: uppercase; font-weight: 800; margin-bottom: 5px">Avg. Predicted Score</div>
+              <div style="font-size: 28px; font-weight: 800; color: #a855f7">{{ avg_score }}</div>
+          </div>
+      </div>
+
+      <div class="section" style="text-align: left; padding: 0; overflow: hidden">
+          <div style="padding: 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center">
+              <h3 style="margin: 0">Prediction Results</h3>
+              <a href="/teacher/bulk-predict/download" style="background:#10b981; color:#fff; padding:8px 20px; border-radius:10px; font-weight:700; text-decoration:none; font-size: 13px">📥 Download Full CSV</a>
+          </div>
+          <div style="overflow-x: auto">
+              <table style="width: 100%; border-collapse: collapse; font-size: 14px">
+                  <thead style="background: rgba(255,255,255,0.03)">
+                      <tr>
+                          <th style="padding: 15px 30px; text-align: left; color: #888; font-weight: 600">Student ID</th>
+                          <th style="padding: 15px 30px; text-align: left; color: #888; font-weight: 600">Attendance</th>
+                          <th style="padding: 15px 30px; text-align: left; color: #888; font-weight: 600">Study Hrs</th>
+                          <th style="padding: 15px 30px; text-align: left; color: #888; font-weight: 600">Prediction</th>
+                          <th style="padding: 15px 30px; text-align: left; color: #888; font-weight: 600">Status</th>
+                          <th style="padding: 15px 30px; text-align: left; color: #888; font-weight: 600">Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for res in results %}
+                      <tr style="border-bottom: 1px solid rgba(255,255,255,0.03)">
+                          <td style="padding: 15px 30px; font-weight: 700">{{ res.Student_ID }}</td>
+                          <td style="padding: 15px 30px">{{ res.Attendance }}%</td>
+                          <td style="padding: 15px 30px">{{ res.Study_Hours }} hrs</td>
+                          <td style="padding: 15px 30px; font-weight: 800; color: #a855f7">{{ res.Predicted_Score }}</td>
+                          <td style="padding: 15px 30px">
+                              <span style="padding: 6px 16px; border-radius: 50px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; display: inline-flex; align-items: center; gap: 5px;
+                                    background: {% if res.Risk == 'Safe' %}rgba(16, 185, 129, 0.1){% elif res.Risk == 'At Risk' %}rgba(239, 68, 68, 0.1){% else %}#2d1a0a{% endif %};
+                                    color: {% if res.Risk == 'Safe' %}#10b981{% elif res.Risk == 'At Risk' %}#ef4444{% else %}#ffaa00{% endif %};
+                                    border: 2px solid {% if res.Risk == 'Safe' %}#10b981{% elif res.Risk == 'At Risk' %}#ef4444{% else %}#ffaa00{% endif %};">
+                                   {% if res.Risk == 'Safe' %}✅ Safe{% elif res.Risk == 'At Risk' %}⚠ Risk{% else %}📊 Average{% endif %}
+                               </span>
+                          </td>
+                          <td style="padding: 15px 30px; display: flex; gap: 8px;">
+                              <a href="/teacher/auto_predict?student_id={{ res.Student_ID }}" style="background: rgba(124, 58, 237, 0.1); color: #a855f7; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 12px; border: 1px solid rgba(124, 58, 237, 0.2)">👁 View</a>
+                              <a href="/teacher/download-report?student_id={{ res.Student_ID }}" style="background: rgba(16, 185, 129, 0.1); color: #10b981; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 12px; border: 1px solid rgba(16, 185, 129, 0.2)">📄 PDF</a>
+                          </td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
       </div>
       {% endif %}
     </div>

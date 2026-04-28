@@ -13,6 +13,7 @@
   <nav class="sidebar">
     <div class="sidebar-logo">Student Portal</div>
     <a href="/student" class="active">📊 My Dashboard</a>
+    <a href="/student/guidance">🚀 Success Guidance</a>
     <div class="divider"></div>
     <a href="/logout">🚪 Logout</a>
   </nav>
@@ -30,11 +31,11 @@
         <div class="section" style="text-align:center">
           <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Predicted Final Score</p>
 
-          {% if score < 70 %}
+          {% if score < 60 %}
             <div class="score-circle circle-risk">{{ score }}</div>
             <div class="sd-result-label sd-risk">⚠ At Risk</div>
             <p class="sd-result-sub">You need immediate improvement.</p>
-          {% elif score < 80 %}
+          {% elif score <= 75 %}
             <div class="score-circle circle-avg">{{ score }}</div>
             <div class="sd-result-label sd-avg">📈 Average</div>
             <p class="sd-result-sub">There is room to grow.</p>
@@ -74,15 +75,40 @@
       <!-- Suggestions -->
       {% if suggestions %}
       <div class="section">
-        <h2 style="margin-bottom:16px">💡 Personalised Improvement Tips</h2>
-        {% for title, body in suggestions %}
-        <div class="tip">
-          <div class="tip-title">{{ title }}</div>
-          <div class="tip-body">{{ body }}</div>
+        <h3 style="margin-bottom:16px">💡 Personalized Improvement Tips</h3>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            {% for title, body in suggestions %}
+            <div class="tip">
+              <div class="tip-title">{{ title }}</div>
+              <div class="tip-body" style="font-size:13px;">{{ body }}</div>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
       </div>
-      {% else %}
+      {% endif %}
+
+      <!-- What-If Roadmap -->
+      {% if sensitivity %}
+      <div class="section" style="margin-top: 30px; border: 1px solid rgba(147, 51, 234, 0.3); background: linear-gradient(145deg, rgba(147, 51, 234, 0.05), transparent);">
+        <h3 style="margin-bottom:16px; display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 24px;">🎯</span> The "What-If" Roadmap
+        </h3>
+        <p style="font-size: 14px; opacity: 0.7; margin-bottom: 20px;">Small changes can lead to big results. Here is how you can reach a <b>Safe</b> status:</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+            {% for item in sensitivity %}
+            <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;">
+                <div style="position: absolute; top: -10px; right: -10px; font-size: 40px; opacity: 0.05; font-weight: 800;">{{ loop.index }}</div>
+                <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #a855f7; font-weight: 700; margin-bottom: 10px;">{{ item.metric }}</div>
+                <div style="font-size: 16px; margin-bottom: 8px;">Improve from <b>{{ item.from }}</b> to <b>{{ item.to }}</b></div>
+                <div style="font-size: 14px; color: #22c55e; font-weight: 600;">📈 Estimated Score Gain: +{{ item.gain }} marks</div>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      
+      {% if not suggestions and not sensitivity %}
       <div class="section" style="text-align:center;padding:30px">
         <div style="font-size:36px;margin-bottom:10px">🎉</div>
         <div style="font-weight:bold;color:var(--green);font-size:16px;margin-bottom:6px">Great Performance!</div>
@@ -130,7 +156,10 @@
 <!-- Chatbot Box -->
 <div id="chatbot-box" style="display:none;">
 
-    <div id="chat-header">AI Assistant</div>
+    <div id="chat-header" style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+        <span>🤖</span>
+        AI Assistant
+    </div>
 
     <!-- Messages -->
     <div id="chat-body"></div>
@@ -235,24 +264,73 @@
 <script>
 function toggleChat(){
     let box = document.getElementById("chatbot-box");
-    box.style.display = box.style.display === "none" ? "flex" : "none";
-}
-
-function handleKey(event){
-    if(event.key === "Enter"){
-        sendMessage();
+    let isOpening = box.style.display === "none";
+    box.style.display = isOpening ? "flex" : "none";
+    
+    // Add welcome message if empty
+    let chatBody = document.getElementById("chat-body");
+    if (isOpening && chatBody.innerHTML.trim() === "") {
+        setTimeout(() => {
+            addMessage("🤖 Hello! I am your AI Assistant. I have analyzed your academic performance and I'm here to help you reach the top. What can I do for you today?", "bot");
+            addQuickActions();
+        }, 300);
     }
 }
+
+function addQuickActions() {
+    let chatBody = document.getElementById("chat-body");
+    let actions = [
+        { label: "📊 Predicted Score", text: "What is my predicted final score?" },
+        { label: "💡 Success Tips", text: "How can I improve my marks?" },
+        { label: "📈 Am I Safe?", text: "Check my risk status." },
+        { label: "🕒 Study Plan", text: "Can you help me plan my study hours?" }
+    ];
+    
+    let html = `<div id="quick-actions" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px">`;
+    actions.forEach(a => {
+        html += `<button onclick="sendQuickMessage('${a.text}')" style="background:rgba(123,44,255,0.1); border:1px solid rgba(123,44,255,0.3); color:#a78bfa; padding:6px 12px; border-radius:15px; font-size:12px; cursor:pointer; transition:0.2s">${a.label}</button>`;
+    });
+    html += `</div>`;
+    chatBody.innerHTML += html;
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function sendQuickMessage(text) {
+    document.getElementById("quick-actions")?.remove();
+    addMessage(text, "user");
+    fetchReply(text);
+}
+
+function handleKey(event){ if(event.key === "Enter") sendMessage(); }
 
 function sendMessage(){
     let input = document.getElementById("user-input");
     let message = input.value;
+    if(!message) return;
+    
+    document.getElementById("quick-actions")?.remove();
+    addMessage(message, "user");
+    input.value = "";
+    fetchReply(message);
+}
 
-    if(message === "") return;
-
+function addMessage(text, sender) {
     let chatBody = document.getElementById("chat-body");
+    if (sender === "user") {
+        chatBody.innerHTML += `<div style='align-self:flex-end; background:#7c3aed; padding:12px 16px; border-radius:18px 18px 0 18px; max-width:85%; font-size:14px; box-shadow:0 4px 12px rgba(0,0,0,0.2)'>${text}</div>`;
+    } else {
+        chatBody.innerHTML += `<div style='align-self:flex-start; background:rgba(255,255,255,0.08); padding:12px 16px; border-radius:18px 18px 18px 0; max-width:85%; font-size:14px; line-height:1.5; border:1px solid rgba(255,255,255,0.05)'>${text}</div>`;
+    }
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
 
-    chatBody.innerHTML += "<div><b>You:</b> " + message + "</div>";
+function fetchReply(message) {
+    let chatBody = document.getElementById("chat-body");
+    
+    // Typing indicator
+    let loaderId = "loader-" + Date.now();
+    chatBody.innerHTML += `<div id="${loaderId}" style='align-self:flex-start; background:rgba(255,255,255,0.05); padding:10px 16px; border-radius:15px; font-size:12px; font-style:italic; color:#aaa'>Thinking...</div>`;
+    chatBody.scrollTop = chatBody.scrollHeight;
 
     fetch("/chatbot", {
         method:"POST",
@@ -261,11 +339,13 @@ function sendMessage(){
     })
     .then(res => res.json())
     .then(data => {
-        chatBody.innerHTML += "<div><b>Bot:</b> " + data.reply + "</div>";
-        chatBody.scrollTop = chatBody.scrollHeight;
+        document.getElementById(loaderId).remove();
+        addMessage(data.reply, "bot");
+    })
+    .catch(err => {
+        document.getElementById(loaderId).remove();
+        addMessage("❌ Error: AI service unavailable.", "bot");
     });
-
-    input.value = "";
 }
 </script>
 {% endblock %}

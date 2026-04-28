@@ -15,13 +15,17 @@
 body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 a{text-decoration:none;color:inherit}
 
-/* Flash messages */
-.flash-wrap{position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px;max-width:360px}
-.flash{padding:12px 18px;border-radius:8px;font-size:13px;font-weight:500;border-left:4px solid;animation:slideIn .25s ease}
-@keyframes slideIn{from{transform:translateX(40px);opacity:0}to{transform:none;opacity:1}}
-.flash.success{background:#0d2e1a;border-color:var(--green);color:var(--green)}
-.flash.danger {background:#2e0d1a;border-color:var(--red);color:var(--red)}
-.flash.warning{background:#2e220d;border-color:var(--amber);color:var(--amber)}
+/* Flash messages - Premium Toast Design */
+.flash-wrap{position:fixed;top:25px;right:25px;z-index:10000;display:flex;flex-direction:column;gap:12px;max-width:400px}
+.flash{padding:16px 24px;border-radius:12px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:12px;box-shadow:0 10px 30px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(10px);animation:toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)}
+@keyframes toastIn{from{transform:translateX(100%);opacity:0}to{transform:none;opacity:1}}
+.flash.success{background:rgba(16, 185, 129, 0.9);border-left:5px solid #00e676;color:white}
+.flash.danger {background:rgba(239, 68, 68, 0.9);border-left:5px solid #ff4d94;color:white}
+.flash.warning{background:rgba(245, 158, 11, 0.9);border-left:5px solid #ffaa00;color:white}
+.flash::before { font-size: 18px; }
+.flash.success::before { content: "✅"; }
+.flash.danger::before { content: "❌"; }
+.flash.warning::before { content: "⚠️"; }
 
 /* Topbar */
 .topbar{background:linear-gradient(90deg,#4b0082,#8a2be2);padding:14px 28px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 12px rgba(138,43,226,.5)}
@@ -31,7 +35,7 @@ a{text-decoration:none;color:inherit}
 
 /* Sidebar layout */
 .layout{display:flex}
-.sidebar{width:210px;min-height:calc(100vh - 54px);background:linear-gradient(180deg,#140024,#0a0016);position:sticky;top:0;height:calc(100vh - 54px);overflow-y:auto;box-shadow:2px 0 10px rgba(138,43,226,.25);flex-shrink:0}
+.sidebar{width:210px;min-height:calc(100vh - 54px);background:linear-gradient(180deg,#140024,#0a0016);position:sticky;top:0;height:calc(100vh - 54px);overflow-y:auto;overflow-x:hidden;box-shadow:2px 0 10px rgba(138,43,226,.25);flex-shrink:0}
 .sidebar-logo{text-align:center;padding:25px 16px 15px;font-weight:bold;font-size:18px;color:var(--purple-light);letter-spacing:1px;text-transform:uppercase}
 .sidebar a{display:flex;align-items:center;gap:12px;padding:14px 22px;color:#caa9ff;font-size:14px;transition:.2s;border-left:4px solid transparent;margin-bottom:2px}
 .sidebar a:hover,.sidebar a.active{background:linear-gradient(90deg,rgba(123,44,255,0.25),transparent);color:white;border-left-color:var(--purple2)}
@@ -116,6 +120,12 @@ tr:hover{background:var(--surface2)}
 
 /* Error / empty */
 .empty{text-align:center;padding:40px;color:var(--muted);font-size:14px}
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(138, 43, 226, 0.3); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(138, 43, 226, 0.5); }
+* { scrollbar-width: thin; scrollbar-color: rgba(138, 43, 226, 0.3) transparent; }
 </style>
 {% block head %}{% endblock %}
 </head>
@@ -123,7 +133,7 @@ tr:hover{background:var(--surface2)}
 
 <div class="flash-wrap">
   {% for cat, msg in get_flashed_messages(with_categories=true) %}
-  <div class="flash {{ cat }}">{{ msg }}</div>
+  <div class="flash {{ cat }}">{{ msg | safe }}</div>
   {% endfor %}
 </div>
 

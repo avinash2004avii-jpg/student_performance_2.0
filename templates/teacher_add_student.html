@@ -78,8 +78,16 @@ body {
     <a href="/teacher/predict">🔮 Predict Student</a>
     <a href="/teacher/auto_predict">⚡ Auto Predict</a>
     <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
+    <a href="/teacher/feedback" style="position: relative;">
+        👪 Parent Feedback
+        {% if open_feedback_count > 0 %}
+        <span style="position: absolute; top: 12px; right: 20px; background: #ef4444; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold; box-shadow: 0 0 10px rgba(239,68,68,0.5);">{{ open_feedback_count }}</span>
+        {% endif %}
+    </a>
     <a href="/teacher/students">👨‍🎓 All Students</a>
+    <a href="/teacher/email_alerts">📧 Email Alerts</a>
     <a href="/teacher/add-student" class="active">➕ Add Student</a>
+    <a href="/teacher/guidance">🚀 Success Guidance</a>
     <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
     <a href="/logout">🚪 Logout</a>
   </nav>
@@ -92,7 +100,7 @@ body {
       <div class="section">
         <form action="/teacher/add-student" method="POST">
           <div class="form-header">Basic Information</div>
-          <div class="form-grid">
+          <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr">
             <div class="form-group">
                 <label>Student ID</label>
                 <input type="text" name="student_id" placeholder="e.g. S1001" required>
@@ -100,6 +108,10 @@ body {
             <div class="form-group">
                 <label>Class</label>
                 <input type="text" name="class_" placeholder="e.g. 10th" required>
+            </div>
+            <div class="form-group">
+                <label>Parent Email</label>
+                <input type="email" name="parent_email" placeholder="parent@example.com">
             </div>
           </div>
           <div class="form-grid">
@@ -145,6 +157,16 @@ body {
             <input type="file" name="file" accept=".csv" required style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; color: #fff;">
             <button type="submit" style="background:#10b981; color:#fff; padding:12px 30px; border-radius:12px; border:none; font-weight:700; cursor:pointer; box-shadow:0 8px 20px rgba(16, 185, 129, 0.3)">⬆️ Upload CSV</button>
         </form>
+
+        <div style="margin-top: 35px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h4 style="color: #ef4444; margin: 0 0 5px 0; font-weight: 800; text-transform: uppercase; font-size: 14px; letter-spacing: 1px;">⚠️ Reset Database</h4>
+                <p style="font-size: 13px; opacity: 0.6; margin: 0;">This will permanently delete all student records from the system.</p>
+            </div>
+            <form action="/teacher/delete-all-students" method="POST" onsubmit="return confirm('Are you absolutely sure you want to delete ALL students? This cannot be undone!')">
+                <button type="submit" style="background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); padding: 12px 25px; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; font-size: 13px; text-transform: uppercase;" onmouseover="this.style.background='rgba(239, 68, 68, 0.2)'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'">🗑️ Clear All Records</button>
+            </form>
+        </div>
       </div>
     </div>
   </div>

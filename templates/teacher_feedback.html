@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% block title %}Parent Feedback Hub{% endblock %}
+{% block body %}
+<style>
+/* 🎨 Match Teacher Dashboard Theme */
+:root {
+    --primary: #7c3aed;
+    --sidebar-bg: #140024;
+    --topbar-bg: #9333ea;
+    --topbar-height: 65px;
+}
+body { background: #0a0016; color: #e2e8f0; font-size: 15px; }
+.topbar { background: var(--topbar-bg) !important; height: var(--topbar-height) !important; padding: 0 30px !important; display: flex !important; align-items: center !important; justify-content: space-between !important; position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 1100; }
+.sidebar { background: var(--sidebar-bg); width: 250px !important; position: fixed; top: var(--topbar-height); left: 0; height: calc(100vh - var(--topbar-height)); z-index: 1000; padding-top: 25px !important; border-right: 1px solid rgba(255,255,255,0.05); }
+.sidebar a { display: flex; align-items: center; gap: 12px; padding: 15px 28px; font-size: 14px; color: #cbd5f5; text-decoration: none; border-left: 4px solid transparent; transition: 0.2s; }
+.sidebar a.active, .sidebar a:hover { background: linear-gradient(90deg, rgba(124, 58, 237, 0.25), transparent); color: #fff; border-left-color: #a855f7; }
+.page { margin-left: 250px; margin-top: var(--topbar-height); padding: 35px; }
+.container { max-width: 1150px; margin: 0 auto; }
+.section { background: rgba(255,255,255,0.02); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); }
+
+.tab-nav { display: flex; gap: 10px; margin-bottom: 25px; }
+.tab-link { padding: 8px 20px; border-radius: 20px; background: rgba(255,255,255,0.05); color: #888; font-weight: 600; font-size: 14px; }
+.tab-link.active { background: #7c3aed; color: #fff; }
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+</style>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <span style="font-size: 26px">🎓</span>
+    <span>Student Performance System</span>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-user">
+        <span style="font-size: 24px">🧑‍🏫</span>
+        <span>{{ session.username }}</span>
+    </div>
+    <a href="/logout" class="logout-btn" style="background: rgba(255,255,255,0.1); color: #fff; padding: 6px 18px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.2); font-weight: 700; text-decoration: none; font-size: 13px;">Logout</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">Teacher Panel</div>
+    <a href="/teacher">📊 Dashboard</a>
+    <a href="/teacher/analytics">📈 Analytics</a>
+    <a href="/teacher/predict">🔮 Predict Student</a>
+    <a href="/teacher/auto_predict">⚡ Auto Predict</a>
+    <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
+    <a href="/teacher/feedback" class="active" style="position: relative;">
+        👪 Parent Feedback
+        {% if open_feedback_count > 0 %}
+        <span style="position: absolute; top: 12px; right: 20px; background: #ef4444; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold; box-shadow: 0 0 10px rgba(239,68,68,0.5);">{{ open_feedback_count }}</span>
+        {% endif %}
+    </a>
+    <a href="/teacher/students">👨‍🎓 All Students</a>
+    <a href="/teacher/email_alerts">📧 Email Alerts</a>
+    <a href="/teacher/add-student">➕ Add Student</a>
+    <a href="/teacher/guidance">🚀 Success Guidance</a>
+    <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <h1 style="font-size:32px; margin-bottom:6px; font-weight:800">Parent Communication Hub 👪</h1>
+      <p class="page-sub" style="margin-bottom:35px; opacity:0.7; font-size:17px">Manage and resolve concerns from parents</p>
+
+      <div class="tab-nav">
+          <a href="/teacher/feedback?status=open" class="tab-link {% if current_status == 'open' %}active{% endif %}">Open Concerns ({{ open_feedback_count }})</a>
+          <a href="/teacher/feedback?status=resolved" class="tab-link {% if current_status == 'resolved' %}active{% endif %}">Resolved</a>
+          <a href="/teacher/feedback?status=deleted" class="tab-link {% if current_status == 'deleted' %}active{% endif %}" style="margin-left:auto; color: #ef4444; border: 1px solid rgba(239,68,68,0.2);">♻️ Recycle Bin</a>
+      </div>
+
+      <div class="section">
+        {% if feedback_list %}
+        <div class="tbl-wrap">
+          <table style="width: 100%; border-collapse: separate; border-spacing: 0 8px">
+            <thead>
+                <tr style="text-align: left; background: rgba(147, 51, 234, 0.12)">
+                    <th style="padding: 12px 18px; border-radius: 12px 0 0 12px; color: #a855f7; font-size: 13px">PARENT NAME</th>
+                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">STUDENT (ID)</th>
+                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">MESSAGE</th>
+                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">SENTIMENT</th>
+                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">DATE</th>
+                    <th style="padding: 12px 18px; border-radius: 0 12px 12px 0; color: #a855f7; font-size: 13px">ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for f in feedback_list %}
+              <tr style="background: rgba(255,255,255,0.03); transition: 0.2s">
+                <td style="padding: 12px 18px; border-radius: 12px 0 0 12px"><b>{{ f.parent_name }}</b></td>
+                <td style="padding: 12px 18px">{{ f.student_code }}</td>
+                <td style="padding: 12px 18px; max-width: 400px; white-space: normal; line-height: 1.5;">
+                    <div>{{ f.message }}</div>
+                    {% if f.teacher_reply %}
+                    <div style="margin-top: 8px; padding: 8px 12px; background: rgba(124, 58, 237, 0.1); border-left: 2px solid #7c3aed; border-radius: 4px; font-size: 13px;">
+                        <b style="color: #a855f7;">Reply:</b> {{ f.teacher_reply }}
+                    </div>
+                    {% endif %}
+                </td>
+                <td style="padding: 12px 18px">
+                    {% if f.sentiment == 'Urgent' %}
+                        <span style="background: #ef4444; color: #fff; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; animation: pulse 2s infinite;">🚨 URGENT</span>
+                    {% elif f.sentiment == 'Frustrated' %}
+                        <span style="background: #f97316; color: #fff; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold;">😠 FRUSTRATED</span>
+                    {% elif f.sentiment == 'Positive' %}
+                        <span style="background: #22c55e; color: #fff; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: bold;">😊 POSITIVE</span>
+                    {% else %}
+                        <span style="background: rgba(255,255,255,0.1); color: #ccc; padding: 4px 10px; border-radius: 12px; font-size: 11px;">😐 NEUTRAL</span>
+                    {% endif %}
+                </td>
+                <td style="padding: 12px 18px; font-size: 12px; opacity: 0.7;">
+                    {% if current_status == 'deleted' %}
+                        <span style="color: var(--red)">Deleted: {{ f.deleted_at[:10] }}</span>
+                    {% else %}
+                        {{ f.created_at[:16] }}
+                    {% endif %}
+                </td>
+                <td style="padding: 12px 18px; border-radius: 0 12px 12px 0">
+                    <div style="display:flex; gap:8px;">
+                        {% if current_status == 'open' %}
+                        <button class="btn btn-sm" style="background: #a855f7; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px;" onclick="openReplyModal({{ f.id }}, '{{ f.parent_name }}', '{{ f.message|replace("'", "\\'") }}')">💬 Reply</button>
+                        <a href="/teacher/intervention-plan/{{ f.student_code }}" class="btn btn-sm" style="background: #7c3aed; color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 12px;" title="Generate AI Study Plan">📋 Plan</a>
+                        <form action="/teacher/resolve-feedback/{{ f.id }}" method="POST">
+                            <button type="submit" class="btn btn-sm" style="background: #22c55e; color: #fff; border: none; padding: 6px 12px; border-radius: 6px;">Resolve</button>
+                        </form>
+                        <form action="/teacher/delete-feedback/{{ f.id }}" method="POST" onsubmit="return confirm('Move to Recycle Bin?')">
+                            <button type="submit" class="btn btn-sm" style="background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid #ef4444; padding: 6px 10px; border-radius: 6px;" title="Move to Recycle Bin">🗑️</button>
+                        </form>
+                        {% elif current_status == 'resolved' %}
+                        <form action="/teacher/delete-feedback/{{ f.id }}" method="POST" onsubmit="return confirm('Move to Recycle Bin?')">
+                            <button type="submit" class="btn btn-sm" style="background: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid #ef4444; padding: 6px 10px; border-radius: 6px;" title="Move to Recycle Bin">🗑️</button>
+                        </form>
+                        {% elif current_status == 'deleted' %}
+                        <form action="/teacher/restore-feedback/{{ f.id }}" method="POST">
+                            <button type="submit" class="btn btn-sm" style="background: #7c3aed; color: #fff; border: none; padding: 6px 12px; border-radius: 6px;">Restore</button>
+                        </form>
+                        <form action="/teacher/permanent-delete-feedback/{{ f.id }}" method="POST" onsubmit="return confirm('This cannot be undone. Delete permanently?')">
+                            <button type="submit" class="btn btn-sm" style="background: #ef4444; color: #fff; border: none; padding: 6px 12px; border-radius: 6px;">Delete Forever</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="empty" style="padding: 80px; text-align: center; opacity: 0.5;">
+            <div style="font-size: 48px; margin-bottom: 20px;">🎉</div>
+            <h3>No {{ current_status }} feedback found.</h3>
+        </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Reply Modal -->
+<div id="replyModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; align-items:center; justify-content:center;">
+    <div style="background:#1a1a2e; width:90%; max-width:500px; padding:30px; border-radius:15px; border:1px solid #7c3aed; box-shadow:0 0 30px rgba(124,58,237,0.3);">
+        <h2 style="margin-top:0; color:#fff;">Reply to Parent</h2>
+        <p id="modalParentName" style="color:#a855f7; font-weight:bold; margin-bottom:5px;"></p>
+        <p id="modalParentMessage" style="font-size:14px; opacity:0.8; margin-bottom:20px; font-style:italic; border-left:3px solid #7c3aed; padding-left:15px;"></p>
+        
+        <form id="replyForm" method="POST">
+            <textarea name="reply_text" style="width:100%; height:150px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:#fff; padding:15px; font-family:inherit; margin-bottom:20px; resize:none;" placeholder="Type your message here..." required></textarea>
+            <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button type="button" onclick="closeReplyModal()" style="background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.2); padding:10px 20px; border-radius:8px; cursor:pointer;">Cancel</button>
+                <button type="submit" style="background:#7c3aed; color:#fff; border:none; padding:10px 25px; border-radius:8px; font-weight:bold; cursor:pointer;">Send Reply</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openReplyModal(id, parentName, message) {
+    document.getElementById('modalParentName').innerText = "To: " + parentName;
+    document.getElementById('modalParentMessage').innerText = '"' + message + '"';
+    document.getElementById('replyForm').action = "/teacher/reply-feedback/" + id;
+    document.getElementById('replyModal').style.display = 'flex';
+}
+
+function closeReplyModal() {
+    document.getElementById('replyModal').style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    let modal = document.getElementById('replyModal');
+    if (event.target == modal) {
+        closeReplyModal();
+    }
+}
+</script>
+{% endblock %}

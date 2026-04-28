@@ -1,0 +1,355 @@
+{% extends "base.html" %}
+{% block title %}Parent Dashboard{% endblock %}
+{% block body %}
+<div class="topbar">
+  <span class="topbar-brand">🎓 Student Performance System</span>
+  <div class="topbar-right" style="display:flex; align-items:center; gap:20px;">
+    {% if unread_reply_count > 0 %}
+    <div class="notification-badge" onclick="document.getElementById('comm-history').scrollIntoView({behavior: 'smooth'})" style="position:relative; cursor:pointer;" title="{{ unread_reply_count }} new replies from teacher">
+        <span style="font-size:24px;">🔔</span>
+        <span style="position:absolute; top:-5px; right:-5px; background:#ef4444; color:white; border-radius:50%; width:18px; height:18px; font-size:11px; display:flex; align-items:center; justify-content:center; font-weight:bold; border:2px solid #9333ea;">{{ unread_reply_count }}</span>
+    </div>
+    {% endif %}
+    <span class="topbar-user">👪 {{ parent.parent_name }}</span>
+    <a href="/logout" class="btn btn-outline btn-sm btn-round">Logout</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">Parent Portal</div>
+    <a href="/parent" class="active">📊 Student progress</a>
+    <a href="/parent/guidance">🚀 Success Guidance</a>
+    <div class="divider"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <div style="display:flex; justify-content:between; align-items:center; margin-bottom: 20px;">
+        <div>
+          <h1>Hello, {{ parent.parent_name }} 👋</h1>
+          <p class="page-sub">Monitoring performance for <b>{{ student.name if student else 'Unknown' }}</b> (ID: {{ parent.student_code }})</p>
+        </div>
+      </div>
+
+      <div class="sd-grid">
+        <!-- 1. Student's Performance Card -->
+        <div class="section">
+            <h3 style="margin-bottom:16px">📈 Predicted Outcome</h3>
+            <div style="text-align:center; padding: 20px 0;">
+                {% if score %}
+                    {% if score < 60 %}
+                        <div class="score-circle circle-risk">{{ score }}</div>
+                        <div class="sd-result-label sd-risk">⚠ At Risk</div>
+                        <p class="sd-result-sub">Immediate intervention recommended.</p>
+                    {% elif score <= 75 %}
+                        <div class="score-circle circle-avg">{{ score }}</div>
+                        <div class="sd-result-label sd-avg">📈 Average Performance</div>
+                        <p class="sd-result-sub">On track, but can improve.</p>
+                    {% else %}
+                        <div class="score-circle circle-safe">{{ score }}</div>
+                        <div class="sd-result-label sd-safe">✅ Safe</div>
+                        <p class="sd-result-sub">Excellent work! Keep it up.</p>
+                    {% endif %}
+                {% else %}
+                    <div class="score-circle circle-muted">?</div>
+                    <p class="sd-result-sub">No data available for prediction yet.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 2. Action Center -->
+        <div class="section">
+            <h3 style="margin-bottom:16px">🛠 Action Center</h3>
+            
+            <!-- Log Hours Form -->
+            <div style="background:var(--surface2); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid rgba(123,44,255,0.2);">
+                <h4 style="margin-bottom:10px; color:var(--purple2);">📝 Log Daily Study Hours</h4>
+                <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Help us refine predictions by logging the student's home study time.</p>
+                <form action="/parent/log-hours" method="POST" style="display:flex; gap:10px;">
+                    <input type="number" name="hours" step="0.5" min="0" max="24" placeholder="Hours (e.g. 3.5)" required style="flex:1;">
+                    <button type="submit" class="btn btn-primary btn-sm btn-round">Log Hours</button>
+                </form>
+            </div>
+
+            <!-- Feedback/Complaint Form -->
+            <div style="background:var(--surface2); padding: 20px; border-radius: 12px; border: 1px solid rgba(239,68,68,0.2);">
+                <h4 style="margin-bottom:10px; color:var(--red);">🚩 Feedback & Concerns</h4>
+                <p style="font-size:12px; color:var(--muted); margin-bottom:12px;">Submit a complaint or feedback directly to the teacher.</p>
+                <form action="/parent/feedback" method="POST">
+                    <textarea name="message" rows="3" placeholder="Describe your concern..." required style="width:100%; margin-bottom:10px; border-radius:8px;"></textarea>
+                    <button type="submit" class="btn btn-outline btn-sm btn-round" style="width:100%; color:var(--red); border-color:var(--red);">Send Feedback</button>
+                </form>
+            </div>
+        </div>
+      </div>
+
+      <!-- 3. Suggestions -->
+      {% if suggestions %}
+      <div class="section">
+        <h3 style="margin-bottom:16px">💡 How to help {{ student.name if student else 'the student' }}</h3>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+            {% for title, body in suggestions %}
+            <div class="tip">
+              <div class="tip-title">{{ title }}</div>
+              <div class="tip-body" style="font-size:13px;">{{ body }}</div>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- What-If Roadmap (Sensitivity) -->
+      {% if sensitivity %}
+      <div class="section" style="margin-top: 25px; border: 1px solid rgba(124, 58, 237, 0.2); background: rgba(124, 58, 237, 0.03);">
+          <h3 style="margin-bottom:12px; color: #a78bfa;">🎯 The "What-If" Goal Roadmap</h3>
+          <p style="font-size: 13px; opacity: 0.8; margin-bottom: 20px;">Help the student reach a <b>Safe</b> status by focusing on these improvements:</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px;">
+              {% for item in sensitivity %}
+              <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
+                  <div style="font-size: 11px; text-transform: uppercase; color: #a78bfa; font-weight: bold; margin-bottom: 8px;">{{ item.metric }}</div>
+                  <div style="font-size: 14px; margin-bottom: 5px;">Goal: <b>{{ item.to }}</b> (currently {{ item.from }})</div>
+                  <div style="font-size: 13px; color: #22c55e;">Potential Gain: +{{ item.gain }} marks</div>
+              </div>
+              {% endfor %}
+          </div>
+      </div>
+      {% endif %}
+
+      <!-- 4. Academic Record Preview -->
+      {% if student %}
+      <div class="section">
+        <h3 style="margin-bottom:16px">📋 Current Academic Record</h3>
+        <div class="sd-stats" style="grid-template-columns: repeat(4, 1fr);">
+            <div class="sd-stat-cell">
+                <div class="sd-stat-label">Attendance</div>
+                <div class="sd-stat-value">{{ student.Attendence }}%</div>
+            </div>
+            <div class="sd-stat-cell">
+                <div class="sd-stat-label">Internal Test 1</div>
+                <div class="sd-stat-value">{{ student['internal_test 1'] }}</div>
+            </div>
+            <div class="sd-stat-cell">
+                <div class="sd-stat-label">Internal Test 2</div>
+                <div class="sd-stat-value">{{ student['internal_test 2'] }}</div>
+            </div>
+            <div class="sd-stat-cell">
+                <div class="sd-stat-label">Assignment</div>
+                <div class="sd-stat-value">{{ student.Assignment_score }}</div>
+            </div>
+        </div>
+      </div>
+      {% endif %}
+
+      {% if feedbacks %}
+      <div id="comm-history" class="section" style="margin-top:25px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3 style="margin:0;">📩 {% if show_recycle %}Recycle Bin{% else %}Communication History{% endif %}</h3>
+            <div style="display:flex; gap:10px; align-items:center;">
+                {% if not show_recycle %}
+                    {% if unread_reply_count > 0 %}
+                    <form action="/parent/mark-read" method="POST">
+                        <button type="submit" class="btn btn-sm" style="background:rgba(255,255,255,0.05); color:#fff; border:1px solid rgba(255,255,255,0.2); border-radius:15px; font-size:12px; padding:4px 12px;">Mark all as read</button>
+                    </form>
+                    {% endif %}
+                    <a href="/parent?show_recycle=1#comm-history" class="btn btn-sm" style="background:rgba(239,68,68,0.1); color:#ef4444; border:1px solid rgba(239,68,68,0.2); border-radius:15px; font-size:12px; padding:4px 12px; text-decoration:none;">♻️ Recycle Bin</a>
+                {% else %}
+                    <a href="/parent#comm-history" class="btn btn-sm" style="background:rgba(255,255,255,0.05); color:#fff; border:1px solid rgba(255,255,255,0.2); border-radius:15px; font-size:12px; padding:4px 12px; text-decoration:none;">⬅️ Back to History</a>
+                {% endif %}
+            </div>
+        </div>
+        
+        {% if feedbacks %}
+        <div style="display:flex; flex-direction:column; gap:12px;">
+            {% for f in feedbacks %}
+            <div style="background:rgba(255,255,255,0.02); padding:15px; border-radius:10px; border:1px solid {% if f.is_read_by_parent == 0 and not show_recycle %}#7c3aed{% else %}rgba(255,255,255,0.05){% endif %}; position:relative;">
+                {% if f.is_read_by_parent == 0 and not show_recycle %}
+                <span style="position:absolute; top:10px; right:10px; background:#7c3aed; color:#fff; font-size:10px; padding:2px 6px; border-radius:10px; font-weight:bold;">NEW</span>
+                {% endif %}
+                
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span style="font-size:12px; opacity:0.6;">{{ f.created_at[:16] }}</span>
+                        {% if f.status == 'resolved' %}
+                            <span style="font-size:11px; background:#22c55e; color:#fff; padding:2px 8px; border-radius:10px;">Resolved</span>
+                        {% elif f.status == 'open' %}
+                            <span style="font-size:11px; background:rgba(255,255,255,0.1); color:#ccc; padding:2px 8px; border-radius:10px;">Open</span>
+                        {% else %}
+                            <span style="font-size:11px; background:rgba(239,68,68,0.2); color:#ef4444; padding:2px 8px; border-radius:10px;">Deleted</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div style="display:flex; gap:5px;">
+                        {% if not show_recycle %}
+                        <form action="/parent/delete-feedback/{{ f.id }}" method="POST" onsubmit="return confirm('Move to Recycle Bin?')">
+                            <button type="submit" style="background:transparent; border:none; cursor:pointer; font-size:16px;" title="Delete">🗑️</button>
+                        </form>
+                        {% else %}
+                        <form action="/parent/restore-feedback/{{ f.id }}" method="POST">
+                            <button type="submit" style="background:transparent; border:none; cursor:pointer; font-size:16px;" title="Restore">🔄</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div style="margin-bottom:10px;">
+                    <b>You:</b> {{ f.message }}
+                </div>
+                {% if f.teacher_reply %}
+                <div style="background:rgba(124,58,237,0.1); padding:12px; border-radius:8px; border-left:3px solid #7c3aed; margin-top:10px;">
+                    <b style="color:#a855f7;">Teacher's Reply:</b><br>
+                    {{ f.teacher_reply }}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align:center; padding:40px; opacity:0.5;">
+            <div style="font-size:40px; margin-bottom:10px;">📭</div>
+            <p>No messages found in {% if show_recycle %}Recycle Bin{% else %}History{% endif %}.</p>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+  <!-- Chatbot UI -->
+  <div id="chatbot-icon" onclick="toggleChat()">💬</div>
+  <div id="chatbot-box" style="display:none;">
+      <div id="chat-header">
+          <span>🤖</span> AI Academic Assistant
+      </div>
+      <div id="chat-body"></div>
+      <div id="chat-footer">
+          <input type="text" id="user-input" placeholder="Ask about child's performance..." onkeypress="handleKey(event)">
+          <button onclick="sendMessage()">➤</button>
+      </div>
+  </div>
+</div>
+
+<style>
+.sd-grid            { display: grid; grid-template-columns: 300px 1fr; gap: 24px; margin-bottom: 24px; align-items: start; }
+.sd-result-label    { font-weight: bold; font-size: 18px; margin-bottom: 4px; }
+.sd-result-sub      { font-size: 13px; color: var(--muted); }
+.sd-risk            { color: var(--red); }
+.sd-avg             { color: var(--amber); }
+.sd-safe            { color: var(--green); }
+.sd-stats           { display: grid; gap: 12px; }
+.sd-stat-cell       { background: var(--surface2); padding: 14px; border-radius: 8px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+.sd-stat-label      { font-size: 11px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; }
+.sd-stat-value      { font-size: 20px; font-weight: bold; }
+
+.tip { background: var(--surface2); border-left: 4px solid var(--purple2); padding: 15px; border-radius: 8px; }
+.tip-title { font-weight: bold; color: var(--purple2); margin-bottom: 5px; }
+.tip-body { color: var(--muted); line-height: 1.5; }
+
+.score-circle {
+    width: 100px; height: 100px; border-radius: 50%;
+    margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;
+    font-size: 32px; font-weight: bold; border: 4px solid;
+}
+.circle-risk { color: var(--red); border-color: var(--red); box-shadow: 0 0 20px rgba(239,68,68,0.3); }
+.circle-avg  { color: var(--amber); border-color: var(--amber); box-shadow: 0 0 20px rgba(245,158,11,0.3); }
+.circle-safe { color: var(--green); border-color: var(--green); box-shadow: 0 0 20px rgba(16,185,129,0.3); }
+.circle-muted { color: var(--muted); border-color: var(--muted); }
+
+#chatbot-icon { position:fixed; bottom:25px; right:25px; background:#7c3aed; color:white; padding:18px; border-radius:50%; cursor:pointer; font-size:20px; box-shadow:0 0 15px rgba(124,58,237,0.6); z-index:1000; }
+#chatbot-box { position:fixed; bottom:90px; right:25px; width:400px; height:520px; background:#140024; border:1px solid rgba(124, 58, 237, 0.2); border-radius:20px; display:flex; flex-direction:column; box-shadow:0 15px 40px rgba(0,0,0,0.6); z-index:1000; overflow:hidden; }
+#chat-header { background:linear-gradient(90deg, #7c3aed, #9333ea); padding:18px; font-weight:bold; text-align:center; font-size:17px; color:#fff; display:flex; align-items:center; justify-content:center; gap:10px; }
+#chat-body { flex:1; padding:18px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; color:#fff; }
+#chat-footer { padding:15px; display:flex; gap:10px; background:rgba(0,0,0,0.3); }
+#user-input { flex:1; background:transparent; border:none; color:#fff; outline:none; font-size:14px; }
+#chat-footer button { background:#7c3aed; border:none; color:#fff; padding:8px 18px; border-radius:10px; cursor:pointer; font-weight:bold; font-size:14px; }
+
+textarea { background: var(--surface); color: white; border: 1px solid #333; padding: 10px; font-family: inherit; }
+textarea:focus { border-color: var(--purple2); outline: none; }
+input { background: var(--surface); color: white; border: 1px solid #333; padding: 8px 12px; border-radius: 8px; }
+</style>
+
+<script>
+function toggleChat(){
+    let box = document.getElementById("chatbot-box");
+    let isOpening = box.style.display === "none";
+    box.style.display = isOpening ? "flex" : "none";
+    
+    let chatBody = document.getElementById("chat-body");
+    if (isOpening && chatBody.innerHTML.trim() === "") {
+        setTimeout(() => {
+            addMessage("🤖 Hello! I am your AI Assistant. I have analyzed your child's data and I'm here to help you monitor their progress. How can I assist you?", "bot");
+            addQuickActions();
+        }, 300);
+    }
+}
+
+function addQuickActions() {
+    let chatBody = document.getElementById("chat-body");
+    let actions = [
+        { label: "📊 Prediction", text: "What is the predicted score for my child?" },
+        { label: "💡 Advice", text: "How can my child improve?" },
+        { label: "📉 Status", text: "Is my child at risk?" },
+        { label: "📅 Attendance", text: "How is attendance affecting performance?" }
+    ];
+    let html = `<div id="quick-actions" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px">`;
+    actions.forEach(a => {
+        html += `<button onclick="sendQuickMessage('${a.text}')" style="background:rgba(124,58,237,0.1); border:1px solid rgba(124,58,237,0.3); color:#a78bfa; padding:6px 12px; border-radius:15px; font-size:12px; cursor:pointer; transition:0.2s">${a.label}</button>`;
+    });
+    html += `</div>`;
+    chatBody.innerHTML += html;
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function sendQuickMessage(text) {
+    document.getElementById("quick-actions")?.remove();
+    addMessage(text, "user");
+    fetchReply(text);
+}
+
+function handleKey(event){ if(event.key === "Enter") sendMessage(); }
+
+function sendMessage(){
+    let input = document.getElementById("user-input");
+    let message = input.value;
+    if(!message) return;
+    document.getElementById("quick-actions")?.remove();
+    addMessage(message, "user");
+    input.value = "";
+    fetchReply(message);
+}
+
+function addMessage(text, sender) {
+    let chatBody = document.getElementById("chat-body");
+    if (sender === "user") {
+        chatBody.innerHTML += `<div style='align-self:flex-end; background:#7c3aed; padding:12px 16px; border-radius:18px 18px 0 18px; max-width:85%; font-size:14px;'>${text}</div>`;
+    } else {
+        chatBody.innerHTML += `<div style='align-self:flex-start; background:rgba(255,255,255,0.08); padding:12px 16px; border-radius:18px 18px 18px 0; max-width:85%; font-size:14px; line-height:1.5;'>${text}</div>`;
+    }
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function fetchReply(message) {
+    let chatBody = document.getElementById("chat-body");
+    let loaderId = "loader-" + Date.now();
+    chatBody.innerHTML += `<div id="${loaderId}" style='align-self:flex-start; background:rgba(255,255,255,0.05); padding:10px 16px; border-radius:15px; font-size:12px; font-style:italic; color:#aaa'>Thinking...</div>`;
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    fetch("/chatbot", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({message: message})
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById(loaderId).remove();
+        addMessage(data.reply, "bot");
+    })
+    .catch(err => {
+        document.getElementById(loaderId).remove();
+        addMessage("❌ Error: AI service unavailable.", "bot");
+    });
+}
+</script>
+{% endblock %}

@@ -33,7 +33,7 @@ def create_tables():
         username     TEXT    UNIQUE NOT NULL,
         email        TEXT    UNIQUE NOT NULL,
         password     TEXT    NOT NULL,
-        role         TEXT    NOT NULL CHECK(role IN ('admin','teacher','student')),
+        role         TEXT    NOT NULL CHECK(role IN ('admin','teacher','student','parent')),
         status       TEXT    DEFAULT 'pending' CHECK(status IN ('pending','active','deactivated')),
         created_at   TEXT    DEFAULT (datetime('now'))
     );
@@ -52,13 +52,57 @@ def create_tables():
         name         TEXT    NOT NULL,
         class        TEXT,
         section      TEXT,
-        teacher_id   INTEGER REFERENCES teachers(id)
+        teacher_id   INTEGER REFERENCES teachers(id),
+        parent_email TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS parents (
+        id           INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id      INTEGER UNIQUE REFERENCES users(id),
+        student_code TEXT    NOT NULL,
+        parent_name  TEXT    NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS parent_feedback (
+        id           INTEGER PRIMARY KEY AUTOINCREMENT,
+        parent_id    INTEGER REFERENCES parents(id),
+        student_code TEXT    NOT NULL,
+        message      TEXT    NOT NULL,
+        status       TEXT    DEFAULT 'open' CHECK(status IN ('open','resolved','deleted')),
+        created_at   TEXT    DEFAULT (datetime('now')),
+        deleted_at   TEXT,
+        sentiment    TEXT    DEFAULT 'Neutral',
+        teacher_reply TEXT,
+        is_read_by_parent INTEGER DEFAULT 1
+    );
+
+    CREATE TABLE IF NOT EXISTS study_logs (
+        id           INTEGER PRIMARY KEY AUTOINCREMENT,
+        student_code TEXT    NOT NULL,
+        hours        REAL    NOT NULL,
+        logged_by    TEXT    NOT NULL,
+        log_date     TEXT    DEFAULT (date('now'))
     );
     """)
 
     # migrate existing db if status column missing
     try:
         c.execute("ALTER TABLE users ADD COLUMN status TEXT DEFAULT 'active' CHECK(status IN ('pending','active','deactivated'))")
+    except sqlite3.OperationalError:
+        pass
+
+    try:
+        c.execute("ALTER TABLE parent_feedback ADD COLUMN sentiment TEXT DEFAULT 'Neutral'")
+    except sqlite3.OperationalError:
+        pass
+
+    try:
+        c.execute("ALTER TABLE parent_feedback ADD COLUMN teacher_reply TEXT")
+    except sqlite3.OperationalError:
+        pass
+
+    try:
+        c.execute("ALTER TABLE parent_feedback ADD COLUMN is_read_by_parent INTEGER DEFAULT 1")
     except sqlite3.OperationalError:
         pass
 
@@ -139,8 +183,30 @@ def signup_student(username, email, password, name, student_code,
             "SELECT id FROM users WHERE username=?", (username,)
         ).fetchone()["id"]
         conn.execute(
-            "INSERT INTO students (user_id,student_code,name,class,section,teacher_id) VALUES (?,?,?,?,?,?)",
-            (user_id, student_code, name, class_, section, teacher_id)
+            "INSERT INTO students (user_id,student_code,name,class,section,teacher_id,parent_email) VALUES (?,?,?,?,?,?,?)",
+            (user_id, student_code, name, class_, section, teacher_id, None)
+        )
+        conn.commit()
+        return True, "Account created successfully."
+    except sqlite3.IntegrityError as e:
+        return False, str(e)
+    finally:
+        conn.close()
+
+
+def signup_parent(username, email, password, parent_name, student_code):
+    conn = get_conn()
+    try:
+        conn.execute(
+            "INSERT INTO users (username,email,password,role,status) VALUES (?,?,?,?,?)",
+            (username, email, hash_password(password), "parent", "active")
+        )
+        user_id = conn.execute(
+            "SELECT id FROM users WHERE username=?", (username,)
+        ).fetchone()["id"]
+        conn.execute(
+            "INSERT INTO parents (user_id, student_code, parent_name) VALUES (?,?,?)",
+            (user_id, student_code, parent_name)
         )
         conn.commit()
         return True, "Account created successfully."
@@ -151,6 +217,139 @@ def signup_student(username, email, password, name, student_code,
 
 
 # ── Queries ───────────────────────────────────────────────────────
+def get_parent_by_user_id(user_id):
+    conn = get_conn()
+    r = conn.execute(
+        "SELECT * FROM parents WHERE user_id=?", (user_id,)
+    ).fetchone()
+    conn.close()
+    return dict(r) if r else None
+
+
+def log_study_hours(student_code, hours, logged_by):
+    conn = get_conn()
+    conn.execute(
+        "INSERT INTO study_logs (student_code, hours, logged_by) VALUES (?,?,?)",
+        (student_code, hours, logged_by)
+    )
+    conn.commit()
+    conn.close()
+
+
+def submit_feedback(parent_id, student_code, message, sentiment='Neutral'):
+    conn = get_conn()
+    conn.execute(
+        "INSERT INTO parent_feedback (parent_id, student_code, message, sentiment) VALUES (?,?,?,?)",
+        (parent_id, student_code, message, sentiment)
+    )
+    conn.commit()
+    conn.close()
+
+
+def soft_delete_feedback(feedback_id):
+    conn = get_conn()
+    conn.execute("UPDATE parent_feedback SET status='deleted', deleted_at=datetime('now') WHERE id=?", (feedback_id,))
+    conn.commit()
+    conn.close()
+
+
+def restore_feedback(feedback_id):
+    conn = get_conn()
+    conn.execute("UPDATE parent_feedback SET status='open', deleted_at=NULL WHERE id=?", (feedback_id,))
+    conn.commit()
+    conn.close()
+
+
+def purge_deleted_feedback():
+    """Permanently delete messages in recycle bin for > 30 days."""
+    conn = get_conn()
+    conn.execute("DELETE FROM parent_feedback WHERE status='deleted' AND deleted_at < datetime('now', '-30 days')")
+    conn.commit()
+    conn.close()
+
+
+def resolve_feedback(feedback_id):
+    conn = get_conn()
+    conn.execute("UPDATE parent_feedback SET status='resolved' WHERE id=?", (feedback_id,))
+    conn.commit()
+    conn.close()
+
+
+def save_teacher_reply(feedback_id, reply_text):
+    conn = get_conn()
+    conn.execute("""
+        UPDATE parent_feedback 
+        SET teacher_reply = ?, status = 'resolved', is_read_by_parent = 0 
+        WHERE id = ?
+    """, (reply_text, feedback_id))
+    conn.commit()
+    conn.close()
+
+
+def mark_feedback_as_read(parent_id):
+    conn = get_conn()
+    conn.execute("UPDATE parent_feedback SET is_read_by_parent = 1 WHERE parent_id = ?", (parent_id,))
+    conn.commit()
+    conn.close()
+
+
+def get_unread_reply_count(parent_id):
+    conn = get_conn()
+    r = conn.execute("SELECT COUNT(*) as count FROM parent_feedback WHERE parent_id = ? AND is_read_by_parent = 0", (parent_id,)).fetchone()
+    conn.close()
+    return r["count"] if r else 0
+
+
+def get_open_feedback_count():
+    conn = get_conn()
+    r = conn.execute("SELECT COUNT(*) as count FROM parent_feedback WHERE status='open'").fetchone()
+    conn.close()
+    return r["count"] if r else 0
+
+
+def update_parent_email(student_code, email):
+    conn = get_conn()
+    conn.execute("UPDATE students SET parent_email = ? WHERE student_code = ?", (email, student_code))
+    conn.commit()
+    conn.close()
+
+
+def get_feedbacks_by_parent(parent_id, exclude_deleted=True):
+    conn = get_conn()
+    if exclude_deleted:
+        rows = conn.execute("""
+            SELECT * FROM parent_feedback 
+            WHERE parent_id = ? AND status != 'deleted'
+            ORDER BY created_at DESC
+        """, (parent_id,)).fetchall()
+    else:
+        rows = conn.execute("""
+            SELECT * FROM parent_feedback 
+            WHERE parent_id = ? AND status = 'deleted'
+            ORDER BY created_at DESC
+        """, (parent_id,)).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+
+def get_all_feedback(status=None):
+    conn = get_conn()
+    query = """
+        SELECT pf.*, p.parent_name, s.name as student_name
+        FROM parent_feedback pf
+        JOIN parents p ON pf.parent_id = p.id
+        LEFT JOIN students s ON pf.student_code = s.student_code
+    """
+    params = []
+    if status:
+        query += " WHERE pf.status = ?"
+        params.append(status)
+    
+    query += " ORDER BY pf.created_at DESC"
+    
+    rows = conn.execute(query, params).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
 def get_all_teachers():
     conn = get_conn()
     rows = conn.execute("""
@@ -216,6 +415,16 @@ def get_all_teachers_simple():
     conn.close()
     return [dict(r) for r in rows]
 
+
+def get_parent_email_by_student_code(student_code):
+    conn = get_conn()
+    r = conn.execute("""
+        SELECT u.email FROM users u
+        JOIN parents p ON u.id = p.user_id
+        WHERE p.student_code = ?
+    """, (student_code,)).fetchone()
+    conn.close()
+    return r["email"] if r else None
 
 if __name__ == "__main__":
     create_tables()

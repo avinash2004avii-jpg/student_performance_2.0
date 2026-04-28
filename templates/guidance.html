@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block title %}Success Guidance{% endblock %}
+{% block body %}
+<style>
+    .guidance-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-top: 30px; }
+    .card { background: rgba(255,255,255,0.03); border-radius: 20px; padding: 30px; border: 1px solid rgba(255,255,255,0.08); transition: 0.3s; height: 100%; }
+    .card:hover { transform: translateY(-5px); border-color: #a855f7; box-shadow: 0 10px 30px rgba(168, 85, 247, 0.1); }
+    .card-title { font-size: 20px; font-weight: 800; color: #a855f7; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .list-item { background: rgba(168, 85, 247, 0.1); border-left: 4px solid #a855f7; padding: 12px 18px; border-radius: 8px; margin-bottom: 12px; font-weight: 600; font-size: 14px; }
+    .behavior-text { line-height: 1.6; opacity: 0.9; font-size: 15px; }
+    .search-box { background: rgba(255,255,255,0.02); border-radius: 15px; padding: 25px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 30px; }
+    
+    /* Animation for cards */
+    .guidance-grid > div { animation: fadeInUp 0.5s ease forwards; opacity: 0; }
+    .guidance-grid > div:nth-child(1) { animation-delay: 0.1s; }
+    .guidance-grid > div:nth-child(2) { animation-delay: 0.2s; }
+    .guidance-grid > div:nth-child(3) { animation-delay: 0.3s; }
+    
+    @keyframes fadeInUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+</style>
+
+<div class="topbar">
+  <div class="topbar-brand">🎓 Student Performance System</div>
+  <div class="topbar-right">
+    <span class="topbar-user">👤 {{ session.username }}</span>
+    <a href="/logout" class="btn btn-outline btn-sm btn-round">Logout</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    {% if role == 'teacher' %}
+        <div class="sidebar-logo">Teacher Panel</div>
+        <a href="/teacher">📊 Dashboard</a>
+        <a href="/teacher/analytics">📈 Analytics</a>
+        <a href="/teacher/predict">🔮 Predict Student</a>
+        <a href="/teacher/auto_predict">⚡ Auto Predict</a>
+        <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
+        <a href="/teacher/feedback" style="position: relative;">
+            👪 Parent Feedback
+            {% if open_feedback_count > 0 %}
+            <span style="position: absolute; top: 12px; right: 20px; background: #ef4444; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold; box-shadow: 0 0 10px rgba(239,68,68,0.5);">{{ open_feedback_count }}</span>
+            {% endif %}
+        </a>
+        <a href="/teacher/students">👨‍🎓 All Students</a>
+        <a href="/teacher/email_alerts">📧 Email Alerts</a>
+        <a href="/teacher/add-student">➕ Add Student</a>
+        <a href="/teacher/guidance" class="active">🚀 Success Guidance</a>
+    {% elif role == 'student' %}
+        <div class="sidebar-logo">Student Portal</div>
+        <a href="/student">📊 My Dashboard</a>
+        <a href="/student/guidance" class="active">🚀 Success Guidance</a>
+    {% else %}
+        <div class="sidebar-logo">Parent Portal</div>
+        <a href="/parent">📊 Student progress</a>
+        <a href="/parent/guidance" class="active">🚀 Success Guidance</a>
+    {% endif %}
+    <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <h1 style="font-size:36px; font-weight: 800; margin-bottom: 10px;">🚀 Success Guidance Hub</h1>
+      <p style="opacity: 0.7; font-size: 18px; margin-bottom: 40px;">AI-driven insights for career, academics, and behavioral growth.</p>
+
+      {% if role == 'teacher' %}
+      <div class="search-box">
+          <form action="/teacher/guidance" method="POST" style="display: flex; gap: 15px; align-items: center;">
+              <input type="text" name="student_id" value="{{ sid }}" placeholder="Enter Student ID (e.g. S1001)" 
+                     style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; color: #fff; outline: none;" required>
+              <button type="submit" class="btn btn-primary" style="padding: 15px 30px; border-radius: 12px;">🔍 Generate Insights</button>
+          </form>
+      </div>
+      {% endif %}
+
+      {% if insights %}
+      <div style="margin-bottom: 30px; padding: 15px 25px; background: rgba(168, 85, 247, 0.1); border-radius: 12px; border: 1px solid rgba(168, 85, 247, 0.2); display: inline-block;">
+          <b style="color: #a855f7;">Analysis for Student:</b> {{ student.Student_ID }} ({{ student.Class }} - {{ student.section }})
+      </div>
+
+      <div class="guidance-grid">
+          <!-- Career Suggestions -->
+          <div class="card">
+              <div class="card-title"><span>🎯</span> Career Suggestions</div>
+              <p style="margin-bottom: 20px; opacity: 0.6; font-size: 14px;">Based on academic performance and aptitude:</p>
+              {% if insights.careers %}
+                  {% for career in insights.careers %}
+                  <div class="list-item">{{ career }}</div>
+                  {% endfor %}
+              {% else %}
+                  <div class="list-item">General Professional Development</div>
+                  <div class="list-item">Public Relations</div>
+                  <div class="list-item">Education & Training</div>
+              {% endif %}
+          </div>
+
+          <!-- Course Suggestions -->
+          <div class="card">
+              <div class="card-title"><span>📚</span> Recommended Courses</div>
+              <p style="margin-bottom: 20px; opacity: 0.6; font-size: 14px;">Top subjects or courses to focus on next:</p>
+              {% if insights.courses %}
+                  {% for course in insights.courses %}
+                  <div class="list-item">{{ course }}</div>
+                  {% endfor %}
+              {% else %}
+                  <div class="list-item">Time Management Mastery</div>
+                  <div class="list-item">Critical Thinking Skills</div>
+                  <div class="list-item">Digital Productivity</div>
+              {% endif %}
+          </div>
+
+          <!-- Behavioral Analysis -->
+          <div class="card">
+              <div class="card-title"><span>🧠</span> Behavioral Analysis</div>
+              <p style="margin-bottom: 20px; opacity: 0.6; font-size: 14px;">An AI analysis of habits and engagement:</p>
+              <div class="behavior-text">
+                  {{ insights.behavior or "Maintain a consistent study schedule and prioritize attendance to ensure steady academic growth." }}
+              </div>
+          </div>
+      </div>
+      {% elif sid or role != 'teacher' %}
+        {% if role != 'teacher' and not student %}
+            <div style="text-align: center; padding: 100px 0; opacity: 0.5;">
+                <div style="font-size: 60px; margin-bottom: 20px;">🔍</div>
+                <h3>Records not found</h3>
+                <p>We couldn't find your academic records to perform the analysis.</p>
+            </div>
+        {% else %}
+            <div style="text-align: center; padding: 100px 0; opacity: 0.5;">
+                <div style="font-size: 60px; margin-bottom: 20px;">🤖</div>
+                <h3>Generating your personalized growth roadmap...</h3>
+                <p>This may take a few seconds as our AI analyzes the records.</p>
+            </div>
+        {% endif %}
+      {% else %}
+      <div style="text-align: center; padding: 100px 0; opacity: 0.5;">
+          <div style="font-size: 60px; margin-bottom: 20px;">🔍</div>
+          <h3>Select a student to see their success guidance</h3>
+          <p>Enter a Student ID above to begin the AI analysis.</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

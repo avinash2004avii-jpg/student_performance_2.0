@@ -6,8 +6,8 @@
 .role-wrap h1{font-size:48px;font-weight:700;margin-bottom:12px;background:linear-gradient(90deg,#fff,#c4a8ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;text-align:center}
 .role-wrap .subtitle{font-size:18px;color:#bbb;max-width:600px;margin:0 auto 48px;line-height:1.6;text-align:center}
 
-.role-cards{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;width:100%;max-width:1100px}
-.role-card{background:rgba(20,0,36,0.6);backdrop-filter:blur(10px);padding:40px 32px;border-radius:24px;border:1px solid rgba(138,43,226,0.3);width:320px;text-align:center;transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);display:flex;flex-direction:column;align-items:center;color:var(--text);text-decoration:none}
+.role-cards{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;width:100%;max-width:1300px}
+.role-card{background:rgba(20,0,36,0.6);backdrop-filter:blur(10px);padding:40px 32px;border-radius:24px;border:1px solid rgba(138,43,226,0.3);width:280px;text-align:center;transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);display:flex;flex-direction:column;align-items:center;color:var(--text);text-decoration:none}
 .role-card:hover{transform:translateY(-12px);box-shadow:0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(138,43,226,0.5);border-color:rgba(166,76,255,0.6);background:rgba(31,0,53,0.8)}
 
 .role-card .icon{font-size:44px;margin-bottom:20px;filter:drop-shadow(0 0 10px rgba(138,43,226,0.5))}
@@ -45,6 +45,13 @@
       <span class="role-pill">Student Login</span>
     </a>
 
+    <a class="role-card" href="/login/parent">
+      <div class="icon">👪</div>
+      <h3>Parent</h3>
+      <p>Monitor your child's progress, log study hours, and communicate with teachers.</p>
+      <span class="role-pill">Parent Login</span>
+    </a>
+
     <a class="role-card" href="/login/admin">
       <div class="icon">🛠</div>
       <h3>Admin</h3>
@@ -57,6 +64,8 @@
     <span>New teacher? <a href="/signup/teacher">Sign up</a></span>
     <span>|</span>
     <span>New student? <a href="/signup/student">Sign up</a></span>
+    <span>|</span>
+    <span>Parent? <a href="/signup/parent">Register Child</a></span>
   </div>
 
   <div class="theme-toggle">

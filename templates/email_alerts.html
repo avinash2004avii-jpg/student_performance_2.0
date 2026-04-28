@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% block title %}Email Alerts{% endblock %}
+{% block body %}
+<style>
+:root {
+    --primary: #7c3aed;
+    --sidebar-bg: #140024;
+    --topbar-bg: #9333ea;
+    --topbar-height: 65px;
+}
+body { background: #0a0016; color: #e2e8f0; font-size: 15px; }
+.topbar { background: var(--topbar-bg) !important; height: var(--topbar-height) !important; padding: 0 30px !important; display: flex !important; align-items: center !important; justify-content: space-between !important; position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 1100; }
+.sidebar { background: var(--sidebar-bg); width: 250px !important; position: fixed; top: var(--topbar-height); left: 0; height: calc(100vh - var(--topbar-height)); z-index: 1000; padding-top: 25px !important; border-right: 1px solid rgba(255,255,255,0.05); }
+.sidebar a { display: flex; align-items: center; gap: 12px; padding: 15px 28px; font-size: 14px; color: #cbd5f5; text-decoration: none; border-left: 4px solid transparent; transition: 0.2s; }
+.sidebar a.active, .sidebar a:hover { background: linear-gradient(90deg, rgba(124, 58, 237, 0.25), transparent); color: #fff; border-left-color: #a855f7; }
+.page { margin-left: 250px; margin-top: var(--topbar-height); padding: 35px; }
+.container { max-width: 1200px; margin: 0 auto; }
+.section { background: rgba(255,255,255,0.02); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); }
+
+/* Table styling */
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+th { text-align: left; background: rgba(147, 51, 234, 0.12); padding: 12px 18px; color: #a855f7; font-size: 13px; text-transform: uppercase; }
+td { padding: 12px 18px; background: rgba(255,255,255,0.02); transition: 0.2s; font-size: 13px; }
+tr:hover td { background: rgba(255,255,255,0.05); }
+.badge { padding: 4px 10px; border-radius: 12px; font-weight: 800; font-size: 11px; }
+
+.btn-send { background: #4f46e5; color: #fff; padding: 6px 14px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; font-size: 12px; text-decoration: none; }
+.btn-send:hover { background: #4338ca; }
+.btn-send-all { background: #10b981; color: #fff; padding: 10px 20px; border-radius: 10px; border: none; font-weight: 700; cursor: pointer; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+
+.status-tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(255,255,255,0.1); color: #888; }
+.status-has-email { background: rgba(34, 197, 94, 0.1); color: #22c55e; }
+
+/* Professional Risk Badges */
+.risk-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 12px;
+    border: 1px solid;
+    min-width: 130px;
+}
+.risk-at-risk {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+    border-color: rgba(239, 68, 68, 0.3);
+}
+.risk-average {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    border-color: rgba(245, 158, 11, 0.3);
+}
+.risk-safe {
+    background: rgba(34, 197, 94, 0.1);
+    color: #22c55e;
+    border-color: rgba(34, 197, 94, 0.3);
+}
+</style>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <span style="font-size: 26px">🎓</span>
+    <span>Student Performance System</span>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-user">
+        <span style="font-size: 24px">🧑‍🏫</span>
+        <span>{{ session.username }}</span>
+    </div>
+    <a href="/logout" class="logout-btn" style="background: rgba(255,255,255,0.1); color: #fff; padding: 6px 18px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.2); font-weight: 700; text-decoration: none; font-size: 13px; margin-left: 15px">Logout</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">Teacher Panel</div>
+    <a href="/teacher">📊 Dashboard</a>
+    <a href="/teacher/analytics">📈 Analytics</a>
+    <a href="/teacher/predict">🔮 Predict Student</a>
+    <a href="/teacher/auto_predict">⚡ Auto Predict</a>
+    <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
+    <a href="/teacher/feedback">👪 Parent Feedback</a>
+    <a href="/teacher/students">👨‍🎓 All Students</a>
+    <a href="/teacher/email_alerts" class="active">📧 Email Alerts</a>
+    <a href="/teacher/add-student">➕ Add Student</a>
+    <a href="/teacher/guidance">🚀 Success Guidance</a>
+    <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px">
+        <div>
+          <h1 style="font-size:32px; margin-bottom:6px; font-weight:800">📧 Email Alerts Hub</h1>
+          <p class="page-sub" style="opacity:0.7">Send performance reports directly to parents</p>
+        </div>
+        <a href="/teacher/send_all_emails" class="btn-send-all" onclick="return confirm('Send reports to all students with valid emails?')">
+            <span>📨</span> Send All Alerts
+        </a>
+      </div>
+
+      <div class="section" style="margin-bottom: 30px; border-color: rgba(168, 85, 247, 0.2);">
+        <h2 style="font-size:24px; margin-bottom:10px; color:#a855f7; display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 28px;">📂</span> Bulk Update Parent Emails
+        </h2>
+        <p style="opacity:0.7; margin-bottom:25px; font-size: 15px;">
+            Update only parent contact information using a CSV file. 
+            <a href="/teacher/email_sample_csv" style="color:#a855f7; font-weight:700; text-decoration: none; border-bottom: 1px solid;">Download sample format here.</a>
+        </p>
+        
+        <form action="/teacher/upload_email_csv" method="POST" enctype="multipart/form-data" style="display: flex; gap: 15px; align-items: center;">
+            <input type="file" name="file" accept=".csv" required style="flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; color: #fff;">
+            <button type="submit" style="background:#10b981; color:#fff; padding:12px 30px; border-radius:12px; border:none; font-weight:700; cursor:pointer; box-shadow:0 8px 20px rgba(16, 185, 129, 0.3); display: flex; align-items: center; gap: 8px;">
+                <span>⬆️</span> Upload Emails
+            </button>
+        </form>
+      </div>
+
+      <div class="section">
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+                <tr>
+                    <th style="border-radius: 12px 0 0 12px">Student ID</th>
+                    <th>Class</th>
+                    <th>Section</th>
+                    <th>Attendance</th>
+                    <th>Final Score</th>
+                    <th>Risk</th>
+                    <th>Parent Email</th>
+                    <th style="border-radius: 0 12px 12px 0">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for s in students %}
+              <tr>
+                <td><b>{{ s.Student_ID }}</b></td>
+                <td>{{ s.Class }}</td>
+                <td>{{ s.section }}</td>
+                <td>{{ s.Attendence }}%</td>
+                <td>
+                    <span class="badge" style="background: {% if s.risk == 'At Risk' %}#ef4444{% elif s.risk == 'Average Performance' %}#f59e0b{% else %}#22c55e{% endif %}; color: #fff;">
+                        {{ s.display_score | default(0) }}
+                    </span>
+                </td>
+                <td>
+                    {% if s.risk == 'At Risk' %}
+                        <div class="risk-badge risk-at-risk"><span>⚠</span> At Risk</div>
+                    {% elif s.risk == 'Average Performance' %}
+                        <div class="risk-badge risk-average"><span>📊</span> Average</div>
+                    {% else %}
+                        <div class="risk-badge risk-safe"><span>✅</span> Safe</div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if s.parent_email and s.parent_email != "nan" and s.parent_email|string != "" %}
+                        <span style="font-size: 12px; opacity: 0.8;">{{ s.parent_email }}</span>
+                    {% else %}
+                        <span class="status-tag">No Email</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if s.parent_email and s.parent_email != "nan" and s.parent_email|string != "" %}
+                    <a href="/teacher/send_email/{{ s.Student_ID }}" class="btn-send">Send Email</a>
+                    {% else %}
+                    <button class="btn-send" style="opacity: 0.3; cursor: not-allowed;" disabled title="Add parent email to send alerts">Send Email</button>
+                    {% endif %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,445 @@
+{% extends "base.html" %}
+{% block title %}Career Guidance{% endblock %}
+{% block head %}
+<style>
+/* ── Page Layout ── */
+.cg-topbar  { background:linear-gradient(90deg,#4b0082,#8a2be2);padding:14px 28px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 12px rgba(138,43,226,.5); }
+.cg-brand   { font-size:18px;font-weight:bold; }
+.cg-layout  { display:flex; }
+
+/* ── Sidebar ── */
+.sidebar a[href="/career-guidance"]{ background:linear-gradient(90deg,rgba(123,44,255,0.25),transparent);color:white;border-left-color:var(--purple2); }
+
+/* ── Stepper ── */
+.stepper          { display:flex;gap:0;margin-bottom:32px;border-radius:12px;overflow:hidden;border:1px solid var(--border); }
+.step             { flex:1;padding:14px 10px;text-align:center;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);background:var(--surface);cursor:pointer;transition:.2s;border-right:1px solid var(--border);position:relative; }
+.step:last-child  { border-right:none; }
+.step.active      { background:linear-gradient(90deg,var(--purple),var(--purple2));color:white; }
+.step.done        { background:rgba(0,230,118,.12);color:var(--green); }
+.step .snum       { display:block;font-size:18px;margin-bottom:2px; }
+
+/* ── Question Cards ── */
+.q-card           { background:var(--surface);border-radius:14px;padding:26px 28px;margin-bottom:20px;border:1px solid var(--border);transition:.2s; }
+.q-card:hover     { border-color:rgba(123,44,255,.4); }
+.q-label          { font-size:13px;font-weight:700;color:var(--purple-light);margin-bottom:12px;display:block; }
+.q-sublabel       { font-size:11px;color:var(--muted);margin-top:-8px;margin-bottom:12px;display:block; }
+.chip-group        { display:flex;flex-wrap:wrap;gap:8px; }
+.chip              { padding:7px 16px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:12px;cursor:pointer;transition:.2s;user-select:none; }
+.chip:hover        { border-color:var(--purple2);color:var(--purple-light); }
+.chip.selected     { background:rgba(123,44,255,.2);border-color:var(--purple2);color:white;font-weight:700; }
+
+/* ── Result Card ── */
+.result-hero       { background:linear-gradient(135deg,rgba(123,44,255,.2),rgba(0,230,118,.08));border:1px solid rgba(123,44,255,.35);border-radius:16px;padding:28px 32px;margin-bottom:24px;text-align:center; }
+.stream-badge      { display:inline-block;padding:10px 28px;border-radius:30px;font-size:18px;font-weight:800;background:linear-gradient(90deg,var(--purple),var(--purple2));color:white;margin-bottom:12px;box-shadow:0 6px 20px rgba(123,44,255,.4); }
+.result-grid       { display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;margin-bottom:24px; }
+.res-section       { background:var(--surface);border-radius:14px;padding:20px 22px;border:1px solid var(--border); }
+.res-section h4    { font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--purple-light);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border); }
+.career-item       { padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05); }
+.career-item:last-child { border-bottom:none; }
+.career-title      { font-size:14px;font-weight:700;margin-bottom:4px;color:white; }
+.career-desc       { font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px; }
+.career-meta       { display:flex;gap:8px;flex-wrap:wrap; }
+.meta-tag          { font-size:11px;padding:3px 10px;border-radius:10px;background:rgba(123,44,255,.15);color:var(--purple-light);border:1px solid rgba(123,44,255,.25); }
+.skill-item        { display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05); }
+.skill-item:last-child { border-bottom:none; }
+.skill-dot         { width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;margin-top:5px; }
+.skill-name        { font-size:13px;font-weight:700;margin-bottom:3px; }
+.skill-how         { font-size:12px;color:var(--muted);line-height:1.5; }
+.college-item      { display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05); }
+.college-item:last-child { border-bottom:none; }
+.college-name      { font-size:13px;font-weight:700; }
+.college-type      { font-size:11px;color:var(--muted); }
+.college-stream    { font-size:11px;padding:3px 10px;border-radius:10px;background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.2);white-space:nowrap; }
+.motivational      { background:linear-gradient(90deg,rgba(0,230,118,.1),rgba(123,44,255,.1));border-left:4px solid var(--green);border-radius:0 12px 12px 0;padding:18px 22px;font-size:14px;line-height:1.7;color:#ddd;font-style:italic; }
+
+/* ── Loading ── */
+.cg-loader         { text-align:center;padding:60px 20px; }
+.cg-spinner        { width:56px;height:56px;border:4px solid rgba(123,44,255,.2);border-top-color:var(--purple);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px; }
+@keyframes spin     { to{transform:rotate(360deg)} }
+
+/* ── Misc ── */
+.past-banner       { background:rgba(255,170,0,.1);border:1px solid rgba(255,170,0,.25);border-radius:10px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;font-size:13px;color:var(--amber); }
+</style>
+{% endblock %}
+
+{% block body %}
+<!-- Topbar -->
+<div class="cg-topbar">
+  <span class="cg-brand">🎓 Student Performance System</span>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span style="font-size:13px;color:var(--purple-light);">
+      {% if role == "student" %}🎓{% else %}👨‍👩‍👧{% endif %} {{ session.username }}
+    </span>
+    <a href="/logout" class="btn btn-outline btn-sm btn-round">Logout</a>
+  </div>
+</div>
+
+<div class="cg-layout">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">{% if role == "student" %}Student{% else %}Parent{% endif %} Portal</div>
+    {% if role == "student" %}
+      <a href="/student">📊 My Dashboard</a>
+      <a href="/student/guidance">🚀 Success Guidance</a>
+      <a href="/career-guidance" class="active">🎯 Career Guidance</a>
+    {% else %}
+      <a href="/parent">📊 Student Progress</a>
+      <a href="/parent/guidance">🚀 Success Guidance</a>
+      <a href="/career-guidance" class="active">🎯 Career Guidance</a>
+    {% endif %}
+    <div class="divider"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
+
+  <!-- Main Page -->
+  <div class="page">
+    <div class="container">
+      <h1>🎯 AI Career Guidance</h1>
+      <p class="page-sub">Answer a few questions — our AI combines your interests with your academic data to suggest the best path after 10th.</p>
+
+      <!-- Past suggestion banner -->
+      {% if past %}
+      <div class="past-banner">
+        <span>⏱ You have a previous career suggestion from {{ past.created_at[:10] }}. Scroll down or retake the quiz for a fresh analysis.</span>
+        <button onclick="showPastResult()" class="btn btn-sm btn-outline" style="white-space:nowrap;">View Previous ↓</button>
+      </div>
+      {% endif %}
+
+      <!-- Stepper -->
+      <div class="stepper" id="stepper">
+        <div class="step active" id="step-tab-1"><span class="snum">📚</span>Academics</div>
+        <div class="step"        id="step-tab-2"><span class="snum">❤️</span>Interests</div>
+        <div class="step"        id="step-tab-3"><span class="snum">🧠</span>Self-Assessment</div>
+        <div class="step"        id="step-tab-4"><span class="snum">🚀</span>Results</div>
+      </div>
+
+      <!-- STEP 1 — Academics (auto-filled from marks) -->
+      <div id="step-1">
+        <div class="q-card">
+          <span class="q-label">📊 Your Academic Profile (Auto-filled from your records)</span>
+          {% if student %}
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:8px;">
+            {% set items = [
+              ("Attendance", student.Attendence|string + "%"),
+              ("Study Hours/Day", student.Study_hours),
+              ("Internal Test 1", student["internal_test 1"]),
+              ("Internal Test 2", student["internal_test 2"]),
+              ("Assignment Score", student.Assignment_score),
+              ("Previous Score", student.Previous_Exam_Score),
+            ] %}
+            {% for label, val in items %}
+            <div style="background:var(--surface2);border-radius:8px;padding:12px 14px;text-align:center;">
+              <div style="font-size:11px;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.4px;">{{ label }}</div>
+              <div style="font-size:20px;font-weight:bold;">{{ val }}</div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div style="color:var(--muted);font-size:13px;padding:12px;">⚠ Your academic records haven't been added yet. The AI will use your questionnaire responses only.</div>
+          {% endif %}
+        </div>
+
+        <div class="q-card">
+          <span class="q-label">📖 Which subjects do you enjoy the most?</span>
+          <span class="q-sublabel">Select all that apply</span>
+          <div class="chip-group" id="fav_subjects">
+            {% for s in ["Mathematics","Physics","Chemistry","Biology","History","Geography","Economics","Computer Science","English","Kannada/Hindi","Accounts","Business Studies","Drawing / Art","Physical Education"] %}
+            <div class="chip" onclick="toggleChip(this,'fav_subjects')">{{ s }}</div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="q-card">
+          <span class="q-label">😣 Which subjects do you find most difficult?</span>
+          <div class="chip-group" id="disliked_subjects">
+            {% for s in ["Mathematics","Physics","Chemistry","Biology","History","Geography","Economics","Computer Science","English","Accounts"] %}
+            <div class="chip" onclick="toggleChip(this,'disliked_subjects')">{{ s }}</div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;margin-top:10px;">
+          <button class="btn btn-primary btn-round" onclick="goStep(2)">Next: Interests →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2 — Interests -->
+      <div id="step-2" style="display:none;">
+        <div class="q-card">
+          <span class="q-label">🎮 What are your hobbies and interests?</span>
+          <div class="chip-group" id="hobbies">
+            {% for h in ["Coding / Programming","Drawing / Painting","Music / Singing","Sports / Fitness","Reading / Writing","Cooking","Photography","Gaming","Dancing","Debating / Public Speaking","Volunteering / Social Work","Science Experiments","Business / Trading","Travelling","Robotics / Electronics"] %}
+            <div class="chip" onclick="toggleChip(this,'hobbies')">{{ h }}</div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="q-card">
+          <span class="q-label">💼 What kind of work do you prefer?</span>
+          <div class="chip-group" id="work_style">
+            {% for w in ["Working with people / teamwork","Working alone / independently","Outdoor / field work","Office / desk work","Creative / artistic work","Technical / hands-on work","Research & analysis","Teaching / mentoring","Business / entrepreneurship","Government / service"] %}
+            <div class="chip" onclick="toggleChip(this,'work_style')">{{ w }}</div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="q-card">
+          <span class="q-label">🌟 What is your career dream or aspiration?</span>
+          <span class="q-sublabel">Type freely — e.g. "I want to become a doctor" or "I want to start my own company"</span>
+          <textarea id="career_dream" rows="3" placeholder="Write your dream here..." style="width:100%;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--text);font-size:14px;outline:none;resize:vertical;"></textarea>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:10px;">
+          <button class="btn btn-outline btn-round" onclick="goStep(1)">← Back</button>
+          <button class="btn btn-primary btn-round" onclick="goStep(3)">Next: Self Assessment →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 — Self Assessment -->
+      <div id="step-3" style="display:none;">
+        <div class="q-card">
+          <span class="q-label">💪 What are your personal strengths?</span>
+          <div class="chip-group" id="strengths">
+            {% for s in ["Good at memorizing","Strong logical thinking","Creative & imaginative","Good communicator","Good at maths","Fast learner","Patient & detail-oriented","Leadership skills","Empathetic / good listener","Disciplined & hardworking","Good at sports","Good at art / design"] %}
+            <div class="chip" onclick="toggleChip(this,'strengths')">{{ s }}</div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="q-card">
+          <span class="q-label">😓 What are your personal weaknesses? (Be honest — the AI uses this to help you improve)</span>
+          <div class="chip-group" id="weaknesses">
+            {% for w in ["Easily distracted","Poor time management","Weak in Mathematics","Weak in languages","Lack of confidence","Exam anxiety","Procrastination","Poor concentration","Difficulty with memorization","Not good with technology"] %}
+            <div class="chip" onclick="toggleChip(this,'weaknesses')">{{ w }}</div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="q-card">
+          <span class="q-label">🎓 Are you willing to study for 4+ years after 10th (college degree)?</span>
+          <div class="chip-group" id="higher_study">
+            <div class="chip" onclick="selectOne(this,'higher_study')">Yes, definitely</div>
+            <div class="chip" onclick="selectOne(this,'higher_study')">Maybe, depends on the field</div>
+            <div class="chip" onclick="selectOne(this,'higher_study')">Prefer to finish quickly (diploma/skill course)</div>
+            <div class="chip" onclick="selectOne(this,'higher_study')">Want to start working as soon as possible</div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <span class="q-label">🛠 Are you open to a vocational diploma or polytechnic course?</span>
+          <div class="chip-group" id="diploma_ok">
+            <div class="chip" onclick="selectOne(this,'diploma_ok')">Yes, very open to it</div>
+            <div class="chip" onclick="selectOne(this,'diploma_ok')">Open if it leads to a good career</div>
+            <div class="chip" onclick="selectOne(this,'diploma_ok')">Prefer traditional college</div>
+            <div class="chip" onclick="selectOne(this,'diploma_ok')">Not sure</div>
+          </div>
+        </div>
+
+        <div class="q-card">
+          <span class="q-label">💰 Family financial background (optional — helps give realistic suggestions)</span>
+          <div class="chip-group" id="financial">
+            <div class="chip" onclick="selectOne(this,'financial')">Can afford any college</div>
+            <div class="chip" onclick="selectOne(this,'financial')">Prefer government / low-fee colleges</div>
+            <div class="chip" onclick="selectOne(this,'financial')">Need scholarship or government quota</div>
+            <div class="chip" onclick="selectOne(this,'financial')">Prefer not to say</div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:10px;">
+          <button class="btn btn-outline btn-round" onclick="goStep(2)">← Back</button>
+          <button class="btn btn-primary btn-round" style="padding:12px 30px;font-size:15px;" onclick="submitQuestionnaire()">🚀 Get My Career Suggestion</button>
+        </div>
+      </div>
+
+      <!-- STEP 4 — Result -->
+      <div id="step-4" style="display:none;">
+
+        <!-- Loader -->
+        <div class="cg-loader" id="cg-loader">
+          <div class="cg-spinner"></div>
+          <div style="font-size:16px;font-weight:bold;margin-bottom:8px;">Analysing your profile…</div>
+          <p style="color:var(--muted);font-size:13px;">Our AI is combining your marks and interests to find the best career path for you.</p>
+        </div>
+
+        <!-- Result container (hidden until loaded) -->
+        <div id="cg-result" style="display:none;"></div>
+
+      </div>
+
+      <!-- Past Result (shown when banner button clicked) -->
+      {% if past %}
+      <script type="application/json" id="past-json-data">{{ past.suggestion_json | safe }}</script>
+      <div id="past-result-section" style="display:none;margin-top:24px;">
+        <div style="font-size:13px;font-weight:700;color:var(--amber);margin-bottom:12px;">⏱ Previous Career Suggestion ({{ past.created_at[:10] }})</div>
+        <div id="past-result-html"></div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Chip Logic ──────────────────────────────────────────────────
+function toggleChip(el, group) {
+  el.classList.toggle('selected');
+}
+function selectOne(el, group) {
+  document.querySelectorAll(`#${group} .chip`).forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function getChipValues(groupId) {
+  return [...document.querySelectorAll(`#${groupId} .chip.selected`)].map(c => c.textContent.trim());
+}
+
+// ── Stepper ─────────────────────────────────────────────────────
+function goStep(n) {
+  for(let i=1;i<=4;i++){
+    document.getElementById(`step-${i}`).style.display = i===n ? 'block' : 'none';
+    let tab = document.getElementById(`step-tab-${i}`);
+    tab.classList.remove('active','done');
+    if(i < n) tab.classList.add('done');
+    else if(i === n) tab.classList.add('active');
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── Submit ───────────────────────────────────────────────────────
+function submitQuestionnaire() {
+  const questionnaire = {
+    fav_subjects:      getChipValues('fav_subjects').join(', '),
+    disliked_subjects: getChipValues('disliked_subjects').join(', '),
+    hobbies:           getChipValues('hobbies').join(', '),
+    work_style:        getChipValues('work_style').join(', '),
+    career_dream:      document.getElementById('career_dream').value.trim(),
+    strengths:         getChipValues('strengths').join(', '),
+    weaknesses:        getChipValues('weaknesses').join(', '),
+    higher_study:      getChipValues('higher_study').join(', '),
+    diploma_ok:        getChipValues('diploma_ok').join(', '),
+    financial:         getChipValues('financial').join(', '),
+  };
+
+  goStep(4);
+
+  fetch('/api/career-suggest', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({questionnaire})
+  })
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById('cg-loader').style.display = 'none';
+    if(data.error) {
+      document.getElementById('cg-result').innerHTML = `<div class="section" style="color:var(--red);">❌ Error: ${data.error}</div>`;
+    } else {
+      document.getElementById('cg-result').innerHTML = buildResultHTML(data.result);
+    }
+    document.getElementById('cg-result').style.display = 'block';
+  })
+  .catch(err => {
+    document.getElementById('cg-loader').style.display = 'none';
+    document.getElementById('cg-result').innerHTML = `<div class="section" style="color:var(--red);">❌ Could not connect to AI service. Please try again.</div>`;
+    document.getElementById('cg-result').style.display = 'block';
+  });
+}
+
+// ── Build Result HTML ────────────────────────────────────────────
+function buildResultHTML(r) {
+  // Stream color
+  const streamColors = {
+    'Science':   '#7b2cff',
+    'Commerce':  '#0099ff',
+    'Arts':      '#ff7b00',
+    'Diploma':   '#00b894',
+    'Vocational':'#00b894',
+  };
+  const streamKey = Object.keys(streamColors).find(k => (r.recommended_stream||'').includes(k)) || 'Science';
+  const col = streamColors[streamKey] || '#7b2cff';
+
+  // Career paths
+  const careerHTML = (r.career_paths||[]).map(c => `
+    <div class="career-item">
+      <div class="career-title">🎯 ${c.title}</div>
+      <div class="career-desc">${c.description}</div>
+      <div class="career-meta">
+        ${c.entrance_exam && c.entrance_exam !== 'None' ? `<span class="meta-tag">📝 ${c.entrance_exam}</span>` : ''}
+        <span class="meta-tag">⏱ ${c.years_required}</span>
+      </div>
+    </div>
+  `).join('');
+
+  // Skill gaps
+  const skillHTML = (r.skill_gaps||[]).map(s => `
+    <div class="skill-item">
+      <div class="skill-dot"></div>
+      <div>
+        <div class="skill-name">${s.skill}</div>
+        <div class="skill-how">${s.how_to_improve}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Colleges
+  const collegeHTML = (r.colleges_to_explore||[]).map(c => `
+    <div class="college-item">
+      <div>
+        <div class="college-name">${c.name}</div>
+        <div class="college-type">${c.type}</div>
+      </div>
+      <span class="college-stream">${c.for_stream}</span>
+    </div>
+  `).join('');
+
+  return `
+    <div class="result-hero">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;">Recommended Stream After 10th</div>
+      <div class="stream-badge" style="background:linear-gradient(90deg,${col},${col}99);">${r.recommended_stream}</div>
+      <p style="color:#ddd;font-size:14px;max-width:620px;margin:0 auto;line-height:1.7;">${r.stream_reason}</p>
+    </div>
+
+    <div class="result-grid">
+      <div class="res-section">
+        <h4>🎯 Career Paths</h4>
+        ${careerHTML || '<p style="color:var(--muted);font-size:13px;">No career paths generated.</p>'}
+      </div>
+      <div>
+        <div class="res-section" style="margin-bottom:18px;">
+          <h4>📈 Skill Gaps to Bridge</h4>
+          ${skillHTML || '<p style="color:var(--muted);font-size:13px;">No skill gaps found.</p>'}
+        </div>
+        <div class="res-section">
+          <h4>🏫 Colleges to Explore</h4>
+          ${collegeHTML || '<p style="color:var(--muted);font-size:13px;">No colleges listed.</p>'}
+        </div>
+      </div>
+    </div>
+
+    <div class="motivational">
+      💬 <b>A Note for You:</b><br>${r.motivational_note}
+    </div>
+
+    <div style="text-align:center;margin-top:24px;">
+      <button class="btn btn-outline btn-round" onclick="retakeQuiz()" style="margin-right:10px;">🔄 Retake Quiz</button>
+      <button class="btn btn-primary btn-round" onclick="window.print()">🖨 Print / Save</button>
+    </div>
+  `;
+}
+
+function retakeQuiz() {
+  goStep(1);
+  document.getElementById('cg-result').style.display = 'none';
+  document.getElementById('cg-loader').style.display = 'block';
+}
+
+// ── Past Result ─────────────────────────────────────────────────
+function showPastResult() {
+  const el = document.getElementById('past-json-data');
+  if (!el) return;
+  const pastData = JSON.parse(el.textContent);
+  const sec = document.getElementById('past-result-section');
+  sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+  document.getElementById('past-result-html').innerHTML = buildResultHTML(pastData);
+  if(sec.style.display === 'block') sec.scrollIntoView({behavior:'smooth'});
+}
+</script>
+{% endblock %}

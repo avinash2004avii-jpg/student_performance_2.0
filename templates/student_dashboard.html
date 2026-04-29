@@ -14,6 +14,7 @@
     <div class="sidebar-logo">Student Portal</div>
     <a href="/student" class="active">📊 My Dashboard</a>
     <a href="/student/guidance">🚀 Success Guidance</a>
+    <a href="/career-guidance">🎯 Career Guidance</a>
     <div class="divider"></div>
     <a href="/logout">🚪 Logout</a>
   </nav>
@@ -115,6 +116,15 @@
         <p style="color:var(--muted);font-size:13px">No improvement tips needed right now. Keep studying consistently!</p>
       </div>
       {% endif %}
+
+      <!-- Career Guidance CTA -->
+      <div class="section" style="background:linear-gradient(135deg,rgba(123,44,255,0.15),rgba(0,230,118,0.08));border:1px solid rgba(123,44,255,0.3);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div>
+          <div style="font-size:20px;font-weight:bold;margin-bottom:6px">🎯 Discover Your Career Path</div>
+          <p style="color:var(--muted);font-size:13px;max-width:500px">Not sure what to do after 10th? Take our AI-powered Career Guidance quiz — get stream suggestions (Science / Commerce / Arts / Diploma), career paths, entrance exams, and more.</p>
+        </div>
+        <a href="/career-guidance" class="btn btn-primary btn-round" style="white-space:nowrap;padding:12px 28px;font-size:14px;">🚀 Start Career Quiz</a>
+      </div>
 
       {% else %}
       <!-- Student not found in CSV -->

@@ -2207,5 +2207,309 @@ def parent_guidance():
             insights = generate_advanced_insights(student_data)
     return render_template("guidance.html", student=student_data, insights=insights, role="parent")
 
+
+# ── Career Guidance ───────────────────────────────────────────────
+@app.route("/career-guidance")
+def career_guidance_page():
+    """Serve career guidance page for student or parent."""
+    if "user_id" not in session:
+        flash("Please log in to continue.", "warning")
+        return redirect(url_for("login_page"))
+    role = session.get("role")
+    if role not in ("student", "parent"):
+        flash("Access denied.", "danger")
+        return redirect(url_for("login_page"))
+
+    student_data = None
+    past = None
+    if role == "student":
+        rec = db.get_student_by_user_id(session["user_id"])
+        if rec:
+            student_data = get_student_by_id(rec["student_code"])
+            past = db.get_latest_career_suggestion(rec["student_code"])
+    else:
+        rec = db.get_parent_by_user_id(session["user_id"])
+        if rec:
+            student_data = get_student_by_id(rec["student_code"])
+            past = db.get_latest_career_suggestion(rec["student_code"])
+
+    return render_template("career_guidance.html",
+                           student=student_data, past=past, role=role)
+
+
+
+
+def rule_based_career_suggestion(q, student_data):
+    """Smart rule-based fallback when Gemini quota is exhausted."""
+    import json
+
+    fav = q.get("fav_subjects", "").lower()
+    hobbies = q.get("hobbies", "").lower()
+    work = q.get("work_style", "").lower()
+    dream = q.get("career_dream", "").lower()
+    higher = q.get("higher_study", "").lower()
+    diploma = q.get("diploma_ok", "").lower()
+    strengths = q.get("strengths", "").lower()
+    weaknesses = q.get("weaknesses", "").lower()
+    financial = q.get("financial", "").lower()
+
+    score = predict_score(student_data) if student_data else 60
+
+    # ── Stream Decision ──────────────────────────────────────────
+    science_score = sum([
+        "mathematics" in fav, "physics" in fav, "chemistry" in fav,
+        "biology" in fav, "computer" in fav,
+        "coding" in hobbies, "robotics" in hobbies,
+        "doctor" in dream, "engineer" in dream, "scientist" in dream,
+        "technical" in work, "research" in work,
+        "logical" in strengths,
+    ])
+    commerce_score = sum([
+        "economics" in fav, "accounts" in fav, "business" in fav,
+        "business" in hobbies, "trading" in hobbies,
+        "business" in dream, "entrepreneur" in dream, "ca" in dream,
+        "business" in work, "leadership" in strengths,
+    ])
+    arts_score = sum([
+        "history" in fav, "geography" in fav, "english" in fav,
+        "drawing" in hobbies, "music" in hobbies, "dancing" in hobbies,
+        "photography" in hobbies, "writing" in hobbies,
+        "creative" in strengths, "creative" in work, "artistic" in work,
+        "artist" in dream, "designer" in dream, "teacher" in dream,
+    ])
+    diploma_score = sum([
+        "finish quickly" in higher, "working as soon" in higher,
+        "very open" in diploma, "leads to" in diploma,
+        "government" in financial or "scholarship" in financial,
+        score < 60,
+    ])
+
+    scores_map = {
+        "Science": science_score,
+        "Commerce": commerce_score,
+        "Arts": arts_score,
+        "Diploma": diploma_score,
+    }
+    stream = max(scores_map, key=scores_map.get)
+    if scores_map[stream] == 0:
+        stream = "Science" if score >= 70 else "Commerce" if score >= 55 else "Diploma"
+
+    # ── Career Paths by Stream ───────────────────────────────────
+    careers_db = {
+        "Science": [
+            {"title": "Software Engineer", "description": "Design and build software systems and applications. One of the most in-demand careers in India with excellent salary prospects.", "entrance_exam": "JEE Main / KCET", "years_required": "4 years (B.E/B.Tech)"},
+            {"title": "Doctor (MBBS)", "description": "Diagnose and treat patients in hospitals or private practice. Requires dedication but offers great respect and earnings.", "entrance_exam": "NEET UG", "years_required": "5.5 years (MBBS)"},
+            {"title": "Data Scientist", "description": "Analyse large datasets to find patterns and help businesses make decisions. Fast-growing field in India.", "entrance_exam": "JEE / KCET + Specialisation", "years_required": "4 years (B.Tech + skills)"},
+            {"title": "Mechanical Engineer", "description": "Design and manufacture machines, engines, and mechanical systems used in industry and daily life.", "entrance_exam": "JEE Main / KCET", "years_required": "4 years (B.E)"},
+        ],
+        "Commerce": [
+            {"title": "Chartered Accountant (CA)", "description": "Handle taxation, auditing, and financial planning for companies and individuals. Highly respected profession in India.", "entrance_exam": "CA Foundation (ICAI)", "years_required": "4-5 years after 12th"},
+            {"title": "Business Manager (MBA)", "description": "Lead teams and manage business operations across industries. Opens doors to top corporate roles.", "entrance_exam": "CAT / MAT / CMAT", "years_required": "5 years (BBA + MBA)"},
+            {"title": "Financial Analyst", "description": "Analyse markets and investments to help companies and individuals grow their wealth.", "entrance_exam": "CFA / B.Com entrance", "years_required": "3-4 years (B.Com + certification)"},
+            {"title": "Company Secretary (CS)", "description": "Ensure a company meets legal and regulatory requirements. Good career with government and private firms.", "entrance_exam": "CS Foundation (ICSI)", "years_required": "3-4 years after 12th"},
+        ],
+        "Arts": [
+            {"title": "Graphic Designer / UI Designer", "description": "Create visual content for brands, apps, and websites. High demand in digital India.", "entrance_exam": "NID / NIFT Entrance", "years_required": "4 years (B.Des)"},
+            {"title": "Journalist / Content Writer", "description": "Write and report news, stories, and content for media houses and digital platforms.", "entrance_exam": "BJMC entrance exams", "years_required": "3 years (BA Journalism)"},
+            {"title": "Teacher / Educator", "description": "Teach and inspire the next generation in schools or colleges. Stable government jobs available.", "entrance_exam": "CTET / TET", "years_required": "3-4 years (BA + B.Ed)"},
+            {"title": "Lawyer (LLB)", "description": "Represent clients in court and provide legal advice. Good career in criminal, civil, or corporate law.", "entrance_exam": "CLAT / LSAT", "years_required": "5 years (BA LLB integrated)"},
+        ],
+        "Diploma": [
+            {"title": "Polytechnic Engineer", "description": "Work as a junior engineer in manufacturing, construction, or electronics. Quick entry into the workforce.", "entrance_exam": "Karnataka Polytechnic CET", "years_required": "3 years (Diploma)"},
+            {"title": "ITI Technician", "description": "Skilled trade professional in electrical, mechanical, or automotive fields. Government and private jobs available.", "entrance_exam": "ITI Entrance", "years_required": "1-2 years (ITI)"},
+            {"title": "Web Developer", "description": "Build websites and web applications. Can be self-taught or through a diploma course. Freelancing possible.", "entrance_exam": "None (skill-based)", "years_required": "1-2 years (Diploma/Bootcamp)"},
+            {"title": "Pharmacy Technician (D.Pharm)", "description": "Assist pharmacists in dispensing medicines. Good scope in hospitals and medical shops.", "entrance_exam": "D.Pharm CET Karnataka", "years_required": "2 years (D.Pharm)"},
+        ],
+    }
+
+    # ── Skill Gaps ───────────────────────────────────────────────
+    skill_gaps = []
+    if "mathematics" in weaknesses or score < 60:
+        skill_gaps.append({"skill": "Mathematical Reasoning", "how_to_improve": "Practice 10 problems daily from RS Aggarwal or NCERT. Use Khan Academy for free video explanations."})
+    if "time management" in weaknesses or "procrastination" in weaknesses:
+        skill_gaps.append({"skill": "Time Management", "how_to_improve": "Use the Pomodoro technique — 25 min study, 5 min break. Make a weekly timetable and stick to it."})
+    if "confidence" in weaknesses or "exam anxiety" in weaknesses:
+        skill_gaps.append({"skill": "Exam Confidence", "how_to_improve": "Take mock tests regularly. Discuss doubts with teachers immediately. Practice deep breathing before exams."})
+    if "language" in weaknesses or "english" in weaknesses:
+        skill_gaps.append({"skill": "English Communication", "how_to_improve": "Read one English newspaper article daily. Watch English YouTube videos with subtitles. Speak in English for 10 min/day."})
+    if not skill_gaps:
+        skill_gaps.append({"skill": "Consistent Study Habit", "how_to_improve": "Maintain a regular 3-4 hour daily study schedule even when not near exams."})
+        skill_gaps.append({"skill": "Critical Thinking", "how_to_improve": "Solve puzzle-based problems, read case studies, and question the 'why' behind every concept you learn."})
+    skill_gaps.append({"skill": "Digital Literacy", "how_to_improve": "Learn basics of MS Office, email etiquette, and one productivity tool like Notion or Google Workspace."})
+
+    # ── Colleges ─────────────────────────────────────────────────
+    colleges_db = {
+        "Science": [
+            {"name": "RV College of Engineering, Bengaluru", "type": "Private (Autonomous)", "for_stream": "Science - Engineering"},
+            {"name": "BMS College of Engineering, Bengaluru", "type": "Private (Autonomous)", "for_stream": "Science - Engineering"},
+            {"name": "Mysore Medical College, Mysuru", "type": "Government", "for_stream": "Science - Medicine"},
+            {"name": "NIE Institute of Technology, Mysuru", "type": "Private", "for_stream": "Science - Engineering"},
+        ],
+        "Commerce": [
+            {"name": "Christ University, Bengaluru", "type": "Private (Deemed)", "for_stream": "Commerce / BBA / MBA"},
+            {"name": "St. Joseph's College of Commerce, Bengaluru", "type": "Private (Autonomous)", "for_stream": "B.Com / Commerce"},
+            {"name": "Bangalore University (affiliated colleges)", "type": "Government", "for_stream": "B.Com / BBA"},
+            {"name": "ICAI Regional Office, Bengaluru", "type": "Professional Body", "for_stream": "CA Foundation"},
+        ],
+        "Arts": [
+            {"name": "Maharaja's College, Mysuru", "type": "Government", "for_stream": "Arts / Humanities"},
+            {"name": "Christ University, Bengaluru", "type": "Private (Deemed)", "for_stream": "BA / Journalism / Psychology"},
+            {"name": "National Institute of Design (NID), Bengaluru", "type": "Government (Autonomous)", "for_stream": "Design / Arts"},
+            {"name": "Manipal University, Manipal", "type": "Private (Deemed)", "for_stream": "Mass Communication / Arts"},
+        ],
+        "Diploma": [
+            {"name": "Government Polytechnic, Bengaluru", "type": "Government Polytechnic", "for_stream": "Diploma Engineering"},
+            {"name": "VVIET Polytechnic, Mysuru", "type": "Private Polytechnic", "for_stream": "Diploma Engineering"},
+            {"name": "Government ITI, Hubballi", "type": "Government ITI", "for_stream": "Vocational / Trade"},
+            {"name": "KSOU (Karnataka State Open University)", "type": "Government Open University", "for_stream": "Flexible Diploma / Degree"},
+        ],
+    }
+
+    # ── Stream Reason ────────────────────────────────────────────
+    reasons = {
+        "Science": f"Based on your interest in {fav or 'technical subjects'} and your academic profile, Science is the best fit for you. It opens doors to engineering, medicine, and technology — some of the highest-paying fields in India. Your predicted score of {score}/100 shows you have the foundation to succeed.",
+        "Commerce": f"Your interest in {fav or 'economics and business'} combined with your work preference makes Commerce the right choice. It leads to careers in CA, MBA, and finance — growing fields with excellent opportunities across India.",
+        "Arts": f"Your creative interests in {hobbies or 'arts and expression'} and strength in humanities subjects make Arts the ideal stream. It offers diverse career paths in design, media, law, and education — often underrated but very rewarding.",
+        "Diploma": f"Given your preference to enter the workforce quickly and your practical strengths, a Diploma or vocational course is the smartest path. It gets you job-ready in 1-3 years with strong industry demand, especially in Karnataka's manufacturing and tech sectors.",
+    }
+
+    notes = {
+        "Science": "Remember, choosing Science doesn't mean you must become an engineer or doctor — it keeps all options open. Focus on building your basics in Maths and Science now, and the right career will follow. You have great potential!",
+        "Commerce": "Commerce is not just about accounts — it's about understanding how the world works economically. Stay consistent, explore internships early, and don't be afraid to take up business competitions. You're on a great path!",
+        "Arts": "Arts students often become the most creative and impactful professionals. Don't let anyone underestimate your stream — designers, lawyers, journalists, and educators shape society. Believe in your unique strengths!",
+        "Diploma": "A diploma is not a compromise — it's a smart, practical choice that gets you earning faster than most. Many successful engineers and entrepreneurs started with a diploma. Stay focused and keep upgrading your skills!",
+    }
+
+    return {
+        "recommended_stream": stream,
+        "stream_reason": reasons[stream],
+        "career_paths": careers_db[stream],
+        "skill_gaps": skill_gaps[:4],
+        "colleges_to_explore": colleges_db[stream],
+        "motivational_note": notes[stream],
+    }
+
+
+@app.route("/api/career-suggest", methods=["POST"])
+def career_suggest_api():
+    """Generate AI career suggestion from questionnaire + marks."""
+    if "user_id" not in session:
+        return jsonify({"error": "Not logged in"}), 401
+
+    role = session.get("role")
+    data = request.get_json(force=True)
+
+    # Resolve student
+    student_code = None
+    student_data = None
+    if role == "student":
+        rec = db.get_student_by_user_id(session["user_id"])
+        if rec:
+            student_code = rec["student_code"]
+            student_data = get_student_by_id(student_code)
+    elif role == "parent":
+        rec = db.get_parent_by_user_id(session["user_id"])
+        if rec:
+            student_code = rec["student_code"]
+            student_data = get_student_by_id(student_code)
+
+    # Build marks context
+    marks_ctx = ""
+    if student_data:
+        score = predict_score(student_data)
+        marks_ctx = f"""
+Student Academic Profile:
+- Predicted Final Score: {score}/100  ({risk_label(score)})
+- Attendance: {student_data.get('Attendence', 'N/A')}%
+- Study Hours/Day: {student_data.get('Study_hours', 'N/A')}
+- Internal Test 1: {student_data.get('internal_test 1', 'N/A')}
+- Internal Test 2: {student_data.get('internal_test 2', 'N/A')}
+- Assignment Score: {student_data.get('Assignment_score', 'N/A')}
+- Previous Exam Score: {student_data.get('Previous_Exam_Score', 'N/A')}
+- Final Exam Score: {student_data.get('Final_Exam_Score', 'N/A')}
+"""
+
+    # Build questionnaire context
+    q = data.get("questionnaire", {})
+    q_ctx = f"""
+Student Questionnaire Responses:
+- Favourite subjects: {q.get('fav_subjects', 'Not specified')}
+- Disliked subjects: {q.get('disliked_subjects', 'Not specified')}
+- Hobbies / Interests: {q.get('hobbies', 'Not specified')}
+- Preferred work style: {q.get('work_style', 'Not specified')}
+- Career dream / aspiration: {q.get('career_dream', 'Not specified')}
+- Willing to study 4+ more years (degree)?: {q.get('higher_study', 'Not specified')}
+- Interested in vocational/diploma?: {q.get('diploma_ok', 'Not specified')}
+- Strengths (self-assessed): {q.get('strengths', 'Not specified')}
+- Weaknesses (self-assessed): {q.get('weaknesses', 'Not specified')}
+- Family financial background (optional): {q.get('financial', 'Not specified')}
+"""
+
+    prompt = f"""You are an expert Indian high school career counsellor with 20 years of experience.
+A student has completed an interest questionnaire and their academic marks are available.
+Based on BOTH the questionnaire AND the academic data below, give a thorough, personalised career guidance report.
+
+{marks_ctx}
+{q_ctx}
+
+Respond ONLY with a valid JSON object (no markdown, no extra text) with this exact structure:
+{{
+  "recommended_stream": "Science / Commerce / Arts / Diploma / Vocational",
+  "stream_reason": "2-3 sentence explanation why this stream fits them",
+  "career_paths": [
+    {{"title": "Career title", "description": "2 sentence description", "entrance_exam": "Exam name or None", "years_required": "X years after 10th"}}
+  ],
+  "skill_gaps": [
+    {{"skill": "Skill name", "how_to_improve": "Short actionable advice"}}
+  ],
+  "colleges_to_explore": [
+    {{"name": "College / Institute name", "type": "Government/Private/Polytechnic", "for_stream": "Stream"}}
+  ],
+  "motivational_note": "A warm, encouraging 2-3 sentence personalised message to the student"
+}}
+
+Include 3-4 career paths, 3-4 skill gaps, and 3-4 colleges. Make it India-specific and realistic.
+"""
+
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+        raw = response.text.strip()
+        # Strip markdown fences if any
+        if raw.startswith("```"):
+            raw = raw.split("```")[1]
+            if raw.startswith("json"):
+                raw = raw[4:]
+        import json
+        result = json.loads(raw)
+
+        # Save to DB
+        if student_code:
+            import json as _json
+            db.save_career_suggestion(
+                student_code,
+                _json.dumps(q),
+                _json.dumps(result)
+            )
+
+        return jsonify({"success": True, "result": result})
+    except Exception as e:
+        traceback.print_exc()
+        # ── Fallback: use rule-based engine if Gemini quota exhausted ──
+        if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e) or "quota" in str(e).lower():
+            import json as _json
+            result = rule_based_career_suggestion(q, student_data)
+            if student_code:
+                db.save_career_suggestion(
+                    student_code,
+                    _json.dumps(q),
+                    _json.dumps(result)
+                )
+            return jsonify({"success": True, "result": result, "fallback": True})
+        return jsonify({"error": str(e)}), 500
+
+
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

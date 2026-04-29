@@ -20,6 +20,7 @@
     <div class="sidebar-logo">Parent Portal</div>
     <a href="/parent" class="active">📊 Student progress</a>
     <a href="/parent/guidance">🚀 Success Guidance</a>
+    <a href="/career-guidance">🎯 Career Guidance</a>
     <div class="divider"></div>
     <a href="/logout">🚪 Logout</a>
   </nav>
@@ -163,7 +164,7 @@
         {% if feedbacks %}
         <div style="display:flex; flex-direction:column; gap:12px;">
             {% for f in feedbacks %}
-            <div style="background:rgba(255,255,255,0.02); padding:15px; border-radius:10px; border:1px solid {% if f.is_read_by_parent == 0 and not show_recycle %}#7c3aed{% else %}rgba(255,255,255,0.05){% endif %}; position:relative;">
+            <div style="background:rgba(255,255,255,0.02); padding:15px; border-radius:10px; border:1px solid {{ 'rgba(124,58,237,0.6)' if (f.is_read_by_parent == 0 and not show_recycle) else 'rgba(255,255,255,0.05)' }}; position:relative;">
                 {% if f.is_read_by_parent == 0 and not show_recycle %}
                 <span style="position:absolute; top:10px; right:10px; background:#7c3aed; color:#fff; font-size:10px; padding:2px 6px; border-radius:10px; font-weight:bold;">NEW</span>
                 {% endif %}
@@ -213,6 +214,15 @@
         {% endif %}
       </div>
       {% endif %}
+
+      <!-- Career Guidance CTA -->
+      <div class="section" style="background:linear-gradient(135deg,rgba(123,44,255,0.15),rgba(0,230,118,0.08));border:1px solid rgba(123,44,255,0.3);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-top:24px;">
+        <div>
+          <div style="font-size:20px;font-weight:bold;margin-bottom:6px">🎯 Career Guidance for Your Child</div>
+          <p style="color:var(--muted);font-size:13px;max-width:500px">Help your child discover the right path after 10th! Our AI combines your child's academic data with an interest questionnaire to suggest the best stream, career options, entrance exams and colleges.</p>
+        </div>
+        <a href="/career-guidance" class="btn btn-primary btn-round" style="white-space:nowrap;padding:12px 28px;font-size:14px;">🚀 Explore Career Paths</a>
+      </div>
 
     </div>
   </div>

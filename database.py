@@ -83,6 +83,14 @@ def create_tables():
         logged_by    TEXT    NOT NULL,
         log_date     TEXT    DEFAULT (date('now'))
     );
+
+    CREATE TABLE IF NOT EXISTS career_suggestions (
+        id              INTEGER PRIMARY KEY AUTOINCREMENT,
+        student_code    TEXT    NOT NULL,
+        questionnaire   TEXT    NOT NULL,
+        suggestion_json TEXT    NOT NULL,
+        created_at      TEXT    DEFAULT (datetime('now'))
+    );
     """)
 
     # migrate existing db if status column missing
@@ -425,6 +433,36 @@ def get_parent_email_by_student_code(student_code):
     """, (student_code,)).fetchone()
     conn.close()
     return r["email"] if r else None
+
+def save_career_suggestion(student_code, questionnaire_json, suggestion_json):
+    conn = get_conn()
+    conn.execute(
+        "INSERT INTO career_suggestions (student_code, questionnaire, suggestion_json) VALUES (?,?,?)",
+        (student_code, questionnaire_json, suggestion_json)
+    )
+    conn.commit()
+    conn.close()
+
+
+def get_latest_career_suggestion(student_code):
+    conn = get_conn()
+    r = conn.execute(
+        "SELECT * FROM career_suggestions WHERE student_code=? ORDER BY created_at DESC LIMIT 1",
+        (student_code,)
+    ).fetchone()
+    conn.close()
+    return dict(r) if r else None
+
+
+def get_all_career_suggestions(student_code):
+    conn = get_conn()
+    rows = conn.execute(
+        "SELECT * FROM career_suggestions WHERE student_code=? ORDER BY created_at DESC",
+        (student_code,)
+    ).fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
 
 if __name__ == "__main__":
     create_tables()

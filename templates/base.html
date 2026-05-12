@@ -12,6 +12,99 @@
   --green:#00e676;--red:#ff4d94;--amber:#ffaa00;
   --text:#ffffff;--muted:#bbb;--border:rgba(138,43,226,.35);
 }
+body.light-mode {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --surface2: #f1f5f9;
+  --purple-light: #7c3aed;
+  --text: #1e293b;
+  --muted: #64748b;
+  --border: #cbd5e1;
+}
+/* Light mode specific elements */
+body.light-mode th {
+  background: #f1f5f9;
+  color: #7c3aed;
+}
+body.light-mode tr:hover {
+  background: #f8fafc;
+}
+body.light-mode td, body.light-mode th {
+  border-bottom: 1px solid #cbd5e1;
+}
+body.light-mode .form-group input, body.light-mode .form-group select, body.light-mode .form-group textarea, body.light-mode .search-input {
+  background: #ffffff;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+}
+body.light-mode .form-group input:focus, body.light-mode .form-group select:focus, body.light-mode .search-input:focus {
+  border-color: #7c3aed;
+}
+body.light-mode .topbar {
+  background: linear-gradient(90deg, #7c3aed, #9333ea);
+  box-shadow: 0 2px 12px rgba(124, 58, 237, 0.2);
+}
+body.light-mode .sidebar {
+  background: #ffffff;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+}
+body.light-mode .sidebar-logo {
+  color: #1e293b;
+}
+body.light-mode .sidebar a {
+  color: #64748b;
+}
+body.light-mode .sidebar a:hover, body.light-mode .sidebar a.active {
+  background: rgba(124, 58, 237, 0.1);
+  color: #7c3aed;
+}
+body.light-mode .hero, body.light-mode .role-wrap {
+  background: radial-gradient(ellipse at top, #e2e8f0 0%, #f8fafc 100%) !important;
+}
+body.light-mode .hcard, body.light-mode .role-card, body.light-mode .auth-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+body.light-mode .hcard h3, body.light-mode .role-card h3, body.light-mode .auth-card h2 {
+  color: #1e293b;
+}
+body.light-mode .hcard p, body.light-mode .role-card p, body.light-mode .auth-sub, body.light-mode .auth-footer {
+  color: #64748b;
+}
+body.light-mode .hero h1, body.light-mode .role-wrap h1 {
+  background: linear-gradient(90deg, #1e293b, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+body.light-mode .theme-toggle {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #1e293b;
+}
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  color: var(--text);
+  transition: all 0.3s;
+}
+.theme-toggle .dot {
+  width: 12px;
+  height: 12px;
+  background: #ffaa00;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ffaa00;
+  transition: all 0.3s;
+}
 body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
 a{text-decoration:none;color:inherit}
 
@@ -130,6 +223,14 @@ tr:hover{background:var(--surface2)}
 {% block head %}{% endblock %}
 </head>
 <body>
+<script>
+  (function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      document.body.classList.add('light-mode');
+    }
+  })();
+</script>
 
 <div class="flash-wrap">
   {% for cat, msg in get_flashed_messages(with_categories=true) %}
@@ -140,6 +241,75 @@ tr:hover{background:var(--surface2)}
 {% block body %}{% endblock %}
 
 <script>
+function toggleMode() {
+  document.body.classList.toggle('light-mode');
+  const isLight = document.body.classList.contains('light-mode');
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+  updateThemeUI(isLight);
+}
+
+function updateThemeUI(isLight) {
+  const themeTextEls = document.querySelectorAll('.theme-toggle span:not(.dot)');
+  themeTextEls.forEach(el => {
+    if (el) el.textContent = isLight ? 'Dark' : 'Light';
+  });
+  const themeDots = document.querySelectorAll('.theme-toggle .dot, .theme-toggle .sun-icon');
+  themeDots.forEach(dot => {
+    if (dot) {
+      if (isLight) {
+        dot.style.background = '#7b2cff';
+        dot.style.boxShadow = '0 0 10px #7b2cff';
+      } else {
+        dot.style.background = '#ffaa00';
+        dot.style.boxShadow = '0 0 10px #ffaa00';
+      }
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const existingToggle = document.querySelector('.theme-toggle');
+  if (!existingToggle) {
+    const topbarRight = document.querySelector('.topbar-right');
+    if (topbarRight) {
+      const toggleDiv = document.createElement('div');
+      toggleDiv.className = 'theme-toggle';
+      toggleDiv.onclick = toggleMode;
+      toggleDiv.style.cssText = 'padding:6px 15px; margin-right:12px;';
+      
+      const dotDiv = document.createElement('div');
+      dotDiv.className = 'dot';
+      
+      const spanText = document.createElement('span');
+      spanText.textContent = 'Light';
+      
+      toggleDiv.appendChild(dotDiv);
+      toggleDiv.appendChild(spanText);
+      
+      topbarRight.insertBefore(toggleDiv, topbarRight.firstChild);
+    } else {
+      const toggleDiv = document.createElement('div');
+      toggleDiv.className = 'theme-toggle';
+      toggleDiv.onclick = toggleMode;
+      toggleDiv.style.cssText = 'position:fixed; bottom:24px; right:24px; z-index:9999;';
+      
+      const dotDiv = document.createElement('div');
+      dotDiv.className = 'dot';
+      
+      const spanText = document.createElement('span');
+      spanText.textContent = 'Light';
+      
+      toggleDiv.appendChild(dotDiv);
+      toggleDiv.appendChild(spanText);
+      
+      document.body.appendChild(toggleDiv);
+    }
+  }
+  
+  const isLight = document.body.classList.contains('light-mode');
+  updateThemeUI(isLight);
+});
+
 // Auto-dismiss flash messages after 4 s
 setTimeout(() => {
   document.querySelectorAll('.flash').forEach(el => {

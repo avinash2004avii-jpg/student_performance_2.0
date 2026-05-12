@@ -47,7 +47,7 @@ student_performance/
     ├── add_student.html
     ├── teacher_dashboard.html
     ├── teacher_add_student.html
-    ├── predict_single.html
+    ├── 
     ├── bulk_predict.html
     ├── students_table.html
     └── student_dashboard.html

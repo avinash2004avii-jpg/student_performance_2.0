@@ -1,0 +1,57 @@
+Line 179: "avg_internal": (it1 + it2) / 2,
+Line 228: avg_internal   = total_internal / 2
+Line 236: "avg_internal": avg_internal,
+Line 288: def generate_suggestions(score, row, class_avg=None):
+Line 310: if class_avg and score < class_avg:
+Line 311: diff = round(class_avg - score, 1)
+Line 312: tips.append(("Benchmark", f"Your predicted score is {diff} marks below the class average ({class_avg}). Try to identify subjects where you are losing marks and seek extra guidance."))
+Line 606: avg_score = round(df["Final_Exam_Score"].mean(), 1) if not df.empty else 0
+Line 614: avg_score=avg_score)
+Line 794: avg_score = round(df["display_score"].mean(), 1) if not df.empty else 0
+Line 795: avg_att = round(df["Attendence"].mean(), 1) if not df.empty else 0
+Line 808: avg_score=avg_score,
+Line 809: avg_att=avg_att,
+Line 848: class_avg = round(float(df["Final_Exam_Score"].mean()), 1) if not df.empty else 0
+Line 849: suggestions = generate_suggestions(score, student, class_avg=class_avg)
+Line 910: class_avg = round(float(df["Final_Exam_Score"].mean()), 1) if not df.empty else 0
+Line 911: suggestions = generate_suggestions(score, input_row, class_avg=class_avg)
+Line 972: elements.append(Paragraph(f"Class Average: {class_avg}", normal_style))
+Line 973: diff = round(score - class_avg, 1)
+Line 1040: avg_score = round(sum(valid_scores) / len(valid_scores), 1) if valid_scores else "—"
+Line 1046: avg_score=avg_score,
+Line 1450: suggestions, class_avg,
+Line 1478: content.append(Paragraph(f"Class Average: {class_avg}", styles["Normal"]))
+Line 1539: class_avg = round(float(df["Final_Exam_Score"].mean()), 1)
+Line 1540: benchmark_diff = round(predicted - class_avg, 1) if predicted else None
+Line 1541: pct_below = round(float((df["Final_Exam_Score"] <= predicted).mean() * 100), 1) if predicted else None
+Line 1544: suggestions = generate_suggestions(predicted, row, class_avg=class_avg) if predicted else []
+Line 1556: class_avg=class_avg,
+Line 1620: group_avg_att = [round(sum(att_data[g]["att"])/len(att_data[g]["att"]), 1) if att_data[g]["att"] else 0 for g in att_groups]
+Line 1621: group_avg_score = [round(sum(att_data[g]["score"])/len(att_data[g]["score"]), 1) if att_data[g]["score"] else 0 for g in att_groups]
+Line 1629: component_at_means = [
+Line 1630: round(at_risk["Assignment_score"].mean(), 1) if not at_risk.empty else 0,
+Line 1631: round(at_risk["Previous_Exam_Score"].mean(), 1) if not at_risk.empty else 0,
+Line 1632: round(at_risk["Attendence"].mean(), 1) if not at_risk.empty else 0,
+Line 1633: round((at_risk["internal_test 1"].mean() + at_risk["internal_test 2"].mean())/2, 1) if not at_risk.empty else 0
+Line 1636: component_safe_means = [
+Line 1637: round(stable["Assignment_score"].mean(), 1) if not stable.empty else 0,
+Line 1638: round(stable["Previous_Exam_Score"].mean(), 1) if not stable.empty else 0,
+Line 1639: round(stable["Attendence"].mean(), 1) if not stable.empty else 0,
+Line 1640: round((stable["internal_test 1"].mean() + stable["internal_test 2"].mean())/2, 1) if not stable.empty else 0
+Line 1647: avg_score = round(df["display_score"].mean(), 1) if total > 0 else 0
+Line 1648: avg_att = round(df["Attendence"].mean(), 1) if total > 0 else 0
+Line 1649: class_avg = df.groupby("Class")["display_score"].mean().round(1).to_dict() if total > 0 else {}
+Line 1651: class_labels = [f"Class {c}" for c in class_avg.keys()]
+Line 1652: class_scores = list(class_avg.values())
+Line 1655: avg_score=avg_score,
+Line 1656: avg_att=avg_att,
+Line 1665: group_avg_att_json=json.dumps(group_avg_att),
+Line 1666: group_avg_score_json=json.dumps(group_avg_score),
+Line 1668: comp_at_means_json=json.dumps(component_at_means),
+Line 1669: comp_safe_means_json=json.dumps(component_safe_means),
+Line 1704: class_avg = round(df["Final_Exam_Score"].mean(), 1) if not df.empty else 0
+Line 1740: - Benchmarks: Class Avg is {class_avg}, Top Score is {top_score}
+Line 1757: {context_text if context_text else "General system context: Class Average is " + str(class_avg)}
+Line 2020: class_avg = round(float(df["Final_Exam_Score"].mean()), 1) if not df.empty else 0
+Line 2021: suggestions = generate_suggestions(score, student, class_avg=class_avg)
+Line 2398: "Science": "Remember, choosing Science doesn't mean you must become an engineer or doctor — it keeps all options open. Focus on building your basics in Maths and Science now, and the right career will follow. You have great potential!",

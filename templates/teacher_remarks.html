@@ -1,0 +1,689 @@
+{% extends "base.html" %}
+{% block title %}Teacher Remarks{% endblock %}
+{% block body %}
+<!-- PDF Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+<style>
+:root {
+    --primary: #7c3aed;
+    --sidebar-bg: #140024;
+    --topbar-bg: #9333ea;
+    --topbar-height: 65px;
+}
+body { background: #0a0016; color: #e2e8f0; font-size: 15px; }
+.topbar { background: var(--topbar-bg) !important; height: var(--topbar-height) !important; padding: 0 30px !important; display: flex !important; align-items: center !important; justify-content: space-between !important; position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 1100; }
+.sidebar { background: var(--sidebar-bg); width: 250px !important; position: fixed; top: var(--topbar-height); left: 0; height: calc(100vh - var(--topbar-height)); z-index: 1000; padding-top: 25px !important; border-right: 1px solid rgba(255,255,255,0.05); }
+.sidebar a { display: flex; align-items: center; gap: 12px; padding: 15px 28px; font-size: 14px; color: #cbd5f5; text-decoration: none; border-left: 4px solid transparent; transition: 0.2s; }
+.sidebar a.active, .sidebar a:hover { background: linear-gradient(90deg, rgba(124, 58, 237, 0.25), transparent); color: #fff; border-left-color: #a855f7; }
+.page { margin-left: 250px; margin-top: var(--topbar-height); padding: 35px; }
+.container { max-width: 1240px; margin: 0 auto; }
+.split-container { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 20px; align-items: start; }
+@media (max-width: 900px) {
+    .split-container { grid-template-columns: 1fr; }
+}
+.section { background: rgba(255,255,255,0.02); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); }
+.filter-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+.search-input { flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 10px 15px; border-radius: 10px; color: #fff; outline: none; font-size: 14px; min-width: 150px; }
+.search-input:focus { border-color: #a855f7; }
+.select-box { background: #1f0035; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 10px 15px; border-radius: 10px; outline: none; font-size: 14px; }
+.tbl-wrap { overflow-x: auto; max-height: 600px; overflow-y: auto; }
+table { width: 100%; border-collapse: separate; border-spacing: 0 6px; }
+th { text-align: left; background: rgba(147, 51, 234, 0.12); padding: 12px; color: #a855f7; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+td { padding: 12px; background: rgba(255,255,255,0.02); transition: 0.2s; font-size: 13px; }
+tr.selected td { background: rgba(124, 58, 237, 0.15) !important; border-left: 3px solid #a855f7; }
+tr:hover td { background: rgba(255,255,255,0.04); }
+.remark-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: flex-start; }
+.remark-text { font-size: 14px; line-height: 1.5; color: #e2e8f0; }
+.remark-meta { font-size: 11px; color: #a855f7; margin-top: 6px; font-weight: 600; }
+.delete-btn { background: transparent; border: none; color: #ef4444; cursor: pointer; padding: 4px; opacity: 0.7; transition: 0.2s; }
+.delete-btn:hover { opacity: 1; transform: scale(1.1); }
+
+/* Category and Priority Badges */
+.badge-cat { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.badge-academic   { background: rgba(124, 58, 237, 0.15); color: #c084fc; border: 1px solid rgba(124, 58, 237, 0.3); }
+.badge-behavioral { background: rgba(6, 182, 212, 0.15); color: #22d3ee; border: 1px solid rgba(6, 182, 212, 0.3); }
+.badge-attendance { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+.badge-discipline { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.badge-performance{ background: rgba(234, 179, 8, 0.15); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.3); }
+.badge-feedback   { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+
+.badge-priority { display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; }
+.priority-high   { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+.priority-medium { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2); }
+.priority-low    { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
+
+/* Interactive Elements */
+.clickable-id { color: #a855f7 !important; cursor: pointer; text-decoration: underline; transition: color 0.2s; }
+.clickable-id:hover { color: #c084fc !important; text-shadow: 0 0 8px rgba(168, 85, 247, 0.4); }
+.table-row-anim { animation: fadeInRow 0.3s ease; }
+@keyframes fadeInRow {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Pagination UI */
+.pagination-container { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; background: rgba(255,255,255,0.01); padding: 12px 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.03); }
+.pagination-btn { background: #1f0035; border: 1px solid rgba(124, 58, 237, 0.3); color: #e2e8f0; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: 600; transition: 0.2s; }
+.pagination-btn:hover:not(:disabled) { background: #7c3aed; color: #fff; box-shadow: 0 0 10px rgba(124, 58, 237, 0.4); }
+.pagination-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.pagination-info { font-size: 13.5px; color: #caa9ff; }
+
+/* Modal Styles */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10, 0, 22, 0.85); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; }
+.modal-container { background: rgba(20, 0, 36, 0.98); border: 1px solid rgba(168, 85, 247, 0.4); border-radius: 24px; width: 550px; max-width: 90%; padding: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(168, 85, 247, 0.15); animation: modalSlide 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); position: relative; }
+@keyframes modalSlide { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+.modal-close-btn { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.05); border: none; color: #e2e8f0; font-size: 18px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+.modal-close-btn:hover { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+.profile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+.profile-cell { background: rgba(255,255,255,0.03); padding: 12px 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+.profile-label { font-size: 11px; color: #caa9ff; text-transform: uppercase; margin-bottom: 4px; }
+.profile-value { font-size: 15px; font-weight: 700; }
+</style>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <span style="font-size: 26px">🎓</span>
+    <span>Student Performance System</span>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-user">
+        <span style="font-size: 24px">🧑‍🏫</span>
+        <span>{{ session.username }}</span>
+    </div>
+    <a href="/logout" class="logout-btn" style="background: rgba(255,255,255,0.1); color: #fff; padding: 6px 18px; border-radius: 18px; border: 1px solid rgba(255,255,255,0.2); font-weight: 700; text-decoration: none; font-size: 13px;">Logout</a>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-logo">Teacher Panel</div>
+    <a href="/teacher">📊 Dashboard</a>
+    <a href="/teacher/analytics">📈 Analytics</a>
+    <a href="/teacher/auto_predict">⚡ Auto Predict</a>
+    <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
+    <a href="/teacher/feedback" style="position: relative;">
+        👪 Parent Feedback
+        {% if open_feedback_count and open_feedback_count > 0 %}
+        <span style="position: absolute; top: 12px; right: 20px; background: #ef4444; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold; box-shadow: 0 0 10px rgba(239,68,68,0.5);">{{ open_feedback_count }}</span>
+        {% endif %}
+    </a>
+    <a href="/teacher/remarks" class="active">💬 Teacher Remarks</a>
+    <a href="/teacher/students">👨‍🎓 All Students</a>
+    <a href="/teacher/email_alerts">📧 Email Alerts</a>
+    <a href="/teacher/absent_alerts">🔔 Absent Alerts</a>
+    <a href="/teacher/attendance_history">📚 Attendance History</a>
+    <a href="/teacher/add-student">➕ Add Student</a>
+
+    <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
+    <a href="/logout">🚪 Logout</a>
+  </nav>
+
+  <div class="page">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:35px">
+        <div>
+          <h1 style="font-size:32px; margin-bottom:6px; font-weight:800">Teacher Remarks 💬</h1>
+          <p class="page-sub" style="margin:0; opacity:0.7; font-size:17px">Give direct academic feedback and personal remarks for individual students</p>
+        </div>
+        <div style="display:flex; gap:12px">
+          <a href="/teacher/remarks/download-csv" class="btn" style="background:#10b981; color:#fff; padding:12px 24px; border-radius:10px; font-weight:bold; text-decoration:none; display:flex; align-items:center; gap:8px; box-shadow:0 4px 15px rgba(16,185,129,0.2)">
+            <span>📥</span> Download CSV
+          </a>
+          <button onclick="downloadRemarksPDF()" class="btn" style="background:#3b82f6; border:none; color:#fff; padding:12px 24px; border-radius:10px; font-weight:bold; cursor:pointer; display:flex; align-items:center; gap:8px; box-shadow:0 4px 15px rgba(59,130,246,0.2)">
+            <span>📄</span> Download PDF
+          </button>
+        </div>
+      </div>
+
+      <div class="split-container">
+        
+        <!-- Left Pane: Student List -->
+        <div class="section">
+          <h2 style="font-size: 20px; margin-bottom: 15px; font-weight: 700;">🧑‍🎓 Select Student</h2>
+          
+          <form action="/teacher/remarks" method="GET" class="filter-row">
+            <input type="text" name="q" value="{{ q }}" placeholder="Search ID..." class="search-input" autocomplete="off">
+            <select name="class" class="select-box" onchange="this.form.submit()">
+              <option value="">All Classes</option>
+              {% for c in classes %}
+              <option value="{{ c }}" {% if sel_class == c|string %}selected{% endif %}>{{ c }}</option>
+              {% endfor %}
+            </select>
+            <select name="section" class="select-box" onchange="this.form.submit()">
+              <option value="">All Sections</option>
+              {% for s in sections %}
+              <option value="{{ s }}" {% if sel_section == s|string %}selected{% endif %}>{{ s }}</option>
+              {% endfor %}
+            </select>
+          </form>
+
+          <div class="tbl-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="border-radius: 8px 0 0 8px">Student ID</th>
+                  <th>Student Name</th>
+                  <th>Class</th>
+                  <th style="border-radius: 0 8px 8px 0">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for s in students %}
+                <tr class="{% if selected_student_id == s.Student_ID|string %}selected{% endif %}">
+                  <td style="border-radius: 8px 0 0 8px"><b>{{ s.Student_ID }}</b></td>
+                  <td><b>{{ s.name }}</b></td>
+                  <td>{{ s.Class }} - {{ s.section }}</td>
+                  <td style="border-radius: 0 8px 8px 0">
+                    <a href="/teacher/remarks?student_id={{ s.Student_ID }}&q={{ q }}&class={{ sel_class }}&section={{ sel_section }}" class="btn btn-sm" style="background: #7c3aed; color: #fff; padding: 4px 12px; font-size: 11.5px; border-radius: 6px; text-decoration: none; font-weight: bold;">Select</a>
+                  </td>
+                </tr>
+                {% endfor %}
+                {% if not students %}
+                <tr>
+                  <td colspan="4" style="text-align: center; opacity: 0.5; padding: 30px;">No students found.</td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Right Pane: Remarks panel -->
+        <div class="section">
+          {% if selected_student_id %}
+          <h2 style="font-size: 20px; margin-bottom: 20px; font-weight: 700; color: #a855f7;">💬 Remarks for {{ selected_student.name or ('Student ' ~ selected_student_id) }}</h2>
+          
+          <!-- Add Remark Form -->
+          <form action="/teacher/remarks/add" method="POST" style="margin-bottom: 25px;">
+            <input type="hidden" name="student_id" value="{{ selected_student_id }}">
+            <input type="hidden" name="q" value="{{ q }}">
+            <input type="hidden" name="class" value="{{ sel_class }}">
+            <input type="hidden" name="section" value="{{ sel_section }}">
+            
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 12px;">
+              <div>
+                <label for="category" style="font-weight: 600; font-size: 13px; margin-bottom: 6px; display: block; color: #caa9ff;">Category:</label>
+                <select name="category" id="category" class="select-box" style="width: 100%;">
+                  <option value="Academic">Academic</option>
+                  <option value="Behavioral">Behavioral</option>
+                  <option value="Attendance">Attendance</option>
+                  <option value="Discipline">Discipline</option>
+                  <option value="Performance">Performance</option>
+                  <option value="General Feedback">General Feedback</option>
+                </select>
+              </div>
+              <div>
+                <label for="priority" style="font-weight: 600; font-size: 13px; margin-bottom: 6px; display: block; color: #caa9ff;">Priority:</label>
+                <select name="priority" id="priority" class="select-box" style="width: 100%;">
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+                </select>
+              </div>
+              <div>
+                <label for="rating" style="font-weight: 600; font-size: 13px; margin-bottom: 6px; display: block; color: #caa9ff;">Rating (1-5 ⭐):</label>
+                <select name="rating" id="rating" class="select-box" style="width: 100%;">
+                  <option value="1">1 Star</option>
+                  <option value="2">2 Stars</option>
+                  <option value="3" selected>3 Stars</option>
+                  <option value="4">4 Stars</option>
+                  <option value="5">5 Stars</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 12px;">
+              <label for="remark" style="font-weight: 600; font-size: 13px; margin-bottom: 6px; display: block; color: #caa9ff;">Write New Remark:</label>
+              <textarea name="remark" id="remark" placeholder="Type direct guidance, encouragement, or specific concerns..." style="width:100%; height:110px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:#fff; padding:12px; font-family:inherit; font-size: 14px; outline:none; resize:none;" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-round" style="padding: 8px 24px; font-size: 13.5px;">Add Remark</button>
+          </form>
+
+          <h3 style="font-size: 16px; margin-bottom: 15px; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; color: #caa9ff;">📜 Remarks History for {{ selected_student.name }}</h3>
+          <div style="max-height: 350px; overflow-y: auto; padding-right: 5px;">
+            {% for r in remarks %}
+            <div class="remark-card">
+              <div>
+                <div style="display: flex; gap: 8px; margin-bottom: 6px; align-items: center; flex-wrap: wrap;">
+                  {% if r.category %}
+                    {% set cat = r.category.lower() %}
+                    {% if 'behav' in cat %}<span class="badge-cat badge-behavioral">{{ r.category }}</span>
+                    {% elif 'attend' in cat %}<span class="badge-cat badge-attendance">{{ r.category }}</span>
+                    {% elif 'disc' in cat %}<span class="badge-cat badge-discipline">{{ r.category }}</span>
+                    {% elif 'perform' in cat %}<span class="badge-cat badge-performance">{{ r.category }}</span>
+                    {% elif 'feed' in cat %}<span class="badge-cat badge-feedback">{{ r.category }}</span>
+                    {% else %}<span class="badge-cat badge-academic">{{ r.category }}</span>
+                    {% endif %}
+                  {% endif %}
+                  
+                  {% if r.priority %}
+                    {% set pri = r.priority.lower() %}
+                    {% if pri == 'high' %}<span class="badge-priority priority-high">High</span>
+                    {% elif pri == 'low' %}<span class="badge-priority priority-low">Low</span>
+                    {% else %}<span class="badge-priority priority-medium">Medium</span>
+                    {% endif %}
+                  {% endif %}
+                </div>
+                <div class="remark-text">{{ r.remark }}</div>
+                <div class="remark-meta">✍️ By {{ r.teacher_name or "Teacher" }} • {{ r.created_at[:16] }}</div>
+              </div>
+              <form action="/teacher/remarks/delete" method="POST" onsubmit="return confirm('Delete this remark?')" style="margin-left: 10px;">
+                <input type="hidden" name="remark_id" value="{{ r.id }}">
+                <input type="hidden" name="student_id" value="{{ selected_student_id }}">
+                <input type="hidden" name="q" value="{{ q }}">
+                <input type="hidden" name="class" value="{{ sel_class }}">
+                <input type="hidden" name="section" value="{{ sel_section }}">
+                <button type="submit" class="delete-btn" title="Delete Remark">🗑️</button>
+              </form>
+            </div>
+            {% endfor %}
+            {% if not remarks %}
+            <div class="empty" style="text-align: center; opacity: 0.5; padding: 30px; font-size: 14px;">No remarks added for this student yet.</div>
+            {% endif %}
+          </div>
+          {% else %}
+          <div style="text-align: center; padding: 80px 20px; opacity: 0.6;">
+            <div style="font-size: 54px; margin-bottom: 15px;">💬</div>
+            <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">No Student Selected</h2>
+            <p style="font-size: 14px; max-width: 320px; margin: 0 auto; line-height: 1.5;">Please select a student from the left panel to write and manage remarks.</p>
+          </div>
+          {% endif %}
+        </div>
+
+      </div>
+      
+      <!-- Full Width Row: Global Remarks History for All 901 Students -->
+      <div class="section" style="margin-top: 35px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+          <h2 style="font-size: 22px; margin: 0; font-weight: 800; color: #caa9ff; display: flex; align-items: center; gap: 10px;">
+            <span>📜</span> Global Remarks History (All Students)
+          </h2>
+          
+          <!-- Instant Interactive Filters -->
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <input type="text" id="global-search" placeholder="Search student name or ID..." class="search-input" style="max-width: 250px; min-width: 200px;" oninput="onFilterChange()">
+            <select id="filter-class" class="select-box" onchange="onFilterChange()">
+              <option value="">All Classes</option>
+              <option value="8th">8th</option>
+              <option value="9th">9th</option>
+              <option value="10th">10th</option>
+            </select>
+            <select id="filter-section" class="select-box" onchange="onFilterChange()">
+              <option value="">All Sections</option>
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+            </select>
+            <select id="filter-category" class="select-box" onchange="onFilterChange()">
+              <option value="">All Categories</option>
+              <option value="Academic">Academic</option>
+              <option value="Behavioral">Behavioral</option>
+              <option value="Attendance">Attendance</option>
+              <option value="Discipline">Discipline</option>
+              <option value="Performance">Performance</option>
+              <option value="General Feedback">General Feedback</option>
+            </select>
+            <select id="filter-priority" class="select-box" onchange="onFilterChange()">
+              <option value="">All Priorities</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="border-radius: 8px 0 0 8px">Student ID</th>
+                <th>Student Name</th>
+                <th>Class & Section</th>
+                <th>Category</th>
+                <th>Priority</th>
+                <th>Rating</th>
+                <th>Remark Content</th>
+                <th>Written By</th>
+                <th>Date & Time</th>
+                <th style="border-radius: 0 8px 8px 0; text-align: center;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="global-remarks-tbody">
+              <!-- Rendered dynamically via fast client-side engine -->
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Pagination Controls -->
+        <div class="pagination-container">
+          <button class="pagination-btn" id="prev-btn" onclick="prevPage()">← Previous</button>
+          <span class="pagination-info" id="pagination-info">Showing page 1 of 1</span>
+          <button class="pagination-btn" id="next-btn" onclick="nextPage()">Next →</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Glassmorphic Student Profile Popup Modal -->
+<div class="modal-overlay" id="profile-modal" onclick="closeModal(event)">
+  <div class="modal-container" onclick="event.stopPropagation()">
+    <button class="modal-close-btn" onclick="closeModal()">✕</button>
+    <div style="text-align: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 20px;">
+      <span style="font-size: 54px; display: block; margin-bottom: 10px;">🎓</span>
+      <h2 id="modal-student-name" style="font-size: 24px; font-weight: 800; color: #caa9ff; margin: 0;">Student Name</h2>
+      <p id="modal-student-id" style="font-size: 13px; color: #a855f7; margin: 5px 0 0 0; font-weight: 700;">ID: S1001</p>
+    </div>
+    
+    <div class="profile-grid">
+      <div class="profile-cell">
+        <div class="profile-label">Class & Section</div>
+        <div class="profile-value" id="modal-class">10 - A</div>
+      </div>
+      <div class="profile-cell">
+        <div class="profile-label">Attendance Rate</div>
+        <div class="profile-value" id="modal-attendance" style="color: #4ade80;">95%</div>
+      </div>
+      <div class="profile-cell">
+        <div class="profile-label">Daily Study Hours</div>
+        <div class="profile-value" id="modal-study-hours">4 hrs</div>
+      </div>
+      <div class="profile-cell">
+        <div class="profile-label">Daily Sleep Hours</div>
+        <div class="profile-value" id="modal-sleep-hours">7 hrs</div>
+      </div>
+      <div class="profile-cell">
+        <div class="profile-label">Internal Test 1</div>
+        <div class="profile-value" id="modal-it1">85</div>
+      </div>
+      <div class="profile-cell">
+        <div class="profile-label">Internal Test 2</div>
+        <div class="profile-value" id="modal-it2">90</div>
+      </div>
+      <div class="profile-cell">
+        <div class="profile-label">Assignment Score</div>
+        <div class="profile-value" id="modal-assignment">95</div>
+      </div>
+      <div class="profile-cell" style="background: rgba(168, 85, 247, 0.1); border-color: rgba(168, 85, 247, 0.3);">
+        <div class="profile-label" style="color: #caa9ff;">Previous Exam Score</div>
+        <div class="profile-value" id="modal-prev-score" style="color: #e9d5ff;">88</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const rawRemarks = {{ all_remarks | tojson }};
+
+// Group by student_code to avoid repeated student rows, keeping the latest remark for each student
+const uniqueRemarksMap = {};
+rawRemarks.forEach(r => {
+    const code = String(r.student_code || "");
+    if (code) {
+        if (!uniqueRemarksMap[code]) {
+            uniqueRemarksMap[code] = r;
+        } else {
+            const dateA = new Date(uniqueRemarksMap[code].created_at || 0);
+            const dateB = new Date(r.created_at || 0);
+            if (dateB > dateA) {
+                uniqueRemarksMap[code] = r;
+            }
+        }
+    }
+});
+
+const ALL_REMARKS_DATA = Object.values(uniqueRemarksMap);
+
+// Sort ALL_REMARKS_DATA in ascending order of student ID
+ALL_REMARKS_DATA.sort((a, b) => {
+    const idA = String(a.student_code || "");
+    const idB = String(b.student_code || "");
+    return idA.localeCompare(idB, undefined, { numeric: true, sensitivity: 'base' });
+});
+
+const STUDENTS_LOOKUP = {};
+{% for s in students %}
+STUDENTS_LOOKUP["{{ s.Student_ID }}"] = {
+    Student_ID: "{{ s.Student_ID }}",
+    name: "{{ s.name }}",
+    Class: "{{ s.Class }}",
+    section: "{{ s.section }}",
+    Attendence: "{{ s.Attendence }}",
+    Study_hours: "{{ s.Study_hours }}",
+    Sleep_hours: "{{ s.Sleep_hours }}",
+    internal_test_1: "{{ s['internal_test 1'] }}",
+    internal_test_2: "{{ s['internal_test 2'] }}",
+    Assignment_score: "{{ s.Assignment_score }}",
+    Previous_Exam_Score: "{{ s.Previous_Exam_Score }}"
+};
+{% endfor %}
+
+// Client-side Pagination & Filter System
+let filteredRemarks = [...ALL_REMARKS_DATA];
+let currentPage = 1;
+const pageSize = 30; // Responsive and lag-free page size
+
+function renderRemarksTable() {
+    const tbody = document.getElementById("global-remarks-tbody");
+    tbody.innerHTML = "";
+    
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, filteredRemarks.length);
+    const paginatedItems = filteredRemarks.slice(startIndex, endIndex);
+    
+    if (paginatedItems.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="10" style="text-align: center; opacity: 0.5; padding: 40px;">No remarks match your filter criteria.</td></tr>`;
+        document.getElementById("prev-btn").disabled = true;
+        document.getElementById("next-btn").disabled = true;
+        document.getElementById("pagination-info").innerText = `Showing 0 of 0`;
+        return;
+    }
+    
+    paginatedItems.forEach(r => {
+        const tr = document.createElement("tr");
+        tr.className = "table-row-anim";
+        
+        // Category Badge
+        let catClass = "badge-academic";
+        const cat = r.category ? r.category.toLowerCase() : "academic";
+        if (cat.includes("behav")) catClass = "badge-behavioral";
+        else if (cat.includes("attend")) catClass = "badge-attendance";
+        else if (cat.includes("disc")) catClass = "badge-discipline";
+        else if (cat.includes("perform")) catClass = "badge-performance";
+        else if (cat.includes("feed")) catClass = "badge-feedback";
+        
+        const catBadge = `<span class="badge-cat ${catClass}">${r.category || 'Academic'}</span>`;
+        
+        // Priority Badge
+        let priClass = "priority-medium";
+        const pri = r.priority ? r.priority.toLowerCase() : "medium";
+        if (pri === "high") priClass = "priority-high";
+        else if (pri === "low") priClass = "priority-low";
+        
+        const priBadge = `<span class="badge-priority ${priClass}">${r.priority || 'Medium'}</span>`;
+        
+        // Rating Stars
+        const ratingVal = r.rating || 3;
+        const stars = "⭐".repeat(ratingVal);
+        
+        // Date formatting
+        const dateStr = r.created_at ? r.created_at.substring(0, 16) : "N/A";
+        
+        tr.innerHTML = `
+            <td style="border-radius: 8px 0 0 8px">
+                <span class="clickable-id" onclick="openStudentProfile('${r.student_code}')"><b>${r.student_code}</b></span>
+            </td>
+            <td>
+                <span class="clickable-id" onclick="openStudentProfile('${r.student_code}')"><b>${r.student_name || 'N/A'}</b></span>
+            </td>
+            <td>${r.student_class || '—'} - ${r.student_section || '—'}</td>
+            <td>${catBadge}</td>
+            <td>${priBadge}</td>
+            <td style="letter-spacing: -2px;">${stars}</td>
+            <td style="max-width: 320px; word-wrap: break-word; white-space: normal;">${r.remark}</td>
+            <td><span style="color:#caa9ff; font-weight:600">✍️ ${r.teacher_name || 'Teacher'}</span></td>
+            <td>${dateStr}</td>
+            <td style="border-radius: 0 8px 8px 0; text-align: center;">
+                <form action="/teacher/remarks/delete" method="POST" onsubmit="return confirm('Delete this remark?')" style="display: inline-block;">
+                    <input type="hidden" name="remark_id" value="${r.id}">
+                    <input type="hidden" name="student_id" value="{{ selected_student_id }}">
+                    <input type="hidden" name="q" value="{{ q }}">
+                    <input type="hidden" name="class" value="{{ sel_class }}">
+                    <input type="hidden" name="section" value="{{ sel_section }}">
+                    <button type="submit" class="delete-btn" title="Delete Remark">🗑️</button>
+                </form>
+            </td>
+        `;
+        tbody.appendChild(tr);
+    });
+    
+    // Update pagination controls
+    const totalPages = Math.ceil(filteredRemarks.length / pageSize);
+    document.getElementById("prev-btn").disabled = currentPage === 1;
+    document.getElementById("next-btn").disabled = currentPage === totalPages || totalPages === 0;
+    document.getElementById("pagination-info").innerText = `Page ${currentPage} of ${totalPages || 1} (${filteredRemarks.length} total remarks)`;
+}
+
+function prevPage() {
+    if (currentPage > 1) {
+        currentPage--;
+        renderRemarksTable();
+    }
+}
+
+function nextPage() {
+    const totalPages = Math.ceil(filteredRemarks.length / pageSize);
+    if (currentPage < totalPages) {
+        currentPage++;
+        renderRemarksTable();
+    }
+}
+
+function onFilterChange() {
+    const searchVal = document.getElementById("global-search").value.toLowerCase();
+    const catVal = document.getElementById("filter-category").value;
+    const priVal = document.getElementById("filter-priority").value;
+    const classVal = document.getElementById("filter-class").value;
+    const sectionVal = document.getElementById("filter-section").value;
+    
+    filteredRemarks = ALL_REMARKS_DATA.filter(r => {
+        const sMatch = !searchVal || 
+                       (r.student_code && r.student_code.toLowerCase().includes(searchVal)) || 
+                       (r.student_name && r.student_name.toLowerCase().includes(searchVal));
+                       
+        const cMatch = !catVal || r.category === catVal;
+        const pMatch = !priVal || r.priority === priVal;
+        const clMatch = !classVal || (r.student_class && String(r.student_class).toLowerCase() === classVal.toLowerCase());
+        const secMatch = !sectionVal || (r.student_section && String(r.student_section).toLowerCase() === sectionVal.toLowerCase());
+        
+        return sMatch && cMatch && pMatch && clMatch && secMatch;
+    });
+    
+    currentPage = 1;
+    renderRemarksTable();
+}
+
+function downloadRemarksPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('l', 'mm', 'a4'); // landscape
+    
+    // Dark deep purple container theme background
+    doc.setFillColor(20, 0, 36); 
+    doc.rect(0, 0, 297, 210, 'F');
+    
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(22);
+    doc.setTextColor(202, 169, 255);
+    doc.text("STUDENT PERFORMANCE SYSTEM", 14, 20);
+    
+    doc.setFontSize(14);
+    doc.setTextColor(255, 255, 255);
+    doc.text("GLOBAL TEACHER REMARKS HISTORY REPORT", 14, 30);
+    
+    const tableRows = [];
+    filteredRemarks.forEach(r => {
+        tableRows.push([
+            r.student_code || 'N/A',
+            r.student_name || 'N/A',
+            `${r.student_class || '—'} - ${r.student_section || '—'}`,
+            r.category || 'Academic',
+            r.priority || 'Medium',
+            r.remark || 'N/A',
+            r.teacher_name || 'Teacher',
+            r.created_at ? r.created_at.substring(0, 16) : 'N/A'
+        ]);
+    });
+    
+    doc.autoTable({
+        startY: 40,
+        head: [['Student ID', 'Student Name', 'Class & Sec', 'Category', 'Priority', 'Remark Content', 'Written By', 'Date & Time']],
+        body: tableRows,
+        theme: 'grid',
+        headStyles: {
+            fillColor: [124, 58, 237],
+            textColor: [255, 255, 255],
+            fontSize: 10,
+            fontStyle: 'bold'
+        },
+        styles: {
+            fontSize: 9,
+            cellPadding: 3,
+            overflow: 'linebreak'
+        },
+        columnStyles: {
+            5: { cellWidth: 80 } // wider remark content
+        },
+        didDrawPage: function (data) {
+            doc.setFontSize(8);
+            doc.setTextColor(200, 200, 200);
+            doc.text(`Page ${doc.internal.getNumberOfPages()}`, data.settings.margin.left, doc.internal.pageSize.height - 10);
+        }
+    });
+    
+    doc.save("all_student_teacher_remarks_history.pdf");
+}
+
+// Student Profile Popup Handlers
+function openStudentProfile(studentId) {
+    const s = STUDENTS_LOOKUP[studentId];
+    if (!s) {
+        alert("Student details not fully cached in the active left selection list. Try searching or selecting them on the left panel to display.");
+        return;
+    }
+    
+    document.getElementById("modal-student-name").innerText = s.name;
+    document.getElementById("modal-student-id").innerText = `ID: ${s.Student_ID}`;
+    document.getElementById("modal-class").innerText = `${s.Class} - ${s.section}`;
+    document.getElementById("modal-attendance").innerText = `${s.Attendence}%`;
+    document.getElementById("modal-study-hours").innerText = `${s.Study_hours} hrs/day`;
+    document.getElementById("modal-sleep-hours").innerText = `${s.Sleep_hours} hrs/day`;
+    document.getElementById("modal-it1").innerText = `${s.internal_test_1}/100`;
+    document.getElementById("modal-it2").innerText = `${s.internal_test_2}/100`;
+    document.getElementById("modal-assignment").innerText = `${s.Assignment_score}/100`;
+    document.getElementById("modal-prev-score").innerText = `${s.Previous_Exam_Score}/100`;
+    
+    const attRate = parseFloat(s.Attendence);
+    const attElement = document.getElementById("modal-attendance");
+    if (attRate < 75) {
+        attElement.style.color = "#f87171"; // Red
+    } else if (attRate < 85) {
+        attElement.style.color = "#facc15"; // Yellow
+    } else {
+        attElement.style.color = "#4ade80"; // Green
+    }
+    
+    document.getElementById("profile-modal").style.display = "flex";
+}
+
+function closeModal(event) {
+    document.getElementById("profile-modal").style.display = "none";
+}
+
+// Initial Table Render
+document.addEventListener("DOMContentLoaded", () => {
+    renderRemarksTable();
+});
+</script>
+{% endblock %}

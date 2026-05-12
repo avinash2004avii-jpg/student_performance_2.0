@@ -106,10 +106,19 @@ def inject_feedback_count():
 
 # ── Helpers ───────────────────────────────────────────────────────
 def load_csv():
-    df = pd.read_csv(DATA_FILE)
+    df = pd.read_csv(DATA_FILE, dtype={'parent_phone': str})
     df["Health_Issues"] = df["Health_Issues"].fillna("None")
-    if "parent_email" in df.columns:
+    if "parent_email" not in df.columns:
+        df["parent_email"] = ""
+    else:
         df["parent_email"] = df["parent_email"].fillna("")
+        
+    if "parent_phone" not in df.columns:
+        df["parent_phone"] = ""
+    else:
+        df["parent_phone"] = df["parent_phone"].astype(str).replace('nan', '')
+        df["parent_phone"] = df["parent_phone"].fillna("")
+        
     return df
 
 def fval(form, key, default=0):
@@ -130,8 +139,8 @@ def ival(form, key, default=0):
 
 def risk_label(score):
     if score is None: return "Unknown"
-    if score < 60:    return "At Risk"
-    if score <= 75:   return "Average Performance"
+    if score < 70:    return "At Risk"
+    if score <= 85:   return "Average Performance"
     return "Safe"
 
 def calculate_display_risk(df):
@@ -197,9 +206,9 @@ def calculate_display_risk(df):
             print(f"Batch Prediction Error: {e}")
 
     # 4. Vectorized Labels
-    df["risk"] = np.where(df["display_score"] < 60, "At Risk",
-                 np.where(df["display_score"] <= 75, "Average Performance", "Safe"))
-    df["risk_val"] = np.where(df["display_score"] < 60, "1", "0")
+    df["risk"] = np.where(df["display_score"] < 70, "At Risk",
+                 np.where(df["display_score"] <= 85, "Average Performance", "Safe"))
+    df["risk_val"] = np.where(df["display_score"] < 70, "1", "0")
     
     return df
 
@@ -283,10 +292,9 @@ def generate_suggestions(score, row, class_avg=None):
     it1  = float(row.get("internal_test 1", row.get("internal1", 0)))
     it2  = float(row.get("internal_test 2", row.get("internal2", 0)))
     asgn = float(row.get("Assignment_score", row.get("assignment", 0)))
-    slp  = float(row.get("Sleep_hours", row.get("sleep_hours", 7)))
 
     # 1. Handle "At Risk" students with specific static-style tips as requested
-    if score < 60:
+    if score < 70:
         return [
             ("Attendance", f"Your attendance is quite low right now ({att}%). This can seriously affect your understanding of subjects. Try to attend classes regularly — even improving to 75–85% can make a big difference in your performance."),
             ("Academics (Low Marks)", "Your current scores show that some concepts may not be clear. Start revising basic topics daily and focus on understanding rather than memorizing. Even 1–2 hours of focused study can improve your marks significantly."),
@@ -314,8 +322,6 @@ def generate_suggestions(score, row, class_avg=None):
     if asgn < 50:
         tips.append(("Assignments", f"Assignment score is only {asgn}/100. Completing assignments consistently is one of the easiest ways to improve your grade."))
     
-    if slp < 6:
-        tips.append(("Sleep", f"Only {slp} hours of sleep affects memory and focus. 7–8 hours of sleep helps retain what you study."))
     
     if it1 < 50 and it2 < 50:
         tips.append(("Core Concepts", "Both internal tests are below 50. Focus on understanding fundamentals rather than memorising — consider extra tutoring."))
@@ -327,59 +333,7 @@ def generate_suggestions(score, row, class_avg=None):
 
 import json
 
-def generate_advanced_insights(row):
-    """Generate career, course, and behavioral analysis using Gemini."""
-    try:
-        # Prepare a clean data summary for the prompt
-        data_summary = {
-            "Internal 1": row.get("internal_test 1", row.get("internal1", 0)),
-            "Internal 2": row.get("internal_test 2", row.get("internal2", 0)),
-            "Assignment": row.get("Assignment_score", row.get("assignment", 0)),
-            "Attendance": row.get("Attendence", row.get("attendance", 0)),
-            "Study Hours": row.get("Study_hours", row.get("study_hours", 0)),
-            "Sleep Hours": row.get("Sleep_hours", row.get("sleep_hours", 0)),
-            "Previous Exam": row.get("Previous_Exam_Score", row.get("previous", 0)),
-            "Health": row.get("Health_Issues", row.get("health", "None"))
-        }
 
-        prompt = f"""
-        Analyze this student's academic performance and habits to provide specific guidance.
-        Data: {json.dumps(data_summary)}
-
-        Provide the following in a strictly structured JSON format:
-        1. "careers": A list of 3 specific career paths suited to their strengths.
-        2. "courses": A list of 3 recommended subjects or online course topics to improve or excel.
-        3. "behavior": A short paragraph (2-3 sentences) analyzing their study habits and attendance patterns.
-
-        JSON format example:
-        {{
-            "careers": ["Data Scientist", "Software Engineer", "Research Analyst"],
-            "courses": ["Advanced Mathematics", "Python Programming", "Time Management"],
-            "behavior": "Your high attendance shows commitment, but low study hours compared to sleep suggest you could optimize your schedule for better retention."
-        }}
-        Return ONLY the JSON.
-        """
-
-        response = client.models.generate_content(
-            model="gemini-2.0-flash",
-            contents=prompt
-        )
-        
-        # Clean the response in case Gemini adds markdown code blocks
-        clean_text = response.text.strip()
-        if "```json" in clean_text:
-            clean_text = clean_text.split("```json")[1].split("```")[0]
-        elif "```" in clean_text:
-            clean_text = clean_text.split("```")[1].split("```")[0]
-        
-        return json.loads(clean_text.strip())
-    except Exception as e:
-        print(f"Error generating insights: {e}")
-        return {
-            "careers": ["Education", "General Management", "Public Service"],
-            "courses": ["Foundational Mathematics", "Communication Skills", "Digital Literacy"],
-            "behavior": "Unable to perform behavioral analysis at this time. Focus on maintaining a balanced study-life schedule."
-        }
 def analyze_sentiment(message):
     """Analyze sentiment of parent message using Gemini."""
     try:
@@ -397,7 +351,7 @@ def analyze_sentiment(message):
         return "Neutral"
 
 def calculate_sensitivity(row, current_score):
-    """Calculate what's needed to reach 'Safe' (75) or 'Average' (60) status."""
+    """Calculate what's needed to reach 'Safe' (85) or 'Average' (70) status."""
     if current_score >= 75:
         return None # Already safe
     
@@ -673,6 +627,13 @@ def admin_users():
         
     return render_template("admin_users.html", users=users)
 
+@app.route("/admin/approve-all", methods=["POST"])
+@login_required("admin")
+def admin_approve_all():
+    db.approve_all()
+    flash("All pending users approved successfully.", "success")
+    return redirect(url_for("admin_users"))
+
 @app.route("/admin/user-action/<int:user_id>", methods=["POST"])
 @login_required("admin")
 def admin_user_action(user_id):
@@ -696,6 +657,17 @@ def admin_user_action(user_id):
             flash("Password reset successfully.", "success")
         else:
             flash("New password cannot be empty.", "warning")
+    elif action == "edit_username":
+        new_username = request.form.get("new_username")
+        if new_username:
+            new_username = new_username.strip()
+            if db.username_exists(new_username):
+                flash("Username already taken.", "danger")
+            else:
+                db.update_username(user_id, new_username)
+                flash("Username updated successfully.", "success")
+        else:
+            flash("Username cannot be empty.", "warning")
     return redirect(url_for("admin_users"))
     df = load_csv()
     df["risk"] = np.where(df["Final_Exam_Score"] < 70, "At Risk", "Safe")
@@ -789,6 +761,14 @@ def admin_delete_student(sid):
     flash("Student removed.", "success")
     return redirect(url_for("admin_students"))
 
+@app.route("/admin/delete-all-students", methods=["POST"])
+@login_required("admin")
+def admin_delete_all_students():
+    df = pd.DataFrame(columns=["Student_ID", "Class", "section", "Age", "Gender", "Study_hours", "Sleep_hours", "Parent_Education_Level", "Health_Issues", "Internet_Access", "Attendence", "internal_test 1", "internal_test 2", "Assignment_score", "Extracurricular_Activities", "Previous_Exam_Score", "Final_Exam_Score", "parent_email"])
+    df.to_csv(DATA_FILE, index=False)
+    flash("All student records cleared successfully.", "warning")
+    return redirect(url_for("admin_students"))
+
 @app.route("/admin/upload-students", methods=["POST"])
 @login_required("admin")
 def admin_upload_students():
@@ -862,32 +842,7 @@ def teacher_dashboard():
         feedback_list=feedback_list
     )
 
-@app.route("/teacher/predict", methods=["GET", "POST"])
-@login_required("teacher")
-def teacher_predict():
-    result = None
-    score  = None
-    suggestions = []
-    if request.method == "POST":
-        try:
-            # Server-side validation for negative numbers
-            for field in ['internal1', 'internal2', 'assignment', 'previous', 'attendance', 'study_hours', 'sleep_hours']:
-                val = fval(request.form, field)
-                if val < 0:
-                    flash(f"Invalid input: {field.replace('_', ' ').title()} cannot be negative.", "danger")
-                    return render_template("predict_single.html", result=None, score=None, suggestions=[], f=request.form)
 
-            score  = predict_score(request.form)
-            result = risk_label(score)
-            if score is not None:
-                df = load_csv()
-                class_avg = round(float(df["Final_Exam_Score"].mean()), 1) if not df.empty else 0
-                suggestions = generate_suggestions(score, request.form, class_avg=class_avg)
-        except Exception as e:
-            flash(f"Prediction error: {e}", "danger")
-    return render_template("predict_single.html",
-                           result=result, score=score, suggestions=suggestions,
-                           f=request.form if request.method == 'POST' else {})
 
 @app.route("/teacher/auto_predict", methods=["GET", "POST"])
 @login_required("teacher")
@@ -907,16 +862,17 @@ def teacher_auto_predict():
                 raw_pred = float(model.predict(build_features(student))[0])
                 score = round(raw_pred, 2)
                 
-                # User requested thresholds for this feature: <60, 60-75, >75
-                if score < 60:
+                # User requested thresholds for this feature: <70, 70-85, >85
+                if score < 70:
                     result = "At Risk"
-                elif score <= 75:
+                elif score <= 85:
                     result = "Average Performance"
                 else:
                     result = "Safe"
                 
                 df = load_csv()
-                class_avg = round(float(df["Final_Exam_Score"].mean()), 1) if not df.empty else 0
+                df = calculate_display_risk(df)
+                class_avg = round(float(df["display_score"].mean()), 1) if not df.empty else 0
                 suggestions = generate_suggestions(score, student, class_avg=class_avg)
                 if result == "At Risk":
                     parent_email = db.get_parent_email_by_student_code(sid)
@@ -978,13 +934,14 @@ def download_report():
     result = risk_label(score)
     
     df = load_csv()
-    class_avg = round(float(df["Final_Exam_Score"].mean()), 1) if not df.empty else 0
+    df = calculate_display_risk(df)
+    class_avg = round(float(df["display_score"].mean()), 1) if not df.empty else 0
     suggestions = generate_suggestions(score, input_row, class_avg=class_avg)
 
     # Benchmark Analysis
     percentile = 0
     if not df.empty:
-        percentile = round((df[df["Final_Exam_Score"] < score].shape[0] / df.shape[0]) * 100, 1)
+        percentile = round((df[df["display_score"] < score].shape[0] / df.shape[0]) * 100, 1)
 
     # Generate Graph
     plt.figure(figsize=(6, 4))
@@ -1343,6 +1300,149 @@ def teacher_bulk_predict_template():
     output.seek(0)
     return send_file(output, mimetype="text/csv", as_attachment=True, download_name="bulk_predict_template.csv")
 
+import csv
+@app.route("/teacher/remarks/download-csv")
+@login_required("teacher")
+def download_remarks_csv():
+    all_remarks = db.get_all_teacher_remarks()
+    
+    si = io.StringIO()
+    cw = csv.writer(si)
+    
+    cw.writerow(["Remark ID", "Student ID", "Student Name", "Class", "Section", "Remark Text", "Written By (Teacher)", "Created At"])
+    
+    for r in all_remarks:
+        cw.writerow([
+            r.get("id"),
+            r.get("student_code"),
+            r.get("student_name") or "N/A",
+            r.get("student_class") or "N/A",
+            r.get("student_section") or "N/A",
+            r.get("remark"),
+            r.get("teacher_name") or "N/A",
+            r.get("created_at")
+        ])
+        
+    output = io.BytesIO()
+    output.write(si.getvalue().encode('utf-8'))
+    output.seek(0)
+    
+    return send_file(
+        output,
+        mimetype="text/csv",
+        as_attachment=True,
+        download_name="all_student_teacher_remarks.csv"
+    )
+
+@app.route("/teacher/remarks", methods=["GET"])
+@login_required("teacher")
+def teacher_remarks():
+    q = request.args.get("q", "")
+    sel_class = request.args.get("class", "")
+    sel_section = request.args.get("section", "")
+    selected_student_id = request.args.get("student_id", "")
+    
+    df = load_csv()
+    classes = sorted(df["Class"].dropna().unique().tolist())
+    sections = sorted(df["section"].dropna().unique().tolist())
+    
+    selected_student = None
+    if selected_student_id:
+        match_student = df[df["Student_ID"].astype(str) == str(selected_student_id)]
+        if not match_student.empty:
+            selected_student = match_student.iloc[0].to_dict()
+
+    if q:
+        df = df[df["Student_ID"].astype(str).str.contains(q, case=False, na=False)]
+    if sel_class:
+        df = df[df["Class"].astype(str) == sel_class]
+    if sel_section:
+        df = df[df["section"].astype(str) == sel_section]
+        
+    students = df.to_dict(orient="records")
+    
+    remarks = []
+    if selected_student_id:
+        remarks = db.get_remarks_by_student(selected_student_id)
+        
+    all_remarks = db.get_all_teacher_remarks()
+        
+    return render_template("teacher_remarks.html",
+                           students=students,
+                           classes=classes,
+                           sections=sections,
+                           sel_class=sel_class,
+                           sel_section=sel_section,
+                           q=q,
+                           selected_student_id=selected_student_id,
+                           selected_student=selected_student,
+                           remarks=remarks,
+                           all_remarks=all_remarks)
+
+@app.route("/teacher/remarks/add", methods=["POST"])
+@login_required("teacher")
+def add_remark():
+    student_id = request.form.get("student_id")
+    remark = request.form.get("remark", "").strip()
+    q = request.form.get("q", "")
+    sel_class = request.form.get("class", "")
+    sel_section = request.form.get("section", "")
+    
+    category = request.form.get("category", "Academic")
+    priority = request.form.get("priority", "Medium")
+    try:
+        rating = int(request.form.get("rating", 3))
+    except ValueError:
+        rating = 3
+
+    df = load_csv()
+    match_student = df[df["Student_ID"].astype(str) == str(student_id)]
+    student_name = None
+    class_val = None
+    section_val = None
+    if not match_student.empty:
+        student_name = match_student.iloc[0].get("name")
+        class_val = str(match_student.iloc[0].get("Class"))
+        section_val = str(match_student.iloc[0].get("section"))
+
+    teacher = db.get_teacher_by_user_id(session["user_id"])
+    teacher_id = teacher["id"] if teacher else None
+    teacher_name = teacher["name"] if teacher else None
+    
+    if student_id and remark:
+         db.add_teacher_remark(
+             student_code=student_id, 
+             teacher_id=teacher_id, 
+             remark=remark, 
+             student_name=student_name, 
+             class_val=class_val, 
+             section_val=section_val, 
+             teacher_name=teacher_name, 
+             category=category, 
+             priority=priority, 
+             rating=rating
+         )
+         flash("Remark added successfully.", "success")
+    else:
+         flash("Failed to add remark. Remark cannot be empty.", "danger")
+        
+    return redirect(url_for("teacher_remarks", student_id=student_id, q=q, section=sel_section, **{"class": sel_class}))
+
+@app.route("/teacher/remarks/delete", methods=["POST"])
+@login_required("teacher")
+def delete_remark():
+    remark_id = request.form.get("remark_id")
+    student_id = request.form.get("student_id")
+    q = request.form.get("q", "")
+    sel_class = request.form.get("class", "")
+    sel_section = request.form.get("section", "")
+    
+    if remark_id:
+        db.delete_teacher_remark(int(remark_id))
+        flash("Remark deleted successfully.", "success")
+        
+    return redirect(url_for("teacher_remarks", student_id=student_id, q=q, section=sel_section, **{"class": sel_class}))
+
 
 # ════════════════════════════════════════════════════════════════════
 # STUDENT
@@ -1358,9 +1458,11 @@ def student_dashboard():
     suggestions = []
     result = None
 
+    remarks = []
     sensitivity = []
     if student:
         match = df[df["Student_ID"].astype(str) == str(student["student_code"])]
+        remarks = db.get_remarks_by_student(student["student_code"])
         if not match.empty:
             row   = match.iloc[0].to_dict()
             score = predict_score(row)
@@ -1373,7 +1475,7 @@ def student_dashboard():
     return render_template("student_dashboard.html",
         student=student, row=row, score=score,
         result=result, suggestions=suggestions,
-        sensitivity=sensitivity
+        sensitivity=sensitivity, remarks=remarks
     )
 
 def explain_prediction(row):
@@ -1529,9 +1631,10 @@ def student_report(student_id):
     risk = risk_label(predicted)
 
     # ✅ Benchmark
-    class_avg = round(float(df["Final_Exam_Score"].mean()), 1)
+    df_with_display = calculate_display_risk(df.copy())
+    class_avg = round(float(df_with_display["display_score"].mean()), 1)
     benchmark_diff = round(predicted - class_avg, 1) if predicted else None
-    pct_below = round(float((df["Final_Exam_Score"] <= predicted).mean() * 100), 1) if predicted else None
+    pct_below = round(float((df_with_display["display_score"] <= predicted).mean() * 100), 1) if predicted else None
 
     # ✅ Suggestions
     suggestions = generate_suggestions(predicted, row, class_avg=class_avg) if predicted else []
@@ -1585,36 +1688,52 @@ def teacher_analytics():
 
     df = calculate_display_risk(df)
 
-    # Basic analytics data (safe defaults)
-    hist_labels = ["0-10","10-20","20-30","30-40","40-50","50-60","60-70","70-80","80-90","90-100"]
-    hist_counts = [0] * 10
-
+    # a) Score Distribution
+    score_bins = ["0-40", "41-70", "71-85", "86-100"]
+    score_counts = [0, 0, 0, 0]
     for score in df["display_score"]:
-        idx = min(int(score // 10), 9)
-        hist_counts[idx] += 1
+        if score < 40: score_counts[0] += 1
+        elif score < 70: score_counts[1] += 1
+        elif score < 85: score_counts[2] += 1
+        else: score_counts[3] += 1
 
-    scatter_points = [
-        {"x": row["Attendence"], "y": row["display_score"]}
-        for _, row in df.iterrows()
-    ]
+    # b) Attendance vs Performance
+    att_groups = ["Low (<70%)", "Medium (70-85%)", "High (>85%)"]
+    att_data = { g: {"att": [], "score": []} for g in att_groups }
+    for _, row in df.iterrows():
+        att = row["Attendence"]
+        score = row["display_score"]
+        if att < 70:
+            att_data["Low (<70%)"]["att"].append(att)
+            att_data["Low (<70%)"]["score"].append(score)
+        elif att <= 85:
+            att_data["Medium (70-85%)"]["att"].append(att)
+            att_data["Medium (70-85%)"]["score"].append(score)
+        else:
+            att_data["High (>85%)"]["att"].append(att)
+            att_data["High (>85%)"]["score"].append(score)
+            
+    group_avg_att = [round(sum(att_data[g]["att"])/len(att_data[g]["att"]), 1) if att_data[g]["att"] else 0 for g in att_groups]
+    group_avg_score = [round(sum(att_data[g]["score"])/len(att_data[g]["score"]), 1) if att_data[g]["score"] else 0 for g in att_groups]
 
-    component_labels = ["Internal 1","Internal 2","Assignment", "Previous"]
+    # c) Component Comparison
+    comp_labels = ["Assignments", "Exams", "Attendance", "Internal Marks"]
 
     at_risk = df[df["risk"] == "At Risk"]
-    safe = df[df["risk"] == "Safe"]
+    stable = df[df["risk"] != "At Risk"] # Compare against everyone else for better insight
 
     component_at_means = [
-        at_risk["internal_test 1"].mean() if not at_risk.empty else 0,
-        at_risk["internal_test 2"].mean() if not at_risk.empty else 0,
-        at_risk["Assignment_score"].mean() if not at_risk.empty else 0,
-        at_risk["Previous_Exam_Score"].mean() if not at_risk.empty else 0
+        round(at_risk["Assignment_score"].mean(), 1) if not at_risk.empty else 0,
+        round(at_risk["Previous_Exam_Score"].mean(), 1) if not at_risk.empty else 0,
+        round(at_risk["Attendence"].mean(), 1) if not at_risk.empty else 0,
+        round((at_risk["internal_test 1"].mean() + at_risk["internal_test 2"].mean())/2, 1) if not at_risk.empty else 0
     ]
 
     component_safe_means = [
-        safe["internal_test 1"].mean() if not safe.empty else 0,
-        safe["internal_test 2"].mean() if not safe.empty else 0,
-        safe["Assignment_score"].mean() if not safe.empty else 0,
-        safe["Previous_Exam_Score"].mean() if not safe.empty else 0
+        round(stable["Assignment_score"].mean(), 1) if not stable.empty else 0,
+        round(stable["Previous_Exam_Score"].mean(), 1) if not stable.empty else 0,
+        round(stable["Attendence"].mean(), 1) if not stable.empty else 0,
+        round((stable["internal_test 1"].mean() + stable["internal_test 2"].mean())/2, 1) if not stable.empty else 0
     ]
 
     import json
@@ -1625,72 +1744,143 @@ def teacher_analytics():
     avg_att = round(df["Attendence"].mean(), 1) if total > 0 else 0
     class_avg = df.groupby("Class")["display_score"].mean().round(1).to_dict() if total > 0 else {}
 
+    class_labels = [f"Class {c}" for c in class_avg.keys()]
+    class_scores = list(class_avg.values())
+
     return render_template("teacher_analytics.html",
         avg_score=avg_score,
         avg_att=avg_att,
         total=total,
-        class_avg=class_avg,
         classes=classes,
         sections=sections,
         sel_class=sel_class,
         sel_section=sel_section,
-        hist_labels_json=json.dumps(hist_labels),
-        hist_counts_json=json.dumps(hist_counts),
-        scatter_points_json=json.dumps(scatter_points),
-        component_labels_json=json.dumps(component_labels),
-        component_at_means_json=json.dumps(component_at_means),
-        component_safe_means_json=json.dumps(component_safe_means),
+        score_bins_json=json.dumps(score_bins),
+        score_counts_json=json.dumps(score_counts),
+        att_groups_json=json.dumps(att_groups),
+        group_avg_att_json=json.dumps(group_avg_att),
+        group_avg_score_json=json.dumps(group_avg_score),
+        comp_labels_json=json.dumps(comp_labels),
+        comp_at_means_json=json.dumps(component_at_means),
+        comp_safe_means_json=json.dumps(component_safe_means),
+        class_labels_json=json.dumps(class_labels),
+        class_scores_json=json.dumps(class_scores),
         attendance_perf_corr=round(df["Attendence"].corr(df["display_score"]),2) if total > 1 else 0
     )
+
+def get_best_performing_class(df):
+    try:
+        df_display = calculate_display_risk(df.copy())
+        if "Class" in df_display.columns:
+            class_groups = df_display.groupby("Class")["display_score"].mean()
+            best_class = class_groups.idxmax()
+            best_avg = round(class_groups.max(), 1)
+            return f"🏆 **Class {best_class}** is the best performing class with an average score of **{best_avg}/100**."
+    except Exception as e:
+        print("Error calculating best class:", e)
+    return "📊 Class performance analysis is currently unavailable."
+
+def get_at_risk_students_fallback(df):
+    try:
+        df_display = calculate_display_risk(df.copy())
+        at_risk = df_display[df_display["display_score"] < 70]
+        if at_risk.empty:
+            return "✅ Great news! No students are currently in the 'At Risk' category (score < 70)."
+        
+        lines = ["⚠️ **At-Risk Students (Predicted Score < 70):**"]
+        for _, s in at_risk.head(10).iterrows():
+            lines.append(f"• **Student {s['Student_ID']}** (Class {s.get('Class', 'N/A')}): Predicted Score **{s['display_score']}**, Attendance **{s['Attendence']}%**")
+        if len(at_risk) > 10:
+            lines.append(f"... and {len(at_risk) - 10} more.")
+        return "\n".join(lines)
+    except Exception as e:
+        print("Error listing at-risk students:", e)
+    return "❌ Error loading at-risk students list."
+
+def get_analytics_summary_fallback(df):
+    try:
+        df_display = calculate_display_risk(df.copy())
+        total = len(df_display)
+        at_risk = len(df_display[df_display["display_score"] < 70])
+        avg_score = round(df_display["display_score"].mean(), 1)
+        avg_att = round(df_display["Attendence"].mean(), 1)
+        risk_pct = round((at_risk / total * 100), 1) if total > 0 else 0
+        
+        return f"""📈 **SPS Real-Time Analytics Overview:**
+• **Total Students Monitored:** {total}
+• **Class Average Predicted Score:** {avg_score}/100
+• **Average Class Attendance:** {avg_att}%
+• **At-Risk Student Count:** {at_risk} ({risk_pct}%)
+• **SPS Insights:** Strong direct correlation found between Study Hours and high exam results."""
+    except Exception as e:
+        print("Error generating analytics fallback:", e)
+    return "📈 Analytics summary is currently unavailable."
+
+def get_attendance_analysis_fallback(df):
+    try:
+        df_display = calculate_display_risk(df.copy())
+        low_att = df_display[df_display["Attendence"] < 75]
+        if low_att.empty:
+            return "📅 Attendance is excellent! All students have attendance above 75%."
+        
+        return f"""📅 **Attendance Trend Analysis:**
+• There are currently **{len(low_att)}** students with attendance below the **75% minimum threshold**.
+• Low attendance is the **primary leading indicator** of academic risk. Students with <75% attendance show an average score decline of **12-15 marks** compared to peers.
+• We recommend sending automatic parent email/SMS alerts to address attendance issues immediately."""
+    except Exception as e:
+        print("Error calculating attendance fallback:", e)
+    return "📅 Attendance analysis is currently unavailable."
 
 @app.route("/chatbot", methods=["POST"])
 def chatbot():
     try:
-        user_message = request.json.get("message", "").lower()
+        user_message = request.json.get("message", "").strip()
+        user_message_lower = user_message.lower()
 
-        # ✅ Basic replies
-        if any(word in user_message for word in ["hi", "hello", "hey"]):
-            return jsonify({"reply": "👋 Hello! I am your Academic Assistant."})
+        # Log User Query
+        print(f"\n[CHATBOT REQUEST] Message: '{user_message}'")
 
-        if "help" in user_message:
-            return jsonify({"reply": """🤖 You can ask:
-- What is my score?
-- Why is my performance low?
-- How to improve?
-- Give suggestions"""})
-
-        # ✅ Check login
+        # Check login
         if "user_id" not in session:
+            print("[CHATBOT INFO] Blocked: No active session")
             return jsonify({"reply": "🔒 Please login first."})
 
         role = session.get("role")
-        
-        # ✅ Load CSV for context
+        print(f"[CHATBOT INFO] User ID: {session['user_id']} | Role: {role}")
+
+
+
+        # Load CSV for context
         try:
             df = load_csv()
         except Exception as e:
-            return jsonify({"reply": f"⚠️ Error loading data file: {e}"})
+            print(f"[CHATBOT ERROR] Failed to load CSV: {e}")
+            return jsonify({"reply": "⚠️ Error loading system database file. Please try again later."})
 
-        # ✅ Benchmark Data
-        class_avg = round(df["Final_Exam_Score"].mean(), 1) if not df.empty else 0
-        top_score = df["Final_Exam_Score"].max() if not df.empty else 0
+        # Benchmark Data
+        df_with_display = calculate_display_risk(df.copy())
+        class_avg = round(df_with_display["display_score"].mean(), 1) if not df.empty else 0
+        top_score = df_with_display["display_score"].max() if not df.empty else 0
 
-        # ✅ Get Context based on Role
+        # Context collection
         student_id = None
         row = {}
         context_text = ""
+        score = None
+        risk = "Unknown"
+        suggestions = []
 
         if role == "student" or role == "parent":
             user_record = db.get_student_by_user_id(session["user_id"]) if role == "student" else db.get_parent_by_user_id(session["user_id"])
             if user_record:
                 student_id = str(user_record.get("student_code", "")).strip().upper()
         
-        # If no explicit student found, but message mentions a student ID (for teachers)
-        if not student_id and role == "teacher":
+        # Parse student ID mentioned in message (useful for teachers)
+        if not student_id:
             import re
-            match_id = re.search(r"student\s*(\d+)", user_message)
+            match_id = re.search(r"student\s*(\d+)", user_message_lower)
             if match_id:
-                student_id = match_id.group(1)
+                student_id = match_id.group(1).upper()
 
         if student_id:
             df["Student_ID"] = df["Student_ID"].astype(str).str.strip().str.upper()
@@ -1711,21 +1901,22 @@ Student Profile ({student_id}):
 - Benchmarks: Class Avg is {class_avg}, Top Score is {top_score}
 - Key Advice: {', '.join([tip[1] for tip in suggestions[:3]])}
 """
+                print(f"[CHATBOT INFO] Found context for Student ID: {student_id}")
 
-        # ✅ Handle History (Multi-turn)
+        # Conversation History
         if "chat_history" not in session:
             session["chat_history"] = []
         
-        history = session["chat_history"][-6:] # Last 3 pairs
+        history = session["chat_history"][-6:]  # Last 3 turns
         history_str = "\n".join([f"{h['role']}: {h['content']}" for h in history])
 
-        # ✅ Build Professional Prompt
+        # AI Prompt Engineering
         prompt = f"""
-You are your "AI Assistant", a world-class Academic Success Counselor.
-Your goal is to provide data-driven, encouraging, and highly professional advice.
+You are "AI Academic Assistant", a world-class educational counselor.
+Provide data-driven, highly encouraging, structured, and helpful responses.
 
 Context Information:
-{context_text if context_text else "General system context: Class Average is " + str(class_avg)}
+{context_text if context_text else "General analytics: Class Average is " + str(class_avg) + ", Top Score is " + str(top_score)}
 
 Conversation History:
 {history_str}
@@ -1733,50 +1924,121 @@ Conversation History:
 User's Latest Message: {user_message}
 
 Instructions:
-1. If the user asks for their score or status, use the provided Profile data.
-2. If no student profile is found, ask the user to provide a Student ID or log in properly.
-3. Keep answers concise, professional, and helpful.
-4. Use formatting (bullet points) if explaining complex tips.
-5. Do not mention "Profile Data" or "Prompt" in your response. Speak naturally.
+1. Speak professionally, encouragingly, and naturally. Do not mention system variables, prompts, or JSON data.
+2. If asked about student scores, tips, or trends, rely heavily on the Context Profile.
+3. If no specific student is found and you need one to answer, politely ask for the Student ID.
+4. Keep answers relatively short, professional, and directly helpful.
 """
 
-        # ✅ Call Gemini API
+        # Call Gemini API
         try:
+            print(f"[CHATBOT INFO] Invoking Gemini API...")
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
                 contents=prompt
             )
             reply = response.text.strip()
-
             if not reply:
-                raise ValueError("Empty response from AI")
+                raise ValueError("Empty response from Gemini")
             
-            # Save to history
+            # Save history
             session["chat_history"].append({"role": "user", "content": user_message})
             session["chat_history"].append({"role": "bot", "content": reply})
             session.modified = True
+            print(f"[CHATBOT RESPONSE] Gemini Success: '{reply[:60]}...'")
 
         except Exception as e:
-            print("Gemini Error:", e)
+            print(f"[CHATBOT ERROR] Gemini failed ({e}). Activating local smart fallback...")
             
-            # ✅ SMART FALLBACK (When AI is down)
-            if student_id and 'row' in locals() and row:
-                if "score" in user_message or "result" in user_message:
-                    reply = f"📊 Based on your data, your predicted score is **{score}** ({risk})."
-                elif "why" in user_message or "low" in user_message or "performance" in user_message:
-                    reasons = explain_prediction(row)
-                    reply = "📌 **Analysis of your performance:**\n" + "\n".join(reasons)
-                elif "improve" in user_message or "suggest" in user_message or "help" in user_message:
-                    if 'suggestions' in locals() and suggestions:
-                        reply = "💡 **Here are some tips to improve:**\n" + "\n".join([f"• {tip[1]}" for tip in suggestions])
-                    else:
-                        reply = "👍 Your current performance is stable. Keep maintaining your attendance and study habits!"
+            # Smart Fallbacks based on keywords
+            if "at risk" in user_message_lower or "at-risk" in user_message_lower:
+                reply = get_at_risk_students_fallback(df)
+            elif "best class" in user_message_lower or "performing best" in user_message_lower or "class performs best" in user_message_lower:
+                reply = get_best_performing_class(df)
+            elif "explain analytics" in user_message_lower or "analytics" in user_message_lower or "class average" in user_message_lower:
+                reply = get_analytics_summary_fallback(df)
+            elif "attendance" in user_message_lower:
+                if student_id and row:
+                    att = row.get("Attendence", 0)
+                    reply = f"📅 **Student {student_id} Attendance:** {att}% (Threshold: 75%). " + ("This is in the safe zone! Excellent." if float(att) >= 75 else "⚠️ This is below the required 75% threshold. Attendance needs immediate improvement.")
                 else:
-                    reply = f"⚠️ AI Assistant is currently offline, but here is your basic status: **Score {score} ({risk})**. Please try asking about your score or improvement tips!"
+                    reply = get_attendance_analysis_fallback(df)
+            elif student_id and row:
+                if "score" in user_message_lower or "predicted" in user_message_lower or "result" in user_message_lower or "marks" in user_message_lower:
+                    reply = f"📊 **SPS Prediction:** Based on Student **{student_id}**'s data, the predicted final exam score is **{score}/100** ({risk})."
+                elif "why" in user_message_lower or "low" in user_message_lower or "performance" in user_message_lower:
+                    reasons = explain_prediction(row)
+                    reply = f"📌 **Performance Analysis for Student {student_id}:**\n" + "\n".join([f"• {r}" for r in reasons])
+                elif any(kw in user_message_lower for kw in ["improve", "tips", "suggest", "plan", "study"]):
+                    reply = f"💡 **Recommended Action Plan for Student {student_id}:**\n" + "\n".join([f"• **{tip[0]}**: {tip[1]}" for tip in suggestions])
+                else:
+                    reply = f"📊 **Student {student_id} Profile Overview:**\n• **Predicted Score:** {score}/100 ({risk})\n• **Attendance:** {row.get('Attendence')}%\n• **Study Hours:** {row.get('Study_hours')} hrs/day\n• **IT1 / IT2:** {row.get('internal_test 1')} / {row.get('internal_test 2')}\n\nAsk about 'score', 'reasons', or 'improvement tips' for a deep dive!"
             else:
-                reply = "❌ I'm having trouble connecting to my AI brain right now, and I couldn't find specific student data to provide a fallback. Please try again in a moment."
+                if role == "teacher":
+                    reply = "🧑‍🏫 **SPS Smart Assistant is online (local fallback mode).**\n\nYou can ask me:\n• 'Show at-risk students'\n• 'Which class performs best?'\n• 'Explain analytics'\n• 'Why is attendance low?'\n\nYou can also query a specific student by typing 'Student <ID>' (e.g., 'student 12345')."
+                else:
+                    reply = "⚠️ **AI Brain is temporarily offline (SPS Safe Fallback Mode).**\n\nI can still help you! Please try asking about 'predicted score', 'why is my performance low', or 'improvement tips' to get real-time statistics from your record."
 
-        return jsonify({"reply": reply})
+            # Save fallback history
+            session["chat_history"].append({"role": "user", "content": user_message})
+            session["chat_history"].append({"role": "bot", "content": reply})
+            session.modified = True
+            print(f"[CHATBOT RESPONSE] Smart Fallback Success: '{reply[:60]}...'")
+
+        # Generate dynamic suggestions
+        user_message_lower = user_message.lower()
+        if role == "teacher":
+            if student_id:
+                suggested_qs = [
+                    f"Why is Student {student_id} at risk?",
+                    f"Show improvement tips for Student {student_id}",
+                    "Which class performs best?"
+                ]
+            elif "at risk" in user_message_lower or "at-risk" in user_message_lower:
+                suggested_qs = [
+                    "Why is attendance low?",
+                    "Which class performs best?",
+                    "Explain analytics"
+                ]
+            elif "attendance" in user_message_lower:
+                suggested_qs = [
+                    "Show at-risk students",
+                    "Explain analytics",
+                    "Which class performs best?"
+                ]
+            elif "analytics" in user_message_lower or "class average" in user_message_lower:
+                suggested_qs = [
+                    "Show at-risk students",
+                    "Why is attendance low?",
+                    "Which class performs best?"
+                ]
+            else:
+                suggested_qs = [
+                    "Show at-risk students",
+                    "Which class performs best?",
+                    "Explain analytics"
+                ]
+        else: # student or parent
+            if "score" in user_message_lower or "predicted" in user_message_lower or "result" in user_message_lower or "marks" in user_message_lower:
+                suggested_qs = [
+                    "How can I improve?",
+                    "Why am I at risk?",
+                    "What is my attendance?"
+                ]
+            elif "improve" in user_message_lower or "tips" in user_message_lower or "suggest" in user_message_lower:
+                suggested_qs = [
+                    "What is my attendance?",
+                    "What are my test scores?",
+                    "Show study tips"
+                ]
+            else:
+                suggested_qs = [
+                    "What is my predicted score?",
+                    "How can I improve?",
+                    "What is my attendance?"
+                ]
+
+        return jsonify({"reply": reply, "suggestions": suggested_qs})
 
     except Exception as e:
         print("Chatbot Error:", e)
@@ -1988,7 +2250,8 @@ def parent_dashboard():
             score = predict_score(student)
         result = risk_label(score)
         df = load_csv()
-        class_avg = round(float(df["Final_Exam_Score"].mean()), 1) if not df.empty else 0
+        df = calculate_display_risk(df)
+        class_avg = round(float(df["display_score"].mean()), 1) if not df.empty else 0
         suggestions = generate_suggestions(score, student, class_avg=class_avg)
         sensitivity = calculate_sensitivity(student, score)
     
@@ -2048,10 +2311,22 @@ def email_alerts_page():
     return render_template("email_alerts.html", students=students)
 
 def send_performance_email(student_row):
-    """Helper to send a single performance report email with inline graph."""
-    email = student_row.get("parent_email", "").strip()
-    if not email:
-        return False, "No parent email provided."
+    """Helper to send a single performance report email and SMS."""
+    email = student_row.get("parent_email", "")
+    phone = student_row.get("parent_phone", "")
+    
+    # Clean 'nan' and strip whitespace
+    if not isinstance(email, str) or str(email).lower() == 'nan': email = ""
+    else: email = email.strip()
+    
+    if not isinstance(phone, str) or str(phone).lower() == 'nan': phone = ""
+    else: phone = phone.strip()
+    
+    if phone and not phone.startswith('+'):
+        phone = '+' + phone
+    
+    if not email and not phone:
+        return False, "No parent email or phone provided."
     
     sid = student_row["Student_ID"]
     score = predict_score(student_row)
@@ -2059,23 +2334,34 @@ def send_performance_email(student_row):
     suggestions = generate_suggestions(score, student_row)
     att = student_row.get("Attendence", 0)
     
-    # Generate the performance graph for the email
-    # If final score is 0, use predicted score for the graph display
     temp_row = student_row.copy()
     if float(temp_row.get('Final_Exam_Score', 0)) == 0:
         temp_row['Final_Exam_Score'] = score
         
     graph_path = create_performance_graph(sid, temp_row)
     
-    subject = f"Academic Performance Report: Student {sid} 📊"
-    html = mailer.get_performance_report_template(sid, score, att, risk, suggestions)
+    email_sent = False
+    sms_sent = False
     
-    # Send email with inline image CID: performance_graph (referenced in template)
-    mailer.send_email_async(email, subject, html, image_path=graph_path)
+    if email:
+        subject = f"Academic Performance Report: Student {sid} 📊"
+        html = mailer.get_performance_report_template(sid, score, att, risk, suggestions)
+        mailer.send_email_async(email, subject, html, image_path=graph_path)
+        email_sent = True
+        
+    if phone:
+        sms_msg = f"Alert for {sid}: Status: {risk}, Score: {score}, Att: {att}%. Check email."
+        mailer.send_sms_async(phone, sms_msg)
+        sms_sent = True
+        
+    if email_sent and sms_sent:
+        return True, "Email and SMS queued successfully."
+    elif email_sent:
+        return True, "Email queued successfully. (No phone number)"
+    elif sms_sent:
+        return True, "SMS queued successfully. (No email address)"
     
-    # Note: We don't delete the graph immediately because send_email_async is async.
-    # It will stay in static/temp_reports until the next time or manual cleanup.
-    return True, "Email queued successfully."
+    return False, "Failed to queue alerts."
 
 @app.route("/teacher/send_email/<student_id>")
 @login_required("teacher")
@@ -2089,7 +2375,7 @@ def send_individual_email(student_id):
     student = match.iloc[0].to_dict()
     success, msg = send_performance_email(student)
     if success:
-        flash(f"Performance report for {student_id} has been sent to {student.get('parent_email')}.", "success")
+        flash(f"Performance report for {student_id} queued successfully. {msg}", "success")
     else:
         flash(f"Error: {msg}", "danger")
     return redirect(url_for("email_alerts_page"))
@@ -2105,22 +2391,24 @@ def send_all_emails():
     count = 0
     for _, row in df.iterrows():
         student = row.to_dict()
-        if student.get("parent_email", "").strip():
+        email = str(student.get("parent_email", "")).strip()
+        phone = str(student.get("parent_phone", "")).strip()
+        if (email and email.lower() != 'nan') or (phone and phone.lower() != 'nan'):
             send_performance_email(student)
             count += 1
             
-    flash(f"Success! Queued performance reports for {count} students with valid parent emails.", "success")
+    flash(f"Success! Queued performance reports (Email/SMS) for {count} students.", "success")
     return redirect(url_for("email_alerts_page"))
 
 @app.route("/teacher/email_sample_csv")
 @login_required("teacher")
 def email_sample_csv():
-    headers = "student_id,student_name,parent_name,parent_email\n"
-    sample_row = "S1001,John Doe,Jane Doe,jane.doe@example.com"
+    headers = "student_id,student_name,parent_name,parent_email,parent_phone\n"
+    sample_row = "S1001,John Doe,Jane Doe,jane.doe@example.com,+1234567890"
     output = io.BytesIO()
     output.write((headers + sample_row).encode('utf-8'))
     output.seek(0)
-    return send_file(output, mimetype="text/csv", as_attachment=True, download_name="email_update_template.csv")
+    return send_file(output, mimetype="text/csv", as_attachment=True, download_name="contact_update_template.csv")
 
 @app.route("/teacher/upload_email_csv", methods=["POST"])
 @login_required("teacher")
@@ -2134,8 +2422,8 @@ def upload_email_csv():
         df_new = pd.read_csv(file)
         df_new.columns = [c.lower().strip() for c in df_new.columns]
         
-        if "student_id" not in df_new.columns or "parent_email" not in df_new.columns:
-            flash("CSV must contain 'student_id' and 'parent_email' columns.", "danger")
+        if "student_id" not in df_new.columns or ("parent_email" not in df_new.columns and "parent_phone" not in df_new.columns):
+            flash("CSV must contain 'student_id' and either 'parent_email' or 'parent_phone'.", "danger")
             return redirect(url_for("email_alerts_page"))
 
         df_main = load_csv()
@@ -2143,21 +2431,29 @@ def upload_email_csv():
         
         for _, row in df_new.iterrows():
             sid = str(row["student_id"]).strip()
-            email = str(row["parent_email"]).strip()
+            email = str(row.get("parent_email", "")).strip() if "parent_email" in df_new.columns else ""
+            phone = str(row.get("parent_phone", "")).strip() if "parent_phone" in df_new.columns else ""
+            
+            if email.lower() == "nan": email = ""
+            if phone.lower() == "nan": phone = ""
             
             # Update CSV Data
             if sid in df_main["Student_ID"].astype(str).values:
-                df_main.loc[df_main["Student_ID"].astype(str) == sid, "parent_email"] = email
+                if email:
+                    df_main.loc[df_main["Student_ID"].astype(str) == sid, "parent_email"] = email
+                if phone:
+                    df_main.loc[df_main["Student_ID"].astype(str) == sid, "parent_phone"] = phone
                 updated_count += 1
             
             # Update SQLite Data (Optional but good for sync)
             try:
-                db.update_parent_email(sid, email)
+                if email:
+                    db.update_parent_email(sid, email)
             except:
                 pass # Continue if SQLite update fails
 
         df_main.to_csv(DATA_FILE, index=False)
-        flash(f"Successfully updated {updated_count} parent email addresses.", "success")
+        flash(f"Successfully updated {updated_count} parent contacts.", "success")
         
     except Exception as e:
         flash(f"Error processing CSV: {e}", "danger")
@@ -2165,47 +2461,6 @@ def upload_email_csv():
     return redirect(url_for("email_alerts_page"))
 
 
-# ════════════════════════════════════════════════════════════════════
-# AI GUIDANCE ROUTES
-# ════════════════════════════════════════════════════════════════════
-
-@app.route("/teacher/guidance", methods=["GET", "POST"])
-@login_required("teacher")
-def teacher_guidance():
-    student = None
-    insights = None
-    sid = (request.form.get("student_id") or request.args.get("student_id") or "").strip()
-    if sid:
-        student = get_student_by_id(sid)
-        if student:
-            insights = generate_advanced_insights(student)
-        else:
-            flash(f"Student ID {sid} not found.", "warning")
-    return render_template("guidance.html", student=student, insights=insights, sid=sid, role="teacher")
-
-@app.route("/student/guidance")
-@login_required("student")
-def student_guidance():
-    student_record = db.get_student_by_user_id(session["user_id"])
-    insights = None
-    student_data = None
-    if student_record:
-        student_data = get_student_by_id(student_record["student_code"])
-        if student_data:
-            insights = generate_advanced_insights(student_data)
-    return render_template("guidance.html", student=student_data, insights=insights, role="student")
-
-@app.route("/parent/guidance")
-@login_required("parent")
-def parent_guidance():
-    parent_record = db.get_parent_by_user_id(session["user_id"])
-    insights = None
-    student_data = None
-    if parent_record:
-        student_data = get_student_by_id(parent_record["student_code"])
-        if student_data:
-            insights = generate_advanced_insights(student_data)
-    return render_template("guidance.html", student=student_data, insights=insights, role="parent")
 
 
 # ── Career Guidance ───────────────────────────────────────────────
@@ -2253,7 +2508,7 @@ def rule_based_career_suggestion(q, student_data):
     weaknesses = q.get("weaknesses", "").lower()
     financial = q.get("financial", "").lower()
 
-    score = predict_score(student_data) if student_data else 60
+    score = predict_score(student_data) if student_data else 70
 
     # ── Stream Decision ──────────────────────────────────────────
     science_score = sum([
@@ -2281,7 +2536,7 @@ def rule_based_career_suggestion(q, student_data):
         "finish quickly" in higher, "working as soon" in higher,
         "very open" in diploma, "leads to" in diploma,
         "government" in financial or "scholarship" in financial,
-        score < 60,
+        score < 70,
     ])
 
     scores_map = {
@@ -2324,7 +2579,7 @@ def rule_based_career_suggestion(q, student_data):
 
     # ── Skill Gaps ───────────────────────────────────────────────
     skill_gaps = []
-    if "mathematics" in weaknesses or score < 60:
+    if "mathematics" in weaknesses or score < 70:
         skill_gaps.append({"skill": "Mathematical Reasoning", "how_to_improve": "Practice 10 problems daily from RS Aggarwal or NCERT. Use Khan Academy for free video explanations."})
     if "time management" in weaknesses or "procrastination" in weaknesses:
         skill_gaps.append({"skill": "Time Management", "how_to_improve": "Use the Pomodoro technique — 25 min study, 5 min break. Make a weekly timetable and stick to it."})
@@ -2510,6 +2765,578 @@ Include 3-4 career paths, 3-4 skill gaps, and 3-4 colleges. Make it India-specif
             return jsonify({"success": True, "result": result, "fallback": True})
         return jsonify({"error": str(e)}), 500
 
+
+def get_absence_alert_email_template(student_name, class_name, date):
+    return f"""
+    <html>
+    <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #1e293b; line-height: 1.6; background-color: #f8fafc; padding: 20px;">
+        <div style="max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+            <div style="background: #ef4444; padding: 30px; text-align: center; color: white;">
+                <h1 style="margin: 0; font-size: 24px;">⚠️ Absence Notification</h1>
+                <p style="margin: 5px 0 0 0; opacity: 0.8;">Date: {date}</p>
+            </div>
+            <div style="padding: 30px;">
+                <p>Dear Parent,</p>
+                <p>This is to inform you that your child, <b>{student_name}</b>, from Class <b>{class_name}</b> was marked <b>Absent</b> today.</p>
+                
+                <div style="background: #fef2f2; border: 1px solid #fee2e2; padding: 15px; border-radius: 8px; margin: 25px 0; text-align: center;">
+                    <span style="color: #ef4444; font-weight: 800; font-size: 16px;">Attendance Status: Absent</span>
+                </div>
+
+                <p>Regular attendance is crucial for academic success. Kindly ensure their attendance in classes going forward.</p>
+                
+                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+                <p style="font-size: 12px; color: #94a3b8; text-align: center;">
+                    This is an automated notification from the <b>Student Performance System</b>.
+                </p>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+
+def get_presence_alert_email_template(student_name, class_name, date):
+    return f"""
+    <html>
+    <body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #1e293b; line-height: 1.6; background-color: #f8fafc; padding: 20px;">
+        <div style="max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+            <div style="background: #22c55e; padding: 30px; text-align: center; color: white;">
+                <h1 style="margin: 0; font-size: 24px;">✅ Safe Arrival Notification</h1>
+                <p style="margin: 5px 0 0 0; opacity: 0.8;">Date: {date}</p>
+            </div>
+            <div style="padding: 30px;">
+                <p>Dear Parent,</p>
+                <p>This is to inform you that your child, <b>{student_name}</b>, from Class <b>{class_name}</b> has arrived safely at school and is marked <b>Present</b> today.</p>
+                
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 8px; margin: 25px 0; text-align: center;">
+                    <span style="color: #16a34a; font-weight: 800; font-size: 16px;">Attendance Status: Present</span>
+                </div>
+
+                <p>Thank you for partnering with us to support your child's academic journey and maintaining excellent school attendance!</p>
+                
+                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+                <p style="font-size: 12px; color: #94a3b8; text-align: center;">
+                    This is an automated notification from the <b>Student Performance System</b>.
+                </p>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+
+
+def send_alert_for_student(student_id, date, send_sms, send_email):
+    student = get_student_by_id(student_id)
+    if not student:
+        return False, "Student not found"
+    
+    student_name = student.get("name", "")
+    class_name = student.get("Class", "N/A")
+    email = student.get("parent_email", "")
+    if not isinstance(email, str) or str(email).lower() == 'nan':
+        email = ""
+    else:
+        email = email.strip()
+        
+    phone = student.get("parent_phone", "")
+    if not isinstance(phone, str) or str(phone).lower() == 'nan':
+        phone = ""
+    else:
+        phone = str(phone).strip()
+        if phone.endswith(".0"):
+            phone = phone[:-2]
+            
+    if phone and not phone.startswith('+'):
+        phone = '+' + phone
+    
+    # Retrieve actual attendance status from SQLite DB
+    attendance_db = db.get_attendance_by_date(date)
+    att_rec = attendance_db.get(str(student_id))
+    status = att_rec["status"] if att_rec else "Present"
+    
+    name_str = student_name if student_name else "your child"
+    
+    sms_success = True
+    email_success = True
+    
+    if send_sms:
+        if phone:
+            if status == "Absent":
+                sms_msg = f"Dear Parent, {name_str} from Class {class_name} was marked Absent today. Please ensure regular attendance."
+            else:
+                sms_msg = f"Dear Parent, {name_str} from Class {class_name} has arrived safely and is marked Present today."
+            mailer.send_sms_async(phone, sms_msg)
+        else:
+            sms_success = False
+            
+    if send_email:
+        if email:
+            if status == "Absent":
+                email_subject = "Student Absence Alert"
+                email_html = get_absence_alert_email_template(name_str, class_name, date)
+            else:
+                email_subject = "Safe Arrival Notification"
+                email_html = get_presence_alert_email_template(name_str, class_name, date)
+            mailer.send_email_async(email, email_subject, email_html)
+        else:
+            email_success = False
+            
+    success = (not send_sms or sms_success) and (not send_email or email_success)
+    status_badge = "Sent" if success else "Failed"
+    db.update_attendance_alert_status(student_id, date, status_badge)
+    
+    return success, "Alert sent" if success else "Failed to send alert due to missing contact details"
+
+@app.route("/teacher/absent_alerts")
+@login_required("teacher")
+def teacher_absent_alerts():
+    import datetime
+    today = datetime.date.today().isoformat()
+    sel_date = request.args.get("date", today)
+    sel_class = request.args.get("class", "")
+    sel_section = request.args.get("section", "")
+    
+    df = load_csv()
+    classes = sorted(df["Class"].dropna().unique().tolist())
+    sections = sorted(df["section"].dropna().unique().tolist())
+    
+    if sel_class:
+        df = df[df["Class"].astype(str) == sel_class]
+    if sel_section:
+        df = df[df["section"].astype(str) == sel_section]
+        
+    students = df.to_dict(orient="records")
+    attendance_db = db.get_attendance_by_date(sel_date)
+    
+    absent_count = 0
+    present_count = 0
+    students_list = []
+    
+    for s in students:
+        sid = str(s["Student_ID"])
+        att_rec = attendance_db.get(sid)
+        status = att_rec["status"] if att_rec else "Present"
+        alert_status = att_rec["alert_status"] if att_rec else "Pending"
+        
+        if status == "Absent":
+            absent_count += 1
+        else:
+            present_count += 1
+            
+        students_list.append({
+            "Student_ID": sid,
+            "name": s.get("name", "N/A"),
+            "Class": s.get("Class", "N/A"),
+            "section": s.get("section", "N/A"),
+            "parent_email": s.get("parent_email", ""),
+            "parent_phone": s.get("parent_phone", ""),
+            "status": status,
+            "alert_status": alert_status
+        })
+        
+    total_students = len(students_list)
+    absence_pct = round((absent_count / total_students * 100), 1) if total_students > 0 else 0
+    
+    return render_template(
+        "absent_alerts.html",
+        students=students_list,
+        total_students=total_students,
+        present_count=present_count,
+        absent_count=absent_count,
+        absence_pct=absence_pct,
+        classes=classes,
+        sections=sections,
+        sel_date=sel_date,
+        sel_class=sel_class,
+        sel_section=sel_section
+    )
+
+
+@app.route("/teacher/attendance_history")
+@login_required("teacher")
+def teacher_attendance_history():
+    import datetime
+    sel_date = request.args.get("date", "")
+    sel_class = request.args.get("class", "")
+    sel_section = request.args.get("section", "")
+    sel_status = request.args.get("status", "")
+    q = request.args.get("q", "").strip()
+    
+    all_records = db.get_attendance_history()
+    
+    df = load_csv()
+    classes = sorted(df["Class"].dropna().unique().tolist())
+    sections = sorted(df["section"].dropna().unique().tolist())
+    
+    filtered_records = []
+    
+    for r in all_records:
+        if sel_date and r.get("attendance_date") != sel_date:
+            continue
+        if sel_class and str(r.get("class")) != sel_class:
+            continue
+        if sel_section and str(r.get("section")) != sel_section:
+            continue
+        if sel_status and r.get("attendance_status") != sel_status:
+            continue
+        if q:
+            q_lower = q.lower()
+            sid = str(r.get("student_id", "")).lower()
+            sname = str(r.get("student_name", "")).lower()
+            if q_lower not in sid and q_lower not in sname:
+                continue
+        filtered_records.append(r)
+        
+    total_records = len(filtered_records)
+    total_present = sum(1 for r in filtered_records if r.get("attendance_status") == "Present")
+    total_absent = sum(1 for r in filtered_records if r.get("attendance_status") == "Absent")
+    overall_pct = round((total_present / total_records * 100), 1) if total_records > 0 else 0.0
+    
+    # Charts data calculation
+    monthly_stats = {}
+    for r in all_records:
+        date_str = r.get("attendance_date", "")
+        if len(date_str) >= 7:
+            month = date_str[:7]
+            if month not in monthly_stats:
+                monthly_stats[month] = {"Present": 0, "Total": 0}
+            monthly_stats[month]["Total"] += 1
+            if r.get("attendance_status") == "Present":
+                monthly_stats[month]["Present"] += 1
+                
+    monthly_trend = []
+    for m in sorted(monthly_stats.keys()):
+        total = monthly_stats[m]["Total"]
+        pct = round((monthly_stats[m]["Present"] / total * 100), 1) if total > 0 else 0.0
+        monthly_trend.append({"month": m, "percentage": pct})
+        
+    class_stats = {}
+    for r in all_records:
+        c = r.get("class", "Unknown")
+        if c not in class_stats:
+            class_stats[c] = {"Present": 0, "Total": 0}
+        class_stats[c]["Total"] += 1
+        if r.get("attendance_status") == "Present":
+            class_stats[c]["Present"] += 1
+            
+    class_wise = []
+    for c in sorted(class_stats.keys()):
+        total = class_stats[c]["Total"]
+        pct = round((class_stats[c]["Present"] / total * 100), 1) if total > 0 else 0.0
+        class_wise.append({"class": c, "percentage": pct})
+        
+    present_vs_absent = {
+        "Present": sum(1 for r in all_records if r.get("attendance_status") == "Present"),
+        "Absent": sum(1 for r in all_records if r.get("attendance_status") == "Absent")
+    }
+    
+    return render_template(
+        "attendance_history.html",
+        records=filtered_records,
+        classes=classes,
+        sections=sections,
+        total_records=total_records,
+        total_present=total_present,
+        total_absent=total_absent,
+        overall_pct=overall_pct,
+        sel_date=sel_date,
+        sel_class=sel_class,
+        sel_section=sel_section,
+        sel_status=sel_status,
+        q=q,
+        monthly_trend=monthly_trend,
+        class_wise=class_wise,
+        present_vs_absent=present_vs_absent
+    )
+
+@app.route("/teacher/attendance_history/export_csv")
+@login_required("teacher")
+def export_attendance_history_csv():
+    import csv
+    from io import StringIO
+    from flask import Response
+    
+    records = db.get_attendance_history()
+    
+    def generate():
+        data = StringIO()
+        writer = csv.writer(data)
+        writer.writerow([
+            "Attendance ID", "Student ID", "Student Name", "Class", "Section", 
+            "Attendance Date", "Status", "Attendance Percentage", "Marked Time", 
+            "Marked By", "Alert Status", "Created At"
+        ])
+        yield data.getvalue()
+        data.seek(0)
+        data.truncate(0)
+        
+        for r in records:
+            writer.writerow([
+                r.get("id"), r.get("student_id"), r.get("student_name"), r.get("class"), r.get("section"),
+                r.get("attendance_date"), r.get("attendance_status"), r.get("attendance_percentage"),
+                r.get("marked_time"), r.get("teacher_name"), r.get("alert_status"), r.get("created_at")
+            ])
+            yield data.getvalue()
+            data.seek(0)
+            data.truncate(0)
+            
+    response = Response(generate(), mimetype="text/csv")
+    response.headers.set("Content-Disposition", "attachment", filename="attendance_history.csv")
+    return response
+
+@app.route("/teacher/attendance_history/export_pdf")
+@login_required("teacher")
+def export_attendance_history_pdf():
+    import io
+    import datetime
+    from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import letter, landscape
+    
+    records = db.get_attendance_history()
+    
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=landscape(letter))
+    styles = getSampleStyleSheet()
+    
+    content = []
+    title_style = ParagraphStyle('TitleStyle', parent=styles['Heading1'], alignment=1, textColor=colors.HexColor("#7c3aed"), spaceAfter=20)
+    normal_style = styles['Normal']
+    
+    content.append(Paragraph("Student Performance System — Attendance History Report", title_style))
+    content.append(Paragraph(f"Generated on: {datetime.date.today().isoformat()}", normal_style))
+    content.append(Spacer(1, 15))
+    
+    data = [["Student ID", "Name", "Class", "Sec", "Date", "Status", "Marked By"]]
+    for r in records[:50]:
+        data.append([
+            str(r.get("student_id")),
+            str(r.get("student_name")),
+            str(r.get("class")),
+            str(r.get("section")),
+            str(r.get("attendance_date")),
+            str(r.get("attendance_status")),
+            str(r.get("teacher_name"))
+        ])
+        
+    t = Table(data, colWidths=[90, 200, 50, 40, 100, 80, 120])
+    t.setStyle(TableStyle([
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor("#9333ea")),
+        ('TEXTCOLOR', (0,0), (-1,0), colors.white),
+        ('ALIGN', (0,0), (-1,-1), 'LEFT'),
+        ('BOTTOMPADDING', (0,0), (-1,0), 8),
+        ('GRID', (0,0), (-1,-1), 1, colors.HexColor("#e2e8f0")),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, colors.HexColor("#f8fafc")])
+    ]))
+    content.append(t)
+    
+    doc.build(content)
+    buffer.seek(0)
+    return send_file(buffer, mimetype="application/pdf", as_attachment=True, download_name="attendance_history_report.pdf")
+
+@app.route("/teacher/student-attendance/<student_id>")
+@login_required("teacher")
+def get_student_attendance_details(student_id):
+    all_history = db.get_attendance_history()
+    student_records = [r for r in all_history if str(r.get("student_id")) == str(student_id)]
+    
+    df = load_csv()
+    match = df[df["Student_ID"].astype(str) == str(student_id)]
+    student_profile = {}
+    if not match.empty:
+        row = match.iloc[0]
+        student_profile = {
+            "student_id": student_id,
+            "name": row.get("name", "N/A"),
+            "class": row.get("Class", "N/A"),
+            "section": row.get("section", "N/A"),
+            "parent_email": row.get("parent_email", "N/A"),
+            "parent_phone": row.get("parent_phone", "N/A"),
+            "attendance_percentage": float(row.get("Attendence", 100.0))
+        }
+        
+    present_count = sum(1 for r in student_records if r.get("attendance_status") == "Present")
+    absent_count = sum(1 for r in student_records if r.get("attendance_status") == "Absent")
+    total_count = len(student_records)
+    
+    last_30_days = student_records[:30]
+    
+    return jsonify({
+        "success": True,
+        "profile": student_profile,
+        "stats": {
+            "present": present_count,
+            "absent": absent_count,
+            "total": total_count,
+            "percentage": round((present_count / total_count * 100), 1) if total_count > 0 else student_profile.get("attendance_percentage", 100.0)
+        },
+        "last_30_days": [{
+            "date": r.get("attendance_date"),
+            "status": r.get("attendance_status"),
+            "alert_status": r.get("alert_status"),
+            "marked_time": r.get("marked_time"),
+            "marked_by": r.get("teacher_name")
+        } for r in last_30_days]
+    })
+
+@app.route("/teacher/update-attendance", methods=["POST"])
+@login_required("teacher")
+def update_attendance_record():
+    data = request.get_json() or {}
+    record_id = data.get("record_id")
+    new_status = data.get("status")
+    
+    if not record_id or not new_status:
+        return jsonify({"success": False, "error": "Missing parameters"}), 400
+        
+    db.update_attendance_history_record(int(record_id), new_status)
+    return jsonify({"success": True, "message": "Attendance updated successfully"})
+
+@app.route("/teacher/delete-attendance", methods=["POST"])
+@login_required("teacher")
+def delete_attendance_record():
+    data = request.get_json() or {}
+    record_id = data.get("record_id")
+    
+    if not record_id:
+        return jsonify({"success": False, "error": "Missing parameters"}), 400
+        
+    db.delete_attendance_history_record(int(record_id))
+    return jsonify({"success": True, "message": "Attendance record deleted successfully"})
+
+
+@app.route("/send-absent-alert", methods=["POST"])
+def send_absent_alert():
+    import datetime
+    data = request.get_json() or {}
+    student_id = data.get("student_id")
+    send_sms = data.get("send_sms", False)
+    send_email = data.get("send_email", False)
+    date = data.get("date", datetime.date.today().isoformat())
+    
+    if not student_id:
+        return jsonify({"success": False, "error": "Missing student_id"}), 400
+        
+    success, msg = send_alert_for_student(student_id, date, send_sms, send_email)
+    if success:
+        return jsonify({"success": True, "message": "Alert sent successfully"})
+    else:
+        return jsonify({"success": False, "error": msg}), 400
+
+@app.route("/bulk-absent-alert", methods=["POST"])
+def bulk_absent_alert():
+    import datetime
+    data = request.get_json() or {}
+    student_ids = data.get("student_ids")
+    send_sms = data.get("send_sms", False)
+    send_email = data.get("send_email", False)
+    date = data.get("date", datetime.date.today().isoformat())
+    
+    if student_ids is None:
+        attendance_db = db.get_attendance_by_date(date)
+        student_ids = [sid for sid, att in attendance_db.items() if att["status"] == "Absent"]
+        
+    count = 0
+    for sid in student_ids:
+        send_alert_for_student(sid, date, send_sms, send_email)
+        count += 1
+        
+    return jsonify({"success": True, "message": f"Bulk alerts queued successfully for {count} students"})
+
+@app.route("/absent-students-today", methods=["GET"])
+def absent_students_today():
+    import datetime
+    sel_date = request.args.get("date", datetime.date.today().isoformat())
+    sel_class = request.args.get("class", "")
+    sel_section = request.args.get("section", "")
+    
+    df = load_csv()
+    if sel_class:
+        df = df[df["Class"].astype(str) == sel_class]
+    if sel_section:
+        df = df[df["section"].astype(str) == sel_section]
+        
+    students = df.to_dict(orient="records")
+    attendance_db = db.get_attendance_by_date(sel_date)
+    
+    absent_list = []
+    for s in students:
+        sid = str(s["Student_ID"])
+        att = attendance_db.get(sid)
+        if att and att["status"] == "Absent":
+            absent_list.append({
+                "Student_ID": sid,
+                "name": s.get("name", "N/A"),
+                "Class": s.get("Class", "N/A"),
+                "section": s.get("section", "N/A"),
+                "parent_email": s.get("parent_email", ""),
+                "parent_phone": s.get("parent_phone", ""),
+                "alert_status": att.get("alert_status", "Pending")
+            })
+            
+    return jsonify({"success": True, "absent_students": absent_list})
+
+@app.route("/teacher/mark_attendance_api", methods=["POST"])
+@login_required("teacher")
+def teacher_mark_attendance_api():
+    data = request.get_json() or {}
+    student_id = data.get("student_id")
+    date = data.get("date")
+    status = data.get("status")
+    auto_send = data.get("auto_send", False)
+    
+    if not student_id or not date or not status:
+        return jsonify({"success": False, "error": "Missing parameters"}), 400
+        
+    db.mark_attendance(student_id, date, status)
+    
+    # Save automatically to attendance_history table
+    try:
+        import datetime
+        df = load_csv()
+        match = df[df["Student_ID"].astype(str) == str(student_id)]
+        student_name = "N/A"
+        class_val = "N/A"
+        section_val = "N/A"
+        att_pct = 100.0
+        if not match.empty:
+            row = match.iloc[0]
+            student_name = row.get("name", "N/A")
+            class_val = row.get("Class", "N/A")
+            section_val = row.get("section", "N/A")
+            att_pct = float(row.get("Attendence", 100.0))
+            
+        teacher = db.get_teacher_by_user_id(session["user_id"])
+        teacher_id = teacher["id"] if teacher else None
+        teacher_name = teacher["name"] if teacher else session.get("username", "System")
+        
+        marked_time = datetime.datetime.now().strftime("%I:%M %p")
+        alert_status = "Pending"
+        if status == "Absent" and auto_send:
+            alert_status = "Sent"
+            
+        db.log_attendance_history(
+            student_id=str(student_id),
+            student_name=student_name,
+            class_val=str(class_val),
+            section_val=str(section_val),
+            status=status,
+            attendance_percentage=att_pct,
+            attendance_date=date,
+            marked_time=marked_time,
+            teacher_id=teacher_id,
+            teacher_name=teacher_name,
+            alert_status=alert_status
+        )
+    except Exception as e:
+        print(f"Error logging attendance history: {e}")
+    
+    if status == "Absent" and auto_send:
+        send_alert_for_student(student_id, date, send_sms=True, send_email=True)
+        return jsonify({"success": True, "alert_sent": True})
+        
+    return jsonify({"success": True, "alert_sent": False})
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

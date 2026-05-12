@@ -91,6 +91,47 @@ def create_tables():
         suggestion_json TEXT    NOT NULL,
         created_at      TEXT    DEFAULT (datetime('now'))
     );
+
+    CREATE TABLE IF NOT EXISTS attendance (
+        id           INTEGER PRIMARY KEY AUTOINCREMENT,
+        student_id   TEXT NOT NULL,
+        date         TEXT NOT NULL,
+        status       TEXT NOT NULL CHECK(status IN ('Present', 'Absent')),
+        alert_status TEXT DEFAULT 'Pending' CHECK(alert_status IN ('Pending', 'Sent', 'Failed')),
+        UNIQUE(student_id, date)
+    );
+
+    CREATE TABLE IF NOT EXISTS teacher_remarks (
+        id           INTEGER PRIMARY KEY AUTOINCREMENT,
+        student_code TEXT    NOT NULL,
+        student_name TEXT,
+        class        TEXT,
+        section      TEXT,
+        teacher_id   INTEGER REFERENCES teachers(id),
+        teacher_name TEXT,
+        remark       TEXT    NOT NULL,
+        category     TEXT    DEFAULT 'Academic',
+        priority     TEXT    DEFAULT 'Medium',
+        rating       INTEGER DEFAULT 3,
+        created_at   TEXT    DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS attendance_history (
+        id                     INTEGER PRIMARY KEY AUTOINCREMENT,
+        student_id             TEXT NOT NULL,
+        student_name           TEXT NOT NULL,
+        class                  TEXT,
+        section                TEXT,
+        attendance_status      TEXT NOT NULL CHECK(attendance_status IN ('Present', 'Absent')),
+        attendance_percentage  REAL,
+        attendance_date        TEXT NOT NULL,
+        marked_time            TEXT,
+        teacher_id             INTEGER,
+        teacher_name           TEXT,
+        alert_status           TEXT DEFAULT 'Pending',
+        created_at             TEXT DEFAULT (datetime('now')),
+        UNIQUE(student_id, attendance_date)
+    );
     """)
 
     # migrate existing db if status column missing
@@ -108,6 +149,20 @@ def create_tables():
         c.execute("ALTER TABLE parent_feedback ADD COLUMN teacher_reply TEXT")
     except sqlite3.OperationalError:
         pass
+
+    for col, col_type in [
+        ("student_name", "TEXT"),
+        ("class", "TEXT"),
+        ("section", "TEXT"),
+        ("teacher_name", "TEXT"),
+        ("category", "TEXT DEFAULT 'Academic'"),
+        ("priority", "TEXT DEFAULT 'Medium'"),
+        ("rating", "INTEGER DEFAULT 3")
+    ]:
+        try:
+            c.execute(f"ALTER TABLE teacher_remarks ADD COLUMN {col} {col_type}")
+        except sqlite3.OperationalError:
+            pass
 
     try:
         c.execute("ALTER TABLE parent_feedback ADD COLUMN is_read_by_parent INTEGER DEFAULT 1")
@@ -402,6 +457,18 @@ def update_user_status(user_id: int, status: str):
     conn.commit()
     conn.close()
 
+def update_username(user_id: int, username: str):
+    conn = get_conn()
+    conn.execute("UPDATE users SET username=? WHERE id=?", (username, user_id))
+    conn.commit()
+    conn.close()
+
+def approve_all():
+    conn = get_conn()
+    conn.execute("UPDATE users SET status='active' WHERE status='pending'")
+    conn.commit()
+    conn.close()
+
 def reset_user_password(user_id: int, new_password: str):
     conn = get_conn()
     conn.execute("UPDATE users SET password=? WHERE id=?", 
@@ -462,6 +529,136 @@ def get_all_career_suggestions(student_code):
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
+
+def get_attendance_by_date(date: str):
+    conn = get_conn()
+    rows = conn.execute("SELECT * FROM attendance WHERE date=?", (date,)).fetchall()
+    conn.close()
+    return {r["student_id"]: dict(r) for r in rows}
+
+def mark_attendance(student_id: str, date: str, status: str):
+    conn = get_conn()
+    conn.execute("""
+        INSERT INTO attendance (student_id, date, status, alert_status)
+        VALUES (?, ?, ?, 'Pending')
+        ON CONFLICT(student_id, date) DO UPDATE SET status=?
+    """, (student_id, date, status, status))
+    conn.commit()
+    conn.close()
+
+def update_attendance_alert_status(student_id: str, date: str, alert_status: str):
+    conn = get_conn()
+    conn.execute("""
+        UPDATE attendance SET alert_status=? WHERE student_id=? AND date=?
+    """, (alert_status, student_id, date))
+    conn.execute("""
+        UPDATE attendance_history SET alert_status=? WHERE student_id=? AND attendance_date=?
+    """, (alert_status, student_id, date))
+    conn.commit()
+    conn.close()
+
+
+def add_teacher_remark(student_code, teacher_id, remark, student_name=None, class_val=None, section_val=None, teacher_name=None, category='Academic', priority='Medium', rating=3, created_at=None):
+    conn = get_conn()
+    if not created_at:
+        import datetime
+        created_at = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    conn.execute(
+        """INSERT INTO teacher_remarks 
+           (student_code, student_name, class, section, teacher_id, teacher_name, remark, category, priority, rating, created_at) 
+           VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
+        (student_code, student_name, class_val, section_val, teacher_id, teacher_name, remark, category, priority, rating, created_at)
+    )
+    conn.commit()
+    conn.close()
+
+def get_remarks_by_student(student_code):
+    conn = get_conn()
+    rows = conn.execute("""
+        SELECT r.*, COALESCE(r.teacher_name, t.name) as teacher_name 
+        FROM teacher_remarks r
+        LEFT JOIN teachers t ON r.teacher_id = t.id
+        WHERE r.student_code = ?
+        ORDER BY r.created_at DESC
+    """, (student_code,)).fetchall()
+    conn.close()
+    return [dict(row) for row in rows]
+
+def get_all_teacher_remarks():
+    conn = get_conn()
+    rows = conn.execute("""
+        SELECT student_code as student_code, 
+               student_name as student_name, 
+               class as student_class, 
+               section as student_section,
+               id as id,
+               COALESCE(category, 'Academic') as category, 
+               COALESCE(priority, 'Medium') as priority, 
+               COALESCE(rating, 3) as rating, 
+               remark as remark, 
+               COALESCE(teacher_name, 'System') as teacher_name, 
+               COALESCE(created_at, 'N/A') as created_at
+        FROM teacher_remarks
+        ORDER BY CAST(student_code AS INTEGER) ASC, created_at DESC
+    """).fetchall()
+    conn.close()
+    return [dict(row) for row in rows]
+
+
+def delete_teacher_remark(remark_id):
+    conn = get_conn()
+    conn.execute("DELETE FROM teacher_remarks WHERE id = ?", (remark_id,))
+    conn.commit()
+    conn.close()
+
+
+def log_attendance_history(student_id: str, student_name: str, class_val: str, section_val: str,
+                            status: str, attendance_percentage: float, attendance_date: str,
+                            marked_time: str, teacher_id: int, teacher_name: str, alert_status: str = 'Pending'):
+    conn = get_conn()
+    conn.execute("""
+        INSERT INTO attendance_history (
+            student_id, student_name, class, section, attendance_status, 
+            attendance_percentage, attendance_date, marked_time, teacher_id, teacher_name, alert_status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(student_id, attendance_date) DO UPDATE SET
+            attendance_status=excluded.attendance_status,
+            attendance_percentage=excluded.attendance_percentage,
+            marked_time=excluded.marked_time,
+            teacher_id=excluded.teacher_id,
+            teacher_name=excluded.teacher_name,
+            alert_status=excluded.alert_status
+    """, (student_id, student_name, class_val, section_val, status, 
+          attendance_percentage, attendance_date, marked_time, teacher_id, teacher_name, alert_status))
+    conn.commit()
+    conn.close()
+
+def get_attendance_history():
+    conn = get_conn()
+    rows = conn.execute("SELECT * FROM attendance_history ORDER BY attendance_date DESC, marked_time DESC").fetchall()
+    conn.close()
+    return [dict(r) for r in rows]
+
+def update_attendance_history_record(record_id: int, status: str, alert_status: str = None):
+    conn = get_conn()
+    if alert_status:
+        conn.execute("UPDATE attendance_history SET attendance_status=?, alert_status=? WHERE id=?", (status, alert_status, record_id))
+    else:
+        conn.execute("UPDATE attendance_history SET attendance_status=? WHERE id=?", (status, record_id))
+    conn.commit()
+    conn.close()
+
+def update_attendance_history_alert_status(student_id: str, date: str, alert_status: str):
+    conn = get_conn()
+    conn.execute("UPDATE attendance_history SET alert_status=? WHERE student_id=? AND attendance_date=?", (alert_status, student_id, date))
+    conn.commit()
+    conn.close()
+
+def delete_attendance_history_record(record_id: int):
+    conn = get_conn()
+    conn.execute("DELETE FROM attendance_history WHERE id=?", (record_id,))
+    conn.commit()
+    conn.close()
 
 
 if __name__ == "__main__":

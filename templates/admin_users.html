@@ -22,8 +22,45 @@
 
   <div class="page">
     <div class="container">
-      <h1>User Management</h1>
-      <p class="page-sub">Approve, deactivate, or manage user accounts</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 15px;">
+        <div>
+          <h1 style="margin-bottom: 4px;">User Management</h1>
+          <p class="page-sub" style="margin-bottom: 0;">Approve, deactivate, or manage user accounts</p>
+        </div>
+        <div>
+          <form action="/admin/approve-all" method="POST" style="display:inline" onsubmit="return confirm('Approve all pending users?')">
+            <button type="submit" class="btn btn-success btn-round">✅ Approve All Pending</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Filters Row -->
+      <form action="/admin/users" method="GET" class="filter-row" style="display: flex; gap: 15px; align-items: center; margin-bottom: 24px; background: rgba(255,255,255,0.03); padding: 15px 25px; border-radius: 12px; border: 1px solid var(--border); flex-wrap: wrap;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Filter by Role:</span>
+          <select name="role" onchange="this.form.submit()" class="select-box" style="background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px; outline: none; font-size: 13px; min-width: 150px; cursor: pointer;">
+            <option value="">All Roles</option>
+            <option value="teacher" {% if request.args.get('role') == 'teacher' %}selected{% endif %}>Teacher</option>
+            <option value="student" {% if request.args.get('role') == 'student' %}selected{% endif %}>Student</option>
+            <option value="parent" {% if request.args.get('role') == 'parent' %}selected{% endif %}>Parent</option>
+            <option value="admin" {% if request.args.get('role') == 'admin' %}selected{% endif %}>Admin</option>
+          </select>
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 10px; margin-left: 15px;">
+          <span style="font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Filter by Status:</span>
+          <select name="status" onchange="this.form.submit()" class="select-box" style="background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px; outline: none; font-size: 13px; min-width: 150px; cursor: pointer;">
+            <option value="">All Statuses</option>
+            <option value="pending" {% if request.args.get('status') == 'pending' %}selected{% endif %}>Pending</option>
+            <option value="active" {% if request.args.get('status') == 'active' %}selected{% endif %}>Active</option>
+            <option value="deactivated" {% if request.args.get('status') == 'deactivated' %}selected{% endif %}>Deactivated</option>
+          </select>
+        </div>
+
+        {% if request.args.get('role') or request.args.get('status') %}
+        <a href="/admin/users" class="btn btn-outline btn-sm" style="margin-left: auto; display: inline-flex; align-items: center; gap: 6px;">🧹 Clear Filters</a>
+        {% endif %}
+      </form>
 
       <!-- Users Table -->
       <div class="section">
@@ -82,6 +119,10 @@
 
                         <button onclick="showResetModal('{{ u.id }}', '{{ u.username }}')" class="btn btn-outline btn-sm">Reset Pass</button>
 
+                        {% if u.role == 'teacher' %}
+                        <button onclick="showEditUsernameModal('{{ u.id }}', '{{ u.username }}')" class="btn btn-outline btn-sm">Edit Username</button>
+                        {% endif %}
+
                         <form action="/admin/user-action/{{ u.id }}" method="POST" style="display:inline" onsubmit="return confirm('Delete user {{ u.username }} permanently?')">
                             <input type="hidden" name="action" value="delete">
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -129,6 +170,30 @@ function showResetModal(userId, username) {
         passInput.name = 'new_password';
         passInput.value = newPass;
         form.appendChild(passInput);
+        
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+
+function showEditUsernameModal(userId, username) {
+    const newUsername = prompt(`Enter new username for ${username}:`, username);
+    if (newUsername && newUsername.trim() !== "" && newUsername.trim() !== username) {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/admin/user-action/${userId}`;
+        
+        const actionInput = document.createElement('input');
+        actionInput.type = 'hidden';
+        actionInput.name = 'action';
+        actionInput.value = 'edit_username';
+        form.appendChild(actionInput);
+        
+        const usernameInput = document.createElement('input');
+        usernameInput.type = 'hidden';
+        usernameInput.name = 'new_username';
+        usernameInput.value = newUsername.trim();
+        form.appendChild(usernameInput);
         
         document.body.appendChild(form);
         form.submit();

@@ -1,0 +1,433 @@
+{% extends "base.html" %}
+{% block title %}Absent Alerts Dashboard{% endblock %}
+{% block body %}
+<style>
+:root {
+    --primary: #7c3aed;
+    --sidebar-bg: #140024;
+    --topbar-bg: #9333ea;
+    --topbar-height: 65px;
+    --bg: #0a0016;
+    --card-bg: rgba(255, 255, 255, 0.02);
+    --border: rgba(255, 255, 255, 0.05);
+}
+
+body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #e2e8f0; transition: background 0.3s, color 0.3s; overflow-x: hidden; font-size: 15px; }
+
+/* ☀ Light Mode Overrides */
+body.light-mode { background: #f8fafc; color: #1e293b; }
+body.light-mode .topbar { background: #fff !important; color: #1e293b; border-bottom: 1px solid #e2e8f0 !important; }
+body.light-mode .sidebar { background: #fff; border-right: 1px solid #e2e8f0; }
+body.light-mode .sidebar-logo { color: #1e293b !important; }
+body.light-mode .sidebar a { color: #64748b !important; }
+body.light-mode .sidebar a.active, body.light-mode .sidebar a:hover { background: rgba(124, 58, 237, 0.1); color: #7c3aed !important; }
+body.light-mode .page { background: #f8fafc; }
+body.light-mode .section { background: #fff; border: 1px solid #e2e8f0; }
+body.light-mode .filter-row { background: #f1f5f9; border: 1px solid #e2e8f0; }
+body.light-mode .select-box, body.light-mode .date-input { background: #fff; color: #1e293b; border-color: #cbd5e1; }
+body.light-mode .stat-card { background: #fff; border-color: rgba(124, 58, 237, 0.2); box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+body.light-mode .stat-card .value { color: #1e293b; }
+body.light-mode th { background: rgba(124, 58, 237, 0.1); color: #7c3aed; }
+body.light-mode td { background: #fff; color: #1e293b; }
+body.light-mode tr:hover td { background: #f1f5f9; }
+body.light-mode h1, body.light-mode .section-title { color: #1e293b; }
+body.light-mode .topbar-user { color: #1e293b; }
+body.light-mode .topbar-brand { color: #1e293b !important; }
+
+.topbar { background: var(--topbar-bg) !important; height: var(--topbar-height) !important; padding: 0 30px !important; display: flex !important; align-items: center !important; justify-content: space-between !important; position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 1100; }
+.sidebar { background: var(--sidebar-bg); width: 250px !important; position: fixed; top: var(--topbar-height); left: 0; height: calc(100vh - var(--topbar-height)); z-index: 1000; padding-top: 25px !important; border-right: 1px solid rgba(255,255,255,0.05); }
+.sidebar a { display: flex; align-items: center; gap: 12px; padding: 15px 28px; font-size: 14px; color: #cbd5f5; text-decoration: none; border-left: 4px solid transparent; transition: 0.2s; }
+.sidebar a.active, .sidebar a:hover { background: linear-gradient(90deg, rgba(124, 58, 237, 0.25), transparent); color: #fff; border-left-color: #a855f7; }
+.page { margin-left: 250px; margin-top: var(--topbar-height); padding: 35px; }
+.container { max-width: 1400px; margin: 0 auto; }
+
+/* Stats summary grid */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 35px; }
+.stat-card { background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(147, 51, 234, 0.05)); border: 1px solid rgba(124, 58, 237, 0.2); padding: 25px !important; border-radius: 18px !important; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.2), 0 0 15px rgba(124, 58, 237, 0.1); transition: 0.3s; }
+.stat-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(124, 58, 237, 0.2), 0 0 20px rgba(124, 58, 237, 0.15); }
+.stat-card .label { font-size: 13px; opacity: 0.8; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-card .value { font-size: 32px; font-weight: 800; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.1); }
+
+/* Main containers */
+.section { background: var(--card-bg); border-radius: 20px; padding: 30px; border: 1px solid var(--border); margin-bottom: 30px; }
+.section-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; color: #fff; }
+
+/* Filter bar styling */
+.filter-row { display: flex; gap: 15px; align-items: center; background: rgba(255,255,255,0.03); padding: 15px 25px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 30px; }
+.filter-label { font-size: 12px; color: #94a3b8; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.select-box, .date-input { background: #140024; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 10px 15px; border-radius: 10px; outline: none; font-size: 14px; cursor: pointer; transition: 0.2s; }
+.select-box:focus, .date-input:focus { border-color: #7c3aed; background: #2e1065; }
+
+/* Table styling */
+.tbl-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: separate; border-spacing: 0 8px; }
+th { text-align: left; background: rgba(147, 51, 234, 0.12); padding: 12px 18px; color: #a855f7; font-size: 12px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; }
+td { padding: 12px 18px; background: rgba(255,255,255,0.02); transition: 0.2s; font-size: 14px; border-top: 1px solid rgba(255,255,255,0.01); border-bottom: 1px solid rgba(255,255,255,0.01); }
+tr:hover td { background: rgba(255,255,255,0.05); }
+
+/* Badges & Buttons */
+.badge { padding: 4px 12px; border-radius: 12px; font-weight: 800; font-size: 11px; text-transform: uppercase; display: inline-block; }
+.badge-absent { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+.badge-present { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
+.badge-sent { background: rgba(168, 85, 247, 0.15); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.3); }
+.badge-pending { background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
+
+.btn-action { border: none; padding: 6px 12px; border-radius: 6px; font-weight: 700; font-size: 12px; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 5px; }
+.btn-sms { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+.btn-sms:hover { background: #38bdf8; color: #000; }
+.btn-email { background: rgba(168, 85, 247, 0.15); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.3); }
+.btn-email:hover { background: #a855f7; color: #fff; }
+.btn-both { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); }
+.btn-both:hover { background: #22c55e; color: #fff; }
+.btn-disabled { opacity: 0.5; pointer-events: none; }
+
+/* Switch design */
+.switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.1); transition: .3s; border-radius: 34px; border: 1px solid rgba(255,255,255,0.05); }
+.slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 2px; bottom: 2px; background-color: #fff; transition: .3s; border-radius: 50%; }
+input:checked + .slider { background-color: #a855f7; }
+input:checked + .slider:before { transform: translateX(22px); }
+
+/* Loader spinner */
+.spinner { border: 2px solid rgba(255, 255, 255, 0.1); width: 14px; height: 14px; border-radius: 50%; border-left-color: currentColor; animation: spin 0.8s linear infinite; display: none; }
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Toast */
+.toast-msg { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10000; background: #1a1a2e; border: 1px solid #7c3aed; padding: 12px 24px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; animation: slideUp 0.3s ease; }
+@keyframes slideUp { from { bottom: 10px; opacity: 0; } to { bottom: 30px; opacity: 1; } }
+</style>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <span style="font-size: 26px">🎓</span>
+    <span>Student Performance System</span>
+  </div>
+  <div class="topbar-right">
+    <div class="topbar-user">
+        <span style="font-size: 24px">🧑‍🏫</span>
+        <span>{{ session.username }}</span>
+    </div>
+    <a href="/logout" style="background:rgba(255,255,255,0.1); color:#fff; padding:6px 18px; border-radius:18px; border:1px solid rgba(255,255,255,0.2); font-weight:700; text-decoration:none; font-size:13px">Logout</a>
+  </div>
+</div>
+
+<nav class="sidebar">
+    <div class="sidebar-logo">Teacher Panel</div>
+    <a href="/teacher">📊 Dashboard</a>
+    <a href="/teacher/analytics">📈 Analytics</a>
+    <a href="/teacher/auto_predict">⚡ Auto Predict</a>
+    <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
+    <a href="/teacher/feedback">👪 Parent Feedback</a>
+    <a href="/teacher/remarks">💬 Teacher Remarks</a>
+    <a href="/teacher/students">👨‍🎓 All Students</a>
+    <a href="/teacher/email_alerts">📧 Email Alerts</a>
+    <a href="/teacher/absent_alerts" class="active">🔔 Absent Alerts</a>
+    <a href="/teacher/attendance_history">📚 Attendance History</a>
+    <a href="/teacher/add-student">➕ Add Student</a>
+    <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
+    <a href="/logout">🚪 Logout</a>
+</nav>
+
+<div class="page">
+  <div class="container">
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 35px">
+        <div>
+            <h1 style="font-size:32px; margin-bottom:6px; font-weight: 800">🔔 Absence Alert Hub</h1>
+            <p class="page-sub" style="font-size:17px; opacity: 0.7; margin: 0">Manage daily attendance and automatically notify parents</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); padding: 12px 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+            <span style="font-size: 14px; font-weight: 700; opacity: 0.9;">☑ Auto-send alerts on marking absent</span>
+            <label class="switch">
+                <input type="checkbox" id="autoSendToggle" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <form action="/teacher/absent_alerts" method="GET" class="filter-row">
+        <div style="display: flex; gap: 15px; align-items: center; width: 100%;">
+            <span class="filter-label">DATE</span>
+            <input type="date" name="date" value="{{ sel_date }}" class="date-input" onchange="this.form.submit()">
+
+            <span class="filter-label" style="margin-left: 15px">CLASS</span>
+            <select name="class" class="select-box" onchange="this.form.submit()">
+                <option value="">All Classes</option>
+                {% for c in classes %}
+                <option value="{{ c }}" {% if sel_class == c|string %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+
+            <span class="filter-label" style="margin-left: 15px">SECTION</span>
+            <select name="section" class="select-box" onchange="this.form.submit()">
+                <option value="">All Sections</option>
+                {% for s in sections %}
+                <option value="{{ s }}" {% if sel_section == s|string %}selected{% endif %}>{{ s }}</option>
+                {% endfor %}
+            </select>
+
+            <a href="/teacher/absent_alerts" class="btn-action btn-email" style="margin-left: auto; padding: 10px 20px; border-radius: 10px;">Reset</a>
+        </div>
+    </form>
+
+    <!-- Today's Attendance Summary -->
+    <div class="stat-grid">
+      <div class="stat-card">
+          <div class="label">Total Students</div>
+          <div id="totalStudentsCount" class="value">{{ total_students }}</div>
+      </div>
+      <div class="stat-card" style="border-color: rgba(34, 197, 94, 0.3);">
+          <div class="label">Present Count</div>
+          <div id="presentCount" class="value" style="color: #22c55e;">{{ present_count }}</div>
+      </div>
+      <div class="stat-card" style="border-color: rgba(239, 68, 68, 0.3);">
+          <div class="label">Absent Count</div>
+          <div id="absentCount" class="value" style="color: #ef4444;">{{ absent_count }}</div>
+      </div>
+      <div class="stat-card" style="border-color: rgba(168, 85, 247, 0.3);">
+          <div class="label">Absence Percentage</div>
+          <div id="absencePct" class="value" style="color: #a855f7;">{{ absence_pct }}%</div>
+      </div>
+    </div>
+
+    <!-- Bulk Actions -->
+    <div class="section">
+        <div class="section-title">🔘 Bulk Dispatches</div>
+        <p style="opacity:0.7; margin-bottom:20px; font-size:14px;">Broadcast alert notifications to all currently marked absent students for this date.</p>
+        <div style="display:flex; gap:15px; align-items:center;">
+            <button id="btn-bulk-sms" class="btn-action btn-sms" onclick="sendBulkAlerts('sms')" style="padding:10px 25px; border-radius:10px;"><div class="spinner mr-5"></div>💬 Send SMS to All</button>
+            <button id="btn-bulk-email" class="btn-action btn-email" onclick="sendBulkAlerts('email')" style="padding:10px 25px; border-radius:10px;"><div class="spinner mr-5"></div>📧 Send Email to All</button>
+            <button id="btn-bulk-both" class="btn-action btn-both" onclick="sendBulkAlerts('both')" style="padding:10px 25px; border-radius:10px;"><div class="spinner mr-5"></div>🔔 Send Both to All</button>
+        </div>
+    </div>
+
+    <!-- Student List Table (Real-time markings) -->
+    <div class="section">
+      <div class="section-title">📋 Student Attendance Register</div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+              <tr>
+                  <th style="border-radius: 12px 0 0 12px">STUDENT ID</th>
+                  <th>NAME</th>
+                  <th>CLASS</th>
+                  <th>SECTION</th>
+                  <th>PARENT CONTACTS</th>
+                  <th>ATTENDANCE STATUS</th>
+                  <th>LAST ALERT STATUS</th>
+                  <th style="border-radius: 0 12px 12px 0; text-align: right;">DISPATCH NOTIFICATIONS</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for s in students %}
+            <tr id="row-{{ s.Student_ID }}" data-email="{{ s.parent_email }}" data-phone="{{ s.parent_phone }}">
+                <td><b>{{ s.Student_ID }}</b></td>
+                <td>{{ s.name }}</td>
+                <td>{{ s.Class }}</td>
+                <td>{{ s.section }}</td>
+                <td style="font-size:12px; opacity:0.8;">
+                    <div>📧 {{ s.parent_email or 'None' }}</div>
+                    <div>📞 {{ s.parent_phone or 'None' }}</div>
+                </td>
+                <td>
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn-action {% if s.status == 'Present' %}badge-present{% else %}btn-email{% endif %}" onclick="toggleAttendance('{{ s.Student_ID }}', 'Present')">Present</button>
+                        <button class="btn-action {% if s.status == 'Absent' %}badge-absent{% else %}btn-email{% endif %}" onclick="toggleAttendance('{{ s.Student_ID }}', 'Absent')">Absent</button>
+                    </div>
+                </td>
+                <td>
+                    <span id="badge-alert-{{ s.Student_ID }}" class="badge {% if s.alert_status == 'Sent' %}badge-sent{% else %}badge-pending{% endif %}">
+                        {{ s.alert_status }}
+                    </span>
+                </td>
+                <td style="text-align: right;">
+                    <div style="display:inline-flex; gap:8px;" id="actions-{{ s.Student_ID }}">
+                        <button class="btn-action btn-sms" onclick="sendSingleAlert('{{ s.Student_ID }}', true, false)"><div class="spinner"></div>💬 SMS</button>
+                        <button class="btn-action btn-email" onclick="sendSingleAlert('{{ s.Student_ID }}', false, true)"><div class="spinner"></div>📧 Email</button>
+                        <button class="btn-action btn-both" onclick="sendSingleAlert('{{ s.Student_ID }}', true, true)"><div class="spinner"></div>🔔 Both</button>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const selDate = "{{ sel_date }}";
+
+function showToast(text, isError=false) {
+    const toast = document.createElement("div");
+    toast.className = "toast-msg";
+    if (isError) {
+        toast.style.borderColor = "#ef4444";
+        toast.innerHTML = "❌ " + text;
+    } else {
+        toast.innerHTML = "✔ " + text;
+    }
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transition = "opacity 0.4s";
+        setTimeout(() => toast.remove(), 400);
+    }, 3000);
+}
+
+function toggleAttendance(sid, newStatus) {
+    const autoSend = document.getElementById("autoSendToggle").checked;
+    const row = document.getElementById("row-" + sid);
+    
+    fetch("/teacher/mark_attendance_api", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            student_id: sid,
+            date: selDate,
+            status: newStatus,
+            auto_send: autoSend
+        })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            // Update local row state
+            const buttons = row.querySelectorAll("td:nth-child(6) button");
+            buttons[0].className = "btn-action " + (newStatus === "Present" ? "badge-present" : "btn-email");
+            buttons[1].className = "btn-action " + (newStatus === "Absent" ? "badge-absent" : "btn-email");
+            
+            // Dynamic updates for summary stats
+            updateStatsLocally();
+            
+            if (data.alert_sent) {
+                document.getElementById("badge-alert-" + sid).className = "badge badge-sent";
+                document.getElementById("badge-alert-" + sid).innerText = "Sent";
+                showToast("Auto-alerts sent to parent for student " + sid);
+            } else {
+                showToast("Attendance marked as " + newStatus);
+            }
+        } else {
+            showToast(data.error || "Failed to update attendance", true);
+        }
+    })
+    .catch(() => showToast("Connection failed", true));
+}
+
+function updateStatsLocally() {
+    const rows = document.querySelectorAll("tbody tr");
+    let total = rows.length;
+    let present = 0;
+    let absent = 0;
+    
+    rows.forEach(r => {
+        const absentBtn = r.querySelector("td:nth-child(6) button:nth-child(2)");
+        if (absentBtn.classList.contains("badge-absent")) {
+            absent++;
+        } else {
+            present++;
+        }
+    });
+    
+    document.getElementById("totalStudentsCount").innerText = total;
+    document.getElementById("presentCount").innerText = present;
+    document.getElementById("absentCount").innerText = absent;
+    document.getElementById("absencePct").innerText = (total > 0 ? ((absent / total) * 100).toFixed(1) : "0") + "%";
+}
+
+function sendSingleAlert(sid, sendSms, sendEmail) {
+    const row = document.getElementById("row-" + sid);
+    const actions = document.getElementById("actions-" + sid);
+    const buttons = actions.querySelectorAll("button");
+    
+    // Show spinner inside action container
+    buttons.forEach(b => {
+        b.classList.add("btn-disabled");
+        b.querySelector(".spinner").style.display = "inline-block";
+    });
+    
+    fetch("/send-absent-alert", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            student_id: sid,
+            date: selDate,
+            send_sms: sendSms,
+            send_email: sendEmail
+        })
+    })
+    .then(r => r.json())
+    .then(data => {
+        buttons.forEach(b => {
+            b.classList.remove("btn-disabled");
+            b.querySelector(".spinner").style.display = "none";
+        });
+        
+        if (data.success) {
+            document.getElementById("badge-alert-" + sid).className = "badge badge-sent";
+            document.getElementById("badge-alert-" + sid).innerText = "Sent";
+            showToast("Alert dispatched successfully");
+        } else {
+            document.getElementById("badge-alert-" + sid).className = "badge badge-absent";
+            document.getElementById("badge-alert-" + sid).innerText = "Failed";
+            showToast(data.error || "Failed to send alert", true);
+        }
+    })
+    .catch(() => {
+        buttons.forEach(b => {
+            b.classList.remove("btn-disabled");
+            b.querySelector(".spinner").style.display = "none";
+        });
+        showToast("Dispatch connection error", true);
+    });
+}
+
+function sendBulkAlerts(mode) {
+    const btnSms = document.getElementById("btn-bulk-sms");
+    const btnEmail = document.getElementById("btn-bulk-email");
+    const btnBoth = document.getElementById("btn-bulk-both");
+    
+    [btnSms, btnEmail, btnBoth].forEach(b => {
+        b.classList.add("btn-disabled");
+        b.querySelector(".spinner").style.display = "inline-block";
+    });
+    
+    const sendSms = mode === "sms" || mode === "both";
+    const sendEmail = mode === "email" || mode === "both";
+    
+    fetch("/bulk-absent-alert", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            date: selDate,
+            send_sms: sendSms,
+            send_email: sendEmail
+        })
+    })
+    .then(r => r.json())
+    .then(data => {
+        [btnSms, btnEmail, btnBoth].forEach(b => {
+            b.classList.remove("btn-disabled");
+            b.querySelector(".spinner").style.display = "none";
+        });
+        
+        if (data.success) {
+            showToast(data.message);
+            // Reload page to reflect updated 'Last Sent Status'
+            setTimeout(() => window.location.reload(), 1500);
+        } else {
+            showToast(data.error || "Bulk sending failed", true);
+        }
+    })
+    .catch(() => {
+        [btnSms, btnEmail, btnBoth].forEach(b => {
+            b.classList.remove("btn-disabled");
+            b.querySelector(".spinner").style.display = "none";
+        });
+        showToast("Connection failed", true);
+    });
+}
+</script>
+{% endblock %}

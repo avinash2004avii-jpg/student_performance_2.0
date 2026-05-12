@@ -11,19 +11,48 @@ load_dotenv()
 # ── Configuration ──────────────────────────────────────────────────
 SMTP_SERVER = os.getenv("SMTP_SERVER", "smtp.gmail.com")
 SMTP_PORT   = int(os.getenv("SMTP_PORT", 587))
-MAIL_USER   = os.getenv("MAIL_USERNAME", "")   # Your email
-MAIL_PASS   = os.getenv("MAIL_PASSWORD", "")   # Your App Password
-MAIL_FROM   = os.getenv("MAIL_FROM", "Student Performance System <noreply@school.com>")
+MAIL_USER   = os.getenv("MAIL_USERNAME", "").strip().strip('"')
+MAIL_PASS   = os.getenv("MAIL_PASSWORD", "").strip().strip('"')
+MAIL_FROM   = os.getenv("MAIL_FROM", f"Student Performance System <{MAIL_USER}>")
+
+TWILIO_ACCOUNT_SID = os.getenv("TWILIO_ACCOUNT_SID", "")
+TWILIO_AUTH_TOKEN  = os.getenv("TWILIO_AUTH_TOKEN", "")
+TWILIO_PHONE_NUMBER = os.getenv("TWILIO_PHONE_NUMBER", "")
 
 def send_email_async(to_email, subject, html_content, image_path=None):
     """Sends email in a separate thread to prevent UI freezing."""
     thread = threading.Thread(target=send_email_sync, args=(to_email, subject, html_content, image_path))
     thread.start()
 
+def send_sms_async(to_phone, message):
+    """Sends SMS in a separate thread to prevent UI freezing."""
+    thread = threading.Thread(target=send_sms_sync, args=(to_phone, message))
+    thread.start()
+
+def send_sms_sync(to_phone, message):
+    """Synchronous SMS sending logic."""
+    if not TWILIO_ACCOUNT_SID or not TWILIO_AUTH_TOKEN or not TWILIO_PHONE_NUMBER:
+        print("[WARNING] Twilio credentials not set.")
+        return False
+
+    try:
+        from twilio.rest import Client
+        client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
+        msg = client.messages.create(
+            body=message,
+            from_=TWILIO_PHONE_NUMBER,
+            to=to_phone
+        )
+        print(f"[SUCCESS] SMS sent successfully to {to_phone}. SID: {msg.sid}")
+        return True
+    except Exception as e:
+        print(f"[ERROR] Failed to send SMS to {to_phone}: {e}")
+        return False
+
 def send_email_sync(to_email, subject, html_content, image_path=None):
     """Synchronous email sending logic with optional inline image."""
     if not MAIL_USER or not MAIL_PASS:
-        print(f"⚠️ MAIL_USERNAME or MAIL_PASSWORD not set.")
+        print(f"[WARNING] MAIL_USERNAME or MAIL_PASSWORD not set.")
         return False
 
     try:
@@ -45,19 +74,23 @@ def send_email_sync(to_email, subject, html_content, image_path=None):
             image.add_header('Content-ID', '<performance_graph>')
             image.add_header('Content-Disposition', 'inline', filename=os.path.basename(image_path))
             msg.attach(image)
-            print(f"✅ Attached inline graph: {image_path}")
+            print(f"[SUCCESS] Attached inline graph: {image_path}")
         else:
-            print(f"⚠️ Graph image not found at: {image_path}")
+            print(f"[WARNING] Graph image not found at: {image_path}")
 
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
             server.starttls()
             server.login(MAIL_USER, MAIL_PASS)
             server.send_message(msg)
         
-        print(f"✅ Email sent successfully to {to_email}")
+        print(f"[SUCCESS] Email sent successfully to {to_email}")
+        with open("sent_emails.log", "a", encoding="utf-8") as log:
+            log.write(f"[{threading.current_thread().name}] SUCCESS: Email sent to {to_email} | Subject: {subject}\n")
         return True
     except Exception as e:
-        print(f"❌ Failed to send email to {to_email}: {e}")
+        print(f"[ERROR] Failed to send email to {to_email}: {e}")
+        with open("sent_emails.log", "a", encoding="utf-8") as log:
+            log.write(f"[{threading.current_thread().name}] ERROR: Failed to send to {to_email} | Error: {e}\n")
         return False
 
 # ── Email Templates ───────────────────────────────────────────────

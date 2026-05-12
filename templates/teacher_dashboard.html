@@ -143,7 +143,6 @@ body.light-mode .filter-select { background: #fff; color: #1e293b; border-color:
     <div class="sidebar-logo">Teacher Panel</div>
     <a href="/teacher" class="active">📊 Dashboard</a>
     <a href="/teacher/analytics">📈 Analytics</a>
-    <a href="/teacher/predict">🔮 Predict Student</a>
     <a href="/teacher/auto_predict">⚡ Auto Predict</a>
     <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
     <a href="/teacher/feedback" style="position: relative;">
@@ -152,10 +151,13 @@ body.light-mode .filter-select { background: #fff; color: #1e293b; border-color:
         <span style="position: absolute; top: 12px; right: 20px; background: #ef4444; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold; box-shadow: 0 0 10px rgba(239,68,68,0.5);">{{ open_feedback_count }}</span>
         {% endif %}
     </a>
+    <a href="/teacher/remarks">💬 Teacher Remarks</a>
     <a href="/teacher/students">👨‍🎓 All Students</a>
     <a href="/teacher/email_alerts">📧 Email Alerts</a>
+    <a href="/teacher/absent_alerts">🔔 Absent Alerts</a>
+    <a href="/teacher/attendance_history">📚 Attendance History</a>
     <a href="/teacher/add-student">➕ Add Student</a>
-    <a href="/teacher/guidance">🚀 Success Guidance</a>
+
     <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
     <a href="/logout">🚪 Logout</a>
   </nav>
@@ -211,50 +213,11 @@ body.light-mode .filter-select { background: #fff; color: #1e293b; border-color:
 
       <!-- Quick actions -->
       <div style="display:flex; gap:15px; margin-bottom:40px">
-        <a href="/teacher/predict" class="btn" style="background:#7c3aed; color:#fff; padding:15px 28px; border-radius:12px; font-weight:700; display:flex; align-items:center; gap:10px; text-decoration:none; transition:0.3s; box-shadow:0 8px 20px rgba(124,58,237,0.3); font-size:14px">🔮 Predict Single Student</a>
         <a href="/teacher/bulk-predict" class="btn" style="background:#10b981; color:#fff; padding:15px 28px; border-radius:12px; font-weight:700; display:flex; align-items:center; gap:10px; text-decoration:none; transition:0.3s; box-shadow:0 8px 20px rgba(16, 185, 129, 0.3); font-size:14px">📂 Bulk Predict (Upload CSV)</a>
         <a href="/teacher/students" class="btn" style="background:transparent; border:2px solid #7c3aed; color:#a78bfa; padding:15px 28px; border-radius:12px; font-weight:700; display:flex; align-items:center; gap:10px; text-decoration:none; transition:0.3s; font-size:14px">🏆 View All Students</a>
       </div>
 
-      <!-- At-risk table -->
-      <div class="section" style="background: rgba(255,255,255,0.02); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05)">
-        <h2 style="font-size: 22px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; font-weight: 800">
-            <span style="color: #ef4444; font-size: 26px">⚠</span> At-Risk Students 
-            <span style="font-size:14px;color:#888;font-weight:normal">(score &lt; 60)</span>
-        </h2>
-        {% if risk_students %}
-        <div class="tbl-wrap">
-          <table style="width: 100%; border-collapse: separate; border-spacing: 0 8px">
-            <thead>
-                <tr style="text-align: left; background: rgba(147, 51, 234, 0.12)">
-                    <th style="padding: 12px 18px; border-radius: 12px 0 0 12px; color: #a855f7; font-size: 13px">STUDENT ID</th>
-                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">SCORE</th>
-                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">ATTENDANCE</th>
-                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">STUDY HRS</th>
-                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">IT1</th>
-                    <th style="padding: 12px 18px; color: #a855f7; font-size: 13px">IT2</th>
-                    <th style="padding: 12px 18px; border-radius: 0 12px 12px 0; color: #a855f7; font-size: 13px">ASGN</th>
-                </tr>
-            </thead>
-            <tbody>
-              {% for s in risk_students %}
-              <tr style="background: rgba(255,255,255,0.03); transition: 0.2s">
-                <td style="padding: 12px 18px; border-radius: 12px 0 0 12px"><b>{{ s.Student_ID }}</b></td>
-                <td style="padding: 12px 18px"><span class="badge" style="background: #ef4444; color: #fff; padding: 4px 14px; border-radius: 18px; font-weight: 800; font-size: 13px">{{ s.Final_Exam_Score }}</span></td>
-                <td style="padding: 12px 18px">{{ s.Attendence }}%</td>
-                <td style="padding: 12px 18px">{{ s.Study_hours }}</td>
-                <td style="padding: 12px 18px">{{ s["internal_test 1"] }}</td>
-                <td style="padding: 12px 18px">{{ s["internal_test 2"] }}</td>
-                <td style="padding: 12px 18px; border-radius: 0 12px 12px 0">{{ s.Assignment_score }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        {% else %}
-        <div class="empty" style="padding: 50px; text-align: center; opacity: 0.5; font-size: 16px">✅ No at-risk students right now.</div>
-        {% endif %}
-      </div>
+
 
       <!-- Parent Feedback Section -->
       <div class="section" style="background: rgba(255,255,255,0.02); border-radius: 20px; padding: 25px; border: 1px solid rgba(255,255,255,0.05); margin-top: 30px;">
@@ -304,44 +267,336 @@ body.light-mode .filter-select { background: #fff; color: #1e293b; border-color:
   </div>
 </div>
 
-<!-- Chatbot UI -->
-<div id="chatbot-icon" onclick="toggleChat()" style="position:fixed; bottom:30px; right:30px; background:#7c3aed; width:60px; height:60px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:26px; box-shadow:0 10px 25px rgba(124,58,237,0.5); z-index:2000">💬</div>
-<div id="chatbot-box" style="position:fixed; bottom:105px; right:30px; width:400px; height:520px; background:#140024; border:1px solid rgba(124, 58, 237, 0.2); border-radius:20px; display:none; flex-direction:column; box-shadow:0 15px 40px rgba(0,0,0,0.6); z-index:2000; overflow:hidden">
-    <div id="chat-header" style="background:linear-gradient(90deg, #7c3aed, #9333ea); padding:18px; font-weight:bold; text-align:center; font-size:17px; color: #fff; display: flex; align-items: center; justify-content: center; gap: 10px;">
-        <span>🤖</span>
-        AI Academic Assistant
+<!-- Premium Neon Chatbot Button -->
+<div id="chatbot-icon" onclick="toggleChat()">💬</div>
+
+<!-- Translucent Neon Chatbot Box -->
+<div id="chatbot-box" style="display:none;">
+    <div id="chat-header">
+        <div class="header-title">
+            <span>🤖</span>
+            <span>AI Academic Assistant</span>
+        </div>
+        <button class="clear-btn" onclick="clearChat()" title="Clear Chat History">🗑️</button>
     </div>
-    <div id="chat-body" style="flex:1; padding:18px; overflow-y:auto; display:flex; flex-direction:column; gap:12px; color: #fff"></div>
-    <div id="chat-footer" style="padding:15px; display:flex; gap:10px; background:rgba(0,0,0,0.3)">
-        <input type="text" id="user-input" placeholder="Ask about student performance..." onkeypress="handleKey(event)" style="flex:1; background:transparent; border:none; color:#fff; outline:none; font-size:14px">
-        <button onclick="sendMessage()" style="background:#7c3aed; border:none; color:#fff; padding:8px 18px; border<script>
-function toggleChat(){
+
+    <!-- Messages Container -->
+    <div id="chat-body"></div>
+
+    <!-- Footer Input Area -->
+    <div id="chat-footer">
+        <input type="text" id="chat-input" placeholder="Ask about student or class performance..." onkeypress="handleKey(event)">
+        <button id="chat-send-btn" onclick="sendMessage()">➤</button>
+    </div>
+</div>
+
+<style>
+/* Premium Neon Floating Button */
+#chatbot-icon {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 26px;
+    box-shadow: 0 8px 32px rgba(124, 58, 237, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    z-index: 2000;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: floatAnimation 3s ease-in-out infinite;
+}
+
+#chatbot-icon:hover {
+    transform: scale(1.1) rotate(12deg);
+    box-shadow: 0 12px 40px rgba(124, 58, 237, 0.7);
+}
+
+@keyframes floatAnimation {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+/* Translucent Neon Chat Box */
+#chatbot-box {
+    position: fixed;
+    bottom: 105px;
+    right: 30px;
+    width: 400px;
+    height: 550px;
+    background: rgba(20, 0, 36, 0.95);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    border-radius: 24px;
+    display: none;
+    flex-direction: column;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 20px rgba(124, 58, 237, 0.2);
+    z-index: 2000;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.1, 0.8, 0.25, 1);
+}
+
+/* Chat Header */
+#chat-header {
+    background: linear-gradient(90deg, #7c3aed, #9333ea);
+    padding: 18px 24px;
+    font-weight: 700;
+    font-size: 16px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+#chat-header .header-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#chat-header .clear-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: white;
+    padding: 6px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    width: 28px;
+    height: 28px;
+}
+
+#chat-header .clear-btn:hover {
+    background: rgba(239, 68, 68, 0.3);
+    transform: scale(1.1);
+}
+
+/* Chat Body */
+#chat-body {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scroll-behavior: smooth;
+}
+
+/* Messages styling */
+.chat-msg {
+    max-width: 85%;
+    padding: 12px 18px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.5;
+    animation: msgFadeIn 0.3s ease;
+}
+
+.chat-msg.user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #7c3aed, #6366f1);
+    color: white;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+}
+
+.chat-msg.bot {
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.08);
+    color: #f1f5f9;
+    border-bottom-left-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@keyframes msgFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Suggested Question Chips */
+.quick-chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+    animation: msgFadeIn 0.4s ease;
+}
+
+.quick-chip {
+    background: rgba(124, 58, 237, 0.1);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    color: #c084fc;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.quick-chip:hover {
+    background: rgba(124, 58, 237, 0.25);
+    border-color: #a855f7;
+    color: #f3e8ff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+}
+
+/* Typing Indicator Animation */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 12px 18px;
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+    width: fit-content;
+    animation: msgFadeIn 0.3s ease;
+}
+
+.typing-indicator span {
+    width: 8px;
+    height: 8px;
+    background-color: #a855f7;
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
+}
+
+/* Chat Footer */
+#chat-footer {
+    padding: 16px 20px;
+    display: flex;
+    gap: 10px;
+    background: rgba(15, 0, 27, 0.6);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#chat-input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: white;
+    padding: 10px 16px;
+    outline: none;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+#chat-input:focus {
+    border-color: #a855f7;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 10px rgba(124, 58, 237, 0.2);
+}
+
+#chat-send-btn {
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
+    border: none;
+    color: white;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+#chat-send-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    box-shadow: 0 6px 16px rgba(124, 58, 237, 0.5);
+}
+</style>
+
+<script>
+const role = "teacher";
+
+// Load chat history from localStorage on page load
+document.addEventListener("DOMContentLoaded", () => {
+    loadChatHistory();
+});
+
+function loadChatHistory() {
+    let key = "chat_history_sps_" + role;
+    let history = JSON.parse(localStorage.getItem(key) || "[]");
+    let chatBody = document.getElementById("chat-body");
+    
+    chatBody.innerHTML = "";
+    
+    if (history.length === 0) {
+        addMessage("🤖 Hello Teacher! I have parsed our system-wide student performance metrics. I can answer questions about class standings, best performing groups, at-risk rosters, or attendance analyses. How can I help you today?", "bot", false);
+        addQuickActions();
+    } else {
+        history.forEach(item => {
+            addMessage(item.text, item.sender, false);
+        });
+    }
+}
+
+function saveLocalMessage(text, sender) {
+    let key = "chat_history_sps_" + role;
+    let history = JSON.parse(localStorage.getItem(key) || "[]");
+    history.push({text: text, sender: sender});
+    localStorage.setItem(key, JSON.stringify(history));
+}
+
+function clearChat() {
+    if (confirm("Clear conversation history?")) {
+        let key = "chat_history_sps_" + role;
+        localStorage.removeItem(key);
+        loadChatHistory();
+    }
+}
+
+function toggleChat() {
     let box = document.getElementById("chatbot-box");
     let isOpening = box.style.display === "none";
     box.style.display = isOpening ? "flex" : "none";
     
-    // Add welcome message if empty
-    let chatBody = document.getElementById("chat-body");
-    if (isOpening && chatBody.innerHTML.trim() === "") {
-        setTimeout(() => {
-            addMessage("🤖 Hello! I am your AI Assistant. I have analyzed your student data and I am ready to help you improve. What would you like to know?", "bot");
-            addQuickActions();
-        }, 300);
+    if (isOpening) {
+        document.getElementById("chat-input").focus();
+        let chatBody = document.getElementById("chat-body");
+        chatBody.scrollTop = chatBody.scrollHeight;
     }
 }
 
 function addQuickActions() {
     let chatBody = document.getElementById("chat-body");
     let actions = [
-        { label: "📊 My Score", text: "What is my predicted final score?" },
-        { label: "💡 How to Improve?", text: "Give me suggestions to improve my performance." },
-        { label: "📉 Risk Analysis", text: "Am I at risk of failing?" },
-        { label: "📅 Attendance", text: "How is my attendance affecting my marks?" }
+        { label: "⚠️ At-Risk List", text: "Show at-risk students" },
+        { label: "🏆 Top Class", text: "Which class performs best?" },
+        { label: "📈 Performance Summary", text: "Explain analytics" },
+        { label: "📅 Attendance Trends", text: "Why is attendance low?" }
     ];
     
-    let html = `<div id="quick-actions" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px">`;
+    let html = `<div id="quick-actions" class="quick-chips-container">`;
     actions.forEach(a => {
-        html += `<button onclick="sendQuickMessage('${a.text}')" style="background:rgba(124,58,237,0.1); border:1px solid rgba(124,58,237,0.3); color:#a78bfa; padding:6px 12px; border-radius:15px; font-size:12px; cursor:pointer; transition:0.2s" onmouseover="this.style.background='rgba(124,58,237,0.2)'" onmouseout="this.style.background='rgba(124,58,237,0.1)'">${a.label}</button>`;
+        html += `<button class="quick-chip" onclick="sendQuickMessage('${a.text}')">${a.label}</button>`;
     });
     html += `</div>`;
     chatBody.innerHTML += html;
@@ -350,30 +605,56 @@ function addQuickActions() {
 
 function sendQuickMessage(text) {
     document.getElementById("quick-actions")?.remove();
+    document.getElementById("dynamic-suggestions")?.remove();
     addMessage(text, "user");
     fetchReply(text);
 }
 
-function handleKey(event){ if(event.key === "Enter") sendMessage(); }
+// Keep the input active
+function handleKey(event) {
+    if (event.key === "Enter") sendMessage();
+}
 
-function sendMessage(){
-    let input = document.getElementById("user-input");
-    let message = input.value;
-    if(!message) return;
+function sendMessage() {
+    let input = document.getElementById("chat-input");
+    let message = input.value.trim();
+    if (!message) return;
     
     document.getElementById("quick-actions")?.remove();
+    document.getElementById("dynamic-suggestions")?.remove();
     addMessage(message, "user");
     input.value = "";
     fetchReply(message);
 }
 
-function addMessage(text, sender) {
+function addMessage(text, sender, persist = true) {
     let chatBody = document.getElementById("chat-body");
+    let formattedText = text.replace(/\n/g, '<br>');
+    
     if (sender === "user") {
-        chatBody.innerHTML += `<div style='align-self:flex-end; background:#7c3aed; padding:12px 16px; border-radius:18px 18px 0 18px; max-width:85%; font-size:14px; box-shadow:0 4px 12px rgba(0,0,0,0.2)'>${text}</div>`;
+        chatBody.innerHTML += `<div class="chat-msg user">${formattedText}</div>`;
     } else {
-        chatBody.innerHTML += `<div style='align-self:flex-start; background:rgba(255,255,255,0.08); padding:12px 16px; border-radius:18px 18px 18px 0; max-width:85%; font-size:14px; line-height:1.5; border:1px solid rgba(255,255,255,0.05)'>${text}</div>`;
+        chatBody.innerHTML += `<div class="chat-msg bot">${formattedText}</div>`;
     }
+    
+    if (persist) {
+        saveLocalMessage(text, sender);
+    }
+    
+    chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function addSuggestions(suggestions) {
+    if (!suggestions || suggestions.length === 0) return;
+    let chatBody = document.getElementById("chat-body");
+    document.getElementById("dynamic-suggestions")?.remove();
+    
+    let html = `<div id="dynamic-suggestions" class="quick-chips-container">`;
+    suggestions.forEach(s => {
+        html += `<button class="quick-chip" onclick="sendQuickMessage('${s}')">${s}</button>`;
+    });
+    html += `</div>`;
+    chatBody.innerHTML += html;
     chatBody.scrollTop = chatBody.scrollHeight;
 }
 
@@ -382,34 +663,32 @@ function fetchReply(message) {
     
     // Typing indicator
     let loaderId = "loader-" + Date.now();
-    chatBody.innerHTML += `<div id="${loaderId}" style='align-self:flex-start; background:rgba(255,255,255,0.05); padding:10px 16px; border-radius:15px; font-size:12px; font-style:italic; color:#aaa'>AI is thinking...</div>`;
+    chatBody.innerHTML += `
+        <div id="${loaderId}" class="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    `;
     chatBody.scrollTop = chatBody.scrollHeight;
 
     fetch("/chatbot", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({message: message})
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message })
     })
     .then(res => res.json())
     .then(data => {
-        document.getElementById(loaderId).remove();
+        document.getElementById(loaderId)?.remove();
         addMessage(data.reply, "bot");
+        if (data.suggestions) {
+            addSuggestions(data.suggestions);
+        }
     })
     .catch(err => {
-        document.getElementById(loaderId).remove();
-        addMessage("❌ Error: Could not connect to AI assistant.", "bot");
+        document.getElementById(loaderId)?.remove();
+        addMessage("❌ Error: Could not connect to AI assistant. Please try again.", "bot", false);
     });
-}
--height:1.5'>${data.reply}</div>`;
-        chatBody.scrollTop = chatBody.scrollHeight;
-    });
-}
-function toggleMode(){
-    document.body.classList.toggle("light-mode");
-    localStorage.setItem("theme", document.body.classList.contains("light-mode") ? "light" : "dark");
-}
-window.onload = function(){
-    if(localStorage.getItem("theme") === "light") document.body.classList.add("light-mode");
 }
 </script>
 {% endblock %}

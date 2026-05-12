@@ -91,7 +91,6 @@ tr:hover td { background: rgba(255,255,255,0.05); }
     <div class="sidebar-logo">Teacher Panel</div>
     <a href="/teacher">📊 Dashboard</a>
     <a href="/teacher/analytics" class="active">📈 Analytics</a>
-    <a href="/teacher/predict">🔮 Predict Student</a>
     <a href="/teacher/auto_predict">⚡ Auto Predict</a>
     <a href="/teacher/bulk-predict">📂 Bulk Predict</a>
     <a href="/teacher/feedback" style="position: relative;">
@@ -100,10 +99,13 @@ tr:hover td { background: rgba(255,255,255,0.05); }
         <span style="position: absolute; top: 12px; right: 20px; background: #ef4444; color: white; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: bold; box-shadow: 0 0 10px rgba(239,68,68,0.5);">{{ open_feedback_count }}</span>
         {% endif %}
     </a>
+    <a href="/teacher/remarks">💬 Teacher Remarks</a>
     <a href="/teacher/students">👨‍🎓 All Students</a>
     <a href="/teacher/email_alerts">📧 Email Alerts</a>
+    <a href="/teacher/absent_alerts">🔔 Absent Alerts</a>
+    <a href="/teacher/attendance_history">📚 Attendance History</a>
     <a href="/teacher/add-student">➕ Add Student</a>
-    <a href="/teacher/guidance">🚀 Success Guidance</a>
+
     <div class="divider" style="height:1px; background:rgba(255,255,255,0.1); margin: 20px 28px"></div>
     <a href="/logout">🚪 Logout</a>
   </nav>
@@ -176,24 +178,7 @@ tr:hover td { background: rgba(255,255,255,0.05); }
         </div>
         <div class="section">
           <h3 style="font-size:20px; margin-bottom: 20px; font-weight: 700">Class-wise Performance</h3>
-          <div class="tbl-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th style="border-radius: 12px 0 0 12px">Class</th>
-                        <th style="border-radius: 0 12px 12px 0">Average Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for cls, avg in class_avg.items() %}
-                    <tr>
-                        <td style="border-radius: 12px 0 0 12px"><b>Class {{ cls }}</b></td>
-                        <td style="border-radius: 0 12px 12px 0">{{ avg }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-          </div>
+          <canvas id="classChart" height="250"></canvas>
         </div>
     </div>
   </div>
@@ -205,79 +190,134 @@ tr:hover td { background: rgba(255,255,255,0.05); }
 Chart.defaults.color = '#cbd5e1';
 Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
 
-// Score Distribution
-new Chart(document.getElementById('scoreHist'), {
+// 1. Score Distribution
+const scoreCtx = document.getElementById('scoreHist').getContext('2d');
+const gradientGreen = scoreCtx.createLinearGradient(0, 0, 0, 400);
+gradientGreen.addColorStop(0, '#22c55e'); gradientGreen.addColorStop(1, '#15803d');
+const gradientYellow = scoreCtx.createLinearGradient(0, 0, 0, 400);
+gradientYellow.addColorStop(0, '#eab308'); gradientYellow.addColorStop(1, '#a16207');
+const gradientOrange = scoreCtx.createLinearGradient(0, 0, 0, 400);
+gradientOrange.addColorStop(0, '#f97316'); gradientOrange.addColorStop(1, '#c2410c');
+const gradientRed = scoreCtx.createLinearGradient(0, 0, 0, 400);
+gradientRed.addColorStop(0, '#ef4444'); gradientRed.addColorStop(1, '#b91c1c');
+
+new Chart(scoreCtx, {
     type: 'bar',
     data: {
-        labels: {{ hist_labels_json|safe }},
+        labels: {{ score_bins_json|safe }},
         datasets: [{
-            label: 'Student Count',
-            data: {{ hist_counts_json|safe }},
-            backgroundColor: 'rgba(124, 58, 237, 0.7)',
-            borderColor: '#7c3aed',
-            borderWidth: 2,
-            borderRadius: 8
+            label: 'Number of Students',
+            data: {{ score_counts_json|safe }},
+            backgroundColor: [gradientRed, gradientOrange, gradientYellow, gradientGreen],
+            borderRadius: 8,
+            borderWidth: 0
         }]
     },
     options: {
         responsive: true,
-        plugins: { legend: { display: false } },
-        scales: { y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } } }
-    }
-});
-
-// Attendance vs Performance
-new Chart(document.getElementById('attScatter'), {
-    type: 'scatter',
-    data: {
-        datasets: [{
-            label: 'Students',
-            data: {{ scatter_points_json|safe }},
-            backgroundColor: 'rgba(16, 185, 129, 0.6)',
-            pointRadius: 6,
-            pointHoverRadius: 8
-        }]
-    },
-    options: {
-        responsive: true,
+        plugins: {
+            legend: { display: false },
+            tooltip: { backgroundColor: 'rgba(0,0,0,0.8)', titleFont: { size: 14 }, bodyFont: { size: 14 }, padding: 10 }
+        },
         scales: {
-            x: { title: { display: true, text: 'Attendance %' } },
-            y: { title: { display: true, text: 'Final Score' } }
+            x: { grid: { display: false } },
+            y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }
         }
     }
 });
 
-// Component Comparison
-new Chart(document.getElementById('compChart'), {
-    type: 'radar',
+// 2. Attendance vs Performance (Grouped Bar Chart)
+new Chart(document.getElementById('attScatter'), {
+    type: 'bar',
     data: {
-        labels: {{ component_labels_json|safe }},
+        labels: {{ att_groups_json|safe }},
         datasets: [
             {
-                label: 'Safe Students',
-                data: {{ component_safe_means_json|safe }},
-                backgroundColor: 'rgba(16, 185, 129, 0.2)',
-                borderColor: '#10b981',
-                borderWidth: 2
+                label: 'Average Attendance %',
+                data: {{ group_avg_att_json|safe }},
+                backgroundColor: 'rgba(56, 189, 248, 0.8)',
+                borderRadius: 6
             },
             {
-                label: 'At-Risk Students',
-                data: {{ component_at_means_json|safe }},
-                backgroundColor: 'rgba(239, 68, 68, 0.2)',
-                borderColor: '#ef4444',
-                borderWidth: 2
+                label: 'Average Score',
+                data: {{ group_avg_score_json|safe }},
+                backgroundColor: 'rgba(168, 85, 247, 0.8)',
+                borderRadius: 6
             }
         ]
     },
     options: {
         responsive: true,
+        plugins: {
+            legend: { display: true, position: 'top', labels: { color: '#cbd5e1' } },
+            tooltip: { mode: 'index', intersect: false }
+        },
         scales: {
-            r: {
-                angleLines: { color: 'rgba(255,255,255,0.1)' },
-                grid: { color: 'rgba(255,255,255,0.1)' },
-                pointLabels: { font: { size: 12 } },
-                suggestedMin: 0
+            x: { grid: { display: false } },
+            y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+        }
+    }
+});
+
+// 3. Component Comparison (Grouped Bar Chart instead of Radar)
+new Chart(document.getElementById('compChart'), {
+    type: 'bar',
+    data: {
+        labels: {{ comp_labels_json|safe }},
+        datasets: [
+            {
+                label: 'Safe Students',
+                data: {{ comp_safe_means_json|safe }},
+                backgroundColor: 'rgba(34, 197, 94, 0.8)',
+                borderRadius: 6
+            },
+            {
+                label: 'At-Risk Students',
+                data: {{ comp_at_means_json|safe }},
+                backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                borderRadius: 6
             }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: true, position: 'top', labels: { color: '#cbd5e1' } },
+            tooltip: { mode: 'index', intersect: false }
+        },
+        scales: {
+            x: { grid: { display: false } },
+            y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' }, title: { display: true, text: 'Average Score / %' } }
+        }
+    }
+});
+
+// 4. Class-wise Performance
+const classScores = {{ class_scores_json|safe }};
+const maxScore = Math.max(...classScores);
+const classColors = classScores.map(score => score === maxScore ? 'rgba(236, 72, 153, 0.9)' : 'rgba(99, 102, 241, 0.6)');
+
+new Chart(document.getElementById('classChart'), {
+    type: 'bar',
+    data: {
+        labels: {{ class_labels_json|safe }},
+        datasets: [{
+            label: 'Average Score',
+            data: classScores,
+            backgroundColor: classColors,
+            borderRadius: 8,
+            borderWidth: 0
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: false },
+            tooltip: { backgroundColor: 'rgba(0,0,0,0.8)' }
+        },
+        scales: {
+            x: { grid: { display: false } },
+            y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } }
         }
     }
 });

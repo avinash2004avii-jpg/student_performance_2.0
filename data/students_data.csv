@@ -1,902 +1,902 @@
-Student_ID,name,Class,section,Age,Gender,Study_hours,Sleep_hours,Parent_Education_Level,Health_Issues,Internet_Access,Attendence,internal_test 1,internal_test 2,Assignment_score,Extracurricular_Activities,Previous_Exam_Score,Final_Exam_Score,parent_email,parent_phone
-1,Aditya Reddy,8th,A,,,2.2,9.0,,,,76.0,74.0,43.0,64.0,,79.0,0.0,avinash2004avii@gmail.com,917483744164
-2,Aarav Patil,8th,A,,,5.6,7.0,,Minor,,93.0,75.0,87.0,62.0,,61.0,0.0,raju@mailinator.com,6892648247
-3,Vihaan Achar,8th,A,,,1.2,8.0,,Frequent,,94.0,56.0,83.0,67.0,,94.0,0.0,kumar@mailinator.com,8626430119
-4,Rahul Mukherjee,8th,A,,,5.8,7.0,,,,91.8,71.0,93.0,84.0,,69.0,0.0,lakshmi@mailinator.com,8671223540
-5,Amit Joshi,8th,A,,,3.8,6.0,,,,80.0,89.0,92.0,65.0,,74.0,0.0,raghavendra@mailinator.com,6710311085
-6,Rohan Murthy,8th,A,,,2.9,5.0,,Frequent,,99.0,61.0,62.0,58.0,,70.0,0.0,jagadish@mailinator.com,8644459909
-7,Sai Pai,8th,A,,,6.0,7.0,,Minor,,93.0,72.0,70.0,83.0,,53.0,0.0,krishna@mailinator.com,9138255760
-8,Karthik Roy,8th,A,,,1.3,8.0,,Frequent,,74.0,41.0,57.0,89.0,,72.0,0.0,pradeep@mailinator.com,8880603997
-9,Akash Nair,8th,A,,,3.6,8.0,,Minor,,89.0,41.0,56.0,70.0,,95.0,0.0,prakash@mailinator.com,6785710669
-10,Abhinav Iyer,8th,A,,,1.2,6.0,,Minor,,73.0,42.0,46.0,62.0,,89.0,0.0,suresh@mailinator.com,6113100254
-11,Nikhil Hegde,8th,A,,,3.9,8.0,,Frequent,,89.0,60.0,73.0,50.0,,66.0,0.0,krishna@mailinator.com,9089941579
-12,Pranav Das,8th,A,,,1.9,5.0,,Frequent,,88.0,45.0,80.0,85.0,,80.0,0.0,anand@mailinator.com,9536188857
-13,Yash Sharma,8th,A,,,4.2,7.0,,Frequent,,65.0,54.0,70.0,62.0,,41.0,0.0,nagaraj@mailinator.com,7663700925
-14,Dev Gupta,8th,A,,,5.9,8.0,,Minor,,88.0,40.0,55.0,66.0,,43.0,0.0,srinivas@mailinator.com,9873908542
-15,Siddharth Deshmukh,8th,A,,,5.4,5.0,,Frequent,,81.0,82.0,79.0,98.0,,48.0,0.0,pradeep@mailinator.com,6854285577
-16,Varun Acharya,8th,A,,,3.3,7.0,,Minor,,79.0,68.0,87.0,84.0,,60.0,0.0,nagaraj@mailinator.com,6310395771
-17,Ayush Chatterjee,8th,A,,,4.5,8.0,,,,90.6,40.0,88.0,69.0,,72.0,0.0,krishna@mailinator.com,8348925461
-18,Ishan Rao,8th,A,,,4.9,6.0,,,,71.8,85.0,92.0,57.0,,50.0,0.0,srinivas@mailinator.com,7526102834
-19,Dhruv Bhat,8th,A,,,3.5,7.0,,Minor,,76.0,70.0,70.0,95.0,,63.0,0.0,pradeep@mailinator.com,8600369961
-20,Kabir Prasad,8th,A,,,3.6,6.0,,,,86.0,95.0,57.0,70.0,,42.0,0.0,umesh@mailinator.com,6203075397
-21,Rithvik Banerjee,8th,A,,,1.8,6.0,,Frequent,,66.0,64.0,92.0,69.0,,40.0,0.0,prakash@mailinator.com,9315145531
-22,Ansh Singh,8th,A,,,2.8,8.0,,,,85.0,66.0,70.0,73.0,,79.0,0.0,shivappa@mailinator.com,7069099517
-23,Shaurya Shastry,8th,A,,,1.7,9.0,,Minor,,99.7,43.0,42.0,76.0,,94.0,0.0,dinesh@mailinator.com,8376127030
-24,Tejas Shetty,8th,A,,,4.6,9.0,,,,88.0,84.0,77.0,75.0,,57.0,0.0,krishna@mailinator.com,8614348420
-25,Harsh Sen,8th,A,,,3.4,9.0,,Frequent,,86.0,58.0,90.0,83.0,,45.0,0.0,dinesh@mailinator.com,9105428309
-26,Vivek Patel,8th,A,,,3.2,7.0,,Minor,,72.0,91.0,66.0,65.0,,43.0,0.0,suresh@mailinator.com,9402532667
-27,Sanjay Verma,8th,A,,,5.4,8.0,,Minor,,79.0,51.0,42.0,72.0,,76.0,0.0,dinesh@mailinator.com,9257424777
-28,Kiran Gowda,8th,A,,,3.6,7.0,,,,83.0,61.0,41.0,56.0,,56.0,0.0,venkatesh@mailinator.com,6590421731
-29,Alok Choudhury,8th,A,,,3.0,9.0,,Frequent,,68.0,71.0,62.0,54.0,,47.0,0.0,nagaraj@mailinator.com,7954125625
-30,Madhav Kumar,8th,A,,,2.3,8.0,,Frequent,,74.0,89.0,45.0,71.0,,77.0,0.0,ashok@mailinator.com,7468983942
-31,Gautam Reddy,8th,A,,,1.4,5.0,,,,90.2,50.0,54.0,94.0,,70.0,0.0,kumar@mailinator.com,9773294811
-32,Raghav Patil,8th,A,,,3.1,7.0,,,,88.0,41.0,78.0,99.0,,62.0,0.0,shivappa@mailinator.com,6601727962
-33,Sameer Achar,8th,A,,,1.1,6.0,,Frequent,,70.0,66.0,88.0,82.0,,94.0,0.0,mahesh@mailinator.com,6164356329
-34,Anand Mukherjee,8th,A,,,2.5,6.0,,,,94.0,52.0,87.0,91.0,,83.0,0.0,krishna@mailinator.com,7190858025
-35,Vijay Joshi,8th,A,,,3.5,8.0,,Minor,,78.0,47.0,51.0,61.0,,93.0,0.0,kumar@mailinator.com,9982183325
-36,Raj Murthy,8th,A,,,5.8,6.0,,,,99.0,91.0,76.0,92.0,,73.0,0.0,raghav@mailinator.com,8792699041
-37,Sunil Pai,8th,A,,,1.5,6.0,,Frequent,,76.0,52.0,82.0,90.0,,62.0,0.0,manjunath@mailinator.com,8528241007
-38,Sandeep Roy,8th,A,,,4.4,6.0,,Frequent,,92.0,62.0,54.0,67.0,,80.0,0.0,shankar@mailinator.com,7959614853
-39,Manoj Nair,8th,A,,,3.5,6.0,,,,78.6,86.0,54.0,67.0,,80.0,0.0,dinesh@mailinator.com,7465703846
-40,Abhishek Iyer,8th,A,,,4.9,5.0,,Minor,,90.0,73.0,60.0,93.0,,74.0,0.0,mohan@mailinator.com,9594147293
-41,Deepak Hegde,8th,A,,,1.7,5.0,,Frequent,,83.0,58.0,40.0,54.0,,90.0,0.0,shivappa@mailinator.com,8557955678
-42,Vikram Das,8th,A,,,1.4,5.0,,Minor,,66.0,76.0,43.0,69.0,,42.0,0.0,krishna@mailinator.com,8122769131
-43,Ravi Sharma,8th,A,,,3.0,5.0,,Frequent,,69.0,86.0,79.0,55.0,,51.0,0.0,mahesh@mailinator.com,8871473822
-44,Anil Gupta,8th,A,,,5.0,6.0,,,,85.4,62.0,47.0,100.0,,65.0,0.0,nagaraj@mailinator.com,8320917857
-45,Suresh Deshmukh,8th,A,,,2.0,7.0,,Frequent,,95.1,72.0,68.0,91.0,,86.0,0.0,prakash@mailinator.com,9720353237
-46,Ramesh Acharya,8th,A,,,4.8,9.0,,Frequent,,84.8,93.0,88.0,82.0,,80.0,0.0,raju@mailinator.com,7527152315
-47,Mahesh Chatterjee,8th,A,,,2.5,5.0,,,,97.0,83.0,49.0,91.0,,78.0,0.0,manohar@mailinator.com,6734795980
-48,Rajesh Rao,8th,A,,,2.1,5.0,,Frequent,,89.0,70.0,86.0,69.0,,77.0,0.0,suresh@mailinator.com,6693294915
-49,Dinesh Bhat,8th,A,,,1.1,9.0,,Frequent,,76.0,70.0,47.0,62.0,,82.0,0.0,chandru@mailinator.com,6473003265
-50,Arjun Prasad,8th,A,,,3.0,5.0,,Frequent,,76.0,70.0,63.0,61.0,,95.0,0.0,shivappa@mailinator.com,6034070172
-51,Aditya Banerjee,8th,A,,,2.9,8.0,,,,73.6,55.0,62.0,77.0,,56.0,0.0,girish@mailinator.com,7483418614
-52,Aarav Singh,8th,A,,,4.3,5.0,,,,70.0,72.0,74.0,74.0,,72.0,0.0,anand@mailinator.com,9399360477
-53,Vihaan Shastry,8th,A,,,1.4,8.0,,,,87.0,72.0,46.0,59.0,,67.0,0.0,jagadish@mailinator.com,6207735965
-54,Rahul Shetty,8th,A,,,1.8,7.0,,,,98.2,60.0,86.0,69.0,,81.0,0.0,jagadish@mailinator.com,6442986388
-55,Amit Sen,8th,A,,,1.1,5.0,,Frequent,,76.0,80.0,72.0,65.0,,59.0,0.0,kumar@mailinator.com,7168199041
-56,Rohan Patel,8th,A,,,1.6,8.0,,Frequent,,94.0,71.0,63.0,98.0,,80.0,0.0,shivappa@mailinator.com,8680374230
-57,Sai Verma,8th,A,,,4.3,8.0,,Frequent,,98.0,74.0,44.0,74.0,,79.0,0.0,shivappa@mailinator.com,9854324364
-58,Karthik Gowda,8th,A,,,3.0,9.0,,,,79.0,41.0,58.0,52.0,,76.0,0.0,srinivas@mailinator.com,7850603574
-59,Akash Choudhury,8th,A,,,2.6,6.0,,,,78.8,74.0,72.0,85.0,,58.0,0.0,raju@mailinator.com,6635298885
-60,Abhinav Kumar,8th,A,,,3.8,5.0,,Frequent,,97.4,50.0,51.0,84.0,,45.0,0.0,raju@mailinator.com,7156586168
-61,Nikhil Reddy,8th,A,,,6.0,7.0,,Minor,,82.0,55.0,65.0,85.0,,52.0,0.0,shivappa@mailinator.com,9932933476
-62,Pranav Patil,8th,A,,,5.2,7.0,,Minor,,73.0,80.0,64.0,77.0,,73.0,0.0,ashok@mailinator.com,7599668359
-63,Yash Achar,8th,A,,,4.5,7.0,,Frequent,,100.0,67.0,69.0,57.0,,71.0,0.0,nagaraj@mailinator.com,8855581754
-64,Dev Mukherjee,8th,A,,,5.6,8.0,,Frequent,,83.0,90.0,71.0,71.0,,56.0,0.0,srinivas@mailinator.com,6413697771
-65,Siddharth Joshi,8th,A,,,1.2,9.0,,Minor,,97.0,89.0,84.0,77.0,,61.0,0.0,srinivas@mailinator.com,6471648106
-66,Varun Murthy,8th,A,,,1.4,6.0,,Minor,,77.0,48.0,55.0,58.0,,44.0,0.0,nagaraj@mailinator.com,7529895796
-67,Ayush Pai,8th,A,,,3.4,5.0,,Frequent,,80.8,57.0,82.0,91.0,,48.0,0.0,prakash@mailinator.com,8508974246
-68,Ishan Roy,8th,A,,,2.7,6.0,,,,84.0,88.0,69.0,77.0,,74.0,0.0,prakash@mailinator.com,7561129140
-69,Dhruv Nair,8th,A,,,5.7,7.0,,,,88.0,51.0,83.0,90.0,,52.0,0.0,shivappa@mailinator.com,7445044507
-70,Kabir Iyer,8th,A,,,3.4,9.0,,Frequent,,86.0,81.0,47.0,87.0,,78.0,0.0,ramesh@mailinator.com,8504685200
-71,Rithvik Hegde,8th,A,,,3.7,5.0,,Frequent,,96.0,79.0,55.0,68.0,,76.0,0.0,dinesh@mailinator.com,7766507510
-72,Ansh Das,8th,A,,,5.5,7.0,,Frequent,,84.0,47.0,43.0,78.0,,73.0,0.0,manohar@mailinator.com,6200676687
-73,Shaurya Sharma,8th,A,,,3.2,7.0,,,,96.0,86.0,45.0,70.0,,68.0,0.0,venkatesh@mailinator.com,6635646289
-74,Tejas Gupta,8th,A,,,5.4,9.0,,Frequent,,69.0,64.0,45.0,76.0,,55.0,0.0,lakshmi@mailinator.com,7107620812
-75,Harsh Deshmukh,8th,A,,,2.3,9.0,,,,80.0,65.0,81.0,87.0,,92.0,0.0,raghavendra@mailinator.com,8081840269
-76,Vivek Acharya,8th,A,,,2.4,8.0,,Minor,,68.4,93.0,61.0,76.0,,80.0,0.0,shankar@mailinator.com,7528718097
-77,Sanjay Chatterjee,8th,A,,,2.6,8.0,,Frequent,,97.0,85.0,57.0,100.0,,92.0,0.0,ashok@mailinator.com,8059714951
-78,Kiran Rao,8th,A,,,3.7,8.0,,Frequent,,73.0,73.0,78.0,78.0,,70.0,0.0,srinivas@mailinator.com,7622400680
-79,Alok Bhat,8th,A,,,2.1,5.0,,,,98.3,40.0,89.0,68.0,,45.0,0.0,girish@mailinator.com,9697608814
-80,Madhav Prasad,8th,A,,,4.4,5.0,,Minor,,93.7,83.0,91.0,70.0,,91.0,0.0,jagadish@mailinator.com,7489948303
-81,Gautam Banerjee,8th,A,,,1.7,8.0,,Minor,,77.0,55.0,68.0,70.0,,48.0,0.0,prakash@mailinator.com,8792445501
-82,Raghav Singh,8th,A,,,1.5,8.0,,,,89.0,87.0,41.0,68.0,,42.0,0.0,shivappa@mailinator.com,9584442643
-83,Sameer Shastry,8th,A,,,5.4,8.0,,,,100.0,65.0,92.0,94.0,,82.0,0.0,ashok@mailinator.com,6430548634
-84,Anand Shetty,8th,A,,,2.2,6.0,,,,92.0,73.0,55.0,93.0,,41.0,0.0,shankar@mailinator.com,6876000534
-85,Vijay Sen,8th,A,,,2.9,9.0,,Minor,,100.4,43.0,89.0,92.0,,67.0,0.0,basavaraj@mailinator.com,9529757445
-86,Raj Patel,8th,A,,,3.9,5.0,,Minor,,95.0,92.0,63.0,76.0,,47.0,0.0,chandru@mailinator.com,8171152947
-87,Sunil Verma,8th,A,,,3.6,7.0,,Frequent,,75.0,69.0,80.0,60.0,,65.0,0.0,raju@mailinator.com,8072654486
-88,Sandeep Gowda,8th,A,,,1.4,9.0,,Frequent,,97.0,93.0,75.0,68.0,,65.0,0.0,shivappa@mailinator.com,8732365776
-89,Manoj Choudhury,8th,A,,,5.4,7.0,,Minor,,88.0,54.0,50.0,100.0,,76.0,0.0,raju@mailinator.com,6868363896
-90,Abhishek Kumar,8th,A,,,5.8,6.0,,Minor,,68.0,43.0,80.0,71.0,,58.0,0.0,umesh@mailinator.com,6742079910
-91,Deepak Reddy,8th,A,,,5.1,9.0,,Frequent,,95.6,73.0,83.0,51.0,,66.0,0.0,devraj@mailinator.com,6749053149
-92,Vikram Patil,8th,A,,,2.4,9.0,,Frequent,,67.0,56.0,75.0,88.0,,57.0,0.0,suresh@mailinator.com,9998743641
-93,Ravi Achar,8th,A,,,3.6,8.0,,,,95.0,93.0,81.0,58.0,,67.0,0.0,raju@mailinator.com,6885774149
-94,Anil Mukherjee,8th,A,,,2.7,5.0,,Frequent,,65.0,67.0,89.0,66.0,,88.0,0.0,nagaraj@mailinator.com,9612224356
-95,Suresh Joshi,8th,A,,,3.8,6.0,,,,90.7,74.0,68.0,91.0,,89.0,0.0,raju@mailinator.com,6575042713
-96,Ramesh Murthy,8th,A,,,5.9,8.0,,Minor,,81.0,86.0,62.0,95.0,,48.0,0.0,lakshmi@mailinator.com,7659870274
-97,Mahesh Pai,8th,A,,,2.6,5.0,,Minor,,99.8,93.0,70.0,64.0,,57.0,0.0,mahesh@mailinator.com,9956270923
-98,Rajesh Roy,8th,A,,,4.3,7.0,,,,76.0,95.0,79.0,53.0,,67.0,0.0,basavaraj@mailinator.com,6782941635
-99,Dinesh Nair,8th,A,,,2.6,7.0,,Minor,,68.0,45.0,55.0,99.0,,54.0,0.0,shankar@mailinator.com,8853602291
-100,Arjun Iyer,8th,A,,,4.9,8.0,,Frequent,,96.0,59.0,85.0,53.0,,41.0,0.0,jagadish@mailinator.com,8363066612
-101,Aditya Hegde,8th,B,,,2.6,7.0,,Frequent,,65.3,48.0,64.0,54.0,,73.0,0.0,pradeep@mailinator.com,7829280353
-102,Aarav Das,8th,B,,,5.4,8.0,,Minor,,88.0,66.0,79.0,56.0,,78.0,0.0,manjunath@mailinator.com,6068886113
-103,Vihaan Sharma,8th,B,,,4.8,7.0,,Frequent,,84.0,65.0,73.0,71.0,,57.0,0.0,pradeep@mailinator.com,7821146318
-104,Rahul Gupta,8th,B,,,4.8,6.0,,Frequent,,78.0,93.0,56.0,67.0,,56.0,0.0,shivappa@mailinator.com,6400965371
-105,Amit Deshmukh,8th,B,,,3.3,5.0,,Frequent,,90.0,49.0,62.0,65.0,,69.0,0.0,mahesh@mailinator.com,9217703190
-106,Rohan Acharya,8th,B,,,2.1,7.0,,,,74.3,55.0,90.0,65.0,,48.0,0.0,suresh@mailinator.com,6973561155
-107,Sai Chatterjee,8th,B,,,1.2,9.0,,,,92.0,68.0,40.0,60.0,,66.0,0.0,mohan@mailinator.com,7649520756
-108,Karthik Rao,8th,B,,,2.6,7.0,,,,91.0,75.0,75.0,51.0,,95.0,0.0,shivappa@mailinator.com,8900625814
-109,Akash Bhat,8th,B,,,1.2,7.0,,Minor,,82.0,42.0,62.0,77.0,,86.0,0.0,ashok@mailinator.com,7469716679
-110,Abhinav Prasad,8th,B,,,4.5,8.0,,Minor,,76.0,48.0,52.0,72.0,,80.0,0.0,krishna@mailinator.com,6475839017
-111,Nikhil Banerjee,8th,B,,,4.4,9.0,,Frequent,,81.0,83.0,77.0,71.0,,55.0,0.0,chandru@mailinator.com,7655856668
-112,Pranav Singh,8th,B,,,3.2,9.0,,Minor,,84.0,64.0,46.0,84.0,,41.0,0.0,prakash@mailinator.com,7189085594
-113,Yash Shastry,8th,B,,,4.8,8.0,,Minor,,85.0,71.0,50.0,65.0,,91.0,0.0,anand@mailinator.com,9939758772
-114,Dev Shetty,8th,B,,,3.7,7.0,,Minor,,89.0,55.0,55.0,79.0,,71.0,0.0,manohar@mailinator.com,7119092595
-115,Siddharth Sen,8th,B,,,1.2,6.0,,Frequent,,83.0,45.0,68.0,61.0,,40.0,0.0,umesh@mailinator.com,7402955235
-116,Varun Patel,8th,B,,,1.7,9.0,,Minor,,66.8,60.0,86.0,73.0,,58.0,0.0,devraj@mailinator.com,8658931749
-117,Ayush Verma,8th,B,,,2.0,9.0,,Frequent,,74.0,93.0,93.0,64.0,,93.0,0.0,anand@mailinator.com,7793642834
-118,Ishan Gowda,8th,B,,,2.7,6.0,,Frequent,,79.0,94.0,63.0,51.0,,46.0,0.0,manohar@mailinator.com,7001689509
-119,Dhruv Choudhury,8th,B,,,1.3,6.0,,Minor,,95.0,76.0,83.0,50.0,,63.0,0.0,dinesh@mailinator.com,6441128888
-120,Kabir Kumar,8th,B,,,4.0,5.0,,Frequent,,72.0,60.0,83.0,89.0,,67.0,0.0,pradeep@mailinator.com,6349155943
-121,Rithvik Reddy,8th,B,,,3.6,7.0,,Minor,,83.0,56.0,87.0,52.0,,42.0,0.0,shankar@mailinator.com,8267961342
-122,Ansh Patil,8th,B,,,4.1,7.0,,,,68.0,48.0,88.0,86.0,,83.0,0.0,venkatesh@mailinator.com,7536931403
-123,Shaurya Achar,8th,B,,,3.2,8.0,,Frequent,,86.0,47.0,82.0,64.0,,63.0,0.0,raju@mailinator.com,8113145099
-124,Tejas Mukherjee,8th,B,,,5.2,7.0,,,,74.2,64.0,40.0,81.0,,62.0,0.0,anand@mailinator.com,6078036972
-125,Harsh Joshi,8th,B,,,3.3,6.0,,Frequent,,87.8,54.0,40.0,92.0,,93.0,0.0,raju@mailinator.com,7188202224
-126,Vivek Murthy,8th,B,,,1.1,8.0,,Frequent,,77.0,48.0,50.0,52.0,,72.0,0.0,dinesh@mailinator.com,8685404141
-127,Sanjay Pai,8th,B,,,5.4,8.0,,,,80.0,49.0,72.0,85.0,,61.0,0.0,mohan@mailinator.com,6131844780
-128,Kiran Roy,8th,B,,,4.3,7.0,,,,91.0,69.0,40.0,100.0,,82.0,0.0,chandru@mailinator.com,7757761156
-129,Alok Nair,8th,B,,,5.1,9.0,,Frequent,,94.0,56.0,75.0,71.0,,75.0,0.0,prakash@mailinator.com,8038337303
-130,Madhav Iyer,8th,B,,,5.8,6.0,,Minor,,72.0,66.0,40.0,100.0,,87.0,0.0,raghav@mailinator.com,7612992391
-131,Gautam Hegde,8th,B,,,1.3,6.0,,Frequent,,75.0,52.0,90.0,93.0,,69.0,0.0,chandru@mailinator.com,6830170168
-132,Raghav Das,8th,B,,,2.2,6.0,,Minor,,73.0,42.0,71.0,67.0,,61.0,0.0,manohar@mailinator.com,7348877621
-133,Sameer Sharma,8th,B,,,1.3,9.0,,Minor,,66.6,85.0,94.0,77.0,,82.0,0.0,shankar@mailinator.com,6235905232
-134,Anand Gupta,8th,B,,,3.1,8.0,,Minor,,85.0,69.0,50.0,56.0,,67.0,0.0,umesh@mailinator.com,7301544267
-135,Vijay Deshmukh,8th,B,,,5.3,6.0,,Frequent,,98.0,42.0,80.0,57.0,,44.0,0.0,mohan@mailinator.com,8658836676
-136,Raj Acharya,8th,B,,,1.4,7.0,,,,82.6,64.0,51.0,62.0,,47.0,0.0,shivappa@mailinator.com,6603361056
-137,Sunil Chatterjee,8th,B,,,3.4,6.0,,Frequent,,97.0,77.0,47.0,58.0,,43.0,0.0,raghav@mailinator.com,6511040344
-138,Sandeep Rao,8th,B,,,1.6,7.0,,Minor,,66.5,61.0,79.0,66.0,,69.0,0.0,pradeep@mailinator.com,6739312132
-139,Manoj Bhat,8th,B,,,4.9,9.0,,Frequent,,87.0,86.0,51.0,68.0,,92.0,0.0,shankar@mailinator.com,7875036584
-140,Abhishek Prasad,8th,B,,,5.2,8.0,,,,82.0,66.0,45.0,98.0,,65.0,0.0,shivappa@mailinator.com,9174187254
-141,Deepak Banerjee,8th,B,,,1.2,6.0,,Minor,,99.8,88.0,59.0,80.0,,40.0,0.0,suresh@mailinator.com,9908430645
-142,Vikram Singh,8th,B,,,3.4,6.0,,Frequent,,86.0,70.0,70.0,55.0,,68.0,0.0,girish@mailinator.com,8186279907
-143,Ravi Shastry,8th,B,,,2.2,7.0,,Minor,,65.5,43.0,70.0,51.0,,76.0,0.0,pradeep@mailinator.com,8251112338
-144,Anil Shetty,8th,B,,,5.8,9.0,,Frequent,,89.0,59.0,84.0,88.0,,75.0,0.0,raghavendra@mailinator.com,6669495689
-145,Suresh Sen,8th,B,,,5.7,8.0,,Minor,,83.0,83.0,65.0,89.0,,53.0,0.0,nagaraj@mailinator.com,8865693737
-146,Ramesh Patel,8th,B,,,4.1,5.0,,Minor,,82.0,41.0,45.0,85.0,,76.0,0.0,ashok@mailinator.com,7340857272
-147,Mahesh Verma,8th,B,,,5.9,6.0,,Minor,,81.0,63.0,71.0,99.0,,63.0,0.0,raghavendra@mailinator.com,8327663364
-148,Rajesh Gowda,8th,B,,,2.7,5.0,,Frequent,,96.8,56.0,50.0,90.0,,94.0,0.0,suresh@mailinator.com,6206210762
-149,Dinesh Choudhury,8th,B,,,5.5,5.0,,Minor,,84.0,57.0,69.0,98.0,,88.0,0.0,chandru@mailinator.com,7160448384
-150,Arjun Kumar,8th,B,,,3.2,8.0,,Minor,,80.0,90.0,66.0,77.0,,60.0,0.0,srinivas@mailinator.com,7395529405
-151,Aditya Reddy,8th,B,,,2.2,7.0,,Frequent,,96.0,71.0,95.0,83.0,,76.0,0.0,nagaraj@mailinator.com,8894253702
-152,Aarav Patil,8th,B,,,5.7,5.0,,Minor,,95.3,55.0,44.0,92.0,,58.0,0.0,shivappa@mailinator.com,7852732149
-153,Vihaan Achar,8th,B,,,4.4,6.0,,,,66.0,64.0,94.0,89.0,,80.0,0.0,basavaraj@mailinator.com,8694167552
-154,Rahul Mukherjee,8th,B,,,1.3,7.0,,,,85.0,46.0,54.0,71.0,,59.0,0.0,lakshmi@mailinator.com,6543946559
-155,Amit Joshi,8th,B,,,5.4,8.0,,Frequent,,68.0,94.0,86.0,85.0,,68.0,0.0,raghav@mailinator.com,7692668783
-156,Rohan Murthy,8th,B,,,4.5,5.0,,Minor,,93.0,43.0,60.0,65.0,,68.0,0.0,raghav@mailinator.com,8940533003
-157,Sai Pai,8th,B,,,4.0,7.0,,Frequent,,80.1,44.0,60.0,90.0,,91.0,0.0,raju@mailinator.com,6726673172
-158,Karthik Roy,8th,B,,,4.7,6.0,,Minor,,74.0,88.0,79.0,86.0,,91.0,0.0,umesh@mailinator.com,7226267844
-159,Akash Nair,8th,B,,,2.3,7.0,,Frequent,,65.0,93.0,67.0,58.0,,56.0,0.0,mahesh@mailinator.com,6958770242
-160,Abhinav Iyer,8th,B,,,4.0,8.0,,Minor,,75.0,74.0,40.0,87.0,,47.0,0.0,prakash@mailinator.com,8181367662
-161,Nikhil Hegde,8th,B,,,5.1,7.0,,Frequent,,84.0,50.0,40.0,80.0,,42.0,0.0,anand@mailinator.com,9412263431
-162,Pranav Das,8th,B,,,1.3,6.0,,Frequent,,94.0,85.0,42.0,71.0,,68.0,0.0,dinesh@mailinator.com,8950621781
-163,Yash Sharma,8th,B,,,1.7,9.0,,,,77.0,63.0,95.0,91.0,,60.0,0.0,mahesh@mailinator.com,8193131732
-164,Dev Gupta,8th,B,,,5.2,9.0,,,,66.7,49.0,45.0,94.0,,83.0,0.0,srinivas@mailinator.com,9459214637
-165,Siddharth Deshmukh,8th,B,,,4.1,8.0,,,,90.0,49.0,58.0,86.0,,66.0,0.0,mohan@mailinator.com,6161389219
-166,Varun Acharya,8th,B,,,3.7,5.0,,Frequent,,71.0,95.0,48.0,62.0,,50.0,0.0,ashok@mailinator.com,8215239121
-167,Ayush Chatterjee,8th,B,,,2.2,6.0,,Frequent,,100.0,58.0,40.0,80.0,,89.0,0.0,prakash@mailinator.com,6796617646
-168,Ishan Rao,8th,B,,,2.5,5.0,,Frequent,,68.0,48.0,82.0,91.0,,69.0,0.0,kumar@mailinator.com,9455404023
-169,Dhruv Bhat,8th,B,,,5.4,6.0,,Frequent,,68.0,47.0,49.0,68.0,,90.0,0.0,umesh@mailinator.com,8406847804
-170,Kabir Prasad,8th,B,,,3.1,6.0,,,,71.0,81.0,64.0,61.0,,94.0,0.0,anand@mailinator.com,7112580924
-171,Rithvik Banerjee,8th,B,,,1.3,5.0,,,,71.0,63.0,90.0,72.0,,72.0,0.0,raghav@mailinator.com,7827770944
-172,Ansh Singh,8th,B,,,5.5,7.0,,,,88.6,86.0,42.0,98.0,,43.0,0.0,mohan@mailinator.com,6461347038
-173,Shaurya Shastry,8th,B,,,2.0,5.0,,,,100.0,50.0,93.0,77.0,,81.0,0.0,chandru@mailinator.com,6262191965
-174,Tejas Shetty,8th,B,,,5.1,6.0,,Minor,,94.0,45.0,87.0,58.0,,80.0,0.0,manjunath@mailinator.com,8934728412
-175,Harsh Sen,8th,B,,,5.4,5.0,,Frequent,,77.0,73.0,70.0,95.0,,77.0,0.0,raghavendra@mailinator.com,7669614448
-176,Vivek Patel,8th,B,,,3.4,7.0,,Frequent,,76.0,73.0,45.0,53.0,,77.0,0.0,dinesh@mailinator.com,6061858202
-177,Sanjay Verma,8th,B,,,4.0,5.0,,,,72.0,95.0,80.0,85.0,,64.0,0.0,raghav@mailinator.com,9900254649
-178,Kiran Gowda,8th,B,,,3.6,7.0,,,,96.7,41.0,67.0,98.0,,86.0,0.0,pradeep@mailinator.com,7600960199
-179,Alok Choudhury,8th,B,,,4.1,7.0,,Frequent,,98.0,91.0,73.0,65.0,,84.0,0.0,ashok@mailinator.com,8348921441
-180,Madhav Kumar,8th,B,,,5.3,5.0,,,,79.0,48.0,55.0,96.0,,76.0,0.0,anand@mailinator.com,6827055781
-181,Gautam Reddy,8th,B,,,2.4,7.0,,Frequent,,89.0,89.0,78.0,94.0,,77.0,0.0,krishna@mailinator.com,6103876354
-182,Raghav Patil,8th,B,,,5.4,5.0,,Frequent,,91.4,89.0,45.0,93.0,,68.0,0.0,girish@mailinator.com,7775168172
-183,Sameer Achar,8th,B,,,3.8,6.0,,Minor,,68.3,55.0,53.0,94.0,,76.0,0.0,manjunath@mailinator.com,7994751657
-184,Anand Mukherjee,8th,B,,,1.6,5.0,,,,75.0,78.0,42.0,57.0,,44.0,0.0,mahesh@mailinator.com,7959745903
-185,Vijay Joshi,8th,B,,,2.1,7.0,,,,77.0,82.0,70.0,77.0,,42.0,0.0,umesh@mailinator.com,6672420437
-186,Raj Murthy,8th,B,,,4.0,5.0,,Minor,,84.0,54.0,55.0,88.0,,48.0,0.0,devraj@mailinator.com,9554438710
-187,Sunil Pai,8th,B,,,2.2,5.0,,Minor,,85.0,87.0,84.0,84.0,,95.0,0.0,dinesh@mailinator.com,9244687911
-188,Sandeep Roy,8th,B,,,1.7,5.0,,Minor,,74.0,68.0,72.0,87.0,,83.0,0.0,basavaraj@mailinator.com,8798781463
-189,Manoj Nair,8th,B,,,1.8,9.0,,Frequent,,71.0,52.0,93.0,94.0,,92.0,0.0,umesh@mailinator.com,7742218626
-190,Abhishek Iyer,8th,B,,,5.2,5.0,,Frequent,,100.0,75.0,51.0,79.0,,93.0,0.0,shivappa@mailinator.com,6262437747
-191,Deepak Hegde,8th,B,,,4.0,9.0,,Frequent,,93.0,74.0,84.0,58.0,,70.0,0.0,kumar@mailinator.com,7101548103
-192,Vikram Das,8th,B,,,5.8,8.0,,Frequent,,99.8,75.0,44.0,82.0,,57.0,0.0,girish@mailinator.com,6369339912
-193,Ravi Sharma,8th,B,,,2.7,8.0,,Minor,,77.0,56.0,81.0,55.0,,69.0,0.0,shivappa@mailinator.com,9330852816
-194,Anil Gupta,8th,B,,,4.0,5.0,,,,84.1,83.0,55.0,58.0,,68.0,0.0,pradeep@mailinator.com,6953932917
-195,Suresh Deshmukh,8th,B,,,4.0,5.0,,Frequent,,93.4,74.0,50.0,50.0,,44.0,0.0,basavaraj@mailinator.com,6941810144
-196,Ramesh Acharya,8th,B,,,4.1,8.0,,,,71.0,51.0,53.0,75.0,,50.0,0.0,jagadish@mailinator.com,7915817703
-197,Mahesh Chatterjee,8th,B,,,1.3,9.0,,,,89.0,55.0,47.0,77.0,,89.0,0.0,raghavendra@mailinator.com,8788459990
-198,Rajesh Rao,8th,B,,,4.8,6.0,,Minor,,69.0,78.0,93.0,65.0,,94.0,0.0,shivappa@mailinator.com,6039715552
-199,Dinesh Bhat,8th,B,,,5.7,5.0,,Minor,,91.0,57.0,53.0,66.0,,85.0,0.0,pradeep@mailinator.com,7189626282
-200,Arjun Prasad,8th,B,,,3.7,8.0,,,,89.0,64.0,62.0,54.0,,43.0,0.0,jagadish@mailinator.com,8062195354
-201,Aditya Banerjee,8th,C,,,2.0,8.0,,Frequent,,86.2,50.0,87.0,53.0,,90.0,0.0,mohan@mailinator.com,8795437058
-202,Aarav Singh,8th,C,,,4.8,8.0,,,,74.9,83.0,90.0,77.0,,60.0,0.0,suresh@mailinator.com,7565049880
-203,Vihaan Shastry,8th,C,,,1.0,8.0,,,,93.0,87.0,75.0,67.0,,64.0,0.0,raghavendra@mailinator.com,6967515769
-204,Rahul Shetty,8th,C,,,2.6,6.0,,Minor,,88.9,85.0,64.0,52.0,,62.0,0.0,raghav@mailinator.com,6479356111
-205,Amit Sen,8th,C,,,5.6,5.0,,Minor,,98.0,51.0,87.0,59.0,,90.0,0.0,pradeep@mailinator.com,8970978674
-206,Rohan Patel,8th,C,,,3.9,9.0,,Minor,,79.0,53.0,58.0,59.0,,40.0,0.0,prakash@mailinator.com,8286445904
-207,Sai Verma,8th,C,,,5.3,8.0,,Frequent,,74.9,75.0,58.0,67.0,,46.0,0.0,manohar@mailinator.com,6427498034
-208,Karthik Gowda,8th,C,,,4.0,9.0,,Minor,,84.7,70.0,54.0,60.0,,42.0,0.0,manjunath@mailinator.com,8649557880
-209,Akash Choudhury,8th,C,,,5.1,5.0,,Frequent,,65.0,45.0,78.0,95.0,,58.0,0.0,ramesh@mailinator.com,9740276700
-210,Abhinav Kumar,8th,C,,,5.4,5.0,,Minor,,73.0,88.0,94.0,83.0,,77.0,0.0,chandru@mailinator.com,8636440607
-211,Nikhil Reddy,8th,C,,,2.6,5.0,,Minor,,65.0,44.0,91.0,70.0,,65.0,0.0,pradeep@mailinator.com,8364022688
-212,Pranav Patil,8th,C,,,1.6,7.0,,Frequent,,93.0,44.0,54.0,60.0,,55.0,0.0,venkatesh@mailinator.com,7476505433
-213,Yash Achar,8th,C,,,4.6,6.0,,Minor,,95.5,93.0,58.0,90.0,,71.0,0.0,manohar@mailinator.com,7196990807
-214,Dev Mukherjee,8th,C,,,3.2,8.0,,Frequent,,100.7,88.0,59.0,50.0,,58.0,0.0,prakash@mailinator.com,6503133265
-215,Siddharth Joshi,8th,C,,,1.6,7.0,,Frequent,,94.0,50.0,85.0,94.0,,94.0,0.0,chandru@mailinator.com,7573116558
-216,Varun Murthy,8th,C,,,3.9,5.0,,,,83.0,86.0,74.0,77.0,,64.0,0.0,shivappa@mailinator.com,6567503488
-217,Ayush Pai,8th,C,,,1.2,5.0,,,,80.0,40.0,52.0,73.0,,68.0,0.0,krishna@mailinator.com,8123216393
-218,Ishan Roy,8th,C,,,2.0,8.0,,Frequent,,89.4,62.0,42.0,54.0,,43.0,0.0,raju@mailinator.com,8327817428
-219,Dhruv Nair,8th,C,,,4.9,6.0,,,,86.0,88.0,78.0,61.0,,77.0,0.0,ashok@mailinator.com,6601115733
-220,Kabir Iyer,8th,C,,,1.1,8.0,,,,89.7,89.0,47.0,82.0,,95.0,0.0,shivappa@mailinator.com,9211046801
-221,Rithvik Hegde,8th,C,,,2.5,7.0,,Frequent,,73.0,87.0,93.0,97.0,,58.0,0.0,shivappa@mailinator.com,9819956175
-222,Ansh Das,8th,C,,,1.1,6.0,,,,97.0,85.0,51.0,70.0,,79.0,0.0,krishna@mailinator.com,8604875207
-223,Shaurya Sharma,8th,C,,,6.0,7.0,,,,83.0,77.0,80.0,98.0,,55.0,0.0,shivappa@mailinator.com,9811405627
-224,Tejas Gupta,8th,C,,,3.9,5.0,,Minor,,97.0,94.0,54.0,54.0,,70.0,0.0,jagadish@mailinator.com,9534920070
-225,Harsh Deshmukh,8th,C,,,2.5,9.0,,,,83.0,69.0,64.0,71.0,,41.0,0.0,krishna@mailinator.com,9090291635
-226,Vivek Acharya,8th,C,,,5.6,5.0,,,,87.0,55.0,55.0,60.0,,76.0,0.0,umesh@mailinator.com,8407210580
-227,Sanjay Chatterjee,8th,C,,,3.5,8.0,,,,88.0,56.0,43.0,76.0,,89.0,0.0,kumar@mailinator.com,6057969190
-228,Kiran Rao,8th,C,,,3.3,7.0,,Minor,,78.0,41.0,48.0,83.0,,68.0,0.0,krishna@mailinator.com,8496213732
-229,Alok Bhat,8th,C,,,3.9,9.0,,Minor,,88.0,79.0,70.0,58.0,,48.0,0.0,raju@mailinator.com,8106325502
-230,Madhav Prasad,8th,C,,,2.3,5.0,,Frequent,,74.0,73.0,70.0,57.0,,63.0,0.0,mahesh@mailinator.com,6317875210
-231,Gautam Banerjee,8th,C,,,2.5,6.0,,Frequent,,92.7,95.0,75.0,66.0,,51.0,0.0,srinivas@mailinator.com,9780349281
-232,Raghav Singh,8th,C,,,2.9,8.0,,Frequent,,67.0,76.0,73.0,99.0,,78.0,0.0,devraj@mailinator.com,9095707935
-233,Sameer Shastry,8th,C,,,2.2,5.0,,Frequent,,73.0,60.0,61.0,89.0,,87.0,0.0,srinivas@mailinator.com,8642270581
-234,Anand Shetty,8th,C,,,3.9,9.0,,Frequent,,70.0,76.0,53.0,87.0,,40.0,0.0,mohan@mailinator.com,8686967633
-235,Vijay Sen,8th,C,,,4.5,7.0,,Frequent,,81.0,60.0,45.0,60.0,,52.0,0.0,anand@mailinator.com,8157271718
-236,Raj Patel,8th,C,,,1.4,8.0,,,,75.0,42.0,57.0,60.0,,78.0,0.0,kumar@mailinator.com,8791992468
-237,Sunil Verma,8th,C,,,5.9,7.0,,Frequent,,71.6,85.0,53.0,53.0,,63.0,0.0,mohan@mailinator.com,6844919983
-238,Sandeep Gowda,8th,C,,,4.8,8.0,,Frequent,,66.0,92.0,76.0,72.0,,42.0,0.0,jagadish@mailinator.com,7887472530
-239,Manoj Choudhury,8th,C,,,5.0,8.0,,Minor,,100.6,85.0,93.0,79.0,,60.0,0.0,prakash@mailinator.com,7668298003
-240,Abhishek Kumar,8th,C,,,4.8,9.0,,Frequent,,73.0,41.0,44.0,91.0,,80.0,0.0,venkatesh@mailinator.com,7470736340
-241,Deepak Reddy,8th,C,,,1.4,7.0,,Frequent,,66.0,53.0,65.0,56.0,,92.0,0.0,prakash@mailinator.com,7159446861
-242,Vikram Patil,8th,C,,,3.4,5.0,,Minor,,68.0,78.0,91.0,80.0,,86.0,0.0,shankar@mailinator.com,8399954056
-243,Ravi Achar,8th,C,,,3.2,8.0,,Frequent,,92.0,88.0,66.0,69.0,,82.0,0.0,devraj@mailinator.com,7539350083
-244,Anil Mukherjee,8th,C,,,4.4,7.0,,Minor,,69.0,75.0,63.0,67.0,,68.0,0.0,mahesh@mailinator.com,6840975543
-245,Suresh Joshi,8th,C,,,3.2,6.0,,,,72.0,47.0,78.0,96.0,,57.0,0.0,devraj@mailinator.com,9676189706
-246,Ramesh Murthy,8th,C,,,4.5,9.0,,,,91.4,78.0,64.0,65.0,,61.0,0.0,srinivas@mailinator.com,7105682757
-247,Mahesh Pai,8th,C,,,4.4,5.0,,,,100.0,59.0,58.0,50.0,,77.0,0.0,manohar@mailinator.com,8039053406
-248,Rajesh Roy,8th,C,,,4.5,8.0,,Frequent,,73.4,92.0,60.0,99.0,,70.0,0.0,pradeep@mailinator.com,8904693406
-249,Dinesh Nair,8th,C,,,4.1,8.0,,Frequent,,82.0,93.0,53.0,69.0,,79.0,0.0,srinivas@mailinator.com,6815994575
-250,Arjun Iyer,8th,C,,,1.8,8.0,,Minor,,75.3,72.0,64.0,96.0,,64.0,0.0,raghavendra@mailinator.com,9816879211
-251,Aditya Hegde,8th,C,,,4.8,9.0,,Minor,,80.0,68.0,66.0,91.0,,70.0,0.0,mohan@mailinator.com,6908383586
-252,Aarav Das,8th,C,,,4.9,8.0,,Minor,,80.5,64.0,48.0,79.0,,46.0,0.0,basavaraj@mailinator.com,9908754361
-253,Vihaan Sharma,8th,C,,,5.5,5.0,,Frequent,,86.0,78.0,79.0,50.0,,91.0,0.0,krishna@mailinator.com,6124896192
-254,Rahul Gupta,8th,C,,,2.2,8.0,,Minor,,70.0,93.0,90.0,51.0,,57.0,0.0,kumar@mailinator.com,8989702043
-255,Amit Deshmukh,8th,C,,,1.9,5.0,,,,66.0,79.0,87.0,56.0,,73.0,0.0,jagadish@mailinator.com,9271681270
-256,Rohan Acharya,8th,C,,,3.0,6.0,,Minor,,79.0,64.0,77.0,85.0,,77.0,0.0,pradeep@mailinator.com,6392580502
-257,Sai Chatterjee,8th,C,,,2.6,5.0,,,,81.0,48.0,91.0,98.0,,62.0,0.0,shankar@mailinator.com,6715241492
-258,Karthik Rao,8th,C,,,5.1,5.0,,Minor,,99.0,66.0,73.0,50.0,,62.0,0.0,raghav@mailinator.com,8124014413
-259,Akash Bhat,8th,C,,,4.1,6.0,,Minor,,100.0,69.0,68.0,82.0,,50.0,0.0,chandru@mailinator.com,9365318988
-260,Abhinav Prasad,8th,C,,,4.8,9.0,,Minor,,86.0,43.0,67.0,82.0,,50.0,0.0,mahesh@mailinator.com,6494549811
-261,Nikhil Banerjee,8th,C,,,3.1,8.0,,,,72.1,54.0,70.0,91.0,,60.0,0.0,ashok@mailinator.com,6738458679
-262,Pranav Singh,8th,C,,,1.5,9.0,,Minor,,81.1,61.0,85.0,76.0,,42.0,0.0,ashok@mailinator.com,7073359688
-263,Yash Shastry,8th,C,,,1.6,9.0,,Minor,,82.0,41.0,54.0,93.0,,84.0,0.0,ramesh@mailinator.com,7289328537
-264,Dev Shetty,8th,C,,,2.9,9.0,,Minor,,86.0,82.0,90.0,77.0,,83.0,0.0,prakash@mailinator.com,7963182505
-265,Siddharth Sen,8th,C,,,2.0,5.0,,,,77.0,93.0,50.0,66.0,,76.0,0.0,umesh@mailinator.com,7072614015
-266,Varun Patel,8th,C,,,5.1,5.0,,Frequent,,72.0,42.0,67.0,97.0,,43.0,0.0,ramesh@mailinator.com,8196821207
-267,Ayush Verma,8th,C,,,4.0,6.0,,,,85.0,51.0,87.0,62.0,,80.0,0.0,prakash@mailinator.com,9602900995
-268,Ishan Gowda,8th,C,,,4.4,8.0,,Frequent,,88.0,88.0,60.0,89.0,,76.0,0.0,raju@mailinator.com,8832378507
-269,Dhruv Choudhury,8th,C,,,3.5,7.0,,Minor,,98.0,50.0,62.0,69.0,,61.0,0.0,raghavendra@mailinator.com,9798872946
-270,Kabir Kumar,8th,C,,,1.4,8.0,,,,80.0,95.0,77.0,50.0,,82.0,0.0,ashok@mailinator.com,8572681738
-271,Rithvik Reddy,8th,C,,,2.2,5.0,,Frequent,,94.0,67.0,69.0,71.0,,43.0,0.0,chandru@mailinator.com,7996160685
-272,Ansh Patil,8th,C,,,3.3,5.0,,,,69.0,65.0,52.0,54.0,,82.0,0.0,prakash@mailinator.com,8588475690
-273,Shaurya Achar,8th,C,,,2.0,5.0,,Minor,,96.0,75.0,60.0,88.0,,43.0,0.0,dinesh@mailinator.com,9147349205
-274,Tejas Mukherjee,8th,C,,,1.1,9.0,,,,78.0,81.0,42.0,90.0,,56.0,0.0,shankar@mailinator.com,6725765530
-275,Harsh Joshi,8th,C,,,4.6,8.0,,,,73.3,50.0,92.0,86.0,,69.0,0.0,nagaraj@mailinator.com,7438471918
-276,Vivek Murthy,8th,C,,,4.6,8.0,,Minor,,92.0,53.0,55.0,55.0,,70.0,0.0,kumar@mailinator.com,7554381438
-277,Sanjay Pai,8th,C,,,2.7,7.0,,Minor,,93.0,53.0,42.0,75.0,,84.0,0.0,pradeep@mailinator.com,8638711699
-278,Kiran Roy,8th,C,,,5.2,8.0,,,,94.0,58.0,81.0,53.0,,51.0,0.0,kumar@mailinator.com,8852978867
-279,Alok Nair,8th,C,,,3.1,9.0,,Frequent,,88.4,65.0,41.0,65.0,,55.0,0.0,nagaraj@mailinator.com,9544999159
-280,Madhav Iyer,8th,C,,,5.3,6.0,,Frequent,,82.0,78.0,73.0,58.0,,82.0,0.0,mohan@mailinator.com,7657387950
-281,Gautam Hegde,8th,C,,,4.3,5.0,,,,70.6,42.0,94.0,78.0,,54.0,0.0,raghav@mailinator.com,9368799256
-282,Raghav Das,8th,C,,,3.9,8.0,,Minor,,68.0,72.0,85.0,84.0,,88.0,0.0,ashok@mailinator.com,6593136871
-283,Sameer Sharma,8th,C,,,2.0,8.0,,Minor,,94.0,40.0,83.0,51.0,,42.0,0.0,girish@mailinator.com,7162904419
-284,Anand Gupta,8th,C,,,3.6,6.0,,Frequent,,94.0,73.0,43.0,89.0,,52.0,0.0,kumar@mailinator.com,8092810718
-285,Vijay Deshmukh,8th,C,,,5.5,7.0,,Frequent,,88.0,62.0,79.0,81.0,,78.0,0.0,mahesh@mailinator.com,6373903280
-286,Raj Acharya,8th,C,,,2.5,7.0,,,,82.0,68.0,87.0,69.0,,58.0,0.0,jagadish@mailinator.com,8623846050
-287,Sunil Chatterjee,8th,C,,,5.4,8.0,,,,90.0,75.0,63.0,75.0,,59.0,0.0,ramesh@mailinator.com,8919378596
-288,Sandeep Rao,8th,C,,,5.5,5.0,,,,76.0,66.0,44.0,69.0,,77.0,0.0,devraj@mailinator.com,9214651341
-289,Manoj Bhat,8th,C,,,2.6,6.0,,Minor,,87.0,42.0,79.0,72.0,,77.0,0.0,nagaraj@mailinator.com,9760061131
-290,Abhishek Prasad,8th,C,,,4.4,9.0,,Frequent,,66.0,41.0,86.0,84.0,,75.0,0.0,mahesh@mailinator.com,7129801202
-291,Deepak Banerjee,8th,C,,,5.5,6.0,,Minor,,76.0,60.0,44.0,61.0,,52.0,0.0,girish@mailinator.com,6524291919
-292,Vikram Singh,8th,C,,,1.4,9.0,,Frequent,,91.0,69.0,45.0,82.0,,71.0,0.0,shankar@mailinator.com,6860937884
-293,Ravi Shastry,8th,C,,,5.4,7.0,,Minor,,81.4,46.0,47.0,99.0,,48.0,0.0,lakshmi@mailinator.com,7957284840
-294,Anil Shetty,8th,C,,,2.0,5.0,,Frequent,,90.0,87.0,47.0,79.0,,90.0,0.0,manohar@mailinator.com,6828478794
-295,Suresh Sen,8th,C,,,5.2,7.0,,Minor,,73.0,41.0,73.0,82.0,,49.0,0.0,raju@mailinator.com,6873616691
-296,Ramesh Patel,8th,C,,,4.3,8.0,,,,67.0,81.0,65.0,80.0,,95.0,0.0,shankar@mailinator.com,6509200865
-297,Mahesh Verma,8th,C,,,2.7,8.0,,Frequent,,96.0,45.0,82.0,56.0,,74.0,0.0,manjunath@mailinator.com,8594850890
-298,Rajesh Gowda,8th,C,,,1.8,8.0,,Frequent,,71.7,49.0,47.0,73.0,,46.0,0.0,dinesh@mailinator.com,8382158150
-299,Dinesh Choudhury,8th,C,,,4.2,7.0,,Frequent,,78.5,57.0,68.0,70.0,,87.0,0.0,nagaraj@mailinator.com,9652712774
-300,Arjun Kumar,8th,C,,,5.2,6.0,,,,86.0,63.0,87.0,73.0,,48.0,0.0,ashok@mailinator.com,8649593903
-301,Aditya Reddy,9th,A,,,5.1,7.0,,Frequent,,69.0,57.0,44.0,75.0,,58.0,0.0,manohar@mailinator.com,8642101854
-302,Aarav Patil,9th,A,,,4.1,7.0,,Frequent,,94.0,52.0,91.0,53.0,,70.0,0.0,devraj@mailinator.com,7432835155
-303,Vihaan Achar,9th,A,,,5.8,9.0,,,,85.0,51.0,86.0,98.0,,95.0,0.0,basavaraj@mailinator.com,7214088754
-304,Rahul Mukherjee,9th,A,,,3.9,8.0,,,,93.0,45.0,41.0,81.0,,43.0,0.0,suresh@mailinator.com,6994379496
-305,Amit Joshi,9th,A,,,2.0,6.0,,Frequent,,87.2,49.0,66.0,74.0,,44.0,0.0,manjunath@mailinator.com,9359036532
-306,Rohan Murthy,9th,A,,,3.1,8.0,,Frequent,,94.0,83.0,50.0,88.0,,79.0,0.0,devraj@mailinator.com,6744016161
-307,Sai Pai,9th,A,,,2.7,5.0,,,,84.2,40.0,64.0,58.0,,47.0,0.0,manohar@mailinator.com,9843651438
-308,Karthik Roy,9th,A,,,6.0,6.0,,Frequent,,94.0,61.0,80.0,100.0,,50.0,0.0,shankar@mailinator.com,6437452857
-309,Akash Nair,9th,A,,,2.9,8.0,,,,85.6,64.0,79.0,66.0,,64.0,0.0,shivappa@mailinator.com,6617411907
-310,Abhinav Iyer,9th,A,,,6.0,6.0,,Minor,,79.0,95.0,88.0,57.0,,81.0,0.0,suresh@mailinator.com,9175840988
-311,Nikhil Hegde,9th,A,,,3.6,5.0,,,,67.0,57.0,72.0,52.0,,78.0,0.0,shivappa@mailinator.com,6558855000
-312,Pranav Das,9th,A,,,1.9,5.0,,,,90.7,80.0,76.0,69.0,,44.0,0.0,girish@mailinator.com,9590405448
-313,Yash Sharma,9th,A,,,1.4,9.0,,Frequent,,66.0,66.0,91.0,93.0,,77.0,0.0,srinivas@mailinator.com,6928032493
-314,Dev Gupta,9th,A,,,2.9,8.0,,Minor,,94.0,68.0,63.0,93.0,,58.0,0.0,manjunath@mailinator.com,7309866150
-315,Siddharth Deshmukh,9th,A,,,1.6,7.0,,Frequent,,99.0,63.0,59.0,82.0,,57.0,0.0,manjunath@mailinator.com,6610769890
-316,Varun Acharya,9th,A,,,4.2,8.0,,,,80.0,41.0,43.0,75.0,,41.0,0.0,raghavendra@mailinator.com,9795300795
-317,Ayush Chatterjee,9th,A,,,3.1,5.0,,,,72.0,53.0,42.0,59.0,,92.0,0.0,raju@mailinator.com,7285057319
-318,Ishan Rao,9th,A,,,6.0,5.0,,Frequent,,70.0,73.0,43.0,53.0,,64.0,0.0,krishna@mailinator.com,8026122858
-319,Dhruv Bhat,9th,A,,,5.6,9.0,,,,80.0,56.0,86.0,60.0,,55.0,0.0,girish@mailinator.com,6667020290
-320,Kabir Prasad,9th,A,,,1.7,6.0,,Minor,,75.0,55.0,40.0,82.0,,43.0,0.0,raju@mailinator.com,7648836944
-321,Rithvik Banerjee,9th,A,,,3.0,6.0,,,,77.0,87.0,67.0,51.0,,77.0,0.0,srinivas@mailinator.com,6608875003
-322,Ansh Singh,9th,A,,,3.3,5.0,,Minor,,72.0,53.0,60.0,83.0,,81.0,0.0,pradeep@mailinator.com,6911105297
-323,Shaurya Shastry,9th,A,,,3.8,6.0,,,,75.0,49.0,67.0,61.0,,49.0,0.0,lakshmi@mailinator.com,7996493506
-324,Tejas Shetty,9th,A,,,4.9,7.0,,Minor,,94.7,83.0,80.0,81.0,,78.0,0.0,ramesh@mailinator.com,6825505865
-325,Harsh Sen,9th,A,,,3.4,9.0,,,,99.0,77.0,54.0,81.0,,71.0,0.0,jagadish@mailinator.com,6058827875
-326,Vivek Patel,9th,A,,,3.1,6.0,,Frequent,,91.0,64.0,57.0,64.0,,80.0,0.0,umesh@mailinator.com,9841227509
-327,Sanjay Verma,9th,A,,,2.3,7.0,,,,65.0,65.0,76.0,85.0,,53.0,0.0,kumar@mailinator.com,8239190667
-328,Kiran Gowda,9th,A,,,5.6,8.0,,Frequent,,84.0,44.0,52.0,99.0,,78.0,0.0,anand@mailinator.com,7657721587
-329,Alok Choudhury,9th,A,,,1.1,9.0,,Frequent,,90.0,55.0,67.0,92.0,,74.0,0.0,suresh@mailinator.com,9513355005
-330,Madhav Kumar,9th,A,,,5.1,6.0,,Frequent,,86.0,70.0,50.0,64.0,,87.0,0.0,manjunath@mailinator.com,6900877074
-331,Gautam Reddy,9th,A,,,1.9,6.0,,Frequent,,69.0,95.0,65.0,98.0,,55.0,0.0,manjunath@mailinator.com,7067613626
-332,Raghav Patil,9th,A,,,4.4,6.0,,Frequent,,66.0,94.0,86.0,88.0,,84.0,0.0,srinivas@mailinator.com,9891548333
-333,Sameer Achar,9th,A,,,2.8,6.0,,Minor,,71.0,95.0,50.0,73.0,,88.0,0.0,raju@mailinator.com,8714964396
-334,Anand Mukherjee,9th,A,,,5.9,8.0,,,,79.0,65.0,89.0,73.0,,46.0,0.0,krishna@mailinator.com,6541709404
-335,Vijay Joshi,9th,A,,,1.6,6.0,,Frequent,,85.0,72.0,47.0,62.0,,68.0,0.0,krishna@mailinator.com,6595053909
-336,Raj Murthy,9th,A,,,1.9,5.0,,Frequent,,98.0,87.0,79.0,54.0,,50.0,0.0,dinesh@mailinator.com,7802349934
-337,Sunil Pai,9th,A,,,5.4,7.0,,Frequent,,74.0,47.0,86.0,80.0,,66.0,0.0,manjunath@mailinator.com,9675256045
-338,Sandeep Roy,9th,A,,,3.9,9.0,,Minor,,67.0,86.0,42.0,50.0,,84.0,0.0,dinesh@mailinator.com,6451495760
-339,Manoj Nair,9th,A,,,2.5,9.0,,Minor,,90.0,51.0,43.0,75.0,,81.0,0.0,manjunath@mailinator.com,7942884376
-340,Abhishek Iyer,9th,A,,,1.0,5.0,,,,98.0,88.0,78.0,88.0,,79.0,0.0,ashok@mailinator.com,7564622550
-341,Deepak Hegde,9th,A,,,2.1,7.0,,Minor,,66.0,43.0,83.0,87.0,,77.0,0.0,srinivas@mailinator.com,8265321798
-342,Vikram Das,9th,A,,,1.7,6.0,,Frequent,,86.0,56.0,73.0,92.0,,77.0,0.0,suresh@mailinator.com,6140187499
-343,Ravi Sharma,9th,A,,,2.0,7.0,,,,84.0,44.0,72.0,80.0,,62.0,0.0,shivappa@mailinator.com,8752662246
-344,Anil Gupta,9th,A,,,5.5,5.0,,Frequent,,74.0,94.0,64.0,91.0,,44.0,0.0,girish@mailinator.com,7601891463
-345,Suresh Deshmukh,9th,A,,,5.4,7.0,,Frequent,,84.2,58.0,41.0,61.0,,46.0,0.0,manjunath@mailinator.com,9207727054
-346,Ramesh Acharya,9th,A,,,4.5,5.0,,Minor,,77.0,73.0,65.0,77.0,,69.0,0.0,chandru@mailinator.com,7478287395
-347,Mahesh Chatterjee,9th,A,,,3.4,6.0,,,,79.0,88.0,54.0,67.0,,44.0,0.0,krishna@mailinator.com,7121768900
-348,Rajesh Rao,9th,A,,,5.1,5.0,,,,79.0,66.0,50.0,50.0,,66.0,0.0,mahesh@mailinator.com,6277164169
-349,Dinesh Bhat,9th,A,,,3.5,8.0,,,,75.0,66.0,87.0,95.0,,57.0,0.0,raghavendra@mailinator.com,9614766898
-350,Arjun Prasad,9th,A,,,2.8,6.0,,,,72.8,64.0,78.0,82.0,,65.0,0.0,jagadish@mailinator.com,7282615778
-351,Aditya Banerjee,9th,A,,,2.4,7.0,,Frequent,,71.0,72.0,53.0,64.0,,88.0,0.0,mahesh@mailinator.com,9103356497
-352,Aarav Singh,9th,A,,,5.6,5.0,,,,98.0,92.0,93.0,66.0,,83.0,0.0,venkatesh@mailinator.com,8586726476
-353,Vihaan Shastry,9th,A,,,2.9,8.0,,,,90.0,82.0,51.0,82.0,,82.0,0.0,manohar@mailinator.com,8589471886
-354,Rahul Shetty,9th,A,,,3.5,8.0,,Frequent,,83.0,70.0,82.0,68.0,,73.0,0.0,suresh@mailinator.com,6901044061
-355,Amit Sen,9th,A,,,2.3,9.0,,Frequent,,88.0,42.0,82.0,93.0,,85.0,0.0,anand@mailinator.com,6556474990
-356,Rohan Patel,9th,A,,,5.4,5.0,,Minor,,92.0,55.0,94.0,85.0,,41.0,0.0,ashok@mailinator.com,9382045376
-357,Sai Verma,9th,A,,,2.9,9.0,,,,65.9,65.0,80.0,78.0,,93.0,0.0,shankar@mailinator.com,6260825318
-358,Karthik Gowda,9th,A,,,2.5,6.0,,,,80.0,50.0,72.0,86.0,,65.0,0.0,krishna@mailinator.com,7586955113
-359,Akash Choudhury,9th,A,,,4.6,6.0,,Minor,,72.0,68.0,74.0,80.0,,68.0,0.0,srinivas@mailinator.com,7481726681
-360,Abhinav Kumar,9th,A,,,2.0,8.0,,Minor,,95.0,54.0,45.0,87.0,,59.0,0.0,mohan@mailinator.com,9484367512
-361,Nikhil Reddy,9th,A,,,1.6,7.0,,Minor,,82.7,72.0,80.0,96.0,,58.0,0.0,girish@mailinator.com,6351177291
-362,Pranav Patil,9th,A,,,5.2,5.0,,Frequent,,88.0,46.0,40.0,72.0,,88.0,0.0,lakshmi@mailinator.com,7998395060
-363,Yash Achar,9th,A,,,4.7,5.0,,,,76.0,87.0,56.0,57.0,,65.0,0.0,srinivas@mailinator.com,7928505194
-364,Dev Mukherjee,9th,A,,,4.0,6.0,,Minor,,75.0,47.0,90.0,86.0,,46.0,0.0,nagaraj@mailinator.com,8499520511
-365,Siddharth Joshi,9th,A,,,2.2,6.0,,,,71.0,71.0,88.0,81.0,,55.0,0.0,raghav@mailinator.com,9283276193
-366,Varun Murthy,9th,A,,,4.1,5.0,,Frequent,,82.7,91.0,51.0,95.0,,46.0,0.0,umesh@mailinator.com,8135492732
-367,Ayush Pai,9th,A,,,4.2,7.0,,,,93.0,83.0,54.0,97.0,,43.0,0.0,chandru@mailinator.com,8165574183
-368,Ishan Roy,9th,A,,,2.6,7.0,,Frequent,,96.0,75.0,84.0,74.0,,89.0,0.0,manohar@mailinator.com,7664616359
-369,Dhruv Nair,9th,A,,,1.3,7.0,,,,89.8,85.0,93.0,77.0,,71.0,0.0,srinivas@mailinator.com,6353344965
-370,Kabir Iyer,9th,A,,,5.4,5.0,,Minor,,87.4,68.0,95.0,60.0,,65.0,0.0,suresh@mailinator.com,9251178868
-371,Rithvik Hegde,9th,A,,,3.3,8.0,,,,88.0,68.0,92.0,89.0,,57.0,0.0,mohan@mailinator.com,7549563269
-372,Ansh Das,9th,A,,,4.8,7.0,,Minor,,86.0,67.0,54.0,66.0,,77.0,0.0,ramesh@mailinator.com,9558181784
-373,Shaurya Sharma,9th,A,,,2.3,7.0,,Frequent,,84.0,55.0,71.0,78.0,,49.0,0.0,prakash@mailinator.com,8087231984
-374,Tejas Gupta,9th,A,,,4.0,8.0,,,,69.0,49.0,79.0,90.0,,52.0,0.0,mohan@mailinator.com,8360708004
-375,Harsh Deshmukh,9th,A,,,3.1,7.0,,,,88.0,89.0,72.0,88.0,,88.0,0.0,ramesh@mailinator.com,6335144962
-376,Vivek Acharya,9th,A,,,2.9,7.0,,Minor,,91.0,70.0,58.0,79.0,,44.0,0.0,krishna@mailinator.com,7114539734
-377,Sanjay Chatterjee,9th,A,,,1.6,6.0,,Frequent,,75.0,71.0,74.0,80.0,,86.0,0.0,manjunath@mailinator.com,7648784809
-378,Kiran Rao,9th,A,,,2.2,8.0,,,,84.0,93.0,48.0,55.0,,73.0,0.0,suresh@mailinator.com,7453822766
-379,Alok Bhat,9th,A,,,1.4,9.0,,Minor,,90.0,46.0,84.0,52.0,,77.0,0.0,lakshmi@mailinator.com,8589749992
-380,Madhav Prasad,9th,A,,,2.5,9.0,,Frequent,,98.0,84.0,66.0,89.0,,50.0,0.0,raghav@mailinator.com,8267911997
-381,Gautam Banerjee,9th,A,,,4.7,7.0,,Minor,,86.0,76.0,69.0,91.0,,72.0,0.0,manohar@mailinator.com,7166169679
-382,Raghav Singh,9th,A,,,4.1,9.0,,,,89.1,89.0,71.0,82.0,,62.0,0.0,devraj@mailinator.com,7367773791
-383,Sameer Shastry,9th,A,,,4.4,7.0,,,,90.0,81.0,72.0,73.0,,92.0,0.0,venkatesh@mailinator.com,7064354869
-384,Anand Shetty,9th,A,,,1.0,9.0,,Frequent,,85.0,91.0,94.0,81.0,,61.0,0.0,umesh@mailinator.com,8881491977
-385,Vijay Sen,9th,A,,,4.4,5.0,,Minor,,99.0,61.0,50.0,66.0,,64.0,0.0,krishna@mailinator.com,6988564057
-386,Raj Patel,9th,A,,,3.5,7.0,,,,86.0,42.0,67.0,64.0,,57.0,0.0,umesh@mailinator.com,7297443986
-387,Sunil Verma,9th,A,,,2.2,9.0,,Frequent,,94.0,77.0,59.0,97.0,,46.0,0.0,raghavendra@mailinator.com,7599324542
-388,Sandeep Gowda,9th,A,,,1.9,5.0,,Minor,,90.3,73.0,78.0,66.0,,95.0,0.0,lakshmi@mailinator.com,8631156278
-389,Manoj Choudhury,9th,A,,,1.9,7.0,,Minor,,72.0,47.0,85.0,86.0,,81.0,0.0,ashok@mailinator.com,6914292943
-390,Abhishek Kumar,9th,A,,,5.2,8.0,,Frequent,,71.0,67.0,42.0,91.0,,87.0,0.0,manohar@mailinator.com,6944150108
-391,Deepak Reddy,9th,A,,,5.9,8.0,,,,71.4,71.0,93.0,76.0,,92.0,0.0,dinesh@mailinator.com,7820310582
-392,Vikram Patil,9th,A,,,5.6,8.0,,Frequent,,77.8,66.0,84.0,73.0,,46.0,0.0,ashok@mailinator.com,6531493247
-393,Ravi Achar,9th,A,,,2.7,7.0,,Minor,,68.0,89.0,53.0,94.0,,52.0,0.0,ramesh@mailinator.com,9222480066
-394,Anil Mukherjee,9th,A,,,4.9,6.0,,,,82.8,60.0,73.0,54.0,,49.0,0.0,manohar@mailinator.com,6013084042
-395,Suresh Joshi,9th,A,,,3.7,9.0,,,,67.3,70.0,71.0,77.0,,41.0,0.0,krishna@mailinator.com,7974756091
-396,Ramesh Murthy,9th,A,,,5.1,5.0,,Frequent,,83.0,45.0,55.0,100.0,,42.0,0.0,manohar@mailinator.com,8938765034
-397,Mahesh Pai,9th,A,,,3.4,8.0,,,,100.0,41.0,56.0,79.0,,83.0,0.0,chandru@mailinator.com,7988181853
-398,Rajesh Roy,9th,A,,,3.9,7.0,,Minor,,97.0,66.0,78.0,64.0,,44.0,0.0,raghav@mailinator.com,9666749283
-399,Dinesh Nair,9th,A,,,4.9,9.0,,Minor,,94.0,47.0,71.0,65.0,,45.0,0.0,ashok@mailinator.com,9900358268
-400,Arjun Iyer,9th,A,,,1.5,8.0,,,,92.0,88.0,90.0,99.0,,90.0,0.0,girish@mailinator.com,6430460556
-401,Aditya Hegde,9th,B,,,3.7,7.0,,Minor,,77.1,43.0,65.0,70.0,,93.0,0.0,raghav@mailinator.com,6118465607
-402,Aarav Das,9th,B,,,2.8,8.0,,Frequent,,89.0,69.0,88.0,80.0,,64.0,0.0,raghavendra@mailinator.com,7189360186
-403,Vihaan Sharma,9th,B,,,4.0,8.0,,,,72.0,61.0,78.0,71.0,,81.0,0.0,dinesh@mailinator.com,7130537427
-404,Rahul Gupta,9th,B,,,5.8,9.0,,Frequent,,70.8,64.0,47.0,88.0,,54.0,0.0,prakash@mailinator.com,6432327770
-405,Amit Deshmukh,9th,B,,,3.0,8.0,,Minor,,88.0,67.0,89.0,68.0,,90.0,0.0,manjunath@mailinator.com,8257730180
-406,Rohan Acharya,9th,B,,,3.0,8.0,,Frequent,,65.2,74.0,90.0,99.0,,54.0,0.0,pradeep@mailinator.com,9666002463
-407,Sai Chatterjee,9th,B,,,5.0,8.0,,Minor,,78.7,87.0,54.0,89.0,,68.0,0.0,ramesh@mailinator.com,7033336912
-408,Karthik Rao,9th,B,,,4.2,9.0,,Frequent,,74.0,52.0,65.0,99.0,,69.0,0.0,raju@mailinator.com,7861872600
-409,Akash Bhat,9th,B,,,3.0,6.0,,,,68.6,56.0,83.0,69.0,,48.0,0.0,manohar@mailinator.com,7602405513
-410,Abhinav Prasad,9th,B,,,4.4,9.0,,,,70.3,42.0,82.0,73.0,,84.0,0.0,krishna@mailinator.com,6042050500
-411,Nikhil Banerjee,9th,B,,,3.0,8.0,,Frequent,,77.0,40.0,70.0,59.0,,72.0,0.0,krishna@mailinator.com,7006041861
-412,Pranav Singh,9th,B,,,1.7,5.0,,Frequent,,97.0,47.0,53.0,54.0,,92.0,0.0,shivappa@mailinator.com,9237152706
-413,Yash Shastry,9th,B,,,3.3,6.0,,Frequent,,99.0,71.0,68.0,71.0,,60.0,0.0,nagaraj@mailinator.com,6441196612
-414,Dev Shetty,9th,B,,,2.7,9.0,,Minor,,91.0,82.0,94.0,60.0,,45.0,0.0,pradeep@mailinator.com,8910539043
-415,Siddharth Sen,9th,B,,,2.1,6.0,,Minor,,78.0,68.0,44.0,79.0,,65.0,0.0,raghav@mailinator.com,9966557900
-416,Varun Patel,9th,B,,,5.6,7.0,,Frequent,,72.4,68.0,81.0,53.0,,66.0,0.0,chandru@mailinator.com,8643440038
-417,Ayush Verma,9th,B,,,4.4,5.0,,Minor,,95.0,80.0,78.0,76.0,,71.0,0.0,shivappa@mailinator.com,7767128185
-418,Ishan Gowda,9th,B,,,4.0,5.0,,Frequent,,65.0,71.0,66.0,58.0,,51.0,0.0,prakash@mailinator.com,9054103327
-419,Dhruv Choudhury,9th,B,,,4.7,8.0,,,,71.0,50.0,73.0,100.0,,82.0,0.0,chandru@mailinator.com,9374205226
-420,Kabir Kumar,9th,B,,,3.7,8.0,,Frequent,,72.0,74.0,79.0,60.0,,91.0,0.0,mahesh@mailinator.com,6712432991
-421,Rithvik Reddy,9th,B,,,4.5,8.0,,Minor,,87.6,82.0,59.0,54.0,,55.0,0.0,basavaraj@mailinator.com,8642909595
-422,Ansh Patil,9th,B,,,5.7,9.0,,,,65.0,80.0,88.0,69.0,,50.0,0.0,umesh@mailinator.com,9333845891
-423,Shaurya Achar,9th,B,,,5.3,7.0,,Frequent,,92.0,65.0,69.0,80.0,,66.0,0.0,manohar@mailinator.com,8375335372
-424,Tejas Mukherjee,9th,B,,,1.8,7.0,,,,97.0,84.0,83.0,76.0,,56.0,0.0,ramesh@mailinator.com,6597977289
-425,Harsh Joshi,9th,B,,,2.3,9.0,,Minor,,98.0,49.0,59.0,97.0,,91.0,0.0,raghavendra@mailinator.com,6707844019
-426,Vivek Murthy,9th,B,,,1.4,9.0,,Minor,,75.0,52.0,75.0,54.0,,69.0,0.0,manjunath@mailinator.com,7342285203
-427,Sanjay Pai,9th,B,,,5.9,8.0,,,,100.0,41.0,65.0,96.0,,89.0,0.0,kumar@mailinator.com,9197366883
-428,Kiran Roy,9th,B,,,2.2,5.0,,,,74.5,52.0,67.0,78.0,,55.0,0.0,basavaraj@mailinator.com,8109200588
-429,Alok Nair,9th,B,,,4.3,7.0,,,,74.0,86.0,60.0,50.0,,48.0,0.0,venkatesh@mailinator.com,7372048725
-430,Madhav Iyer,9th,B,,,1.4,7.0,,,,94.0,93.0,44.0,73.0,,74.0,0.0,jagadish@mailinator.com,7907821714
-431,Gautam Hegde,9th,B,,,2.1,7.0,,Minor,,89.0,95.0,80.0,81.0,,70.0,0.0,shankar@mailinator.com,6050488472
-432,Raghav Das,9th,B,,,3.5,7.0,,,,74.8,60.0,51.0,67.0,,68.0,0.0,srinivas@mailinator.com,9774616205
-433,Sameer Sharma,9th,B,,,1.5,7.0,,Frequent,,91.5,93.0,91.0,100.0,,72.0,0.0,raghavendra@mailinator.com,6862656773
-434,Anand Gupta,9th,B,,,2.9,7.0,,Minor,,70.0,84.0,54.0,78.0,,43.0,0.0,shivappa@mailinator.com,6607138404
-435,Vijay Deshmukh,9th,B,,,3.7,5.0,,,,85.0,79.0,54.0,58.0,,72.0,0.0,venkatesh@mailinator.com,6324711550
-436,Raj Acharya,9th,B,,,2.7,6.0,,Minor,,66.0,95.0,87.0,92.0,,78.0,0.0,basavaraj@mailinator.com,7587798997
-437,Sunil Chatterjee,9th,B,,,3.8,8.0,,Frequent,,97.0,65.0,49.0,64.0,,78.0,0.0,suresh@mailinator.com,6086819394
-438,Sandeep Rao,9th,B,,,3.7,6.0,,Minor,,75.9,43.0,54.0,88.0,,94.0,0.0,nagaraj@mailinator.com,6625167278
-439,Manoj Bhat,9th,B,,,3.0,5.0,,Frequent,,91.0,76.0,40.0,93.0,,67.0,0.0,shankar@mailinator.com,8624825016
-440,Abhishek Prasad,9th,B,,,4.5,6.0,,Minor,,88.6,40.0,83.0,84.0,,43.0,0.0,ramesh@mailinator.com,6770174645
-441,Deepak Banerjee,9th,B,,,4.4,9.0,,Frequent,,68.0,81.0,40.0,95.0,,69.0,0.0,mohan@mailinator.com,7753838082
-442,Vikram Singh,9th,B,,,4.4,9.0,,Frequent,,69.0,71.0,63.0,95.0,,94.0,0.0,lakshmi@mailinator.com,9538031047
-443,Ravi Shastry,9th,B,,,3.8,9.0,,,,74.0,86.0,64.0,96.0,,42.0,0.0,kumar@mailinator.com,7653680676
-444,Anil Shetty,9th,B,,,2.8,7.0,,,,92.0,58.0,88.0,96.0,,95.0,0.0,suresh@mailinator.com,6171502517
-445,Suresh Sen,9th,B,,,4.1,6.0,,,,83.0,95.0,76.0,55.0,,61.0,0.0,basavaraj@mailinator.com,7178047936
-446,Ramesh Patel,9th,B,,,5.7,6.0,,Minor,,68.3,85.0,78.0,73.0,,91.0,0.0,jagadish@mailinator.com,9110716629
-447,Mahesh Verma,9th,B,,,4.0,8.0,,,,73.0,62.0,44.0,72.0,,65.0,0.0,manjunath@mailinator.com,8879912233
-448,Rajesh Gowda,9th,B,,,5.9,5.0,,Frequent,,66.0,69.0,85.0,83.0,,79.0,0.0,raghavendra@mailinator.com,6931458918
-449,Dinesh Choudhury,9th,B,,,3.2,7.0,,Frequent,,65.0,50.0,91.0,97.0,,49.0,0.0,anand@mailinator.com,6955087311
-450,Arjun Kumar,9th,B,,,4.7,7.0,,Minor,,93.0,73.0,82.0,93.0,,93.0,0.0,srinivas@mailinator.com,6906508797
-451,Aditya Reddy,9th,B,,,1.2,9.0,,Minor,,84.0,77.0,65.0,58.0,,61.0,0.0,venkatesh@mailinator.com,9120689195
-452,Aarav Patil,9th,B,,,4.8,5.0,,Frequent,,99.0,71.0,74.0,81.0,,86.0,0.0,kumar@mailinator.com,9388207622
-453,Vihaan Achar,9th,B,,,3.6,7.0,,Minor,,91.3,43.0,61.0,89.0,,53.0,0.0,srinivas@mailinator.com,6080991664
-454,Rahul Mukherjee,9th,B,,,1.0,7.0,,,,73.0,60.0,80.0,81.0,,84.0,0.0,manohar@mailinator.com,9357052136
-455,Amit Joshi,9th,B,,,2.4,9.0,,Frequent,,87.7,74.0,60.0,87.0,,53.0,0.0,anand@mailinator.com,7910008404
-456,Rohan Murthy,9th,B,,,3.7,9.0,,Frequent,,90.0,42.0,42.0,88.0,,46.0,0.0,shankar@mailinator.com,6106730952
-457,Sai Pai,9th,B,,,4.8,5.0,,Minor,,88.0,71.0,64.0,90.0,,53.0,0.0,chandru@mailinator.com,6386908917
-458,Karthik Roy,9th,B,,,1.3,6.0,,Frequent,,68.0,64.0,63.0,85.0,,43.0,0.0,mahesh@mailinator.com,7570486091
-459,Akash Nair,9th,B,,,3.7,5.0,,Frequent,,86.0,50.0,86.0,90.0,,54.0,0.0,dinesh@mailinator.com,9859598626
-460,Abhinav Iyer,9th,B,,,5.0,7.0,,,,84.0,79.0,78.0,79.0,,49.0,0.0,prakash@mailinator.com,9507997384
-461,Nikhil Hegde,9th,B,,,4.2,7.0,,,,95.0,48.0,93.0,62.0,,88.0,0.0,nagaraj@mailinator.com,7963515354
-462,Pranav Das,9th,B,,,5.7,5.0,,Frequent,,94.0,63.0,84.0,61.0,,85.0,0.0,krishna@mailinator.com,6382339692
-463,Yash Sharma,9th,B,,,1.4,6.0,,,,81.0,46.0,44.0,77.0,,93.0,0.0,nagaraj@mailinator.com,6719247621
-464,Dev Gupta,9th,B,,,2.4,6.0,,Frequent,,87.0,79.0,84.0,68.0,,55.0,0.0,jagadish@mailinator.com,9658847773
-465,Siddharth Deshmukh,9th,B,,,5.6,6.0,,Minor,,81.9,73.0,72.0,94.0,,58.0,0.0,umesh@mailinator.com,6897813349
-466,Varun Acharya,9th,B,,,4.8,7.0,,,,97.0,91.0,62.0,52.0,,60.0,0.0,umesh@mailinator.com,8278758525
-467,Ayush Chatterjee,9th,B,,,4.0,8.0,,Minor,,94.0,59.0,47.0,68.0,,60.0,0.0,prakash@mailinator.com,8692865247
-468,Ishan Rao,9th,B,,,5.2,8.0,,,,81.0,62.0,65.0,72.0,,87.0,0.0,raghav@mailinator.com,9328296768
-469,Dhruv Bhat,9th,B,,,5.5,7.0,,Frequent,,80.0,56.0,56.0,62.0,,41.0,0.0,umesh@mailinator.com,6351759142
-470,Kabir Prasad,9th,B,,,5.9,5.0,,Minor,,82.5,55.0,53.0,55.0,,76.0,0.0,ashok@mailinator.com,9118389886
-471,Rithvik Banerjee,9th,B,,,6.0,5.0,,Minor,,69.0,89.0,41.0,89.0,,47.0,0.0,suresh@mailinator.com,8688733374
-472,Ansh Singh,9th,B,,,1.7,6.0,,Frequent,,69.6,57.0,64.0,74.0,,93.0,0.0,shivappa@mailinator.com,9008543585
-473,Shaurya Shastry,9th,B,,,1.4,7.0,,Minor,,85.0,45.0,71.0,69.0,,84.0,0.0,mohan@mailinator.com,9119775221
-474,Tejas Shetty,9th,B,,,1.4,5.0,,,,77.0,45.0,92.0,62.0,,95.0,0.0,srinivas@mailinator.com,8604935389
-475,Harsh Sen,9th,B,,,1.1,8.0,,Frequent,,95.5,41.0,42.0,74.0,,48.0,0.0,shankar@mailinator.com,7111212548
-476,Vivek Patel,9th,B,,,5.9,9.0,,Frequent,,95.0,53.0,65.0,93.0,,72.0,0.0,srinivas@mailinator.com,9848663086
-477,Sanjay Verma,9th,B,,,1.5,9.0,,,,67.0,95.0,44.0,53.0,,64.0,0.0,venkatesh@mailinator.com,8346405979
-478,Kiran Gowda,9th,B,,,5.2,8.0,,,,72.0,72.0,80.0,83.0,,90.0,0.0,ashok@mailinator.com,9220579230
-479,Alok Choudhury,9th,B,,,4.4,8.0,,,,67.0,45.0,42.0,60.0,,80.0,0.0,venkatesh@mailinator.com,9907091764
-480,Madhav Kumar,9th,B,,,3.4,8.0,,Minor,,97.0,91.0,62.0,84.0,,76.0,0.0,chandru@mailinator.com,8336166593
-481,Gautam Reddy,9th,B,,,2.7,5.0,,,,87.8,94.0,62.0,73.0,,86.0,0.0,krishna@mailinator.com,8947667577
-482,Raghav Patil,9th,B,,,2.8,5.0,,,,90.7,49.0,70.0,94.0,,82.0,0.0,manjunath@mailinator.com,8031646836
-483,Sameer Achar,9th,B,,,2.3,7.0,,,,93.0,56.0,81.0,50.0,,77.0,0.0,krishna@mailinator.com,9363472574
-484,Anand Mukherjee,9th,B,,,5.6,6.0,,,,94.0,92.0,51.0,78.0,,43.0,0.0,nagaraj@mailinator.com,8177568320
-485,Vijay Joshi,9th,B,,,4.6,5.0,,,,83.0,65.0,77.0,56.0,,76.0,0.0,shankar@mailinator.com,9934238925
-486,Raj Murthy,9th,B,,,1.1,8.0,,Minor,,98.0,61.0,73.0,53.0,,88.0,0.0,umesh@mailinator.com,7289269877
-487,Sunil Pai,9th,B,,,3.3,7.0,,Frequent,,100.0,65.0,91.0,55.0,,73.0,0.0,dinesh@mailinator.com,6990240727
-488,Sandeep Roy,9th,B,,,2.4,7.0,,Frequent,,78.0,89.0,58.0,59.0,,73.0,0.0,pradeep@mailinator.com,6528232534
-489,Manoj Nair,9th,B,,,1.1,6.0,,Frequent,,90.4,94.0,72.0,63.0,,44.0,0.0,suresh@mailinator.com,6988726857
-490,Abhishek Iyer,9th,B,,,5.4,9.0,,Minor,,69.0,91.0,49.0,72.0,,53.0,0.0,kumar@mailinator.com,8770921550
-491,Deepak Hegde,9th,B,,,4.9,5.0,,Frequent,,90.0,86.0,51.0,55.0,,67.0,0.0,shankar@mailinator.com,8120289422
-492,Vikram Das,9th,B,,,2.6,9.0,,,,92.0,70.0,64.0,94.0,,79.0,0.0,venkatesh@mailinator.com,7532237051
-493,Ravi Sharma,9th,B,,,5.0,6.0,,Frequent,,99.0,65.0,79.0,88.0,,61.0,0.0,venkatesh@mailinator.com,6062348753
-494,Anil Gupta,9th,B,,,2.6,9.0,,,,96.4,72.0,41.0,98.0,,75.0,0.0,srinivas@mailinator.com,6878978878
-495,Suresh Deshmukh,9th,B,,,2.5,9.0,,,,80.0,77.0,64.0,57.0,,69.0,0.0,raju@mailinator.com,8276487202
-496,Ramesh Acharya,9th,B,,,5.6,7.0,,Frequent,,98.0,78.0,49.0,87.0,,51.0,0.0,manohar@mailinator.com,9945338081
-497,Mahesh Chatterjee,9th,B,,,5.9,8.0,,,,75.0,43.0,81.0,67.0,,82.0,0.0,jagadish@mailinator.com,6674139951
-498,Rajesh Rao,9th,B,,,3.6,5.0,,Minor,,99.0,42.0,51.0,87.0,,89.0,0.0,krishna@mailinator.com,8303848384
-499,Dinesh Bhat,9th,B,,,5.8,7.0,,,,71.0,77.0,67.0,56.0,,45.0,0.0,ramesh@mailinator.com,9274727287
-500,Arjun Prasad,9th,B,,,5.4,5.0,,Frequent,,70.0,45.0,66.0,78.0,,45.0,0.0,umesh@mailinator.com,7543052987
-501,Aditya Banerjee,9th,C,,,3.6,8.0,,Minor,,88.6,46.0,68.0,96.0,,76.0,0.0,nagaraj@mailinator.com,7369508755
-502,Aarav Singh,9th,C,,,2.9,7.0,,Frequent,,73.0,62.0,68.0,100.0,,58.0,0.0,pradeep@mailinator.com,9816105747
-503,Vihaan Shastry,9th,C,,,4.6,6.0,,,,79.0,65.0,48.0,63.0,,74.0,0.0,srinivas@mailinator.com,6302723167
-504,Rahul Shetty,9th,C,,,3.3,7.0,,Minor,,98.4,83.0,47.0,99.0,,72.0,0.0,shankar@mailinator.com,8202400132
-505,Amit Sen,9th,C,,,4.0,9.0,,Minor,,89.0,64.0,95.0,62.0,,61.0,0.0,ramesh@mailinator.com,7855612502
-506,Rohan Patel,9th,C,,,6.0,5.0,,Frequent,,94.6,70.0,51.0,89.0,,82.0,0.0,prakash@mailinator.com,6178406535
-507,Sai Verma,9th,C,,,4.9,8.0,,Frequent,,65.0,42.0,94.0,78.0,,93.0,0.0,srinivas@mailinator.com,6318516671
-508,Karthik Gowda,9th,C,,,2.7,5.0,,Frequent,,95.0,88.0,55.0,98.0,,72.0,0.0,shivappa@mailinator.com,9563956643
-509,Akash Choudhury,9th,C,,,1.4,6.0,,Minor,,65.0,75.0,62.0,64.0,,81.0,0.0,prakash@mailinator.com,8364966347
-510,Abhinav Kumar,9th,C,,,1.9,6.0,,Minor,,76.0,63.0,63.0,66.0,,72.0,0.0,prakash@mailinator.com,8649370736
-511,Nikhil Reddy,9th,C,,,3.6,7.0,,Minor,,80.0,62.0,59.0,78.0,,76.0,0.0,manohar@mailinator.com,7479933992
-512,Pranav Patil,9th,C,,,3.1,6.0,,Frequent,,70.0,94.0,50.0,68.0,,67.0,0.0,manohar@mailinator.com,6609943195
-513,Yash Achar,9th,C,,,5.0,6.0,,Minor,,65.0,77.0,64.0,67.0,,67.0,0.0,mohan@mailinator.com,6888621380
-514,Dev Mukherjee,9th,C,,,5.7,7.0,,,,68.4,56.0,77.0,86.0,,51.0,0.0,mahesh@mailinator.com,6506947243
-515,Siddharth Joshi,9th,C,,,1.9,5.0,,Minor,,84.8,70.0,93.0,57.0,,72.0,0.0,jagadish@mailinator.com,9671032377
-516,Varun Murthy,9th,C,,,5.3,8.0,,Minor,,77.0,67.0,63.0,97.0,,61.0,0.0,anand@mailinator.com,6811444982
-517,Ayush Pai,9th,C,,,5.8,9.0,,Frequent,,79.7,83.0,43.0,70.0,,61.0,0.0,anand@mailinator.com,7229975416
-518,Ishan Roy,9th,C,,,5.8,5.0,,Minor,,84.0,50.0,92.0,75.0,,81.0,0.0,suresh@mailinator.com,7445666297
-519,Dhruv Nair,9th,C,,,1.2,6.0,,,,74.0,89.0,51.0,68.0,,56.0,0.0,anand@mailinator.com,7060693036
-520,Kabir Iyer,9th,C,,,1.3,9.0,,,,100.4,58.0,56.0,79.0,,54.0,0.0,chandru@mailinator.com,7083306576
-521,Rithvik Hegde,9th,C,,,1.0,7.0,,,,91.0,84.0,45.0,62.0,,84.0,0.0,kumar@mailinator.com,8643114779
-522,Ansh Das,9th,C,,,2.6,6.0,,,,68.5,76.0,75.0,77.0,,56.0,0.0,raghavendra@mailinator.com,8290372977
-523,Shaurya Sharma,9th,C,,,1.3,5.0,,Frequent,,66.0,76.0,63.0,88.0,,47.0,0.0,mahesh@mailinator.com,7892068269
-524,Tejas Gupta,9th,C,,,2.5,5.0,,Minor,,75.0,47.0,79.0,50.0,,42.0,0.0,kumar@mailinator.com,7961449138
-525,Harsh Deshmukh,9th,C,,,2.8,6.0,,Minor,,65.4,52.0,77.0,57.0,,85.0,0.0,chandru@mailinator.com,6300541935
-526,Vivek Acharya,9th,C,,,5.8,5.0,,,,95.0,82.0,74.0,67.0,,94.0,0.0,raju@mailinator.com,6894074821
-527,Sanjay Chatterjee,9th,C,,,3.4,7.0,,Frequent,,72.3,83.0,69.0,52.0,,41.0,0.0,pradeep@mailinator.com,6648509729
-528,Kiran Rao,9th,C,,,2.4,8.0,,,,76.0,55.0,48.0,58.0,,91.0,0.0,ashok@mailinator.com,8136969801
-529,Alok Bhat,9th,C,,,3.5,5.0,,,,80.0,50.0,71.0,61.0,,95.0,0.0,raju@mailinator.com,8847713388
-530,Madhav Prasad,9th,C,,,4.2,7.0,,Frequent,,96.1,95.0,43.0,96.0,,52.0,0.0,shivappa@mailinator.com,6697266918
-531,Gautam Banerjee,9th,C,,,1.6,8.0,,Frequent,,77.0,86.0,55.0,58.0,,52.0,0.0,anand@mailinator.com,6964656114
-532,Raghav Singh,9th,C,,,4.8,9.0,,Minor,,82.0,71.0,94.0,67.0,,78.0,0.0,chandru@mailinator.com,8891778587
-533,Sameer Shastry,9th,C,,,5.3,8.0,,Frequent,,72.0,77.0,42.0,86.0,,52.0,0.0,anand@mailinator.com,6223651636
-534,Anand Shetty,9th,C,,,5.2,7.0,,Frequent,,100.0,86.0,43.0,73.0,,50.0,0.0,raghav@mailinator.com,8989759592
-535,Vijay Sen,9th,C,,,5.5,8.0,,Frequent,,96.5,88.0,62.0,57.0,,78.0,0.0,dinesh@mailinator.com,7318571002
-536,Raj Patel,9th,C,,,2.9,7.0,,,,98.0,62.0,93.0,100.0,,51.0,0.0,nagaraj@mailinator.com,7792139867
-537,Sunil Verma,9th,C,,,3.2,6.0,,Minor,,65.0,83.0,61.0,87.0,,86.0,0.0,shankar@mailinator.com,6224194867
-538,Sandeep Gowda,9th,C,,,1.5,6.0,,,,88.0,50.0,53.0,57.0,,74.0,0.0,raghavendra@mailinator.com,7698066726
-539,Manoj Choudhury,9th,C,,,2.1,9.0,,Frequent,,93.0,61.0,59.0,58.0,,45.0,0.0,nagaraj@mailinator.com,7810373475
-540,Abhishek Kumar,9th,C,,,5.9,6.0,,Minor,,65.0,67.0,50.0,53.0,,54.0,0.0,devraj@mailinator.com,7241798355
-541,Deepak Reddy,9th,C,,,2.4,7.0,,Frequent,,66.0,63.0,68.0,84.0,,58.0,0.0,raju@mailinator.com,7067849492
-542,Vikram Patil,9th,C,,,5.5,5.0,,Frequent,,97.0,84.0,80.0,85.0,,57.0,0.0,dinesh@mailinator.com,8332547592
-543,Ravi Achar,9th,C,,,5.5,9.0,,Frequent,,90.0,64.0,79.0,96.0,,95.0,0.0,shivappa@mailinator.com,6273786724
-544,Anil Mukherjee,9th,C,,,5.6,7.0,,,,75.0,80.0,84.0,68.0,,40.0,0.0,ramesh@mailinator.com,9889212453
-545,Suresh Joshi,9th,C,,,1.8,5.0,,Minor,,78.0,66.0,42.0,50.0,,63.0,0.0,jagadish@mailinator.com,8788356046
-546,Ramesh Murthy,9th,C,,,5.4,7.0,,Minor,,89.0,85.0,77.0,51.0,,78.0,0.0,anand@mailinator.com,9570306492
-547,Mahesh Pai,9th,C,,,4.2,5.0,,Frequent,,88.0,61.0,50.0,61.0,,80.0,0.0,srinivas@mailinator.com,9270163183
-548,Rajesh Roy,9th,C,,,2.1,7.0,,Frequent,,69.0,66.0,83.0,73.0,,87.0,0.0,devraj@mailinator.com,8560984255
-549,Dinesh Nair,9th,C,,,2.7,5.0,,,,68.2,82.0,52.0,91.0,,88.0,0.0,jagadish@mailinator.com,8374237958
-550,Arjun Iyer,9th,C,,,1.8,6.0,,Frequent,,74.0,79.0,68.0,84.0,,61.0,0.0,mahesh@mailinator.com,9870726815
-551,Aditya Hegde,9th,C,,,3.2,5.0,,,,73.6,72.0,42.0,85.0,,52.0,0.0,pradeep@mailinator.com,8190734722
-552,Aarav Das,9th,C,,,1.4,6.0,,,,72.4,57.0,53.0,71.0,,67.0,0.0,ashok@mailinator.com,9547369347
-553,Vihaan Sharma,9th,C,,,1.8,5.0,,Frequent,,78.0,51.0,87.0,94.0,,83.0,0.0,dinesh@mailinator.com,9965111803
-554,Rahul Gupta,9th,C,,,2.0,6.0,,,,76.0,85.0,50.0,69.0,,82.0,0.0,pradeep@mailinator.com,7155963033
-555,Amit Deshmukh,9th,C,,,4.5,8.0,,Frequent,,81.0,57.0,40.0,96.0,,51.0,0.0,basavaraj@mailinator.com,9590955368
-556,Rohan Acharya,9th,C,,,3.9,9.0,,,,96.0,83.0,50.0,86.0,,91.0,0.0,raghav@mailinator.com,9505150664
-557,Sai Chatterjee,9th,C,,,5.4,6.0,,Frequent,,71.2,75.0,82.0,98.0,,61.0,0.0,raju@mailinator.com,6522370002
-558,Karthik Rao,9th,C,,,2.2,9.0,,Minor,,94.0,82.0,42.0,57.0,,66.0,0.0,raju@mailinator.com,7824648503
-559,Akash Bhat,9th,C,,,4.1,5.0,,,,82.9,84.0,78.0,88.0,,41.0,0.0,chandru@mailinator.com,8357433184
-560,Abhinav Prasad,9th,C,,,1.2,6.0,,,,77.8,92.0,63.0,67.0,,58.0,0.0,raghavendra@mailinator.com,6765931021
-561,Nikhil Banerjee,9th,C,,,3.6,7.0,,Minor,,97.0,93.0,95.0,94.0,,89.0,0.0,pradeep@mailinator.com,6233738472
-562,Pranav Singh,9th,C,,,5.3,8.0,,Frequent,,97.0,49.0,89.0,71.0,,45.0,0.0,ramesh@mailinator.com,7566008949
-563,Yash Shastry,9th,C,,,5.9,9.0,,,,86.0,63.0,94.0,94.0,,77.0,0.0,srinivas@mailinator.com,9267593205
-564,Dev Shetty,9th,C,,,1.0,8.0,,Frequent,,87.0,72.0,49.0,74.0,,51.0,0.0,manjunath@mailinator.com,9756027682
-565,Siddharth Sen,9th,C,,,2.3,8.0,,,,74.0,80.0,56.0,57.0,,55.0,0.0,prakash@mailinator.com,9725643663
-566,Varun Patel,9th,C,,,2.1,7.0,,Frequent,,100.3,46.0,51.0,60.0,,45.0,0.0,venkatesh@mailinator.com,7206238822
-567,Ayush Verma,9th,C,,,1.2,9.0,,Frequent,,70.0,40.0,44.0,51.0,,89.0,0.0,jagadish@mailinator.com,8210854654
-568,Ishan Gowda,9th,C,,,1.1,7.0,,Minor,,98.1,43.0,88.0,65.0,,58.0,0.0,devraj@mailinator.com,7136883401
-569,Dhruv Choudhury,9th,C,,,3.5,8.0,,Frequent,,69.0,55.0,84.0,90.0,,54.0,0.0,prakash@mailinator.com,7907813212
-570,Kabir Kumar,9th,C,,,1.2,9.0,,Minor,,74.0,95.0,72.0,55.0,,92.0,0.0,ashok@mailinator.com,9337267477
-571,Rithvik Reddy,9th,C,,,2.4,7.0,,Frequent,,70.0,69.0,63.0,65.0,,72.0,0.0,chandru@mailinator.com,8126317582
-572,Ansh Patil,9th,C,,,4.2,6.0,,Frequent,,98.0,72.0,76.0,90.0,,64.0,0.0,raghav@mailinator.com,8610820699
-573,Shaurya Achar,9th,C,,,2.5,9.0,,Frequent,,75.6,74.0,45.0,59.0,,67.0,0.0,raghav@mailinator.com,6984508361
-574,Tejas Mukherjee,9th,C,,,2.3,8.0,,Minor,,82.0,67.0,94.0,78.0,,78.0,0.0,jagadish@mailinator.com,8483241837
-575,Harsh Joshi,9th,C,,,4.0,7.0,,,,73.0,52.0,69.0,57.0,,46.0,0.0,krishna@mailinator.com,7449661574
-576,Vivek Murthy,9th,C,,,2.9,5.0,,Frequent,,80.0,59.0,87.0,56.0,,55.0,0.0,ramesh@mailinator.com,7183338256
-577,Sanjay Pai,9th,C,,,4.5,5.0,,,,94.5,69.0,88.0,100.0,,42.0,0.0,suresh@mailinator.com,7776703273
-578,Kiran Roy,9th,C,,,3.5,7.0,,,,81.0,91.0,42.0,75.0,,50.0,0.0,mohan@mailinator.com,6282490105
-579,Alok Nair,9th,C,,,4.2,7.0,,,,100.0,95.0,91.0,66.0,,89.0,0.0,devraj@mailinator.com,7182784619
-580,Madhav Iyer,9th,C,,,2.8,9.0,,Frequent,,66.8,66.0,68.0,50.0,,66.0,0.0,shankar@mailinator.com,8381048276
-581,Gautam Hegde,9th,C,,,2.4,5.0,,Frequent,,85.0,45.0,61.0,92.0,,67.0,0.0,umesh@mailinator.com,8749747316
-582,Raghav Das,9th,C,,,1.7,6.0,,Frequent,,99.0,81.0,69.0,78.0,,60.0,0.0,srinivas@mailinator.com,8646170247
-583,Sameer Sharma,9th,C,,,5.7,7.0,,Minor,,91.0,90.0,86.0,64.0,,64.0,0.0,kumar@mailinator.com,6760265133
-584,Anand Gupta,9th,C,,,5.0,8.0,,Minor,,77.0,74.0,57.0,84.0,,55.0,0.0,chandru@mailinator.com,6242824425
-585,Vijay Deshmukh,9th,C,,,5.7,9.0,,Frequent,,69.0,61.0,75.0,92.0,,95.0,0.0,nagaraj@mailinator.com,9427681954
-586,Raj Acharya,9th,C,,,1.9,6.0,,Minor,,68.0,84.0,88.0,93.0,,52.0,0.0,chandru@mailinator.com,6097368692
-587,Sunil Chatterjee,9th,C,,,5.7,6.0,,Minor,,74.4,94.0,68.0,90.0,,57.0,0.0,dinesh@mailinator.com,8218089358
-588,Sandeep Rao,9th,C,,,5.7,9.0,,Frequent,,90.0,71.0,82.0,73.0,,64.0,0.0,anand@mailinator.com,8490706576
-589,Manoj Bhat,9th,C,,,2.4,9.0,,Minor,,86.0,67.0,87.0,72.0,,82.0,0.0,chandru@mailinator.com,6557744922
-590,Abhishek Prasad,9th,C,,,2.4,9.0,,Frequent,,99.0,46.0,51.0,100.0,,52.0,0.0,chandru@mailinator.com,8660236055
-591,Deepak Banerjee,9th,C,,,3.8,9.0,,Minor,,88.0,65.0,93.0,76.0,,49.0,0.0,krishna@mailinator.com,9469072635
-592,Vikram Singh,9th,C,,,1.9,8.0,,Minor,,85.4,57.0,74.0,77.0,,93.0,0.0,srinivas@mailinator.com,8938541708
-593,Ravi Shastry,9th,C,,,3.2,5.0,,,,99.8,92.0,92.0,60.0,,60.0,0.0,ramesh@mailinator.com,7404319961
-594,Anil Shetty,9th,C,,,1.9,9.0,,,,98.7,88.0,66.0,98.0,,74.0,0.0,suresh@mailinator.com,6622289297
-595,Suresh Sen,9th,C,,,5.7,7.0,,Minor,,67.0,41.0,59.0,83.0,,81.0,0.0,manohar@mailinator.com,8372986222
-596,Ramesh Patel,9th,C,,,3.5,7.0,,,,98.0,59.0,57.0,52.0,,43.0,0.0,srinivas@mailinator.com,8862449483
-597,Mahesh Verma,9th,C,,,5.8,9.0,,Minor,,99.0,66.0,67.0,87.0,,94.0,0.0,devraj@mailinator.com,8395609231
-598,Rajesh Gowda,9th,C,,,4.2,5.0,,Frequent,,85.7,72.0,42.0,89.0,,48.0,0.0,manohar@mailinator.com,6678935689
-599,Dinesh Choudhury,9th,C,,,3.4,8.0,,Minor,,71.0,41.0,63.0,86.0,,84.0,0.0,ashok@mailinator.com,6931409717
-600,Arjun Kumar,9th,C,,,5.8,9.0,,Frequent,,70.0,60.0,79.0,96.0,,75.0,0.0,girish@mailinator.com,9812793194
-601,Aditya Reddy,10th,A,,,1.7,6.0,,Minor,,96.9,55.0,82.0,89.0,,55.0,0.0,lakshmi@mailinator.com,7247596307
-602,Aarav Patil,10th,A,,,4.2,9.0,,,,68.0,54.0,69.0,79.0,,63.0,0.0,manohar@mailinator.com,8132615334
-603,Vihaan Achar,10th,A,,,4.3,5.0,,Frequent,,96.8,58.0,73.0,87.0,,54.0,0.0,raghav@mailinator.com,6679968182
-604,Rahul Mukherjee,10th,A,,,3.2,5.0,,Frequent,,96.0,95.0,43.0,51.0,,58.0,0.0,chandru@mailinator.com,7621291226
-605,Amit Joshi,10th,A,,,1.3,6.0,,,,76.0,92.0,51.0,82.0,,49.0,0.0,manohar@mailinator.com,9935374568
-606,Rohan Murthy,10th,A,,,3.5,9.0,,,,86.4,62.0,45.0,86.0,,71.0,0.0,jagadish@mailinator.com,6791047853
-607,Sai Pai,10th,A,,,3.3,6.0,,Frequent,,66.4,75.0,56.0,99.0,,80.0,0.0,raghav@mailinator.com,7853851519
-608,Karthik Roy,10th,A,,,5.0,6.0,,Minor,,86.0,51.0,46.0,86.0,,46.0,0.0,ramesh@mailinator.com,8866382965
-609,Akash Nair,10th,A,,,2.3,5.0,,,,99.0,75.0,43.0,82.0,,54.0,0.0,kumar@mailinator.com,6599505663
-610,Abhinav Iyer,10th,A,,,3.0,8.0,,Frequent,,87.7,71.0,78.0,74.0,,59.0,0.0,mohan@mailinator.com,6585851946
-611,Nikhil Hegde,10th,A,,,2.2,5.0,,Minor,,73.0,83.0,79.0,98.0,,55.0,0.0,ramesh@mailinator.com,9158325258
-612,Pranav Das,10th,A,,,4.4,6.0,,,,85.2,71.0,49.0,69.0,,63.0,0.0,nagaraj@mailinator.com,7329499587
-613,Yash Sharma,10th,A,,,5.9,7.0,,Minor,,71.0,74.0,50.0,60.0,,89.0,0.0,lakshmi@mailinator.com,7559044048
-614,Dev Gupta,10th,A,,,1.9,9.0,,Minor,,79.0,51.0,55.0,82.0,,65.0,0.0,manohar@mailinator.com,8529812824
-615,Siddharth Deshmukh,10th,A,,,5.1,5.0,,,,77.0,72.0,54.0,69.0,,76.0,0.0,raghav@mailinator.com,9955257999
-616,Varun Acharya,10th,A,,,2.2,6.0,,Minor,,67.0,94.0,71.0,88.0,,61.0,0.0,chandru@mailinator.com,9008088482
-617,Ayush Chatterjee,10th,A,,,1.3,9.0,,Minor,,76.0,41.0,72.0,50.0,,71.0,0.0,krishna@mailinator.com,7821887246
-618,Ishan Rao,10th,A,,,1.7,8.0,,Frequent,,92.0,89.0,73.0,69.0,,52.0,0.0,lakshmi@mailinator.com,8229852041
-619,Dhruv Bhat,10th,A,,,5.7,8.0,,Frequent,,72.0,61.0,69.0,77.0,,44.0,0.0,kumar@mailinator.com,9352116582
-620,Kabir Prasad,10th,A,,,5.4,5.0,,Minor,,86.0,94.0,60.0,58.0,,43.0,0.0,ramesh@mailinator.com,6376589033
-621,Rithvik Banerjee,10th,A,,,2.4,5.0,,Frequent,,84.0,80.0,77.0,78.0,,55.0,0.0,manjunath@mailinator.com,9028378464
-622,Ansh Singh,10th,A,,,5.7,5.0,,Frequent,,80.0,40.0,92.0,99.0,,84.0,0.0,umesh@mailinator.com,6407526401
-623,Shaurya Shastry,10th,A,,,5.2,7.0,,Minor,,74.0,90.0,95.0,85.0,,70.0,0.0,ashok@mailinator.com,9585947902
-624,Tejas Shetty,10th,A,,,3.2,7.0,,Frequent,,94.0,72.0,78.0,63.0,,41.0,0.0,pradeep@mailinator.com,7081204150
-625,Harsh Sen,10th,A,,,3.3,6.0,,Minor,,74.0,60.0,47.0,52.0,,88.0,0.0,prakash@mailinator.com,7392514658
-626,Vivek Patel,10th,A,,,4.1,8.0,,Minor,,66.4,63.0,74.0,90.0,,61.0,0.0,srinivas@mailinator.com,6353032095
-627,Sanjay Verma,10th,A,,,1.8,7.0,,,,88.0,46.0,70.0,58.0,,75.0,0.0,krishna@mailinator.com,6628428402
-628,Kiran Gowda,10th,A,,,1.1,8.0,,,,82.0,64.0,60.0,55.0,,40.0,0.0,shivappa@mailinator.com,7846762035
-629,Alok Choudhury,10th,A,,,2.3,8.0,,Minor,,79.2,81.0,72.0,57.0,,86.0,0.0,raghav@mailinator.com,6000325503
-630,Madhav Kumar,10th,A,,,1.1,7.0,,,,94.5,80.0,83.0,51.0,,49.0,0.0,mahesh@mailinator.com,9316560380
-631,Gautam Reddy,10th,A,,,4.4,9.0,,Minor,,84.0,78.0,74.0,63.0,,57.0,0.0,manohar@mailinator.com,7393211229
-632,Raghav Patil,10th,A,,,3.8,7.0,,,,79.0,66.0,79.0,88.0,,80.0,0.0,devraj@mailinator.com,9498292647
-633,Sameer Achar,10th,A,,,2.6,7.0,,Minor,,96.0,41.0,70.0,75.0,,90.0,0.0,raghavendra@mailinator.com,6376495251
-634,Anand Mukherjee,10th,A,,,4.9,9.0,,Minor,,81.5,40.0,45.0,82.0,,56.0,0.0,umesh@mailinator.com,6910397906
-635,Vijay Joshi,10th,A,,,1.7,9.0,,Frequent,,87.0,76.0,50.0,98.0,,82.0,0.0,raghav@mailinator.com,8990500259
-636,Raj Murthy,10th,A,,,2.2,6.0,,Minor,,88.0,76.0,93.0,62.0,,52.0,0.0,chandru@mailinator.com,6205256542
-637,Sunil Pai,10th,A,,,2.5,9.0,,Minor,,72.0,81.0,69.0,99.0,,53.0,0.0,nagaraj@mailinator.com,9367460289
-638,Sandeep Roy,10th,A,,,2.0,9.0,,Frequent,,93.5,82.0,42.0,74.0,,51.0,0.0,shivappa@mailinator.com,7744753040
-639,Manoj Nair,10th,A,,,1.4,7.0,,,,96.0,64.0,62.0,54.0,,54.0,0.0,pradeep@mailinator.com,8545252795
-640,Abhishek Iyer,10th,A,,,5.3,9.0,,Frequent,,68.0,56.0,60.0,67.0,,77.0,0.0,shivappa@mailinator.com,9253657971
-641,Deepak Hegde,10th,A,,,1.4,5.0,,Minor,,95.8,44.0,86.0,61.0,,45.0,0.0,basavaraj@mailinator.com,9623917676
-642,Vikram Das,10th,A,,,4.4,7.0,,Minor,,77.0,93.0,72.0,53.0,,60.0,0.0,mohan@mailinator.com,9921721141
-643,Ravi Sharma,10th,A,,,1.6,8.0,,,,79.0,61.0,74.0,95.0,,68.0,0.0,suresh@mailinator.com,6678074636
-644,Anil Gupta,10th,A,,,1.1,8.0,,Minor,,68.0,68.0,69.0,67.0,,50.0,0.0,girish@mailinator.com,7575135533
-645,Suresh Deshmukh,10th,A,,,3.8,6.0,,,,69.5,63.0,95.0,93.0,,47.0,0.0,mahesh@mailinator.com,6552745080
-646,Ramesh Acharya,10th,A,,,5.5,5.0,,Minor,,94.0,67.0,92.0,80.0,,70.0,0.0,raghavendra@mailinator.com,7570613130
-647,Mahesh Chatterjee,10th,A,,,5.3,6.0,,Minor,,99.0,89.0,80.0,63.0,,87.0,0.0,shivappa@mailinator.com,7570838860
-648,Rajesh Rao,10th,A,,,2.7,9.0,,Minor,,92.0,91.0,45.0,70.0,,73.0,0.0,jagadish@mailinator.com,7544407271
-649,Dinesh Bhat,10th,A,,,1.1,6.0,,,,82.6,45.0,53.0,83.0,,43.0,0.0,umesh@mailinator.com,6677156808
-650,Arjun Prasad,10th,A,,,5.0,6.0,,Minor,,91.0,93.0,50.0,93.0,,90.0,0.0,umesh@mailinator.com,9034812335
-651,Aditya Banerjee,10th,A,,,5.0,7.0,,,,65.0,40.0,66.0,63.0,,93.0,0.0,mahesh@mailinator.com,6836190280
-652,Aarav Singh,10th,A,,,5.3,7.0,,,,84.0,52.0,95.0,89.0,,43.0,0.0,dinesh@mailinator.com,7779542599
-653,Vihaan Shastry,10th,A,,,4.3,5.0,,Frequent,,86.0,85.0,44.0,60.0,,94.0,0.0,shivappa@mailinator.com,8639074053
-654,Rahul Shetty,10th,A,,,5.0,7.0,,Minor,,73.9,59.0,61.0,98.0,,60.0,0.0,srinivas@mailinator.com,6570562228
-655,Amit Sen,10th,A,,,5.5,9.0,,,,74.0,87.0,47.0,70.0,,64.0,0.0,umesh@mailinator.com,7830499663
-656,Rohan Patel,10th,A,,,3.3,7.0,,,,77.0,67.0,92.0,97.0,,53.0,0.0,kumar@mailinator.com,8825395931
-657,Sai Verma,10th,A,,,3.8,7.0,,,,81.0,52.0,60.0,95.0,,62.0,0.0,ashok@mailinator.com,8534472993
-658,Karthik Gowda,10th,A,,,3.5,7.0,,Frequent,,74.0,63.0,45.0,73.0,,78.0,0.0,suresh@mailinator.com,6602360707
-659,Akash Choudhury,10th,A,,,4.5,7.0,,,,90.0,56.0,63.0,61.0,,84.0,0.0,basavaraj@mailinator.com,9063188943
-660,Abhinav Kumar,10th,A,,,4.4,7.0,,,,76.0,45.0,57.0,73.0,,40.0,0.0,basavaraj@mailinator.com,9823208501
-661,Nikhil Reddy,10th,A,,,3.6,9.0,,,,84.0,86.0,66.0,62.0,,83.0,0.0,lakshmi@mailinator.com,7643123749
-662,Pranav Patil,10th,A,,,5.1,9.0,,Minor,,75.1,72.0,92.0,66.0,,91.0,0.0,raghavendra@mailinator.com,7493442608
-663,Yash Achar,10th,A,,,3.5,7.0,,Minor,,90.0,65.0,80.0,62.0,,64.0,0.0,ashok@mailinator.com,9829318482
-664,Dev Mukherjee,10th,A,,,5.1,8.0,,Frequent,,98.0,95.0,48.0,100.0,,41.0,0.0,shivappa@mailinator.com,7532035764
-665,Siddharth Joshi,10th,A,,,2.4,6.0,,Minor,,81.0,72.0,70.0,72.0,,78.0,0.0,nagaraj@mailinator.com,7460785814
-666,Varun Murthy,10th,A,,,1.9,7.0,,Frequent,,83.0,70.0,68.0,58.0,,88.0,0.0,kumar@mailinator.com,8310835798
-667,Ayush Pai,10th,A,,,5.8,6.0,,Minor,,84.0,66.0,68.0,56.0,,94.0,0.0,devraj@mailinator.com,6016980003
-668,Ishan Roy,10th,A,,,4.7,6.0,,Minor,,71.0,54.0,94.0,73.0,,80.0,0.0,shankar@mailinator.com,6874826711
-669,Dhruv Nair,10th,A,,,2.3,5.0,,,,69.0,46.0,78.0,99.0,,80.0,0.0,devraj@mailinator.com,9711723489
-670,Kabir Iyer,10th,A,,,3.9,5.0,,,,94.0,82.0,61.0,78.0,,86.0,0.0,kumar@mailinator.com,9375084683
-671,Rithvik Hegde,10th,A,,,5.8,9.0,,,,68.0,52.0,93.0,83.0,,86.0,0.0,raju@mailinator.com,9937539158
-672,Ansh Das,10th,A,,,1.4,5.0,,,,91.0,72.0,94.0,66.0,,59.0,0.0,suresh@mailinator.com,7465825260
-673,Shaurya Sharma,10th,A,,,1.4,8.0,,,,91.0,92.0,41.0,59.0,,42.0,0.0,srinivas@mailinator.com,6182894145
-674,Tejas Gupta,10th,A,,,4.1,9.0,,Minor,,74.0,65.0,83.0,98.0,,89.0,0.0,jagadish@mailinator.com,8016738390
-675,Harsh Deshmukh,10th,A,,,2.1,8.0,,Minor,,70.1,47.0,93.0,50.0,,74.0,0.0,raju@mailinator.com,7673245127
-676,Vivek Acharya,10th,A,,,4.8,8.0,,,,93.0,50.0,51.0,75.0,,93.0,0.0,suresh@mailinator.com,6910456897
-677,Sanjay Chatterjee,10th,A,,,3.8,7.0,,,,99.6,80.0,84.0,96.0,,79.0,0.0,raju@mailinator.com,9675615557
-678,Kiran Rao,10th,A,,,4.3,5.0,,,,100.7,85.0,60.0,58.0,,86.0,0.0,manohar@mailinator.com,6085682222
-679,Alok Bhat,10th,A,,,1.5,7.0,,Minor,,71.5,66.0,75.0,92.0,,80.0,0.0,suresh@mailinator.com,8082877826
-680,Madhav Prasad,10th,A,,,1.4,6.0,,Minor,,92.0,74.0,68.0,68.0,,49.0,0.0,jagadish@mailinator.com,7261870687
-681,Gautam Banerjee,10th,A,,,4.1,9.0,,Minor,,94.0,54.0,56.0,57.0,,45.0,0.0,raghavendra@mailinator.com,7836632491
-682,Raghav Singh,10th,A,,,3.0,9.0,,,,87.0,75.0,54.0,63.0,,55.0,0.0,krishna@mailinator.com,7313143315
-683,Sameer Shastry,10th,A,,,1.4,5.0,,Minor,,69.0,41.0,87.0,75.0,,48.0,0.0,manohar@mailinator.com,7591214874
-684,Anand Shetty,10th,A,,,2.9,7.0,,,,75.2,69.0,87.0,96.0,,52.0,0.0,girish@mailinator.com,9551471749
-685,Vijay Sen,10th,A,,,4.4,7.0,,Frequent,,87.0,67.0,54.0,85.0,,74.0,0.0,girish@mailinator.com,8099523999
-686,Raj Patel,10th,A,,,1.9,6.0,,Minor,,84.5,71.0,65.0,54.0,,55.0,0.0,manjunath@mailinator.com,6515412059
-687,Sunil Verma,10th,A,,,5.5,8.0,,,,87.4,81.0,93.0,92.0,,61.0,0.0,pradeep@mailinator.com,9391617776
-688,Sandeep Gowda,10th,A,,,5.7,5.0,,Minor,,85.6,81.0,75.0,70.0,,63.0,0.0,manjunath@mailinator.com,8540457954
-689,Manoj Choudhury,10th,A,,,5.8,7.0,,Minor,,100.6,43.0,53.0,85.0,,73.0,0.0,mohan@mailinator.com,9544768278
-690,Abhishek Kumar,10th,A,,,4.7,6.0,,Minor,,68.0,41.0,63.0,85.0,,52.0,0.0,mohan@mailinator.com,6493478481
-691,Deepak Reddy,10th,A,,,3.0,6.0,,Minor,,91.0,45.0,95.0,64.0,,93.0,0.0,lakshmi@mailinator.com,8392337100
-692,Vikram Patil,10th,A,,,4.7,5.0,,,,97.0,46.0,54.0,50.0,,88.0,0.0,shankar@mailinator.com,8227595195
-693,Ravi Achar,10th,A,,,2.4,6.0,,Minor,,65.0,44.0,43.0,54.0,,51.0,0.0,shivappa@mailinator.com,8223479265
-694,Anil Mukherjee,10th,A,,,2.6,9.0,,,,80.0,94.0,54.0,69.0,,83.0,0.0,anand@mailinator.com,8622937098
-695,Suresh Joshi,10th,A,,,4.0,6.0,,,,79.7,46.0,68.0,70.0,,73.0,0.0,suresh@mailinator.com,6293351725
-696,Ramesh Murthy,10th,A,,,4.0,5.0,,Frequent,,93.0,85.0,75.0,50.0,,73.0,0.0,prakash@mailinator.com,9595321768
-697,Mahesh Pai,10th,A,,,5.4,7.0,,Frequent,,89.0,87.0,40.0,58.0,,59.0,0.0,venkatesh@mailinator.com,6250319343
-698,Rajesh Roy,10th,A,,,2.3,6.0,,Frequent,,83.0,89.0,93.0,86.0,,87.0,0.0,nagaraj@mailinator.com,8179619485
-699,Dinesh Nair,10th,A,,,4.8,7.0,,Frequent,,80.8,76.0,60.0,74.0,,66.0,0.0,anand@mailinator.com,9735292343
-700,Arjun Iyer,10th,A,,,5.7,5.0,,Minor,,90.0,80.0,83.0,57.0,,94.0,0.0,devraj@mailinator.com,7286658883
-701,Aditya Hegde,10th,B,,,1.0,8.0,,Frequent,,67.0,76.0,89.0,94.0,,73.0,0.0,kumar@mailinator.com,8255973785
-702,Aarav Das,10th,B,,,3.4,6.0,,Frequent,,65.0,77.0,52.0,64.0,,60.0,0.0,jagadish@mailinator.com,8623896422
-703,Vihaan Sharma,10th,B,,,4.3,6.0,,Frequent,,86.0,91.0,94.0,86.0,,82.0,0.0,ramesh@mailinator.com,9748065711
-704,Rahul Gupta,10th,B,,,5.2,5.0,,Frequent,,68.0,64.0,92.0,100.0,,53.0,0.0,suresh@mailinator.com,9345276718
-705,Amit Deshmukh,10th,B,,,1.9,8.0,,,,82.0,88.0,63.0,58.0,,49.0,0.0,dinesh@mailinator.com,8908817062
-706,Rohan Acharya,10th,B,,,5.3,7.0,,,,80.0,53.0,43.0,57.0,,87.0,0.0,manjunath@mailinator.com,7529445609
-707,Sai Chatterjee,10th,B,,,2.8,6.0,,Frequent,,74.0,63.0,85.0,73.0,,50.0,0.0,dinesh@mailinator.com,8475255711
-708,Karthik Rao,10th,B,,,5.5,9.0,,Minor,,83.0,81.0,54.0,76.0,,60.0,0.0,suresh@mailinator.com,9924446690
-709,Akash Bhat,10th,B,,,1.1,9.0,,Minor,,92.0,75.0,49.0,62.0,,50.0,0.0,ramesh@mailinator.com,6427310986
-710,Abhinav Prasad,10th,B,,,1.4,7.0,,Frequent,,78.0,58.0,60.0,86.0,,61.0,0.0,basavaraj@mailinator.com,9139466103
-711,Nikhil Banerjee,10th,B,,,5.9,6.0,,Minor,,95.0,45.0,94.0,97.0,,81.0,0.0,prakash@mailinator.com,7716675782
-712,Pranav Singh,10th,B,,,4.0,5.0,,,,81.0,54.0,54.0,70.0,,86.0,0.0,girish@mailinator.com,6763862174
-713,Yash Shastry,10th,B,,,3.1,5.0,,,,84.0,80.0,77.0,52.0,,54.0,0.0,ramesh@mailinator.com,8023398142
-714,Dev Shetty,10th,B,,,1.8,8.0,,,,68.0,63.0,69.0,53.0,,65.0,0.0,venkatesh@mailinator.com,6169238029
-715,Siddharth Sen,10th,B,,,4.2,6.0,,Frequent,,66.0,42.0,88.0,79.0,,53.0,0.0,raghav@mailinator.com,6103745883
-716,Varun Patel,10th,B,,,1.2,7.0,,Minor,,86.0,62.0,80.0,66.0,,65.0,0.0,ramesh@mailinator.com,6947812090
-717,Ayush Verma,10th,B,,,2.6,9.0,,,,89.0,48.0,56.0,66.0,,65.0,0.0,manohar@mailinator.com,8056014811
-718,Ishan Gowda,10th,B,,,2.6,9.0,,,,97.0,67.0,62.0,55.0,,57.0,0.0,mohan@mailinator.com,6149556363
-719,Dhruv Choudhury,10th,B,,,4.0,5.0,,,,72.0,50.0,77.0,98.0,,40.0,0.0,mahesh@mailinator.com,9616343277
-720,Kabir Kumar,10th,B,,,4.3,8.0,,Frequent,,97.0,95.0,41.0,56.0,,47.0,0.0,anand@mailinator.com,6407906196
-721,Rithvik Reddy,10th,B,,,5.2,7.0,,Minor,,79.0,81.0,48.0,93.0,,78.0,0.0,raghavendra@mailinator.com,7127708754
-722,Ansh Patil,10th,B,,,5.6,6.0,,,,92.0,60.0,87.0,56.0,,55.0,0.0,jagadish@mailinator.com,9095443841
-723,Shaurya Achar,10th,B,,,4.3,6.0,,Minor,,96.1,84.0,65.0,51.0,,40.0,0.0,shivappa@mailinator.com,6153005632
-724,Tejas Mukherjee,10th,B,,,3.9,5.0,,Minor,,97.0,46.0,52.0,89.0,,92.0,0.0,raghav@mailinator.com,6633361370
-725,Harsh Joshi,10th,B,,,3.0,7.0,,,,93.6,65.0,60.0,96.0,,41.0,0.0,mahesh@mailinator.com,9064597733
-726,Vivek Murthy,10th,B,,,5.8,5.0,,Minor,,96.0,70.0,87.0,95.0,,63.0,0.0,basavaraj@mailinator.com,6130239594
-727,Sanjay Pai,10th,B,,,1.8,8.0,,,,85.7,64.0,75.0,78.0,,56.0,0.0,chandru@mailinator.com,6140969546
-728,Kiran Roy,10th,B,,,5.5,5.0,,Minor,,87.0,63.0,50.0,50.0,,59.0,0.0,mohan@mailinator.com,7210951795
-729,Alok Nair,10th,B,,,2.6,5.0,,,,66.5,82.0,82.0,72.0,,94.0,0.0,raghavendra@mailinator.com,8979557149
-730,Madhav Iyer,10th,B,,,3.7,7.0,,Frequent,,65.0,52.0,70.0,65.0,,74.0,0.0,venkatesh@mailinator.com,6009975772
-731,Gautam Hegde,10th,B,,,4.4,9.0,,Frequent,,77.0,95.0,70.0,73.0,,43.0,0.0,mahesh@mailinator.com,7757501768
-732,Raghav Das,10th,B,,,2.2,6.0,,Frequent,,92.0,76.0,54.0,51.0,,85.0,0.0,jagadish@mailinator.com,8664898894
-733,Sameer Sharma,10th,B,,,1.8,5.0,,,,70.6,45.0,90.0,98.0,,47.0,0.0,shankar@mailinator.com,9954922316
-734,Anand Gupta,10th,B,,,3.5,7.0,,,,66.7,58.0,53.0,59.0,,79.0,0.0,raju@mailinator.com,6928214400
-735,Vijay Deshmukh,10th,B,,,5.0,8.0,,Frequent,,90.5,84.0,58.0,63.0,,62.0,0.0,prakash@mailinator.com,9054731999
-736,Raj Acharya,10th,B,,,4.5,6.0,,Frequent,,72.0,51.0,64.0,57.0,,83.0,0.0,shivappa@mailinator.com,8665333230
-737,Sunil Chatterjee,10th,B,,,1.6,7.0,,Minor,,70.3,86.0,72.0,58.0,,81.0,0.0,srinivas@mailinator.com,7099055879
-738,Sandeep Rao,10th,B,,,5.5,7.0,,Frequent,,99.0,54.0,56.0,64.0,,54.0,0.0,srinivas@mailinator.com,8256484428
-739,Manoj Bhat,10th,B,,,3.4,7.0,,Minor,,84.0,83.0,54.0,87.0,,66.0,0.0,raghav@mailinator.com,8814502536
-740,Abhishek Prasad,10th,B,,,5.7,8.0,,,,68.0,90.0,92.0,56.0,,50.0,0.0,jagadish@mailinator.com,9967084791
-741,Deepak Banerjee,10th,B,,,3.8,7.0,,Frequent,,94.0,95.0,64.0,77.0,,62.0,0.0,mahesh@mailinator.com,6908982504
-742,Vikram Singh,10th,B,,,1.4,7.0,,Frequent,,98.0,51.0,61.0,57.0,,68.0,0.0,mohan@mailinator.com,7261295697
-743,Ravi Shastry,10th,B,,,2.0,8.0,,Frequent,,90.3,40.0,48.0,82.0,,65.0,0.0,chandru@mailinator.com,8845404866
-744,Anil Shetty,10th,B,,,5.3,8.0,,Frequent,,96.0,63.0,94.0,58.0,,66.0,0.0,chandru@mailinator.com,7360729054
-745,Suresh Sen,10th,B,,,4.5,9.0,,,,73.0,69.0,44.0,53.0,,74.0,0.0,raghav@mailinator.com,9532785973
-746,Ramesh Patel,10th,B,,,5.5,9.0,,Frequent,,76.0,42.0,89.0,55.0,,90.0,0.0,raghav@mailinator.com,9256149412
-747,Mahesh Verma,10th,B,,,2.6,6.0,,,,74.0,47.0,51.0,97.0,,71.0,0.0,raghavendra@mailinator.com,8092575162
-748,Rajesh Gowda,10th,B,,,3.6,5.0,,Minor,,99.7,40.0,50.0,51.0,,40.0,0.0,prakash@mailinator.com,9073405843
-749,Dinesh Choudhury,10th,B,,,4.3,9.0,,Minor,,79.0,57.0,86.0,80.0,,86.0,0.0,srinivas@mailinator.com,7424691934
-750,Arjun Kumar,10th,B,,,4.0,5.0,,Frequent,,98.0,85.0,57.0,93.0,,78.0,0.0,krishna@mailinator.com,9162784451
-751,Aditya Reddy,10th,B,,,2.2,6.0,,Minor,,83.0,50.0,51.0,61.0,,83.0,0.0,devraj@mailinator.com,9787675256
-752,Aarav Patil,10th,B,,,3.1,8.0,,Minor,,67.0,81.0,73.0,58.0,,43.0,0.0,basavaraj@mailinator.com,9826135279
-753,Vihaan Achar,10th,B,,,2.2,8.0,,Minor,,98.0,78.0,65.0,78.0,,85.0,0.0,krishna@mailinator.com,8875813124
-754,Rahul Mukherjee,10th,B,,,5.2,9.0,,Frequent,,71.0,92.0,79.0,76.0,,68.0,0.0,kumar@mailinator.com,7770971388
-755,Amit Joshi,10th,B,,,5.9,5.0,,Minor,,75.0,85.0,53.0,74.0,,58.0,0.0,manjunath@mailinator.com,6144957696
-756,Rohan Murthy,10th,B,,,1.3,7.0,,Frequent,,81.0,49.0,79.0,80.0,,64.0,0.0,raju@mailinator.com,6137650393
-757,Sai Pai,10th,B,,,4.6,7.0,,Minor,,97.0,52.0,92.0,86.0,,81.0,0.0,mohan@mailinator.com,7047976329
-758,Karthik Roy,10th,B,,,2.7,8.0,,Minor,,78.7,82.0,42.0,63.0,,76.0,0.0,mohan@mailinator.com,6019843980
-759,Akash Nair,10th,B,,,4.1,7.0,,Minor,,86.0,81.0,90.0,100.0,,78.0,0.0,venkatesh@mailinator.com,6637690178
-760,Abhinav Iyer,10th,B,,,2.3,7.0,,,,80.0,80.0,76.0,92.0,,52.0,0.0,mohan@mailinator.com,7105264425
-761,Nikhil Hegde,10th,B,,,4.3,5.0,,Frequent,,91.1,63.0,52.0,79.0,,54.0,0.0,raju@mailinator.com,9975860241
-762,Pranav Das,10th,B,,,2.9,8.0,,Minor,,66.0,46.0,59.0,96.0,,62.0,0.0,raju@mailinator.com,9032141684
-763,Yash Sharma,10th,B,,,2.5,8.0,,Minor,,96.7,51.0,47.0,51.0,,74.0,0.0,lakshmi@mailinator.com,8747283722
-764,Dev Gupta,10th,B,,,5.6,7.0,,Frequent,,69.0,63.0,83.0,94.0,,89.0,0.0,lakshmi@mailinator.com,7391604305
-765,Siddharth Deshmukh,10th,B,,,5.7,5.0,,Frequent,,100.5,90.0,84.0,73.0,,79.0,0.0,pradeep@mailinator.com,8254829987
-766,Varun Acharya,10th,B,,,4.1,8.0,,Frequent,,66.0,94.0,45.0,60.0,,84.0,0.0,dinesh@mailinator.com,7542539850
-767,Ayush Chatterjee,10th,B,,,2.1,9.0,,Minor,,85.0,66.0,72.0,61.0,,44.0,0.0,raju@mailinator.com,8584561166
-768,Ishan Rao,10th,B,,,5.7,7.0,,Minor,,76.4,41.0,81.0,56.0,,75.0,0.0,raghavendra@mailinator.com,9182801599
-769,Dhruv Bhat,10th,B,,,4.8,5.0,,,,91.0,90.0,94.0,62.0,,67.0,0.0,basavaraj@mailinator.com,9684185675
-770,Kabir Prasad,10th,B,,,4.8,8.0,,Minor,,78.0,50.0,54.0,90.0,,74.0,0.0,pradeep@mailinator.com,7438179391
-771,Rithvik Banerjee,10th,B,,,2.1,8.0,,Frequent,,79.0,48.0,59.0,53.0,,76.0,0.0,venkatesh@mailinator.com,8818995666
-772,Ansh Singh,10th,B,,,5.2,5.0,,Frequent,,91.0,40.0,46.0,69.0,,87.0,0.0,chandru@mailinator.com,8606839806
-773,Shaurya Shastry,10th,B,,,2.2,9.0,,Minor,,95.8,45.0,77.0,91.0,,80.0,0.0,raju@mailinator.com,9379820114
-774,Tejas Shetty,10th,B,,,4.2,7.0,,Minor,,72.0,51.0,80.0,55.0,,40.0,0.0,dinesh@mailinator.com,7225558035
-775,Harsh Sen,10th,B,,,4.6,8.0,,Minor,,96.0,88.0,54.0,86.0,,51.0,0.0,anand@mailinator.com,7862839089
-776,Vivek Patel,10th,B,,,4.7,7.0,,Frequent,,81.2,72.0,77.0,95.0,,90.0,0.0,prakash@mailinator.com,9071172179
-777,Sanjay Verma,10th,B,,,3.0,9.0,,Frequent,,79.5,62.0,83.0,81.0,,59.0,0.0,girish@mailinator.com,7277797400
-778,Kiran Gowda,10th,B,,,4.8,9.0,,Frequent,,88.0,53.0,68.0,60.0,,44.0,0.0,shankar@mailinator.com,6094747437
-779,Alok Choudhury,10th,B,,,5.5,6.0,,Frequent,,90.0,68.0,79.0,92.0,,76.0,0.0,chandru@mailinator.com,7659833511
-780,Madhav Kumar,10th,B,,,3.9,7.0,,Minor,,80.0,53.0,55.0,69.0,,91.0,0.0,pradeep@mailinator.com,7167202748
-781,Gautam Reddy,10th,B,,,1.5,7.0,,Frequent,,76.0,82.0,52.0,90.0,,50.0,0.0,prakash@mailinator.com,9563754241
-782,Raghav Patil,10th,B,,,1.6,8.0,,Frequent,,96.3,73.0,94.0,50.0,,67.0,0.0,ashok@mailinator.com,9877039942
-783,Sameer Achar,10th,B,,,1.5,5.0,,Frequent,,99.0,69.0,52.0,83.0,,91.0,0.0,chandru@mailinator.com,9693632097
-784,Anand Mukherjee,10th,B,,,1.9,8.0,,Frequent,,70.7,83.0,83.0,64.0,,68.0,0.0,girish@mailinator.com,8097543101
-785,Vijay Joshi,10th,B,,,1.6,6.0,,,,95.0,87.0,55.0,50.0,,91.0,0.0,mohan@mailinator.com,7117982121
-786,Raj Murthy,10th,B,,,4.9,7.0,,Minor,,67.0,91.0,50.0,72.0,,60.0,0.0,lakshmi@mailinator.com,7772552366
-787,Sunil Pai,10th,B,,,1.2,5.0,,,,78.0,61.0,82.0,83.0,,53.0,0.0,shivappa@mailinator.com,6832016113
-788,Sandeep Roy,10th,B,,,2.2,6.0,,Frequent,,89.0,94.0,95.0,54.0,,58.0,0.0,ashok@mailinator.com,7323211264
-789,Manoj Nair,10th,B,,,5.4,7.0,,,,81.0,72.0,87.0,76.0,,90.0,0.0,girish@mailinator.com,6890192628
-790,Abhishek Iyer,10th,B,,,5.9,7.0,,Frequent,,97.0,77.0,46.0,71.0,,62.0,0.0,kumar@mailinator.com,8987264261
-791,Deepak Hegde,10th,B,,,4.0,5.0,,,,81.0,47.0,85.0,98.0,,65.0,0.0,prakash@mailinator.com,9707204516
-792,Vikram Das,10th,B,,,5.9,5.0,,,,91.0,67.0,82.0,65.0,,59.0,0.0,pradeep@mailinator.com,7019071096
-793,Ravi Sharma,10th,B,,,1.2,5.0,,Frequent,,94.0,82.0,56.0,90.0,,76.0,0.0,mohan@mailinator.com,7031265856
-794,Anil Gupta,10th,B,,,5.7,7.0,,,,94.0,49.0,66.0,53.0,,49.0,0.0,lakshmi@mailinator.com,9757572035
-795,Suresh Deshmukh,10th,B,,,2.6,8.0,,Frequent,,74.0,57.0,54.0,87.0,,90.0,0.0,srinivas@mailinator.com,7397636250
-796,Ramesh Acharya,10th,B,,,5.0,8.0,,Minor,,99.0,61.0,47.0,62.0,,83.0,0.0,lakshmi@mailinator.com,9281412828
-797,Mahesh Chatterjee,10th,B,,,5.1,9.0,,,,93.0,61.0,63.0,97.0,,76.0,0.0,manohar@mailinator.com,6314889197
-798,Rajesh Rao,10th,B,,,5.3,7.0,,,,72.0,93.0,49.0,95.0,,52.0,0.0,shankar@mailinator.com,9539252350
-799,Dinesh Bhat,10th,B,,,3.3,5.0,,Frequent,,96.0,68.0,60.0,93.0,,50.0,0.0,lakshmi@mailinator.com,6264027788
-800,Arjun Prasad,10th,B,,,5.7,7.0,,Frequent,,69.0,70.0,47.0,82.0,,53.0,0.0,raghav@mailinator.com,8145694439
-801,Aditya Banerjee,10th,C,,,2.3,8.0,,Frequent,,76.5,77.0,40.0,95.0,,77.0,0.0,srinivas@mailinator.com,6953777806
-802,Aarav Singh,10th,C,,,5.7,8.0,,Frequent,,88.0,59.0,90.0,82.0,,86.0,0.0,girish@mailinator.com,6172554791
-803,Vihaan Shastry,10th,C,,,4.1,6.0,,Minor,,71.0,47.0,53.0,74.0,,50.0,0.0,mahesh@mailinator.com,6523499929
-804,Rahul Shetty,10th,C,,,5.9,8.0,,,,72.0,42.0,76.0,94.0,,54.0,0.0,girish@mailinator.com,9129676608
-805,Amit Sen,10th,C,,,1.2,9.0,,,,72.0,83.0,82.0,81.0,,66.0,0.0,nagaraj@mailinator.com,8849716124
-806,Rohan Patel,10th,C,,,4.6,6.0,,Frequent,,84.4,56.0,48.0,72.0,,61.0,0.0,lakshmi@mailinator.com,9954165261
-807,Sai Verma,10th,C,,,3.8,5.0,,,,94.0,88.0,43.0,98.0,,54.0,0.0,basavaraj@mailinator.com,7715973592
-808,Karthik Gowda,10th,C,,,3.5,9.0,,,,67.0,68.0,95.0,69.0,,86.0,0.0,mohan@mailinator.com,7326703927
-809,Akash Choudhury,10th,C,,,2.3,9.0,,Minor,,65.0,74.0,67.0,75.0,,75.0,0.0,lakshmi@mailinator.com,8911431018
-810,Abhinav Kumar,10th,C,,,2.6,7.0,,Minor,,85.0,46.0,75.0,98.0,,40.0,0.0,suresh@mailinator.com,7838011602
-811,Nikhil Reddy,10th,C,,,2.2,8.0,,Frequent,,100.0,50.0,69.0,69.0,,92.0,0.0,prakash@mailinator.com,6834703702
-812,Pranav Patil,10th,C,,,2.1,6.0,,,,75.0,92.0,42.0,74.0,,73.0,0.0,prakash@mailinator.com,8648942945
-813,Yash Achar,10th,C,,,5.0,8.0,,Minor,,66.0,48.0,64.0,75.0,,90.0,0.0,srinivas@mailinator.com,9221532958
-814,Dev Mukherjee,10th,C,,,3.5,6.0,,Minor,,97.2,44.0,50.0,98.0,,69.0,0.0,basavaraj@mailinator.com,6080987637
-815,Siddharth Joshi,10th,C,,,1.4,5.0,,Minor,,78.0,83.0,77.0,93.0,,81.0,0.0,dinesh@mailinator.com,8937233218
-816,Varun Murthy,10th,C,,,4.9,5.0,,Minor,,90.0,50.0,62.0,84.0,,84.0,0.0,raghavendra@mailinator.com,8916771584
-817,Ayush Pai,10th,C,,,3.7,7.0,,Minor,,91.0,90.0,70.0,59.0,,93.0,0.0,umesh@mailinator.com,7481677643
-818,Ishan Roy,10th,C,,,4.7,9.0,,,,88.0,71.0,83.0,97.0,,90.0,0.0,shivappa@mailinator.com,9443257904
-819,Dhruv Nair,10th,C,,,3.6,7.0,,Minor,,95.0,61.0,88.0,79.0,,56.0,0.0,suresh@mailinator.com,6467582373
-820,Kabir Iyer,10th,C,,,3.0,7.0,,,,100.3,50.0,58.0,89.0,,90.0,0.0,krishna@mailinator.com,7567365967
-821,Rithvik Hegde,10th,C,,,5.9,8.0,,Frequent,,81.7,40.0,46.0,59.0,,70.0,0.0,raghavendra@mailinator.com,6779191027
-822,Ansh Das,10th,C,,,1.1,7.0,,Minor,,93.0,91.0,60.0,86.0,,46.0,0.0,raghav@mailinator.com,6781155289
-823,Shaurya Sharma,10th,C,,,5.7,8.0,,Frequent,,78.0,79.0,59.0,91.0,,54.0,0.0,shivappa@mailinator.com,8998814683
-824,Tejas Gupta,10th,C,,,5.7,7.0,,Minor,,89.3,84.0,65.0,74.0,,67.0,0.0,mohan@mailinator.com,9722378251
-825,Harsh Deshmukh,10th,C,,,3.0,6.0,,Frequent,,100.0,42.0,46.0,61.0,,79.0,0.0,girish@mailinator.com,7067177679
-826,Vivek Acharya,10th,C,,,2.1,8.0,,Frequent,,94.0,83.0,92.0,96.0,,76.0,0.0,shankar@mailinator.com,8136556894
-827,Sanjay Chatterjee,10th,C,,,4.1,8.0,,Frequent,,72.0,82.0,44.0,52.0,,47.0,0.0,basavaraj@mailinator.com,7979693396
-828,Kiran Rao,10th,C,,,1.9,5.0,,Minor,,66.0,88.0,69.0,62.0,,63.0,0.0,kumar@mailinator.com,6283105332
-829,Alok Bhat,10th,C,,,5.0,9.0,,Frequent,,79.0,44.0,70.0,59.0,,77.0,0.0,manjunath@mailinator.com,8217699232
-830,Madhav Prasad,10th,C,,,2.3,9.0,,,,100.5,90.0,79.0,62.0,,46.0,0.0,krishna@mailinator.com,9169942829
-831,Gautam Banerjee,10th,C,,,2.5,5.0,,,,88.0,76.0,44.0,84.0,,82.0,0.0,pradeep@mailinator.com,8564709069
-832,Raghav Singh,10th,C,,,5.6,9.0,,,,89.2,91.0,59.0,90.0,,66.0,0.0,pradeep@mailinator.com,7059524318
-833,Sameer Shastry,10th,C,,,5.5,7.0,,Minor,,91.0,78.0,54.0,90.0,,70.0,0.0,krishna@mailinator.com,9391701186
-834,Anand Shetty,10th,C,,,3.7,6.0,,Frequent,,79.0,66.0,94.0,58.0,,90.0,0.0,mahesh@mailinator.com,6248566939
-835,Vijay Sen,10th,C,,,5.3,8.0,,,,74.0,71.0,47.0,94.0,,41.0,0.0,raju@mailinator.com,8433725363
-836,Raj Patel,10th,C,,,2.8,5.0,,Frequent,,79.0,45.0,47.0,50.0,,82.0,0.0,raghavendra@mailinator.com,9469058578
-837,Sunil Verma,10th,C,,,6.0,8.0,,,,100.0,76.0,88.0,63.0,,83.0,0.0,devraj@mailinator.com,6373389705
-838,Sandeep Gowda,10th,C,,,3.2,8.0,,Frequent,,86.0,77.0,60.0,100.0,,78.0,0.0,shankar@mailinator.com,7929516411
-839,Manoj Choudhury,10th,C,,,2.5,6.0,,Frequent,,67.0,76.0,58.0,75.0,,46.0,0.0,shankar@mailinator.com,6476585677
-840,Abhishek Kumar,10th,C,,,1.2,8.0,,,,79.0,83.0,42.0,83.0,,42.0,0.0,prakash@mailinator.com,6434969160
-841,Deepak Reddy,10th,C,,,5.9,7.0,,,,89.0,41.0,92.0,96.0,,93.0,0.0,manjunath@mailinator.com,8965143273
-842,Vikram Patil,10th,C,,,3.3,8.0,,,,85.0,43.0,57.0,68.0,,75.0,0.0,ramesh@mailinator.com,6584230418
-843,Ravi Achar,10th,C,,,4.7,7.0,,Frequent,,88.0,65.0,91.0,63.0,,83.0,0.0,manjunath@mailinator.com,6660007399
-844,Anil Mukherjee,10th,C,,,4.2,7.0,,Minor,,74.0,67.0,51.0,83.0,,49.0,0.0,raghav@mailinator.com,6884580311
-845,Suresh Joshi,10th,C,,,4.6,7.0,,,,95.0,89.0,91.0,68.0,,65.0,0.0,prakash@mailinator.com,7303659536
-846,Ramesh Murthy,10th,C,,,1.3,5.0,,Frequent,,97.0,42.0,68.0,86.0,,63.0,0.0,venkatesh@mailinator.com,7528753440
-847,Mahesh Pai,10th,C,,,5.6,6.0,,Frequent,,90.0,76.0,88.0,60.0,,49.0,0.0,raghav@mailinator.com,9157619200
-848,Rajesh Roy,10th,C,,,5.6,7.0,,Frequent,,65.0,79.0,73.0,79.0,,47.0,0.0,anand@mailinator.com,8200491610
-849,Dinesh Nair,10th,C,,,3.8,7.0,,,,88.0,86.0,93.0,78.0,,69.0,0.0,basavaraj@mailinator.com,9707264110
-850,Arjun Iyer,10th,C,,,5.8,6.0,,Frequent,,88.0,66.0,71.0,86.0,,85.0,0.0,ramesh@mailinator.com,6939258443
-851,Aditya Hegde,10th,C,,,2.4,5.0,,Frequent,,72.0,53.0,86.0,64.0,,60.0,0.0,ramesh@mailinator.com,7579682527
-852,Aarav Das,10th,C,,,4.0,8.0,,Minor,,93.0,84.0,91.0,55.0,,41.0,0.0,suresh@mailinator.com,6447179855
-853,Vihaan Sharma,10th,C,,,3.0,5.0,,Minor,,65.0,54.0,44.0,85.0,,45.0,0.0,manohar@mailinator.com,7032759712
-854,Rahul Gupta,10th,C,,,4.1,8.0,,,,79.0,88.0,43.0,81.0,,65.0,0.0,venkatesh@mailinator.com,6343098356
-855,Amit Deshmukh,10th,C,,,2.5,7.0,,,,77.0,59.0,64.0,80.0,,87.0,0.0,raghavendra@mailinator.com,7212955633
-856,Rohan Acharya,10th,C,,,5.1,5.0,,Frequent,,71.5,53.0,42.0,79.0,,55.0,0.0,srinivas@mailinator.com,7034458483
-857,Sai Chatterjee,10th,C,,,1.3,9.0,,,,94.0,86.0,70.0,86.0,,42.0,0.0,raghav@mailinator.com,8916869010
-858,Karthik Rao,10th,C,,,1.2,5.0,,Frequent,,73.8,69.0,94.0,50.0,,90.0,0.0,jagadish@mailinator.com,6762709264
-859,Akash Bhat,10th,C,,,1.2,8.0,,,,99.0,88.0,68.0,85.0,,48.0,0.0,jagadish@mailinator.com,9580256244
-860,Abhinav Prasad,10th,C,,,1.8,9.0,,Minor,,84.8,52.0,67.0,57.0,,57.0,0.0,manjunath@mailinator.com,9120727978
-861,Nikhil Banerjee,10th,C,,,3.0,8.0,,,,97.0,85.0,81.0,54.0,,81.0,0.0,suresh@mailinator.com,8629817622
-862,Pranav Singh,10th,C,,,5.8,7.0,,Minor,,89.0,88.0,90.0,86.0,,44.0,0.0,ramesh@mailinator.com,9125963435
-863,Yash Shastry,10th,C,,,1.6,7.0,,Minor,,94.0,42.0,79.0,89.0,,77.0,0.0,dinesh@mailinator.com,7623198297
-864,Dev Shetty,10th,C,,,4.2,9.0,,,,84.0,86.0,78.0,66.0,,55.0,0.0,manjunath@mailinator.com,9014037354
-865,Siddharth Sen,10th,C,,,3.6,5.0,,Frequent,,91.0,52.0,86.0,88.0,,91.0,0.0,lakshmi@mailinator.com,6462306928
-866,Varun Patel,10th,C,,,2.8,5.0,,Minor,,65.6,84.0,62.0,82.0,,60.0,0.0,pradeep@mailinator.com,8279597061
-867,Ayush Verma,10th,C,,,2.0,6.0,,Frequent,,79.0,44.0,59.0,73.0,,42.0,0.0,ramesh@mailinator.com,7303254759
-868,Ishan Gowda,10th,C,,,2.1,9.0,,Frequent,,85.5,47.0,71.0,79.0,,75.0,0.0,mohan@mailinator.com,7935329147
-869,Dhruv Choudhury,10th,C,,,1.2,7.0,,Minor,,100.0,43.0,56.0,100.0,,61.0,0.0,nagaraj@mailinator.com,7837442381
-870,Kabir Kumar,10th,C,,,4.6,6.0,,Frequent,,67.0,69.0,91.0,59.0,,87.0,0.0,srinivas@mailinator.com,9136371403
-871,Rithvik Reddy,10th,C,,,4.3,6.0,,Minor,,93.0,85.0,44.0,96.0,,88.0,0.0,umesh@mailinator.com,8658356658
-872,Ansh Patil,10th,C,,,3.2,6.0,,Frequent,,83.0,62.0,83.0,67.0,,58.0,0.0,girish@mailinator.com,8430867336
-873,Shaurya Achar,10th,C,,,4.6,7.0,,Frequent,,70.0,94.0,71.0,55.0,,76.0,0.0,pradeep@mailinator.com,6961285920
-874,Tejas Mukherjee,10th,C,,,1.5,6.0,,,,71.0,94.0,85.0,70.0,,73.0,0.0,krishna@mailinator.com,7300513785
-875,Harsh Joshi,10th,C,,,5.7,5.0,,Minor,,69.0,75.0,70.0,78.0,,84.0,0.0,srinivas@mailinator.com,9180256795
-876,Vivek Murthy,10th,C,,,5.2,5.0,,,,94.0,47.0,56.0,55.0,,76.0,0.0,srinivas@mailinator.com,9278367006
-877,Sanjay Pai,10th,C,,,4.3,8.0,,Frequent,,69.0,82.0,93.0,70.0,,90.0,0.0,raju@mailinator.com,6425957728
-878,Kiran Roy,10th,C,,,2.9,8.0,,,,99.0,95.0,65.0,83.0,,68.0,0.0,suresh@mailinator.com,7392389414
-879,Alok Nair,10th,C,,,3.1,7.0,,,,78.0,51.0,75.0,78.0,,47.0,0.0,krishna@mailinator.com,9849589905
-880,Madhav Iyer,10th,C,,,3.4,7.0,,,,91.0,72.0,83.0,90.0,,62.0,0.0,mahesh@mailinator.com,7618910941
-881,Gautam Hegde,10th,C,,,5.7,6.0,,,,74.0,41.0,91.0,68.0,,51.0,0.0,mahesh@mailinator.com,6072089980
-882,Raghav Das,10th,C,,,5.3,6.0,,Minor,,71.0,81.0,86.0,59.0,,80.0,0.0,mohan@mailinator.com,9184451478
-883,Sameer Sharma,10th,C,,,3.4,5.0,,Minor,,96.0,63.0,40.0,94.0,,90.0,0.0,nagaraj@mailinator.com,7626190755
-884,Anand Gupta,10th,C,,,3.8,9.0,,Frequent,,69.0,88.0,91.0,82.0,,65.0,0.0,venkatesh@mailinator.com,7185472465
-885,Vijay Deshmukh,10th,C,,,5.4,9.0,,Frequent,,76.0,79.0,40.0,59.0,,92.0,0.0,dinesh@mailinator.com,9719900320
-886,Raj Acharya,10th,C,,,5.7,5.0,,Frequent,,75.0,85.0,73.0,51.0,,80.0,0.0,pradeep@mailinator.com,6676770763
-887,Sunil Chatterjee,10th,C,,,4.2,7.0,,Minor,,94.0,41.0,71.0,68.0,,79.0,0.0,raju@mailinator.com,8658758864
-888,Sandeep Rao,10th,C,,,4.7,7.0,,Minor,,96.0,56.0,63.0,70.0,,88.0,0.0,mohan@mailinator.com,7759546193
-889,Manoj Bhat,10th,C,,,2.8,5.0,,Frequent,,66.5,92.0,93.0,69.0,,63.0,0.0,basavaraj@mailinator.com,6574889608
-890,Abhishek Prasad,10th,C,,,5.6,6.0,,Minor,,68.3,85.0,80.0,73.0,,49.0,0.0,lakshmi@mailinator.com,7391196474
-891,Deepak Banerjee,10th,C,,,5.2,8.0,,,,97.0,71.0,61.0,50.0,,95.0,0.0,pradeep@mailinator.com,8361817847
-892,Vikram Singh,10th,C,,,3.8,6.0,,,,72.0,75.0,49.0,88.0,,63.0,0.0,shivappa@mailinator.com,9899399005
-893,Ravi Shastry,10th,C,,,5.3,7.0,,Minor,,93.2,61.0,64.0,86.0,,41.0,0.0,raghavendra@mailinator.com,7658507338
-894,Anil Shetty,10th,C,,,5.2,9.0,,Minor,,71.0,65.0,51.0,70.0,,79.0,0.0,umesh@mailinator.com,9459378391
-895,Suresh Sen,10th,C,,,5.0,7.0,,Frequent,,65.0,49.0,73.0,59.0,,70.0,0.0,prakash@mailinator.com,6989949787
-896,Ramesh Patel,10th,C,,,1.7,5.0,,Minor,,67.0,47.0,64.0,68.0,,59.0,0.0,raju@mailinator.com,6118570279
-897,Mahesh Verma,10th,C,,,3.7,8.0,,Minor,,83.9,40.0,47.0,93.0,,53.0,0.0,raju@mailinator.com,9205572192
-898,Rajesh Gowda,10th,C,,,5.5,9.0,,Minor,,73.0,54.0,82.0,94.0,,56.0,0.0,pradeep@mailinator.com,7710539579
-899,Dinesh Choudhury,10th,C,,,4.9,9.0,,Frequent,,95.0,73.0,65.0,54.0,,52.0,0.0,shivappa@mailinator.com,9893030742
-900,Arjun Kumar,10th,C,,,3.1,9.0,,Frequent,,78.0,54.0,41.0,69.0,,47.0,0.0,kumar@mailinator.com,6077237218
-901,Aditya Reddy,10th,C,,,2.0,89.0,,,,98.0,87.0,90.0,100.0,,89.0,0.0,nagaraj@mailinator.com,6224011255
+Student_ID,Class,section,Age,Gender,Study_hours,Sleep_hours,Parent_Education_Level,Health_Issues,Internet_Access,Attendence,internal_test 1,internal_test 2,Assignment_score,Extracurricular_Activities,Previous_Exam_Score,Final_Exam_Score,parent_email,parent_phone
+1,9th,C,14,Female,2.2,9,Primary,None,No,76.0,74,43,64,No,79,74,avinash2004avii@gmail.com,917484000000.0
+2,10th,C,16,Male,5.6,7,High School,Minor,Yes,93.0,75,87,62,No,61,84,chaithanya124k@gmail.com,6892648247.0
+3,9th,A,13,Male,1.2,8,PUC,Frequent,Yes,94.0,56,83,67,No,94,76,kumar@mailinator.com,8626430119.0
+4,8th,C,13,Female,5.8,7,PUC,None,Yes,91.8,71,93,84,No,69,87,lakshmi@mailinator.com,8671223540.0
+5,9th,B,16,Female,3.8,6,Degree,None,Yes,80.0,89,92,65,Yes,74,86,raghavendra@mailinator.com,6710311085.0
+6,9th,C,14,Male,2.9,5,High School,Frequent,Yes,99.0,61,62,58,No,70,69,jagadish@mailinator.com,8644459909.0
+7,10th,C,16,Male,6.0,7,Primary,Minor,Yes,93.0,72,70,83,Yes,53,86,krishna@mailinator.com,9138255760.0
+8,10th,B,14,Female,1.3,8,PUC,Frequent,No,74.0,41,57,89,No,72,65,pradeep@mailinator.com,8880603997.0
+9,10th,B,16,Female,3.6,8,PUC,Minor,No,89.0,41,56,70,Yes,95,74,prakash@mailinator.com,6785710669.0
+10,9th,B,13,Male,1.2,6,Postgraduate,Minor,Yes,73.0,42,46,62,Yes,89,64,suresh@mailinator.com,6113100254.0
+11,8th,C,13,Female,3.9,8,Postgraduate,Frequent,No,89.0,60,73,50,Yes,66,71,krishna@mailinator.com,9089941579.0
+12,9th,C,14,Female,1.9,5,Postgraduate,Frequent,No,88.0,45,80,85,Yes,80,79,anand@mailinator.com,9536188857.0
+13,9th,C,13,Female,4.2,7,Degree,Frequent,Yes,65.0,54,70,62,Yes,41,65,nagaraj@mailinator.com,7663700925.0
+14,8th,C,16,Male,5.9,8,PUC,Minor,Yes,88.0,40,55,66,No,43,68,srinivas@mailinator.com,9873908542.0
+15,8th,B,14,Male,5.4,5,Degree,Frequent,No,81.0,82,79,98,Yes,48,90,pradeep@mailinator.com,6854285577.0
+16,10th,C,13,Male,3.3,7,Primary,Minor,Yes,79.0,68,87,84,No,60,81,nagaraj@mailinator.com,6310395771.0
+17,10th,C,15,Female,4.5,8,Postgraduate,None,Yes,90.6,40,88,69,No,72,74,krishna@mailinator.com,8348925461.0
+18,9th,C,14,Male,4.9,6,PUC,None,Yes,71.8,85,92,57,No,50,79,srinivas@mailinator.com,7526102834.0
+19,9th,B,15,Female,3.5,7,PUC,Minor,Yes,76.0,70,70,95,No,63,86,pradeep@mailinator.com,8600369961.0
+20,8th,B,13,Female,3.6,6,Degree,None,No,86.0,95,57,70,No,42,75,umesh@mailinator.com,6203075397.0
+21,8th,C,15,Female,1.8,6,High School,Frequent,Yes,66.0,64,92,69,No,40,69,prakash@mailinator.com,9315145531.0
+22,10th,A,14,Male,2.8,8,PUC,None,No,85.0,66,70,73,No,79,81,shivappa@mailinator.com,7069099517.0
+23,10th,A,15,Female,1.7,9,Degree,Minor,No,99.7,43,42,76,No,94,68,dinesh@mailinator.com,8376127030.0
+24,9th,C,13,Male,4.6,9,Degree,None,No,88.0,84,77,75,No,57,89,krishna@mailinator.com,8614348420.0
+25,9th,C,16,Male,3.4,9,Postgraduate,Frequent,No,86.0,58,90,83,No,45,74,dinesh@mailinator.com,9105428309.0
+26,9th,C,13,Male,3.2,7,Postgraduate,Minor,No,72.0,91,66,65,No,43,75,suresh@mailinator.com,9402532667.0
+27,9th,C,15,Female,5.4,8,Primary,Minor,Yes,79.0,51,42,72,Yes,76,74,dinesh@mailinator.com,9257424777.0
+28,10th,C,13,Female,3.6,7,Postgraduate,None,Yes,83.0,61,41,56,Yes,56,65,venkatesh@mailinator.com,6590421731.0
+29,9th,C,14,Male,3.0,9,Primary,Frequent,No,68.0,71,62,54,Yes,47,65,nagaraj@mailinator.com,7954125625.0
+30,10th,A,15,Female,2.3,8,PUC,Frequent,No,74.0,89,45,71,Yes,77,78,ashok@mailinator.com,7468983942.0
+31,10th,A,15,Male,1.4,5,PUC,None,No,90.2,50,54,94,Yes,70,73,kumar@mailinator.com,9773294811.0
+32,9th,B,13,Male,3.1,7,High School,None,No,88.0,41,78,99,Yes,62,78,shivappa@mailinator.com,6601727962.0
+33,9th,C,16,Female,1.1,6,High School,Frequent,Yes,70.0,66,88,82,Yes,94,79,mahesh@mailinator.com,6164356329.0
+34,8th,B,16,Male,2.5,6,Postgraduate,None,Yes,94.0,52,87,91,Yes,83,81,krishna@mailinator.com,7190858025.0
+35,8th,B,14,Male,3.5,8,Degree,Minor,No,78.0,47,51,61,No,93,71,kumar@mailinator.com,9982183325.0
+36,8th,C,14,Male,5.8,6,PUC,None,Yes,99.0,91,76,92,Yes,73,97,raghav@mailinator.com,8792699041.0
+37,9th,C,16,Female,1.5,6,Degree,Frequent,No,76.0,52,82,90,Yes,62,79,manjunath@mailinator.com,8528241007.0
+38,10th,B,15,Male,4.4,6,High School,Frequent,Yes,92.0,62,54,67,Yes,80,80,shankar@mailinator.com,7959614853.0
+39,8th,A,13,Male,3.5,6,High School,None,Yes,78.6,86,54,67,Yes,80,78,dinesh@mailinator.com,7465703846.0
+40,10th,B,15,Female,4.9,5,Degree,Minor,Yes,90.0,73,60,93,Yes,74,88,mohan@mailinator.com,9594147293.0
+41,8th,B,14,Male,1.7,5,Primary,Frequent,Yes,83.0,58,40,54,No,90,60,shivappa@mailinator.com,8557955678.0
+42,8th,A,14,Female,1.4,5,PUC,Minor,No,66.0,76,43,69,Yes,42,62,krishna@mailinator.com,8122769131.0
+43,10th,C,14,Female,3.0,5,High School,Frequent,Yes,69.0,86,79,55,No,51,75,mahesh@mailinator.com,8871473822.0
+44,8th,A,16,Female,5.0,6,Postgraduate,None,Yes,85.4,62,47,100,Yes,65,75,nagaraj@mailinator.com,8320917857.0
+45,8th,A,16,Male,2.0,7,Postgraduate,Frequent,Yes,95.1,72,68,91,No,86,81,prakash@mailinator.com,9720353237.0
+46,8th,A,14,Female,4.8,9,PUC,Frequent,Yes,84.8,93,88,82,No,80,91,raju@mailinator.com,7527152315.0
+47,10th,B,15,Male,2.5,5,Postgraduate,None,Yes,97.0,83,49,91,Yes,78,85,manohar@mailinator.com,6734795980.0
+48,8th,C,14,Male,2.1,5,High School,Frequent,Yes,89.0,70,86,69,No,77,78,suresh@mailinator.com,6693294915.0
+49,10th,C,14,Male,1.1,9,PUC,Frequent,Yes,76.0,70,47,62,Yes,82,69,chandru@mailinator.com,6473003265.0
+50,8th,B,13,Female,3.0,5,Primary,Frequent,Yes,76.0,70,63,61,No,95,77,shivappa@mailinator.com,6034070172.0
+51,10th,A,13,Male,2.9,8,Degree,None,No,73.6,55,62,77,Yes,56,71,girish@mailinator.com,7483418614.0
+52,9th,A,14,Female,4.3,5,Degree,None,Yes,70.0,72,74,74,Yes,72,76,anand@mailinator.com,9399360477.0
+53,8th,B,13,Female,1.4,8,Postgraduate,None,Yes,87.0,72,46,59,No,67,61,jagadish@mailinator.com,6207735965.0
+54,10th,B,13,Male,1.8,7,High School,None,No,98.2,60,86,69,Yes,81,75,jagadish@mailinator.com,6442986388.0
+55,10th,C,14,Male,1.1,5,High School,Frequent,Yes,76.0,80,72,65,No,59,70,kumar@mailinator.com,7168199041.0
+56,10th,B,16,Female,1.6,8,PUC,Frequent,Yes,94.0,71,63,98,Yes,80,84,shivappa@mailinator.com,8680374230.0
+57,10th,C,16,Male,4.3,8,Primary,Frequent,Yes,98.0,74,44,74,Yes,79,79,shivappa@mailinator.com,9854324364.0
+58,8th,B,15,Female,3.0,9,PUC,None,Yes,79.0,41,58,52,Yes,76,64,srinivas@mailinator.com,7850603574.0
+59,8th,B,14,Female,2.6,6,Postgraduate,None,Yes,78.8,74,72,85,No,58,77,raju@mailinator.com,6635298885.0
+60,10th,B,13,Male,3.8,5,Postgraduate,Frequent,No,97.4,50,51,84,Yes,45,66,raju@mailinator.com,7156586168.0
+61,9th,C,15,Male,6.0,7,Primary,Minor,No,82.0,55,65,85,Yes,52,78,shivappa@mailinator.com,9932933476.0
+62,10th,C,16,Female,5.2,7,Postgraduate,Minor,No,73.0,80,64,77,Yes,73,83,ashok@mailinator.com,7599668359.0
+63,8th,C,16,Male,4.5,7,Postgraduate,Frequent,Yes,100.0,67,69,57,Yes,71,82,nagaraj@mailinator.com,8855581754.0
+64,8th,A,15,Male,5.6,8,Postgraduate,Frequent,Yes,83.0,90,71,71,Yes,56,81,srinivas@mailinator.com,6413697771.0
+65,10th,A,14,Female,1.2,9,Degree,Minor,Yes,97.0,89,84,77,Yes,61,81,srinivas@mailinator.com,6471648106.0
+66,9th,C,14,Female,1.4,6,High School,Minor,No,77.0,48,55,58,Yes,44,52,nagaraj@mailinator.com,7529895796.0
+67,10th,C,14,Female,3.4,5,PUC,Frequent,Yes,80.8,57,82,91,Yes,48,82,prakash@mailinator.com,8508974246.0
+68,9th,A,16,Female,2.7,6,Primary,None,No,84.0,88,69,77,No,74,85,prakash@mailinator.com,7561129140.0
+69,8th,A,13,Female,5.7,7,Degree,None,No,88.0,51,83,90,No,52,77,shivappa@mailinator.com,7445044507.0
+70,10th,A,13,Female,3.4,9,High School,Frequent,Yes,86.0,81,47,87,Yes,78,78,ramesh@mailinator.com,8504685200.0
+71,10th,B,14,Female,3.7,5,Degree,Frequent,Yes,96.0,79,55,68,Yes,76,75,dinesh@mailinator.com,7766507510.0
+72,10th,A,16,Female,5.5,7,Degree,Frequent,Yes,84.0,47,43,78,Yes,73,72,manohar@mailinator.com,6200676687.0
+73,8th,A,13,Male,3.2,7,Degree,None,No,96.0,86,45,70,No,68,76,venkatesh@mailinator.com,6635646289.0
+74,9th,A,15,Female,5.4,9,PUC,Frequent,Yes,69.0,64,45,76,Yes,55,67,lakshmi@mailinator.com,7107620812.0
+75,8th,C,13,Female,2.3,9,High School,None,Yes,80.0,65,81,87,No,92,81,raghavendra@mailinator.com,8081840269.0
+76,10th,B,13,Male,2.4,8,PUC,Minor,Yes,68.4,93,61,76,No,80,78,shankar@mailinator.com,7528718097.0
+77,10th,C,14,Female,2.6,8,High School,Frequent,Yes,97.0,85,57,100,Yes,92,86,ashok@mailinator.com,8059714951.0
+78,8th,B,16,Female,3.7,8,High School,Frequent,Yes,73.0,73,78,78,No,70,85,srinivas@mailinator.com,7622400680.0
+79,10th,A,14,Female,2.1,5,Postgraduate,None,No,98.3,40,89,68,Yes,45,64,girish@mailinator.com,9697608814.0
+80,10th,B,15,Male,4.4,5,Primary,Minor,Yes,93.7,83,91,70,Yes,91,92,jagadish@mailinator.com,7489948303.0
+81,8th,A,16,Male,1.7,8,Postgraduate,Minor,Yes,77.0,55,68,70,Yes,48,67,prakash@mailinator.com,8792445501.0
+82,10th,C,13,Male,1.5,8,Postgraduate,None,No,89.0,87,41,68,Yes,42,61,shivappa@mailinator.com,9584442643.0
+83,10th,A,13,Male,5.4,8,High School,None,No,100.0,65,92,94,Yes,82,94,ashok@mailinator.com,6430548634.0
+84,10th,A,14,Male,2.2,6,Degree,None,Yes,92.0,73,55,93,Yes,41,69,shankar@mailinator.com,6876000534.0
+85,9th,B,16,Male,2.9,9,Degree,Minor,Yes,100.4,43,89,92,No,67,83,basavaraj@mailinator.com,9529757445.0
+86,8th,A,15,Male,3.9,5,Postgraduate,Minor,Yes,95.0,92,63,76,No,47,85,chandru@mailinator.com,8171152947.0
+87,10th,A,16,Female,3.6,7,PUC,Frequent,Yes,75.0,69,80,60,No,65,72,raju@mailinator.com,8072654486.0
+88,9th,A,16,Male,1.4,9,Degree,Frequent,Yes,97.0,93,75,68,Yes,65,76,shivappa@mailinator.com,8732365776.0
+89,9th,C,15,Female,5.4,7,PUC,Minor,Yes,88.0,54,50,100,No,76,77,raju@mailinator.com,6868363896.0
+90,9th,A,14,Male,5.8,6,Primary,Minor,Yes,68.0,43,80,71,No,58,72,umesh@mailinator.com,6742079910.0
+91,10th,A,13,Male,5.1,9,Primary,Frequent,No,95.6,73,83,51,Yes,66,79,devraj@mailinator.com,6749053149.0
+92,8th,B,15,Female,2.4,9,Degree,Frequent,No,67.0,56,75,88,No,57,68,suresh@mailinator.com,9998743641.0
+93,8th,B,14,Female,3.6,8,High School,None,No,95.0,93,81,58,Yes,67,80,raju@mailinator.com,6885774149.0
+94,8th,A,16,Male,2.7,5,Primary,Frequent,Yes,65.0,67,89,66,Yes,88,83,nagaraj@mailinator.com,9612224356.0
+95,9th,B,16,Male,3.8,6,PUC,None,Yes,90.7,74,68,91,No,89,84,raju@mailinator.com,6575042713.0
+96,10th,C,15,Male,5.9,8,PUC,Minor,Yes,81.0,86,62,95,Yes,48,88,lakshmi@mailinator.com,7659870274.0
+97,10th,C,16,Male,2.6,5,Primary,Minor,Yes,99.8,93,70,64,No,57,82,mahesh@mailinator.com,9956270923.0
+98,10th,B,14,Male,4.3,7,High School,None,Yes,76.0,95,79,53,Yes,67,88,basavaraj@mailinator.com,6782941635.0
+99,9th,C,13,Male,2.6,7,PUC,Minor,Yes,68.0,45,55,99,Yes,54,69,shankar@mailinator.com,8853602291.0
+100,8th,C,16,Male,4.9,8,High School,Frequent,Yes,96.0,59,85,53,Yes,41,74,jagadish@mailinator.com,8363066612.0
+101,10th,B,14,Male,2.6,7,High School,Frequent,Yes,65.3,48,64,54,No,73,68,pradeep@mailinator.com,7829280353.0
+102,8th,C,14,Male,5.4,8,Degree,Minor,Yes,88.0,66,79,56,Yes,78,84,manjunath@mailinator.com,6068886113.0
+103,8th,B,16,Male,4.8,7,Postgraduate,Frequent,Yes,84.0,65,73,71,No,57,80,pradeep@mailinator.com,7821146318.0
+104,9th,C,15,Female,4.8,6,High School,Frequent,No,78.0,93,56,67,Yes,56,81,shivappa@mailinator.com,6400965371.0
+105,8th,C,13,Male,3.3,5,Primary,Frequent,Yes,90.0,49,62,65,No,69,68,mahesh@mailinator.com,9217703190.0
+106,8th,A,13,Male,2.1,7,PUC,None,Yes,74.3,55,90,65,No,48,69,suresh@mailinator.com,6973561155.0
+107,9th,C,15,Male,1.2,9,Postgraduate,None,Yes,92.0,68,40,60,Yes,66,66,mohan@mailinator.com,7649520756.0
+108,10th,B,15,Female,2.6,7,High School,None,Yes,91.0,75,75,51,Yes,95,85,shivappa@mailinator.com,8900625814.0
+109,10th,A,16,Female,1.2,7,High School,Minor,Yes,82.0,42,62,77,Yes,86,72,ashok@mailinator.com,7469716679.0
+110,8th,A,16,Male,4.5,8,Primary,Minor,No,76.0,48,52,72,No,80,70,krishna@mailinator.com,6475839017.0
+111,9th,A,16,Female,4.4,9,Primary,Frequent,Yes,81.0,83,77,71,Yes,55,83,chandru@mailinator.com,7655856668.0
+112,8th,C,16,Male,3.2,9,PUC,Minor,No,84.0,64,46,84,Yes,41,63,prakash@mailinator.com,7189085594.0
+113,9th,A,14,Female,4.8,8,High School,Minor,No,85.0,71,50,65,No,91,83,anand@mailinator.com,9939758772.0
+114,10th,C,16,Female,3.7,7,High School,Minor,Yes,89.0,55,55,79,Yes,71,77,manohar@mailinator.com,7119092595.0
+115,9th,C,16,Male,1.2,6,High School,Frequent,Yes,83.0,45,68,61,Yes,40,59,umesh@mailinator.com,7402955235.0
+116,9th,A,13,Female,1.7,9,Postgraduate,Minor,Yes,66.8,60,86,73,Yes,58,71,devraj@mailinator.com,8658931749.0
+117,8th,A,15,Female,2.0,9,PUC,Frequent,Yes,74.0,93,93,64,Yes,93,86,anand@mailinator.com,7793642834.0
+118,9th,B,15,Female,2.7,6,Primary,Frequent,No,79.0,94,63,51,No,46,73,manohar@mailinator.com,7001689509.0
+119,9th,B,15,Female,1.3,6,High School,Minor,Yes,95.0,76,83,50,No,63,71,dinesh@mailinator.com,6441128888.0
+120,8th,B,13,Female,4.0,5,High School,Frequent,Yes,72.0,60,83,89,No,67,84,pradeep@mailinator.com,6349155943.0
+121,9th,C,13,Female,3.6,7,Degree,Minor,Yes,83.0,56,87,52,No,42,69,shankar@mailinator.com,8267961342.0
+122,9th,B,16,Female,4.1,7,PUC,None,Yes,68.0,48,88,86,No,83,80,venkatesh@mailinator.com,7536931403.0
+123,10th,B,16,Female,3.2,8,Degree,Frequent,No,86.0,47,82,64,No,63,70,raju@mailinator.com,8113145099.0
+124,10th,C,14,Male,5.2,7,Degree,None,Yes,74.2,64,40,81,No,62,77,anand@mailinator.com,6078036972.0
+125,9th,B,14,Female,3.3,6,Postgraduate,Frequent,Yes,87.8,54,40,92,No,93,74,raju@mailinator.com,7188202224.0
+126,8th,A,14,Male,1.1,8,PUC,Frequent,No,77.0,48,50,52,No,72,62,dinesh@mailinator.com,8685404141.0
+127,9th,C,16,Male,5.4,8,Primary,None,Yes,80.0,49,72,85,No,61,77,mohan@mailinator.com,6131844780.0
+128,8th,C,13,Female,4.3,7,Postgraduate,None,Yes,91.0,69,40,100,No,82,79,chandru@mailinator.com,7757761156.0
+129,8th,A,13,Female,5.1,9,Primary,Frequent,Yes,94.0,56,75,71,No,75,79,prakash@mailinator.com,8038337303.0
+130,9th,B,14,Female,5.8,6,High School,Minor,Yes,72.0,66,40,100,No,87,87,raghav@mailinator.com,7612992391.0
+131,8th,A,14,Male,1.3,6,Postgraduate,Frequent,Yes,75.0,52,90,93,Yes,69,78,chandru@mailinator.com,6830170168.0
+132,10th,C,15,Male,2.2,6,Postgraduate,Minor,Yes,73.0,42,71,67,Yes,61,64,manohar@mailinator.com,7348877621.0
+133,9th,B,13,Female,1.3,9,PUC,Minor,Yes,66.6,85,94,77,No,82,83,shankar@mailinator.com,6235905232.0
+134,10th,B,14,Male,3.1,8,Primary,Minor,Yes,85.0,69,50,56,No,67,67,umesh@mailinator.com,7301544267.0
+135,9th,C,15,Male,5.3,6,Degree,Frequent,Yes,98.0,42,80,57,No,44,67,mohan@mailinator.com,8658836676.0
+136,9th,A,15,Male,1.4,7,PUC,None,No,82.6,64,51,62,Yes,47,62,shivappa@mailinator.com,6603361056.0
+137,10th,A,13,Male,3.4,6,High School,Frequent,Yes,97.0,77,47,58,No,43,69,raghav@mailinator.com,6511040344.0
+138,8th,A,16,Male,1.6,7,Postgraduate,Minor,Yes,66.5,61,79,66,Yes,69,68,pradeep@mailinator.com,6739312132.0
+139,10th,C,14,Male,4.9,9,Postgraduate,Frequent,No,87.0,86,51,68,No,92,86,shankar@mailinator.com,7875036584.0
+140,8th,B,16,Male,5.2,8,Primary,None,Yes,82.0,66,45,98,Yes,65,75,shivappa@mailinator.com,9174187254.0
+141,9th,C,16,Male,1.2,6,PUC,Minor,Yes,99.8,88,59,80,Yes,40,69,suresh@mailinator.com,9908430645.0
+142,9th,A,14,Female,3.4,6,Primary,Frequent,Yes,86.0,70,70,55,No,68,78,girish@mailinator.com,8186279907.0
+143,10th,B,13,Male,2.2,7,PUC,Minor,Yes,65.5,43,70,51,No,76,62,pradeep@mailinator.com,8251112338.0
+144,10th,A,16,Male,5.8,9,Postgraduate,Frequent,Yes,89.0,59,84,88,No,75,87,raghavendra@mailinator.com,6669495689.0
+145,8th,C,13,Male,5.7,8,PUC,Minor,Yes,83.0,83,65,89,No,53,83,nagaraj@mailinator.com,8865693737.0
+146,10th,A,16,Female,4.1,5,PUC,Minor,Yes,82.0,41,45,85,Yes,76,67,ashok@mailinator.com,7340857272.0
+147,9th,A,13,Female,5.9,6,High School,Minor,Yes,81.0,63,71,99,No,63,85,raghavendra@mailinator.com,8327663364.0
+148,8th,A,15,Female,2.7,5,High School,Frequent,Yes,96.8,56,50,90,No,94,74,suresh@mailinator.com,6206210762.0
+149,9th,B,13,Male,5.5,5,High School,Minor,No,84.0,57,69,98,Yes,88,84,chandru@mailinator.com,7160448384.0
+150,9th,C,16,Female,3.2,8,Primary,Minor,No,80.0,90,66,77,No,60,79,srinivas@mailinator.com,7395529405.0
+151,9th,C,16,Male,2.2,7,PUC,Frequent,Yes,96.0,71,95,83,No,76,86,nagaraj@mailinator.com,8894253702.0
+152,10th,A,14,Female,5.7,5,Degree,Minor,Yes,95.3,55,44,92,No,58,71,shivappa@mailinator.com,7852732149.0
+153,10th,B,13,Female,4.4,6,High School,None,Yes,66.0,64,94,89,Yes,80,85,basavaraj@mailinator.com,8694167552.0
+154,9th,A,14,Male,1.3,7,Postgraduate,None,Yes,85.0,46,54,71,No,59,60,lakshmi@mailinator.com,6543946559.0
+155,10th,B,13,Female,5.4,8,Postgraduate,Frequent,Yes,68.0,94,86,85,Yes,68,95,raghav@mailinator.com,7692668783.0
+156,8th,B,13,Male,4.5,5,High School,Minor,Yes,93.0,43,60,65,Yes,68,70,raghav@mailinator.com,8940533003.0
+157,8th,A,15,Female,4.0,7,High School,Frequent,Yes,80.1,44,60,90,Yes,91,73,raju@mailinator.com,6726673172.0
+158,9th,C,13,Female,4.7,6,Postgraduate,Minor,No,74.0,88,79,86,Yes,91,89,umesh@mailinator.com,7226267844.0
+159,8th,B,14,Male,2.3,7,PUC,Frequent,Yes,65.0,93,67,58,No,56,78,mahesh@mailinator.com,6958770242.0
+160,10th,C,15,Male,4.0,8,Degree,Minor,Yes,75.0,74,40,87,Yes,47,72,prakash@mailinator.com,8181367662.0
+161,8th,C,16,Female,5.1,7,Postgraduate,Frequent,Yes,84.0,50,40,80,No,42,67,anand@mailinator.com,9412263431.0
+162,8th,C,13,Male,1.3,6,Degree,Frequent,No,94.0,85,42,71,Yes,68,70,dinesh@mailinator.com,8950621781.0
+163,10th,B,14,Female,1.7,9,Degree,None,Yes,77.0,63,95,91,No,60,85,mahesh@mailinator.com,8193131732.0
+164,10th,C,16,Female,5.2,9,Postgraduate,None,Yes,66.7,49,45,94,No,83,74,srinivas@mailinator.com,9459214637.0
+165,8th,A,14,Female,4.1,8,Postgraduate,None,Yes,90.0,49,58,86,No,66,77,mohan@mailinator.com,6161389219.0
+166,9th,A,13,Female,3.7,5,PUC,Frequent,No,71.0,95,48,62,Yes,50,72,ashok@mailinator.com,8215239121.0
+167,10th,A,15,Male,2.2,6,Degree,Frequent,Yes,100.0,58,40,80,Yes,89,75,prakash@mailinator.com,6796617646.0
+168,8th,C,13,Male,2.5,5,Primary,Frequent,Yes,68.0,48,82,91,Yes,69,75,kumar@mailinator.com,9455404023.0
+169,10th,B,13,Female,5.4,6,Postgraduate,Frequent,Yes,68.0,47,49,68,No,90,74,umesh@mailinator.com,8406847804.0
+170,10th,C,13,Female,3.1,6,Primary,None,Yes,71.0,81,64,61,Yes,94,77,anand@mailinator.com,7112580924.0
+171,8th,B,13,Female,1.3,5,Degree,None,Yes,71.0,63,90,72,Yes,72,75,raghav@mailinator.com,7827770944.0
+172,9th,A,14,Female,5.5,7,Postgraduate,None,Yes,88.6,86,42,98,Yes,43,84,mohan@mailinator.com,6461347038.0
+173,8th,A,15,Male,2.0,5,Degree,None,Yes,100.0,50,93,77,No,81,85,chandru@mailinator.com,6262191965.0
+174,9th,C,13,Male,5.1,6,Primary,Minor,Yes,94.0,45,87,58,No,80,82,manjunath@mailinator.com,8934728412.0
+175,10th,C,14,Male,5.4,5,Degree,Frequent,Yes,77.0,73,70,95,No,77,91,raghavendra@mailinator.com,7669614448.0
+176,9th,A,13,Female,3.4,7,Primary,Frequent,No,76.0,73,45,53,No,77,65,dinesh@mailinator.com,6061858202.0
+177,8th,A,15,Male,4.0,5,Degree,None,No,72.0,95,80,85,Yes,64,92,raghav@mailinator.com,9900254649.0
+178,8th,B,16,Male,3.6,7,Primary,None,Yes,96.7,41,67,98,Yes,86,78,pradeep@mailinator.com,7600960199.0
+179,8th,A,14,Male,4.1,7,Postgraduate,Frequent,No,98.0,91,73,65,Yes,84,89,ashok@mailinator.com,8348921441.0
+180,8th,C,15,Female,5.3,5,PUC,None,No,79.0,48,55,96,No,76,76,anand@mailinator.com,6827055781.0
+181,8th,B,13,Male,2.4,7,Postgraduate,Frequent,No,89.0,89,78,94,No,77,92,krishna@mailinator.com,6103876354.0
+182,10th,C,13,Female,5.4,5,PUC,Frequent,Yes,91.4,89,45,93,No,68,82,girish@mailinator.com,7775168172.0
+183,10th,B,16,Female,3.8,6,Postgraduate,Minor,Yes,68.3,55,53,94,No,76,73,manjunath@mailinator.com,7994751657.0
+184,10th,A,15,Male,1.6,5,Primary,None,No,75.0,78,42,57,Yes,44,61,mahesh@mailinator.com,7959745903.0
+185,9th,B,15,Female,2.1,7,Primary,None,Yes,77.0,82,70,77,Yes,42,70,umesh@mailinator.com,6672420437.0
+186,10th,A,15,Female,4.0,5,PUC,Minor,Yes,84.0,54,55,88,Yes,48,75,devraj@mailinator.com,9554438710.0
+187,8th,B,13,Female,2.2,5,PUC,Minor,Yes,85.0,87,84,84,Yes,95,88,dinesh@mailinator.com,9244687911.0
+188,8th,A,14,Female,1.7,5,PUC,Minor,Yes,74.0,68,72,87,No,83,79,basavaraj@mailinator.com,8798781463.0
+189,9th,C,15,Female,1.8,9,PUC,Frequent,Yes,71.0,52,93,94,Yes,92,81,umesh@mailinator.com,7742218626.0
+190,9th,A,15,Male,5.2,5,Primary,Frequent,Yes,100.0,75,51,79,Yes,93,82,shivappa@mailinator.com,6262437747.0
+191,9th,B,15,Female,4.0,9,High School,Frequent,Yes,93.0,74,84,58,Yes,70,78,kumar@mailinator.com,7101548103.0
+192,9th,C,15,Female,5.8,8,PUC,Frequent,No,99.8,75,44,82,Yes,57,79,girish@mailinator.com,6369339912.0
+193,8th,C,16,Female,2.7,8,High School,Minor,Yes,77.0,56,81,55,No,69,72,shivappa@mailinator.com,9330852816.0
+194,9th,B,16,Female,4.0,5,Degree,None,Yes,84.1,83,55,58,No,68,80,pradeep@mailinator.com,6953932917.0
+195,10th,C,13,Male,4.0,5,Degree,Frequent,No,93.4,74,50,50,Yes,44,68,basavaraj@mailinator.com,6941810144.0
+196,8th,C,15,Female,4.1,8,Primary,None,Yes,71.0,51,53,75,No,50,69,jagadish@mailinator.com,7915817703.0
+197,10th,B,16,Male,1.3,9,Postgraduate,None,No,89.0,55,47,77,No,89,73,raghavendra@mailinator.com,8788459990.0
+198,8th,B,14,Male,4.8,6,Degree,Minor,No,69.0,78,93,65,Yes,94,94,shivappa@mailinator.com,6039715552.0
+199,8th,C,14,Male,5.7,5,Postgraduate,Minor,Yes,91.0,57,53,66,No,85,77,pradeep@mailinator.com,7189626282.0
+200,8th,B,15,Male,3.7,8,Degree,None,Yes,89.0,64,62,54,No,43,67,jagadish@mailinator.com,8062195354.0
+201,9th,C,13,Female,2.0,8,Primary,Frequent,Yes,86.2,50,87,53,Yes,90,72,mohan@mailinator.com,8795437058.0
+202,10th,C,15,Male,4.8,8,PUC,None,Yes,74.9,83,90,77,Yes,60,91,suresh@mailinator.com,7565049880.0
+203,9th,B,13,Male,1.0,8,High School,None,Yes,93.0,87,75,67,Yes,64,74,raghavendra@mailinator.com,6967515769.0
+204,8th,A,15,Male,2.6,6,Postgraduate,Minor,Yes,88.9,85,64,52,Yes,62,77,raghav@mailinator.com,6479356111.0
+205,9th,B,14,Male,5.6,5,Primary,Minor,Yes,98.0,51,87,59,No,90,83,pradeep@mailinator.com,8970978674.0
+206,9th,B,14,Male,3.9,9,Primary,Minor,No,79.0,53,58,59,Yes,40,60,prakash@mailinator.com,8286445904.0
+207,9th,A,14,Male,5.3,8,PUC,Frequent,Yes,74.9,75,58,67,No,46,70,manohar@mailinator.com,6427498034.0
+208,9th,B,15,Female,4.0,9,PUC,Minor,Yes,84.7,70,54,60,Yes,42,70,manjunath@mailinator.com,8649557880.0
+209,9th,A,14,Male,5.1,5,Postgraduate,Frequent,Yes,65.0,45,78,95,No,58,73,ramesh@mailinator.com,9740276700.0
+210,8th,A,14,Female,5.4,5,Degree,Minor,Yes,73.0,88,94,83,No,77,95,chandru@mailinator.com,8636440607.0
+211,8th,C,13,Male,2.6,5,PUC,Minor,Yes,65.0,44,91,70,Yes,65,69,pradeep@mailinator.com,8364022688.0
+212,8th,B,15,Female,1.6,7,Primary,Frequent,No,93.0,44,54,60,No,55,62,venkatesh@mailinator.com,7476505433.0
+213,10th,A,13,Female,4.6,6,Postgraduate,Minor,Yes,95.5,93,58,90,No,71,84,manohar@mailinator.com,7196990807.0
+214,10th,B,16,Male,3.2,8,Degree,Frequent,Yes,100.7,88,59,50,No,58,72,prakash@mailinator.com,6503133265.0
+215,9th,C,14,Male,1.6,7,Degree,Frequent,Yes,94.0,50,85,94,Yes,94,85,chandru@mailinator.com,7573116558.0
+216,8th,B,13,Female,3.9,5,Degree,None,No,83.0,86,74,77,No,64,81,shivappa@mailinator.com,6567503488.0
+217,9th,B,14,Male,1.2,5,Postgraduate,None,No,80.0,40,52,73,No,68,61,krishna@mailinator.com,8123216393.0
+218,9th,A,14,Female,2.0,8,High School,Frequent,Yes,89.4,62,42,54,Yes,43,59,raju@mailinator.com,8327817428.0
+219,8th,B,16,Female,4.9,6,PUC,None,Yes,86.0,88,78,61,No,77,88,ashok@mailinator.com,6601115733.0
+220,8th,C,13,Female,1.1,8,Primary,None,Yes,89.7,89,47,82,No,95,77,shivappa@mailinator.com,9211046801.0
+221,10th,A,14,Female,2.5,7,High School,Frequent,Yes,73.0,87,93,97,No,58,90,shivappa@mailinator.com,9819956175.0
+222,8th,B,16,Female,1.1,6,Degree,None,Yes,97.0,85,51,70,No,79,79,krishna@mailinator.com,8604875207.0
+223,8th,C,14,Male,6.0,7,Primary,None,Yes,83.0,77,80,98,No,55,92,shivappa@mailinator.com,9811405627.0
+224,10th,B,14,Male,3.9,5,High School,Minor,No,97.0,94,54,54,Yes,70,83,jagadish@mailinator.com,9534920070.0
+225,9th,B,15,Male,2.5,9,Degree,None,Yes,83.0,69,64,71,No,41,66,krishna@mailinator.com,9090291635.0
+226,8th,A,14,Male,5.6,5,Primary,None,No,87.0,55,55,60,No,76,78,umesh@mailinator.com,8407210580.0
+227,8th,C,13,Male,3.5,8,PUC,None,Yes,88.0,56,43,76,Yes,89,74,kumar@mailinator.com,6057969190.0
+228,10th,C,13,Female,3.3,7,Postgraduate,Minor,No,78.0,41,48,83,Yes,68,70,krishna@mailinator.com,8496213732.0
+229,10th,C,16,Female,3.9,9,High School,Minor,No,88.0,79,70,58,No,48,78,raju@mailinator.com,8106325502.0
+230,8th,B,15,Male,2.3,5,Postgraduate,Frequent,Yes,74.0,73,70,57,No,63,71,mahesh@mailinator.com,6317875210.0
+231,8th,B,14,Male,2.5,6,Postgraduate,Frequent,No,92.7,95,75,66,No,51,78,srinivas@mailinator.com,9780349281.0
+232,8th,A,13,Male,2.9,8,High School,Frequent,Yes,67.0,76,73,99,Yes,78,85,devraj@mailinator.com,9095707935.0
+233,9th,C,16,Female,2.2,5,High School,Frequent,Yes,73.0,60,61,89,Yes,87,77,srinivas@mailinator.com,8642270581.0
+234,8th,B,16,Female,3.9,9,Degree,Frequent,Yes,70.0,76,53,87,Yes,40,74,mohan@mailinator.com,8686967633.0
+235,8th,C,13,Male,4.5,7,PUC,Frequent,Yes,81.0,60,45,60,No,52,70,anand@mailinator.com,8157271718.0
+236,9th,B,16,Female,1.4,8,Postgraduate,None,Yes,75.0,42,57,60,No,78,64,kumar@mailinator.com,8791992468.0
+237,9th,B,14,Female,5.9,7,Postgraduate,Frequent,Yes,71.6,85,53,53,No,63,74,mohan@mailinator.com,6844919983.0
+238,8th,C,15,Female,4.8,8,Degree,Frequent,No,66.0,92,76,72,No,42,79,jagadish@mailinator.com,7887472530.0
+239,10th,B,16,Male,5.0,8,PUC,Minor,Yes,100.6,85,93,79,No,60,95,prakash@mailinator.com,7668298003.0
+240,10th,B,14,Male,4.8,9,Postgraduate,Frequent,Yes,73.0,41,44,91,No,80,68,venkatesh@mailinator.com,7470736340.0
+241,8th,C,14,Male,1.4,7,Degree,Frequent,No,66.0,53,65,56,No,92,66,prakash@mailinator.com,7159446861.0
+242,9th,C,13,Male,3.4,5,High School,Minor,Yes,68.0,78,91,80,No,86,92,shankar@mailinator.com,8399954056.0
+243,9th,B,14,Female,3.2,8,Degree,Frequent,Yes,92.0,88,66,69,No,82,81,devraj@mailinator.com,7539350083.0
+244,8th,A,13,Female,4.4,7,Postgraduate,Minor,Yes,69.0,75,63,67,No,68,82,mahesh@mailinator.com,6840975543.0
+245,10th,A,14,Male,3.2,6,PUC,None,Yes,72.0,47,78,96,No,57,76,devraj@mailinator.com,9676189706.0
+246,9th,A,13,Female,4.5,9,High School,None,Yes,91.4,78,64,65,No,61,77,srinivas@mailinator.com,7105682757.0
+247,10th,A,14,Male,4.4,5,Primary,None,Yes,100.0,59,58,50,No,77,78,manohar@mailinator.com,8039053406.0
+248,10th,B,16,Male,4.5,8,Degree,Frequent,Yes,73.4,92,60,99,Yes,70,92,pradeep@mailinator.com,8904693406.0
+249,10th,C,14,Female,4.1,8,PUC,Frequent,Yes,82.0,93,53,69,No,79,79,srinivas@mailinator.com,6815994575.0
+250,9th,A,14,Female,1.8,8,High School,Minor,Yes,75.3,72,64,96,No,64,74,raghavendra@mailinator.com,9816879211.0
+251,8th,C,16,Male,4.8,9,High School,Minor,Yes,80.0,68,66,91,No,70,86,mohan@mailinator.com,6908383586.0
+252,10th,B,14,Male,4.9,8,Primary,Minor,Yes,80.5,64,48,79,No,46,74,basavaraj@mailinator.com,9908754361.0
+253,9th,A,13,Male,5.5,5,Primary,Frequent,Yes,86.0,78,79,50,No,91,91,krishna@mailinator.com,6124896192.0
+254,9th,A,15,Male,2.2,8,High School,Minor,Yes,70.0,93,90,51,No,57,77,kumar@mailinator.com,8989702043.0
+255,10th,B,14,Male,1.9,5,Postgraduate,None,No,66.0,79,87,56,Yes,73,72,jagadish@mailinator.com,9271681270.0
+256,9th,A,16,Female,3.0,6,Primary,Minor,Yes,79.0,64,77,85,No,77,78,pradeep@mailinator.com,6392580502.0
+257,10th,A,13,Female,2.6,5,Degree,None,Yes,81.0,48,91,98,No,62,77,shankar@mailinator.com,6715241492.0
+258,10th,C,13,Female,5.1,5,High School,Minor,Yes,99.0,66,73,50,No,62,73,raghav@mailinator.com,8124014413.0
+259,9th,A,15,Female,4.1,6,High School,Minor,Yes,100.0,69,68,82,Yes,50,78,chandru@mailinator.com,9365318988.0
+260,8th,C,14,Female,4.8,9,Primary,Minor,Yes,86.0,43,67,82,Yes,50,73,mahesh@mailinator.com,6494549811.0
+261,10th,B,16,Male,3.1,8,Degree,None,Yes,72.1,54,70,91,Yes,60,72,ashok@mailinator.com,6738458679.0
+262,10th,C,13,Female,1.5,9,Degree,Minor,No,81.1,61,85,76,Yes,42,73,ashok@mailinator.com,7073359688.0
+263,8th,C,15,Male,1.6,9,Primary,Minor,Yes,82.0,41,54,93,Yes,84,72,ramesh@mailinator.com,7289328537.0
+264,10th,A,15,Male,2.9,9,Degree,Minor,Yes,86.0,82,90,77,No,83,89,prakash@mailinator.com,7963182505.0
+265,9th,B,15,Female,2.0,5,Primary,None,Yes,77.0,93,50,66,Yes,76,73,umesh@mailinator.com,7072614015.0
+266,8th,B,13,Female,5.1,5,Degree,Frequent,Yes,72.0,42,67,97,Yes,43,70,ramesh@mailinator.com,8196821207.0
+267,8th,B,14,Male,4.0,6,Postgraduate,None,Yes,85.0,51,87,62,No,80,76,prakash@mailinator.com,9602900995.0
+268,8th,B,16,Female,4.4,8,Degree,Frequent,Yes,88.0,88,60,89,Yes,76,84,raju@mailinator.com,8832378507.0
+269,10th,B,16,Female,3.5,7,High School,Minor,Yes,98.0,50,62,69,No,61,66,raghavendra@mailinator.com,9798872946.0
+270,8th,C,16,Female,1.4,8,Postgraduate,None,Yes,80.0,95,77,50,Yes,82,78,ashok@mailinator.com,8572681738.0
+271,9th,A,14,Female,2.2,5,High School,Frequent,Yes,94.0,67,69,71,No,43,73,chandru@mailinator.com,7996160685.0
+272,8th,A,14,Male,3.3,5,High School,None,Yes,69.0,65,52,54,Yes,82,71,prakash@mailinator.com,8588475690.0
+273,8th,A,14,Male,2.0,5,High School,Minor,Yes,96.0,75,60,88,Yes,43,70,dinesh@mailinator.com,9147349205.0
+274,8th,A,15,Male,1.1,9,PUC,None,Yes,78.0,81,42,90,Yes,56,74,shankar@mailinator.com,6725765530.0
+275,9th,A,13,Female,4.6,8,Postgraduate,None,No,73.3,50,92,86,Yes,69,79,nagaraj@mailinator.com,7438471918.0
+276,10th,B,16,Female,4.6,8,High School,Minor,Yes,92.0,53,55,55,No,70,70,kumar@mailinator.com,7554381438.0
+277,8th,A,13,Male,2.7,7,Primary,Minor,Yes,93.0,53,42,75,Yes,84,72,pradeep@mailinator.com,8638711699.0
+278,8th,C,15,Female,5.2,8,Degree,None,Yes,94.0,58,81,53,No,51,70,kumar@mailinator.com,8852978867.0
+279,9th,A,13,Female,3.1,9,Degree,Frequent,No,88.4,65,41,65,No,55,66,nagaraj@mailinator.com,9544999159.0
+280,10th,B,14,Female,5.3,6,High School,Frequent,Yes,82.0,78,73,58,No,82,80,mohan@mailinator.com,7657387950.0
+281,8th,A,13,Female,4.3,5,High School,None,Yes,70.6,42,94,78,Yes,54,71,raghav@mailinator.com,9368799256.0
+282,10th,A,16,Female,3.9,8,Postgraduate,Minor,Yes,68.0,72,85,84,Yes,88,88,ashok@mailinator.com,6593136871.0
+283,10th,C,15,Female,2.0,8,Degree,Minor,Yes,94.0,40,83,51,Yes,42,62,girish@mailinator.com,7162904419.0
+284,9th,A,16,Female,3.6,6,PUC,Frequent,Yes,94.0,73,43,89,No,52,73,kumar@mailinator.com,8092810718.0
+285,10th,A,13,Female,5.5,7,Degree,Frequent,Yes,88.0,62,79,81,Yes,78,85,mahesh@mailinator.com,6373903280.0
+286,8th,C,15,Female,2.5,7,Degree,None,No,82.0,68,87,69,Yes,58,77,jagadish@mailinator.com,8623846050.0
+287,10th,B,15,Male,5.4,8,High School,None,Yes,90.0,75,63,75,Yes,59,77,ramesh@mailinator.com,8919378596.0
+288,9th,B,13,Male,5.5,5,PUC,None,Yes,76.0,66,44,69,No,77,77,devraj@mailinator.com,9214651341.0
+289,8th,A,14,Female,2.6,6,Primary,Minor,Yes,87.0,42,79,72,No,77,72,nagaraj@mailinator.com,9760061131.0
+290,9th,C,16,Female,4.4,9,High School,Frequent,Yes,66.0,41,86,84,Yes,75,77,mahesh@mailinator.com,7129801202.0
+291,8th,A,13,Male,5.5,6,PUC,Minor,No,76.0,60,44,61,No,52,69,girish@mailinator.com,6524291919.0
+292,8th,C,13,Male,1.4,9,High School,Frequent,Yes,91.0,69,45,82,Yes,71,74,shankar@mailinator.com,6860937884.0
+293,9th,A,13,Female,5.4,7,Postgraduate,Minor,Yes,81.4,46,47,99,No,48,71,lakshmi@mailinator.com,7957284840.0
+294,10th,C,14,Male,2.0,5,High School,Frequent,Yes,90.0,87,47,79,No,90,81,manohar@mailinator.com,6828478794.0
+295,9th,C,15,Male,5.2,7,Postgraduate,Minor,Yes,73.0,41,73,82,No,49,71,raju@mailinator.com,6873616691.0
+296,8th,C,16,Female,4.3,8,PUC,None,Yes,67.0,81,65,80,No,95,90,shankar@mailinator.com,6509200865.0
+297,8th,B,14,Female,2.7,8,Primary,Frequent,Yes,96.0,45,82,56,No,74,71,manjunath@mailinator.com,8594850890.0
+298,8th,B,13,Female,1.8,8,PUC,Frequent,Yes,71.7,49,47,73,Yes,46,57,dinesh@mailinator.com,8382158150.0
+299,9th,B,13,Male,4.2,7,Postgraduate,Frequent,No,78.5,57,68,70,Yes,87,76,nagaraj@mailinator.com,9652712774.0
+300,10th,B,16,Male,5.2,6,Primary,None,Yes,86.0,63,87,73,No,48,82,ashok@mailinator.com,8649593903.0
+301,8th,B,13,Male,5.1,7,Primary,Frequent,Yes,69.0,57,44,75,No,58,69,manohar@mailinator.com,8642101854.0
+302,10th,B,14,Male,4.1,7,Degree,Frequent,Yes,94.0,52,91,53,No,70,81,devraj@mailinator.com,7432835155.0
+303,10th,C,15,Female,5.8,9,Primary,None,Yes,85.0,51,86,98,No,95,92,basavaraj@mailinator.com,7214088754.0
+304,10th,A,13,Female,3.9,8,PUC,None,No,93.0,45,41,81,Yes,43,67,suresh@mailinator.com,6994379496.0
+305,8th,A,13,Male,2.0,6,Postgraduate,Frequent,Yes,87.2,49,66,74,No,44,62,manjunath@mailinator.com,9359036532.0
+306,10th,B,16,Male,3.1,8,High School,Frequent,Yes,94.0,83,50,88,Yes,79,78,devraj@mailinator.com,6744016161.0
+307,8th,A,15,Female,2.7,5,Degree,None,Yes,84.2,40,64,58,No,47,65,manohar@mailinator.com,9843651438.0
+308,9th,B,16,Female,6.0,6,PUC,Frequent,Yes,94.0,61,80,100,Yes,50,82,shankar@mailinator.com,6437452857.0
+309,10th,C,15,Male,2.9,8,Primary,None,Yes,85.6,64,79,66,No,64,74,shivappa@mailinator.com,6617411907.0
+310,8th,A,16,Female,6.0,6,Primary,Minor,Yes,79.0,95,88,57,No,81,91,suresh@mailinator.com,9175840988.0
+311,8th,A,16,Male,3.6,5,Postgraduate,None,No,67.0,57,72,52,Yes,78,75,shivappa@mailinator.com,6558855000.0
+312,9th,A,16,Female,1.9,5,Postgraduate,None,No,90.7,80,76,69,Yes,44,75,girish@mailinator.com,9590405448.0
+313,10th,B,15,Male,1.4,9,Postgraduate,Frequent,No,66.0,66,91,93,Yes,77,82,srinivas@mailinator.com,6928032493.0
+314,8th,A,16,Female,2.9,8,High School,Minor,Yes,94.0,68,63,93,Yes,58,78,manjunath@mailinator.com,7309866150.0
+315,10th,B,15,Male,1.6,7,High School,Frequent,Yes,99.0,63,59,82,No,57,75,manjunath@mailinator.com,6610769890.0
+316,10th,C,16,Male,4.2,8,PUC,None,Yes,80.0,41,43,75,Yes,41,61,raghavendra@mailinator.com,9795300795.0
+317,9th,A,16,Female,3.1,5,PUC,None,Yes,72.0,53,42,59,Yes,92,66,raju@mailinator.com,7285057319.0
+318,8th,B,14,Female,6.0,5,Postgraduate,Frequent,Yes,70.0,73,43,53,Yes,64,68,krishna@mailinator.com,8026122858.0
+319,8th,A,16,Male,5.6,9,High School,None,Yes,80.0,56,86,60,Yes,55,74,girish@mailinator.com,6667020290.0
+320,10th,B,15,Male,1.7,6,PUC,Minor,Yes,75.0,55,40,82,Yes,43,58,raju@mailinator.com,7648836944.0
+321,9th,A,13,Female,3.0,6,Degree,None,Yes,77.0,87,67,51,No,77,77,srinivas@mailinator.com,6608875003.0
+322,8th,B,16,Female,3.3,5,PUC,Minor,Yes,72.0,53,60,83,Yes,81,72,pradeep@mailinator.com,6911105297.0
+323,8th,B,15,Female,3.8,6,Primary,None,Yes,75.0,49,67,61,No,49,62,lakshmi@mailinator.com,7996493506.0
+324,9th,B,13,Female,4.9,7,High School,Minor,No,94.7,83,80,81,Yes,78,88,ramesh@mailinator.com,6825505865.0
+325,9th,B,13,Male,3.4,9,Degree,None,No,99.0,77,54,81,No,71,76,jagadish@mailinator.com,6058827875.0
+326,9th,A,13,Female,3.1,6,Degree,Frequent,Yes,91.0,64,57,64,Yes,80,77,umesh@mailinator.com,9841227509.0
+327,10th,C,16,Male,2.3,7,PUC,None,Yes,65.0,65,76,85,Yes,53,76,kumar@mailinator.com,8239190667.0
+328,8th,B,16,Female,5.6,8,Postgraduate,Frequent,Yes,84.0,44,52,99,No,78,79,anand@mailinator.com,7657721587.0
+329,9th,B,13,Female,1.1,9,Primary,Frequent,Yes,90.0,55,67,92,No,74,72,suresh@mailinator.com,9513355005.0
+330,8th,B,16,Female,5.1,6,PUC,Frequent,Yes,86.0,70,50,64,No,87,81,manjunath@mailinator.com,6900877074.0
+331,10th,A,14,Female,1.9,6,PUC,Frequent,Yes,69.0,95,65,98,No,55,80,manjunath@mailinator.com,7067613626.0
+332,8th,C,15,Male,4.4,6,PUC,Frequent,Yes,66.0,94,86,88,Yes,84,94,srinivas@mailinator.com,9891548333.0
+333,9th,C,15,Female,2.8,6,Postgraduate,Minor,Yes,71.0,95,50,73,Yes,88,79,raju@mailinator.com,8714964396.0
+334,9th,B,16,Male,5.9,8,Degree,None,No,79.0,65,89,73,Yes,46,82,krishna@mailinator.com,6541709404.0
+335,8th,A,16,Male,1.6,6,Degree,Frequent,Yes,85.0,72,47,62,No,68,67,krishna@mailinator.com,6595053909.0
+336,10th,B,14,Female,1.9,5,PUC,Frequent,No,98.0,87,79,54,Yes,50,73,dinesh@mailinator.com,7802349934.0
+337,8th,B,16,Female,5.4,7,Degree,Frequent,Yes,74.0,47,86,80,Yes,66,84,manjunath@mailinator.com,9675256045.0
+338,8th,A,16,Female,3.9,9,PUC,Minor,Yes,67.0,86,42,50,Yes,84,70,dinesh@mailinator.com,6451495760.0
+339,10th,A,14,Male,2.5,9,Degree,Minor,Yes,90.0,51,43,75,Yes,81,70,manjunath@mailinator.com,7942884376.0
+340,9th,C,16,Female,1.0,5,High School,None,Yes,98.0,88,78,88,No,79,88,ashok@mailinator.com,7564622550.0
+341,9th,A,13,Male,2.1,7,Degree,Minor,Yes,66.0,43,83,87,No,77,78,srinivas@mailinator.com,8265321798.0
+342,9th,A,15,Female,1.7,6,Postgraduate,Frequent,Yes,86.0,56,73,92,Yes,77,76,suresh@mailinator.com,6140187499.0
+343,10th,C,15,Male,2.0,7,Degree,None,Yes,84.0,44,72,80,No,62,69,shivappa@mailinator.com,8752662246.0
+344,8th,C,15,Male,5.5,5,Primary,Frequent,Yes,74.0,94,64,91,Yes,44,87,girish@mailinator.com,7601891463.0
+345,8th,C,13,Male,5.4,7,High School,Frequent,Yes,84.2,58,41,61,No,46,65,manjunath@mailinator.com,9207727054.0
+346,8th,A,15,Female,4.5,5,PUC,Minor,Yes,77.0,73,65,77,No,69,77,chandru@mailinator.com,7478287395.0
+347,10th,C,15,Male,3.4,6,Degree,None,Yes,79.0,88,54,67,No,44,76,krishna@mailinator.com,7121768900.0
+348,8th,C,14,Female,5.1,5,High School,None,No,79.0,66,50,50,No,66,69,mahesh@mailinator.com,6277164169.0
+349,9th,C,13,Female,3.5,8,Postgraduate,None,Yes,75.0,66,87,95,No,57,83,raghavendra@mailinator.com,9614766898.0
+350,9th,C,13,Male,2.8,6,Degree,None,No,72.8,64,78,82,Yes,65,76,jagadish@mailinator.com,7282615778.0
+351,9th,C,13,Female,2.4,7,PUC,Frequent,Yes,71.0,72,53,64,Yes,88,70,mahesh@mailinator.com,9103356497.0
+352,9th,B,13,Female,5.6,5,PUC,None,No,98.0,92,93,66,No,83,92,venkatesh@mailinator.com,8586726476.0
+353,10th,B,15,Male,2.9,8,Degree,None,Yes,90.0,82,51,82,No,82,76,manohar@mailinator.com,8589471886.0
+354,8th,C,14,Male,3.5,8,Degree,Frequent,Yes,83.0,70,82,68,Yes,73,81,suresh@mailinator.com,6901044061.0
+355,8th,C,16,Male,2.3,9,PUC,Frequent,No,88.0,42,82,93,Yes,85,76,anand@mailinator.com,6556474990.0
+356,9th,B,16,Male,5.4,5,PUC,Minor,Yes,92.0,55,94,85,Yes,41,81,ashok@mailinator.com,9382045376.0
+357,9th,C,14,Female,2.9,9,High School,None,Yes,65.9,65,80,78,Yes,93,82,shankar@mailinator.com,6260825318.0
+358,10th,A,13,Female,2.5,6,Postgraduate,None,Yes,80.0,50,72,86,No,65,73,krishna@mailinator.com,7586955113.0
+359,10th,A,15,Female,4.6,6,Degree,Minor,Yes,72.0,68,74,80,Yes,68,82,srinivas@mailinator.com,7481726681.0
+360,8th,A,15,Female,2.0,8,Degree,Minor,No,95.0,54,45,87,Yes,59,68,mohan@mailinator.com,9484367512.0
+361,9th,B,14,Female,1.6,7,Degree,Minor,No,82.7,72,80,96,Yes,58,84,girish@mailinator.com,6351177291.0
+362,10th,C,15,Female,5.2,5,Postgraduate,Frequent,Yes,88.0,46,40,72,Yes,88,73,lakshmi@mailinator.com,7998395060.0
+363,10th,C,14,Male,4.7,5,High School,None,Yes,76.0,87,56,57,No,65,77,srinivas@mailinator.com,7928505194.0
+364,10th,A,15,Male,4.0,6,High School,Minor,Yes,75.0,47,90,86,No,46,74,nagaraj@mailinator.com,8499520511.0
+365,10th,C,14,Female,2.2,6,Primary,None,Yes,71.0,71,88,81,Yes,55,76,raghav@mailinator.com,9283276193.0
+366,8th,C,15,Female,4.1,5,PUC,Frequent,Yes,82.7,91,51,95,No,46,82,umesh@mailinator.com,8135492732.0
+367,8th,C,13,Female,4.2,7,Primary,None,Yes,93.0,83,54,97,Yes,43,83,chandru@mailinator.com,8165574183.0
+368,9th,A,13,Female,2.6,7,Degree,Frequent,Yes,96.0,75,84,74,Yes,89,84,manohar@mailinator.com,7664616359.0
+369,10th,A,15,Male,1.3,7,Postgraduate,None,Yes,89.8,85,93,77,Yes,71,89,srinivas@mailinator.com,6353344965.0
+370,10th,C,15,Male,5.4,5,High School,Minor,No,87.4,68,95,60,No,65,80,suresh@mailinator.com,9251178868.0
+371,9th,C,13,Female,3.3,8,Postgraduate,None,Yes,88.0,68,92,89,No,57,80,mohan@mailinator.com,7549563269.0
+372,8th,B,14,Female,4.8,7,Primary,Minor,Yes,86.0,67,54,66,No,77,78,ramesh@mailinator.com,9558181784.0
+373,9th,B,15,Male,2.3,7,Primary,Frequent,No,84.0,55,71,78,No,49,74,prakash@mailinator.com,8087231984.0
+374,8th,C,13,Female,4.0,8,PUC,None,Yes,69.0,49,79,90,No,52,75,mohan@mailinator.com,8360708004.0
+375,10th,B,15,Female,3.1,7,Degree,None,Yes,88.0,89,72,88,Yes,88,89,ramesh@mailinator.com,6335144962.0
+376,10th,B,16,Female,2.9,7,High School,Minor,Yes,91.0,70,58,79,No,44,69,krishna@mailinator.com,7114539734.0
+377,9th,C,13,Female,1.6,6,Primary,Frequent,Yes,75.0,71,74,80,No,86,78,manjunath@mailinator.com,7648784809.0
+378,10th,A,16,Male,2.2,8,Degree,None,Yes,84.0,93,48,55,No,73,76,suresh@mailinator.com,7453822766.0
+379,9th,A,14,Female,1.4,9,Postgraduate,Minor,Yes,90.0,46,84,52,Yes,77,68,lakshmi@mailinator.com,8589749992.0
+380,9th,C,13,Female,2.5,9,High School,Frequent,Yes,98.0,84,66,89,No,50,82,raghav@mailinator.com,8267911997.0
+381,8th,B,13,Female,4.7,7,Degree,Minor,Yes,86.0,76,69,91,No,72,84,manohar@mailinator.com,7166169679.0
+382,8th,C,16,Male,4.1,9,High School,None,Yes,89.1,89,71,82,Yes,62,85,devraj@mailinator.com,7367773791.0
+383,10th,C,16,Male,4.4,7,High School,None,No,90.0,81,72,73,Yes,92,87,venkatesh@mailinator.com,7064354869.0
+384,10th,B,15,Female,1.0,9,PUC,Frequent,No,85.0,91,94,81,No,61,81,umesh@mailinator.com,8881491977.0
+385,9th,B,16,Male,4.4,5,High School,Minor,No,99.0,61,50,66,Yes,64,71,krishna@mailinator.com,6988564057.0
+386,8th,C,13,Male,3.5,7,High School,None,No,86.0,42,67,64,Yes,57,70,umesh@mailinator.com,7297443986.0
+387,9th,A,16,Male,2.2,9,High School,Frequent,No,94.0,77,59,97,No,46,80,raghavendra@mailinator.com,7599324542.0
+388,9th,C,15,Male,1.9,5,Primary,Minor,Yes,90.3,73,78,66,Yes,95,83,lakshmi@mailinator.com,8631156278.0
+389,10th,B,16,Male,1.9,7,Primary,Minor,No,72.0,47,85,86,No,81,80,ashok@mailinator.com,6914292943.0
+390,10th,A,14,Female,5.2,8,PUC,Frequent,Yes,71.0,67,42,91,Yes,87,80,manohar@mailinator.com,6944150108.0
+391,8th,B,15,Female,5.9,8,High School,None,No,71.4,71,93,76,Yes,92,91,dinesh@mailinator.com,7820310582.0
+392,10th,C,13,Female,5.6,8,Degree,Frequent,Yes,77.8,66,84,73,Yes,46,78,ashok@mailinator.com,6531493247.0
+393,10th,C,16,Male,2.7,7,Degree,Minor,Yes,68.0,89,53,94,Yes,52,73,ramesh@mailinator.com,9222480066.0
+394,8th,C,13,Female,4.9,6,Primary,None,Yes,82.8,60,73,54,No,49,68,manohar@mailinator.com,6013084042.0
+395,9th,B,13,Female,3.7,9,High School,None,Yes,67.3,70,71,77,No,41,75,krishna@mailinator.com,7974756091.0
+396,9th,C,13,Male,5.1,5,PUC,Frequent,No,83.0,45,55,100,Yes,42,76,manohar@mailinator.com,8938765034.0
+397,10th,A,15,Female,3.4,8,Degree,None,Yes,100.0,41,56,79,No,83,77,chandru@mailinator.com,7988181853.0
+398,9th,A,15,Female,3.9,7,PUC,Minor,No,97.0,66,78,64,No,44,76,raghav@mailinator.com,9666749283.0
+399,9th,A,16,Male,4.9,9,High School,Minor,Yes,94.0,47,71,65,Yes,45,67,ashok@mailinator.com,9900358268.0
+400,9th,C,16,Male,1.5,8,High School,None,Yes,92.0,88,90,99,Yes,90,96,girish@mailinator.com,6430460556.0
+401,10th,C,13,Male,3.7,7,High School,Minor,Yes,77.1,43,65,70,No,93,73,raghav@mailinator.com,6118465607.0
+402,8th,C,15,Female,2.8,8,Degree,Frequent,Yes,89.0,69,88,80,Yes,64,82,raghavendra@mailinator.com,7189360186.0
+403,10th,A,14,Male,4.0,8,High School,None,Yes,72.0,61,78,71,Yes,81,85,dinesh@mailinator.com,7130537427.0
+404,8th,C,16,Male,5.8,9,Degree,Frequent,Yes,70.8,64,47,88,No,54,75,prakash@mailinator.com,6432327770.0
+405,9th,B,14,Male,3.0,8,Primary,Minor,Yes,88.0,67,89,68,Yes,90,89,manjunath@mailinator.com,8257730180.0
+406,10th,B,14,Female,3.0,8,Degree,Frequent,No,65.2,74,90,99,Yes,54,83,pradeep@mailinator.com,9666002463.0
+407,10th,B,13,Female,5.0,8,Degree,Minor,No,78.7,87,54,89,No,68,83,ramesh@mailinator.com,7033336912.0
+408,9th,A,14,Female,4.2,9,Primary,Frequent,No,74.0,52,65,99,Yes,69,80,raju@mailinator.com,7861872600.0
+409,10th,B,15,Male,3.0,6,Primary,None,Yes,68.6,56,83,69,Yes,48,69,manohar@mailinator.com,7602405513.0
+410,10th,A,14,Male,4.4,9,Postgraduate,None,No,70.3,42,82,73,Yes,84,80,krishna@mailinator.com,6042050500.0
+411,9th,B,15,Female,3.0,8,Postgraduate,Frequent,Yes,77.0,40,70,59,Yes,72,68,krishna@mailinator.com,7006041861.0
+412,8th,B,15,Female,1.7,5,Primary,Frequent,Yes,97.0,47,53,54,No,92,66,shivappa@mailinator.com,9237152706.0
+413,9th,B,14,Male,3.3,6,Postgraduate,Frequent,Yes,99.0,71,68,71,No,60,80,nagaraj@mailinator.com,6441196612.0
+414,8th,B,13,Female,2.7,9,High School,Minor,Yes,91.0,82,94,60,No,45,77,pradeep@mailinator.com,8910539043.0
+415,8th,C,14,Male,2.1,6,PUC,Minor,No,78.0,68,44,79,Yes,65,64,raghav@mailinator.com,9966557900.0
+416,10th,C,15,Female,5.6,7,Degree,Frequent,Yes,72.4,68,81,53,Yes,66,76,chandru@mailinator.com,8643440038.0
+417,10th,B,16,Male,4.4,5,Primary,Minor,Yes,95.0,80,78,76,No,71,83,shivappa@mailinator.com,7767128185.0
+418,8th,C,15,Female,4.0,5,PUC,Frequent,No,65.0,71,66,58,No,51,66,prakash@mailinator.com,9054103327.0
+419,9th,B,13,Female,4.7,8,Primary,None,Yes,71.0,50,73,100,No,82,79,chandru@mailinator.com,9374205226.0
+420,8th,A,13,Female,3.7,8,Primary,Frequent,Yes,72.0,74,79,60,Yes,91,81,mahesh@mailinator.com,6712432991.0
+421,10th,B,13,Female,4.5,8,High School,Minor,Yes,87.6,82,59,54,Yes,55,79,basavaraj@mailinator.com,8642909595.0
+422,9th,A,16,Female,5.7,9,Degree,None,Yes,65.0,80,88,69,Yes,50,83,umesh@mailinator.com,9333845891.0
+423,8th,C,15,Female,5.3,7,Degree,Frequent,Yes,92.0,65,69,80,Yes,66,84,manohar@mailinator.com,8375335372.0
+424,8th,C,13,Male,1.8,7,Degree,None,Yes,97.0,84,83,76,No,56,85,ramesh@mailinator.com,6597977289.0
+425,9th,B,16,Male,2.3,9,PUC,Minor,Yes,98.0,49,59,97,No,91,77,raghavendra@mailinator.com,6707844019.0
+426,9th,B,16,Female,1.4,9,Primary,Minor,No,75.0,52,75,54,Yes,69,67,manjunath@mailinator.com,7342285203.0
+427,9th,A,16,Female,5.9,8,Degree,None,Yes,100.0,41,65,96,No,89,85,kumar@mailinator.com,9197366883.0
+428,8th,B,14,Female,2.2,5,Primary,None,Yes,74.5,52,67,78,Yes,55,71,basavaraj@mailinator.com,8109200588.0
+429,9th,C,16,Male,4.3,7,High School,None,Yes,74.0,86,60,50,No,48,70,venkatesh@mailinator.com,7372048725.0
+430,9th,A,13,Female,1.4,7,PUC,None,No,94.0,93,44,73,Yes,74,77,jagadish@mailinator.com,7907821714.0
+431,9th,C,15,Female,2.1,7,PUC,Minor,Yes,89.0,95,80,81,No,70,90,shankar@mailinator.com,6050488472.0
+432,8th,B,15,Male,3.5,7,Primary,None,Yes,74.8,60,51,67,No,68,73,srinivas@mailinator.com,9774616205.0
+433,8th,A,16,Male,1.5,7,PUC,Frequent,No,91.5,93,91,100,No,72,89,raghavendra@mailinator.com,6862656773.0
+434,9th,A,13,Female,2.9,7,Primary,Minor,Yes,70.0,84,54,78,Yes,43,71,shivappa@mailinator.com,6607138404.0
+435,9th,A,14,Male,3.7,5,PUC,None,Yes,85.0,79,54,58,No,72,78,venkatesh@mailinator.com,6324711550.0
+436,8th,B,14,Female,2.7,6,Degree,Minor,No,66.0,95,87,92,Yes,78,95,basavaraj@mailinator.com,7587798997.0
+437,10th,B,15,Female,3.8,8,High School,Frequent,Yes,97.0,65,49,64,No,78,69,suresh@mailinator.com,6086819394.0
+438,10th,A,14,Female,3.7,6,Degree,Minor,Yes,75.9,43,54,88,Yes,94,73,nagaraj@mailinator.com,6625167278.0
+439,8th,B,16,Male,3.0,5,PUC,Frequent,Yes,91.0,76,40,93,No,67,77,shankar@mailinator.com,8624825016.0
+440,10th,B,15,Male,4.5,6,Primary,Minor,Yes,88.6,40,83,84,No,43,69,ramesh@mailinator.com,6770174645.0
+441,10th,B,13,Female,4.4,9,High School,Frequent,Yes,68.0,81,40,95,No,69,77,mohan@mailinator.com,7753838082.0
+442,10th,B,14,Female,4.4,9,Primary,Frequent,Yes,69.0,71,63,95,No,94,82,lakshmi@mailinator.com,9538031047.0
+443,8th,B,14,Male,3.8,9,PUC,None,Yes,74.0,86,64,96,Yes,42,78,kumar@mailinator.com,7653680676.0
+444,10th,A,13,Female,2.8,7,Degree,None,Yes,92.0,58,88,96,Yes,95,90,suresh@mailinator.com,6171502517.0
+445,8th,C,14,Male,4.1,6,Degree,None,Yes,83.0,95,76,55,No,61,86,basavaraj@mailinator.com,7178047936.0
+446,10th,C,16,Female,5.7,6,PUC,Minor,No,68.3,85,78,73,No,91,95,jagadish@mailinator.com,9110716629.0
+447,8th,C,16,Male,4.0,8,PUC,None,Yes,73.0,62,44,72,Yes,65,66,manjunath@mailinator.com,8879912233.0
+448,9th,B,14,Male,5.9,5,PUC,Frequent,No,66.0,69,85,83,No,79,93,raghavendra@mailinator.com,6931458918.0
+449,9th,A,15,Female,3.2,7,Degree,Frequent,No,65.0,50,91,97,No,49,82,anand@mailinator.com,6955087311.0
+450,10th,A,16,Male,4.7,7,High School,Minor,No,93.0,73,82,93,No,93,98,srinivas@mailinator.com,6906508797.0
+451,9th,C,15,Female,1.2,9,Postgraduate,Minor,No,84.0,77,65,58,No,61,68,venkatesh@mailinator.com,9120689195.0
+452,8th,C,13,Male,4.8,5,Degree,Frequent,Yes,99.0,71,74,81,No,86,94,kumar@mailinator.com,9388207622.0
+453,10th,B,15,Male,3.6,7,PUC,Minor,No,91.3,43,61,89,Yes,53,69,srinivas@mailinator.com,6080991664.0
+454,10th,C,13,Female,1.0,7,High School,None,Yes,73.0,60,80,81,Yes,84,80,manohar@mailinator.com,9357052136.0
+455,9th,C,15,Female,2.4,9,Primary,Frequent,Yes,87.7,74,60,87,Yes,53,70,anand@mailinator.com,7910008404.0
+456,10th,A,16,Female,3.7,9,Degree,Frequent,Yes,90.0,42,42,88,No,46,65,shankar@mailinator.com,6106730952.0
+457,8th,C,13,Female,4.8,5,Degree,Minor,Yes,88.0,71,64,90,No,53,85,chandru@mailinator.com,6386908917.0
+458,8th,C,15,Male,1.3,6,High School,Frequent,Yes,68.0,64,63,85,Yes,43,65,mahesh@mailinator.com,7570486091.0
+459,10th,B,15,Male,3.7,5,PUC,Frequent,Yes,86.0,50,86,90,Yes,54,81,dinesh@mailinator.com,9859598626.0
+460,8th,C,13,Female,5.0,7,Degree,None,Yes,84.0,79,78,79,Yes,49,84,prakash@mailinator.com,9507997384.0
+461,8th,C,16,Female,4.2,7,Degree,None,Yes,95.0,48,93,62,Yes,88,87,nagaraj@mailinator.com,7963515354.0
+462,9th,C,15,Female,5.7,5,Degree,Frequent,Yes,94.0,63,84,61,Yes,85,84,krishna@mailinator.com,6382339692.0
+463,10th,B,13,Male,1.4,6,Degree,None,Yes,81.0,46,44,77,No,93,70,nagaraj@mailinator.com,6719247621.0
+464,9th,B,16,Female,2.4,6,Primary,Frequent,Yes,87.0,79,84,68,No,55,77,jagadish@mailinator.com,9658847773.0
+465,9th,C,15,Male,5.6,6,Primary,Minor,Yes,81.9,73,72,94,Yes,58,83,umesh@mailinator.com,6897813349.0
+466,10th,A,16,Male,4.8,7,Primary,None,Yes,97.0,91,62,52,Yes,60,83,umesh@mailinator.com,8278758525.0
+467,8th,C,16,Male,4.0,8,High School,Minor,No,94.0,59,47,68,Yes,60,65,prakash@mailinator.com,8692865247.0
+468,10th,C,13,Female,5.2,8,PUC,None,Yes,81.0,62,65,72,Yes,87,77,raghav@mailinator.com,9328296768.0
+469,10th,A,14,Male,5.5,7,Postgraduate,Frequent,Yes,80.0,56,56,62,No,41,66,umesh@mailinator.com,6351759142.0
+470,9th,B,15,Female,5.9,5,Degree,Minor,Yes,82.5,55,53,55,Yes,76,76,ashok@mailinator.com,9118389886.0
+471,8th,C,14,Female,6.0,5,Postgraduate,Minor,Yes,69.0,89,41,89,Yes,47,83,suresh@mailinator.com,8688733374.0
+472,9th,A,13,Female,1.7,6,High School,Frequent,Yes,69.6,57,64,74,Yes,93,70,shivappa@mailinator.com,9008543585.0
+473,9th,C,16,Female,1.4,7,High School,Minor,No,85.0,45,71,69,Yes,84,73,mohan@mailinator.com,9119775221.0
+474,10th,A,15,Female,1.4,5,Postgraduate,None,Yes,77.0,45,92,62,Yes,95,79,srinivas@mailinator.com,8604935389.0
+475,8th,B,15,Male,1.1,8,Postgraduate,Frequent,Yes,95.5,41,42,74,Yes,48,53,shankar@mailinator.com,7111212548.0
+476,10th,A,15,Male,5.9,9,High School,Frequent,Yes,95.0,53,65,93,Yes,72,82,srinivas@mailinator.com,9848663086.0
+477,10th,C,13,Female,1.5,9,High School,None,Yes,67.0,95,44,53,Yes,64,66,venkatesh@mailinator.com,8346405979.0
+478,10th,C,14,Male,5.2,8,Primary,None,Yes,72.0,72,80,83,Yes,90,88,ashok@mailinator.com,9220579230.0
+479,9th,B,15,Male,4.4,8,High School,None,Yes,67.0,45,42,60,Yes,80,68,venkatesh@mailinator.com,9907091764.0
+480,8th,B,16,Female,3.4,8,High School,Minor,Yes,97.0,91,62,84,No,76,91,chandru@mailinator.com,8336166593.0
+481,8th,B,14,Male,2.7,5,PUC,None,Yes,87.8,94,62,73,Yes,86,85,krishna@mailinator.com,8947667577.0
+482,9th,C,14,Male,2.8,5,Primary,None,No,90.7,49,70,94,No,82,77,manjunath@mailinator.com,8031646836.0
+483,10th,C,14,Male,2.3,7,High School,None,Yes,93.0,56,81,50,No,77,77,krishna@mailinator.com,9363472574.0
+484,8th,B,14,Male,5.6,6,PUC,None,Yes,94.0,92,51,78,Yes,43,77,nagaraj@mailinator.com,8177568320.0
+485,8th,A,13,Male,4.6,5,Postgraduate,None,Yes,83.0,65,77,56,No,76,76,shankar@mailinator.com,9934238925.0
+486,10th,C,14,Male,1.1,8,High School,Minor,No,98.0,61,73,53,Yes,88,74,umesh@mailinator.com,7289269877.0
+487,8th,B,15,Male,3.3,7,Degree,Frequent,Yes,100.0,65,91,55,Yes,73,85,dinesh@mailinator.com,6990240727.0
+488,10th,B,14,Female,2.4,7,Primary,Frequent,Yes,78.0,89,58,59,No,73,72,pradeep@mailinator.com,6528232534.0
+489,9th,B,13,Female,1.1,6,Degree,Frequent,Yes,90.4,94,72,63,No,44,73,suresh@mailinator.com,6988726857.0
+490,9th,A,13,Male,5.4,9,PUC,Minor,No,69.0,91,49,72,No,53,77,kumar@mailinator.com,8770921550.0
+491,10th,A,15,Male,4.9,5,High School,Frequent,Yes,90.0,86,51,55,Yes,67,76,shankar@mailinator.com,8120289422.0
+492,8th,A,15,Female,2.6,9,Postgraduate,None,No,92.0,70,64,94,No,79,85,venkatesh@mailinator.com,7532237051.0
+493,9th,A,16,Female,5.0,6,Primary,Frequent,No,99.0,65,79,88,No,61,86,venkatesh@mailinator.com,6062348753.0
+494,9th,B,14,Male,2.6,9,Postgraduate,None,Yes,96.4,72,41,98,Yes,75,80,srinivas@mailinator.com,6878978878.0
+495,9th,B,13,Female,2.5,9,Primary,None,Yes,80.0,77,64,57,Yes,69,75,raju@mailinator.com,8276487202.0
+496,9th,A,13,Female,5.6,7,PUC,Frequent,Yes,98.0,78,49,87,Yes,51,81,manohar@mailinator.com,9945338081.0
+497,8th,B,13,Male,5.9,8,PUC,None,Yes,75.0,43,81,67,Yes,82,75,jagadish@mailinator.com,6674139951.0
+498,10th,C,15,Male,3.6,5,Degree,Minor,No,99.0,42,51,87,Yes,89,78,krishna@mailinator.com,8303848384.0
+499,9th,C,16,Female,5.8,7,Degree,None,Yes,71.0,77,67,56,Yes,45,72,ramesh@mailinator.com,9274727287.0
+500,9th,C,15,Male,5.4,5,Primary,Frequent,No,70.0,45,66,78,Yes,45,72,umesh@mailinator.com,7543052987.0
+501,9th,B,13,Male,3.6,8,Degree,Minor,Yes,88.6,46,68,96,Yes,76,79,nagaraj@mailinator.com,7369508755.0
+502,9th,C,14,Female,2.9,7,Primary,Frequent,Yes,73.0,62,68,100,Yes,58,72,pradeep@mailinator.com,9816105747.0
+503,9th,A,16,Male,4.6,6,PUC,None,Yes,79.0,65,48,63,Yes,74,74,srinivas@mailinator.com,6302723167.0
+504,10th,C,14,Female,3.3,7,Postgraduate,Minor,Yes,98.4,83,47,99,Yes,72,79,shankar@mailinator.com,8202400132.0
+505,8th,A,14,Female,4.0,9,High School,Minor,Yes,89.0,64,95,62,Yes,61,80,ramesh@mailinator.com,7855612502.0
+506,10th,B,15,Female,6.0,5,Postgraduate,Frequent,No,94.6,70,51,89,Yes,82,90,prakash@mailinator.com,6178406535.0
+507,9th,A,14,Female,4.9,8,Primary,Frequent,Yes,65.0,42,94,78,No,93,81,srinivas@mailinator.com,6318516671.0
+508,9th,C,14,Male,2.7,5,Degree,Frequent,Yes,95.0,88,55,98,Yes,72,86,shivappa@mailinator.com,9563956643.0
+509,10th,C,13,Male,1.4,6,Primary,Minor,Yes,65.0,75,62,64,No,81,70,prakash@mailinator.com,8364966347.0
+510,9th,C,14,Female,1.9,6,Degree,Minor,No,76.0,63,63,66,No,72,72,prakash@mailinator.com,8649370736.0
+511,8th,C,15,Male,3.6,7,Primary,Minor,Yes,80.0,62,59,78,Yes,76,81,manohar@mailinator.com,7479933992.0
+512,10th,C,13,Male,3.1,6,Degree,Frequent,Yes,70.0,94,50,68,Yes,67,75,manohar@mailinator.com,6609943195.0
+513,9th,C,16,Female,5.0,6,PUC,Minor,Yes,65.0,77,64,67,No,67,73,mohan@mailinator.com,6888621380.0
+514,9th,C,13,Female,5.7,7,Primary,None,Yes,68.4,56,77,86,Yes,51,78,mahesh@mailinator.com,6506947243.0
+515,9th,A,13,Male,1.9,5,Primary,Minor,Yes,84.8,70,93,57,Yes,72,75,jagadish@mailinator.com,9671032377.0
+516,10th,C,15,Female,5.3,8,Postgraduate,Minor,Yes,77.0,67,63,97,Yes,61,79,anand@mailinator.com,6811444982.0
+517,9th,B,16,Female,5.8,9,High School,Frequent,Yes,79.7,83,43,70,No,61,79,anand@mailinator.com,7229975416.0
+518,9th,B,14,Male,5.8,5,Degree,Minor,Yes,84.0,50,92,75,No,81,89,suresh@mailinator.com,7445666297.0
+519,8th,B,14,Male,1.2,6,Postgraduate,None,Yes,74.0,89,51,68,Yes,56,71,anand@mailinator.com,7060693036.0
+520,8th,B,14,Female,1.3,9,Degree,None,No,100.4,58,56,79,No,54,65,chandru@mailinator.com,7083306576.0
+521,10th,A,13,Female,1.0,7,High School,None,No,91.0,84,45,62,Yes,84,70,kumar@mailinator.com,8643114779.0
+522,10th,C,13,Female,2.6,6,High School,None,Yes,68.5,76,75,77,No,56,76,raghavendra@mailinator.com,8290372977.0
+523,8th,C,13,Male,1.3,5,Degree,Frequent,Yes,66.0,76,63,88,No,47,66,mahesh@mailinator.com,7892068269.0
+524,10th,A,15,Male,2.5,5,High School,Minor,No,75.0,47,79,50,Yes,42,58,kumar@mailinator.com,7961449138.0
+525,9th,C,14,Female,2.8,6,Primary,Minor,Yes,65.4,52,77,57,No,85,75,chandru@mailinator.com,6300541935.0
+526,9th,B,15,Male,5.8,5,PUC,None,No,95.0,82,74,67,No,94,95,raju@mailinator.com,6894074821.0
+527,10th,A,16,Female,3.4,7,PUC,Frequent,Yes,72.3,83,69,52,Yes,41,74,pradeep@mailinator.com,6648509729.0
+528,10th,B,16,Female,2.4,8,Degree,None,Yes,76.0,55,48,58,Yes,91,66,ashok@mailinator.com,8136969801.0
+529,9th,A,15,Male,3.5,5,Degree,None,No,80.0,50,71,61,No,95,75,raju@mailinator.com,8847713388.0
+530,9th,C,13,Male,4.2,7,PUC,Frequent,Yes,96.1,95,43,96,No,52,86,shivappa@mailinator.com,6697266918.0
+531,8th,B,14,Male,1.6,8,PUC,Frequent,Yes,77.0,86,55,58,No,52,68,anand@mailinator.com,6964656114.0
+532,10th,C,16,Female,4.8,9,Postgraduate,Minor,Yes,82.0,71,94,67,Yes,78,90,chandru@mailinator.com,8891778587.0
+533,8th,A,13,Male,5.3,8,Primary,Frequent,Yes,72.0,77,42,86,No,52,74,anand@mailinator.com,6223651636.0
+534,10th,C,16,Male,5.2,7,Primary,Frequent,Yes,100.0,86,43,73,Yes,50,75,raghav@mailinator.com,8989759592.0
+535,10th,A,14,Female,5.5,8,Primary,Frequent,Yes,96.5,88,62,57,No,78,84,dinesh@mailinator.com,7318571002.0
+536,8th,C,15,Male,2.9,7,PUC,None,Yes,98.0,62,93,100,No,51,86,nagaraj@mailinator.com,7792139867.0
+537,8th,B,15,Female,3.2,6,Postgraduate,Minor,Yes,65.0,83,61,87,Yes,86,87,shankar@mailinator.com,6224194867.0
+538,10th,A,13,Female,1.5,6,PUC,None,Yes,88.0,50,53,57,No,74,62,raghavendra@mailinator.com,7698066726.0
+539,8th,C,15,Male,2.1,9,Postgraduate,Frequent,Yes,93.0,61,59,58,No,45,63,nagaraj@mailinator.com,7810373475.0
+540,10th,C,16,Male,5.9,6,Degree,Minor,Yes,65.0,67,50,53,Yes,54,73,devraj@mailinator.com,7241798355.0
+541,10th,A,15,Female,2.4,7,Degree,Frequent,Yes,66.0,63,68,84,No,58,76,raju@mailinator.com,7067849492.0
+542,9th,A,15,Male,5.5,5,Primary,Frequent,Yes,97.0,84,80,85,No,57,87,dinesh@mailinator.com,8332547592.0
+543,10th,B,15,Male,5.5,9,PUC,Frequent,No,90.0,64,79,96,Yes,95,90,shivappa@mailinator.com,6273786724.0
+544,10th,B,13,Male,5.6,7,Postgraduate,None,Yes,75.0,80,84,68,No,40,78,ramesh@mailinator.com,9889212453.0
+545,10th,B,14,Male,1.8,5,High School,Minor,No,78.0,66,42,50,No,63,58,jagadish@mailinator.com,8788356046.0
+546,10th,B,15,Male,5.4,7,PUC,Minor,Yes,89.0,85,77,51,No,78,84,anand@mailinator.com,9570306492.0
+547,10th,B,16,Male,4.2,5,Degree,Frequent,Yes,88.0,61,50,61,No,80,75,srinivas@mailinator.com,9270163183.0
+548,8th,A,13,Male,2.1,7,High School,Frequent,Yes,69.0,66,83,73,Yes,87,79,devraj@mailinator.com,8560984255.0
+549,10th,C,13,Male,2.7,5,PUC,None,Yes,68.2,82,52,91,Yes,88,77,jagadish@mailinator.com,8374237958.0
+550,8th,A,14,Male,1.8,6,Degree,Frequent,Yes,74.0,79,68,84,Yes,61,73,mahesh@mailinator.com,9870726815.0
+551,9th,B,14,Female,3.2,5,Primary,None,Yes,73.6,72,42,85,Yes,52,72,pradeep@mailinator.com,8190734722.0
+552,9th,C,14,Male,1.4,6,Degree,None,Yes,72.4,57,53,71,No,67,65,ashok@mailinator.com,9547369347.0
+553,9th,A,13,Male,1.8,5,Postgraduate,Frequent,Yes,78.0,51,87,94,No,83,76,dinesh@mailinator.com,9965111803.0
+554,9th,A,15,Male,2.0,6,Postgraduate,None,Yes,76.0,85,50,69,No,82,79,pradeep@mailinator.com,7155963033.0
+555,10th,C,16,Female,4.5,8,PUC,Frequent,Yes,81.0,57,40,96,Yes,51,68,basavaraj@mailinator.com,9590955368.0
+556,8th,A,15,Male,3.9,9,Postgraduate,None,Yes,96.0,83,50,86,Yes,91,82,raghav@mailinator.com,9505150664.0
+557,8th,B,15,Male,5.4,6,PUC,Frequent,Yes,71.2,75,82,98,Yes,61,86,raju@mailinator.com,6522370002.0
+558,8th,C,13,Female,2.2,9,Postgraduate,Minor,Yes,94.0,82,42,57,Yes,66,72,raju@mailinator.com,7824648503.0
+559,10th,C,15,Male,4.1,5,PUC,None,Yes,82.9,84,78,88,No,41,81,chandru@mailinator.com,8357433184.0
+560,10th,A,13,Male,1.2,6,High School,None,No,77.8,92,63,67,Yes,58,73,raghavendra@mailinator.com,6765931021.0
+561,8th,B,16,Female,3.6,7,Primary,Minor,Yes,97.0,93,95,94,No,89,98,pradeep@mailinator.com,6233738472.0
+562,9th,C,16,Female,5.3,8,Postgraduate,Frequent,Yes,97.0,49,89,71,Yes,45,80,ramesh@mailinator.com,7566008949.0
+563,10th,B,16,Male,5.9,9,Degree,None,Yes,86.0,63,94,94,No,77,93,srinivas@mailinator.com,9267593205.0
+564,8th,A,16,Female,1.0,8,High School,Frequent,Yes,87.0,72,49,74,Yes,51,62,manjunath@mailinator.com,9756027682.0
+565,9th,A,16,Female,2.3,8,Primary,None,Yes,74.0,80,56,57,No,55,72,prakash@mailinator.com,9725643663.0
+566,8th,A,13,Female,2.1,7,High School,Frequent,No,100.3,46,51,60,Yes,45,58,venkatesh@mailinator.com,7206238822.0
+567,9th,C,15,Female,1.2,9,High School,Frequent,No,70.0,40,44,51,No,89,54,jagadish@mailinator.com,8210854654.0
+568,8th,C,16,Male,1.1,7,High School,Minor,Yes,98.1,43,88,65,Yes,58,65,devraj@mailinator.com,7136883401.0
+569,10th,C,14,Female,3.5,8,PUC,Frequent,Yes,69.0,55,84,90,No,54,81,prakash@mailinator.com,7907813212.0
+570,10th,B,15,Male,1.2,9,Primary,Minor,Yes,74.0,95,72,55,No,92,82,ashok@mailinator.com,9337267477.0
+571,10th,C,15,Female,2.4,7,Degree,Frequent,Yes,70.0,69,63,65,No,72,68,chandru@mailinator.com,8126317582.0
+572,10th,C,13,Male,4.2,6,Degree,Frequent,Yes,98.0,72,76,90,No,64,90,raghav@mailinator.com,8610820699.0
+573,9th,B,15,Female,2.5,9,Postgraduate,Frequent,Yes,75.6,74,45,59,No,67,70,raghav@mailinator.com,6984508361.0
+574,10th,C,14,Female,2.3,8,Postgraduate,Minor,Yes,82.0,67,94,78,Yes,78,82,jagadish@mailinator.com,8483241837.0
+575,8th,A,15,Male,4.0,7,Primary,None,Yes,73.0,52,69,57,Yes,46,62,krishna@mailinator.com,7449661574.0
+576,10th,A,13,Male,2.9,5,Postgraduate,Frequent,Yes,80.0,59,87,56,Yes,55,67,ramesh@mailinator.com,7183338256.0
+577,9th,A,15,Female,4.5,5,PUC,None,Yes,94.5,69,88,100,No,42,87,suresh@mailinator.com,7776703273.0
+578,9th,B,16,Male,3.5,7,Primary,None,No,81.0,91,42,75,No,50,73,mohan@mailinator.com,6282490105.0
+579,9th,B,13,Female,4.2,7,Postgraduate,None,Yes,100.0,95,91,66,Yes,89,98,devraj@mailinator.com,7182784619.0
+580,10th,A,14,Female,2.8,9,PUC,Frequent,Yes,66.8,66,68,50,No,66,73,shankar@mailinator.com,8381048276.0
+581,10th,C,13,Female,2.4,5,Degree,Frequent,Yes,85.0,45,61,92,Yes,67,72,umesh@mailinator.com,8749747316.0
+582,10th,A,15,Male,1.7,6,Postgraduate,Frequent,Yes,99.0,81,69,78,Yes,60,74,srinivas@mailinator.com,8646170247.0
+583,8th,B,15,Male,5.7,7,High School,Minor,No,91.0,90,86,64,Yes,64,90,kumar@mailinator.com,6760265133.0
+584,10th,C,15,Male,5.0,8,Degree,Minor,Yes,77.0,74,57,84,Yes,55,78,chandru@mailinator.com,6242824425.0
+585,10th,B,14,Female,5.7,9,Postgraduate,Frequent,Yes,69.0,61,75,92,No,95,85,nagaraj@mailinator.com,9427681954.0
+586,8th,A,15,Male,1.9,6,PUC,Minor,Yes,68.0,84,88,93,Yes,52,86,chandru@mailinator.com,6097368692.0
+587,8th,B,15,Female,5.7,6,Postgraduate,Minor,Yes,74.4,94,68,90,No,57,90,dinesh@mailinator.com,8218089358.0
+588,8th,C,16,Female,5.7,9,High School,Frequent,Yes,90.0,71,82,73,Yes,64,84,anand@mailinator.com,8490706576.0
+589,8th,C,14,Male,2.4,9,PUC,Minor,Yes,86.0,67,87,72,No,82,83,chandru@mailinator.com,6557744922.0
+590,8th,A,13,Female,2.4,9,Degree,Frequent,Yes,99.0,46,51,100,No,52,73,chandru@mailinator.com,8660236055.0
+591,8th,C,16,Male,3.8,9,PUC,Minor,Yes,88.0,65,93,76,No,49,78,krishna@mailinator.com,9469072635.0
+592,8th,A,14,Female,1.9,8,Primary,Minor,Yes,85.4,57,74,77,Yes,93,84,srinivas@mailinator.com,8938541708.0
+593,9th,C,16,Female,3.2,5,High School,None,Yes,99.8,92,92,60,No,60,85,ramesh@mailinator.com,7404319961.0
+594,10th,B,14,Female,1.9,9,Postgraduate,None,Yes,98.7,88,66,98,No,74,89,suresh@mailinator.com,6622289297.0
+595,9th,C,16,Male,5.7,7,Primary,Minor,No,67.0,41,59,83,No,81,74,manohar@mailinator.com,8372986222.0
+596,10th,C,15,Female,3.5,7,Degree,None,Yes,98.0,59,57,52,Yes,43,60,srinivas@mailinator.com,8862449483.0
+597,9th,A,15,Male,5.8,9,Primary,Minor,Yes,99.0,66,67,87,Yes,94,88,devraj@mailinator.com,8395609231.0
+598,10th,B,13,Male,4.2,5,PUC,Frequent,Yes,85.7,72,42,89,No,48,73,manohar@mailinator.com,6678935689.0
+599,8th,A,15,Male,3.4,8,High School,Minor,Yes,71.0,41,63,86,Yes,84,75,ashok@mailinator.com,6931409717.0
+600,10th,C,13,Female,5.8,9,Degree,Frequent,Yes,70.0,60,79,96,Yes,75,83,girish@mailinator.com,9812793194.0
+601,8th,A,13,Male,1.7,6,Primary,Minor,Yes,96.9,55,82,89,Yes,55,74,lakshmi@mailinator.com,7247596307.0
+602,9th,C,13,Female,4.2,9,PUC,None,Yes,68.0,54,69,79,Yes,63,78,manohar@mailinator.com,8132615334.0
+603,9th,A,15,Female,4.3,5,High School,Frequent,Yes,96.8,58,73,87,No,54,76,raghav@mailinator.com,6679968182.0
+604,8th,A,16,Female,3.2,5,Primary,Frequent,No,96.0,95,43,51,Yes,58,74,chandru@mailinator.com,7621291226.0
+605,9th,C,15,Male,1.3,6,Degree,None,Yes,76.0,92,51,82,Yes,49,73,manohar@mailinator.com,9935374568.0
+606,9th,B,13,Male,3.5,9,Postgraduate,None,Yes,86.4,62,45,86,Yes,71,68,jagadish@mailinator.com,6791047853.0
+607,10th,B,13,Male,3.3,6,High School,Frequent,Yes,66.4,75,56,99,No,80,81,raghav@mailinator.com,7853851519.0
+608,8th,C,16,Male,5.0,6,Degree,Minor,Yes,86.0,51,46,86,Yes,46,73,ramesh@mailinator.com,8866382965.0
+609,10th,C,13,Male,2.3,5,Postgraduate,None,Yes,99.0,75,43,82,No,54,67,kumar@mailinator.com,6599505663.0
+610,8th,C,14,Female,3.0,8,High School,Frequent,Yes,87.7,71,78,74,No,59,78,mohan@mailinator.com,6585851946.0
+611,9th,A,15,Male,2.2,5,Postgraduate,Minor,Yes,73.0,83,79,98,Yes,55,78,ramesh@mailinator.com,9158325258.0
+612,9th,C,14,Female,4.4,6,Primary,None,Yes,85.2,71,49,69,No,63,73,nagaraj@mailinator.com,7329499587.0
+613,10th,A,15,Male,5.9,7,Degree,Minor,Yes,71.0,74,50,60,No,89,77,lakshmi@mailinator.com,7559044048.0
+614,10th,A,13,Male,1.9,9,Degree,Minor,Yes,79.0,51,55,82,Yes,65,68,manohar@mailinator.com,8529812824.0
+615,10th,B,14,Male,5.1,5,Postgraduate,None,Yes,77.0,72,54,69,Yes,76,80,raghav@mailinator.com,9955257999.0
+616,10th,A,16,Male,2.2,6,High School,Minor,Yes,67.0,94,71,88,Yes,61,77,chandru@mailinator.com,9008088482.0
+617,10th,A,14,Male,1.3,9,Postgraduate,Minor,Yes,76.0,41,72,50,No,71,66,krishna@mailinator.com,7821887246.0
+618,8th,A,14,Female,1.7,8,PUC,Frequent,Yes,92.0,89,73,69,Yes,52,77,lakshmi@mailinator.com,8229852041.0
+619,9th,C,14,Male,5.7,8,Postgraduate,Frequent,Yes,72.0,61,69,77,Yes,44,72,kumar@mailinator.com,9352116582.0
+620,8th,B,14,Female,5.4,5,Degree,Minor,No,86.0,94,60,58,Yes,43,82,ramesh@mailinator.com,6376589033.0
+621,10th,B,15,Male,2.4,5,Degree,Frequent,Yes,84.0,80,77,78,Yes,55,82,manjunath@mailinator.com,9028378464.0
+622,10th,B,15,Male,5.7,5,Postgraduate,Frequent,No,80.0,40,92,99,No,84,91,umesh@mailinator.com,6407526401.0
+623,9th,A,13,Male,5.2,7,Degree,Minor,Yes,74.0,90,95,85,No,70,99,ashok@mailinator.com,9585947902.0
+624,10th,B,14,Female,3.2,7,Primary,Frequent,Yes,94.0,72,78,63,No,41,73,pradeep@mailinator.com,7081204150.0
+625,8th,C,13,Female,3.3,6,PUC,Minor,Yes,74.0,60,47,52,No,88,64,prakash@mailinator.com,7392514658.0
+626,9th,B,15,Male,4.1,8,Degree,Minor,Yes,66.4,63,74,90,Yes,61,79,srinivas@mailinator.com,6353032095.0
+627,8th,B,16,Female,1.8,7,PUC,None,Yes,88.0,46,70,58,Yes,75,70,krishna@mailinator.com,6628428402.0
+628,9th,A,15,Female,1.1,8,PUC,None,Yes,82.0,64,60,55,Yes,40,59,shivappa@mailinator.com,7846762035.0
+629,10th,C,14,Male,2.3,8,High School,Minor,Yes,79.2,81,72,57,No,86,77,raghav@mailinator.com,6000325503.0
+630,9th,B,14,Male,1.1,7,Degree,None,Yes,94.5,80,83,51,No,49,73,mahesh@mailinator.com,9316560380.0
+631,8th,C,15,Female,4.4,9,High School,Minor,Yes,84.0,78,74,63,Yes,57,77,manohar@mailinator.com,7393211229.0
+632,9th,C,13,Male,3.8,7,PUC,None,Yes,79.0,66,79,88,No,80,90,devraj@mailinator.com,9498292647.0
+633,10th,A,13,Male,2.6,7,Postgraduate,Minor,No,96.0,41,70,75,No,90,74,raghavendra@mailinator.com,6376495251.0
+634,8th,C,14,Male,4.9,9,PUC,Minor,Yes,81.5,40,45,82,No,56,71,umesh@mailinator.com,6910397906.0
+635,10th,A,16,Male,1.7,9,High School,Frequent,Yes,87.0,76,50,98,Yes,82,81,raghav@mailinator.com,8990500259.0
+636,8th,B,13,Male,2.2,6,Primary,Minor,No,88.0,76,93,62,Yes,52,83,chandru@mailinator.com,6205256542.0
+637,10th,C,14,Female,2.5,9,High School,Minor,Yes,72.0,81,69,99,Yes,53,80,nagaraj@mailinator.com,9367460289.0
+638,8th,B,14,Male,2.0,9,Degree,Frequent,Yes,93.5,82,42,74,No,51,68,shivappa@mailinator.com,7744753040.0
+639,8th,B,13,Female,1.4,7,Postgraduate,None,Yes,96.0,64,62,54,Yes,54,68,pradeep@mailinator.com,8545252795.0
+640,8th,B,13,Male,5.3,9,Postgraduate,Frequent,No,68.0,56,60,67,Yes,77,72,shivappa@mailinator.com,9253657971.0
+641,9th,A,13,Female,1.4,5,Postgraduate,Minor,No,95.8,44,86,61,No,45,61,basavaraj@mailinator.com,9623917676.0
+642,10th,B,15,Male,4.4,7,High School,Minor,Yes,77.0,93,72,53,Yes,60,85,mohan@mailinator.com,9921721141.0
+643,8th,C,16,Male,1.6,8,Degree,None,No,79.0,61,74,95,No,68,77,suresh@mailinator.com,6678074636.0
+644,10th,A,15,Male,1.1,8,Primary,Minor,Yes,68.0,68,69,67,Yes,50,69,girish@mailinator.com,7575135533.0
+645,9th,C,13,Male,3.8,6,Postgraduate,None,Yes,69.5,63,95,93,Yes,47,78,mahesh@mailinator.com,6552745080.0
+646,8th,B,16,Male,5.5,5,High School,Minor,Yes,94.0,67,92,80,Yes,70,88,raghavendra@mailinator.com,7570613130.0
+647,10th,C,15,Male,5.3,6,Postgraduate,Minor,Yes,99.0,89,80,63,No,87,96,shivappa@mailinator.com,7570838860.0
+648,9th,A,13,Male,2.7,9,Postgraduate,Minor,Yes,92.0,91,45,70,No,73,75,jagadish@mailinator.com,7544407271.0
+649,8th,A,15,Female,1.1,6,Degree,None,Yes,82.6,45,53,83,Yes,43,65,umesh@mailinator.com,6677156808.0
+650,8th,A,13,Female,5.0,6,Degree,Minor,No,91.0,93,50,93,No,90,95,umesh@mailinator.com,9034812335.0
+651,8th,A,13,Female,5.0,7,Postgraduate,None,Yes,65.0,40,66,63,Yes,93,70,mahesh@mailinator.com,6836190280.0
+652,9th,B,13,Male,5.3,7,PUC,None,Yes,84.0,52,95,89,Yes,43,82,dinesh@mailinator.com,7779542599.0
+653,8th,B,14,Male,4.3,5,Degree,Frequent,Yes,86.0,85,44,60,Yes,94,76,shivappa@mailinator.com,8639074053.0
+654,10th,A,16,Male,5.0,7,Primary,Minor,Yes,73.9,59,61,98,Yes,60,78,srinivas@mailinator.com,6570562228.0
+655,10th,B,13,Female,5.5,9,PUC,None,Yes,74.0,87,47,70,No,64,74,umesh@mailinator.com,7830499663.0
+656,9th,B,15,Male,3.3,7,Primary,None,Yes,77.0,67,92,97,Yes,53,83,kumar@mailinator.com,8825395931.0
+657,9th,A,15,Male,3.8,7,Postgraduate,None,No,81.0,52,60,95,No,62,75,ashok@mailinator.com,8534472993.0
+658,9th,A,13,Female,3.5,7,Postgraduate,Frequent,No,74.0,63,45,73,No,78,69,suresh@mailinator.com,6602360707.0
+659,10th,A,15,Female,4.5,7,Degree,None,Yes,90.0,56,63,61,Yes,84,75,basavaraj@mailinator.com,9063188943.0
+660,9th,C,15,Female,4.4,7,Primary,None,Yes,76.0,45,57,73,No,40,66,basavaraj@mailinator.com,9823208501.0
+661,8th,A,16,Male,3.6,9,Primary,None,Yes,84.0,86,66,62,Yes,83,77,lakshmi@mailinator.com,7643123749.0
+662,9th,A,14,Male,5.1,9,Degree,Minor,Yes,75.1,72,92,66,Yes,91,87,raghavendra@mailinator.com,7493442608.0
+663,9th,A,13,Female,3.5,7,Postgraduate,Minor,Yes,90.0,65,80,62,No,64,75,ashok@mailinator.com,9829318482.0
+664,10th,B,16,Male,5.1,8,Degree,Frequent,Yes,98.0,95,48,100,No,41,87,shivappa@mailinator.com,7532035764.0
+665,8th,A,13,Female,2.4,6,Primary,Minor,Yes,81.0,72,70,72,No,78,81,nagaraj@mailinator.com,7460785814.0
+666,9th,B,13,Male,1.9,7,High School,Frequent,Yes,83.0,70,68,58,No,88,73,kumar@mailinator.com,8310835798.0
+667,10th,B,16,Female,5.8,6,Primary,Minor,Yes,84.0,66,68,56,Yes,94,84,devraj@mailinator.com,6016980003.0
+668,9th,B,13,Female,4.7,6,Primary,Minor,No,71.0,54,94,73,No,80,86,shankar@mailinator.com,6874826711.0
+669,10th,A,16,Female,2.3,5,PUC,None,Yes,69.0,46,78,99,No,80,78,devraj@mailinator.com,9711723489.0
+670,8th,C,16,Male,3.9,5,PUC,None,Yes,94.0,82,61,78,Yes,86,80,kumar@mailinator.com,9375084683.0
+671,8th,A,16,Female,5.8,9,PUC,None,Yes,68.0,52,93,83,No,86,87,raju@mailinator.com,9937539158.0
+672,8th,C,13,Female,1.4,5,Postgraduate,None,Yes,91.0,72,94,66,No,59,74,suresh@mailinator.com,7465825260.0
+673,9th,B,13,Male,1.4,8,Primary,None,Yes,91.0,92,41,59,No,42,63,srinivas@mailinator.com,6182894145.0
+674,8th,B,15,Female,4.1,9,PUC,Minor,Yes,74.0,65,83,98,Yes,89,91,jagadish@mailinator.com,8016738390.0
+675,8th,B,16,Female,2.1,8,Degree,Minor,No,70.1,47,93,50,No,74,72,raju@mailinator.com,7673245127.0
+676,8th,A,14,Female,4.8,8,High School,None,Yes,93.0,50,51,75,Yes,93,78,suresh@mailinator.com,6910456897.0
+677,9th,A,16,Male,3.8,7,Primary,None,Yes,99.6,80,84,96,No,79,97,raju@mailinator.com,9675615557.0
+678,10th,A,14,Male,4.3,5,PUC,None,Yes,100.7,85,60,58,Yes,86,79,manohar@mailinator.com,6085682222.0
+679,10th,B,14,Female,1.5,7,Postgraduate,Minor,Yes,71.5,66,75,92,No,80,79,suresh@mailinator.com,8082877826.0
+680,9th,C,13,Male,1.4,6,Primary,Minor,No,92.0,74,68,68,Yes,49,69,jagadish@mailinator.com,7261870687.0
+681,8th,C,16,Female,4.1,9,PUC,Minor,Yes,94.0,54,56,57,Yes,45,69,raghavendra@mailinator.com,7836632491.0
+682,8th,A,13,Male,3.0,9,PUC,None,Yes,87.0,75,54,63,Yes,55,65,krishna@mailinator.com,7313143315.0
+683,8th,A,16,Male,1.4,5,PUC,Minor,No,69.0,41,87,75,No,48,62,manohar@mailinator.com,7591214874.0
+684,8th,C,15,Male,2.9,7,High School,None,Yes,75.2,69,87,96,Yes,52,83,girish@mailinator.com,9551471749.0
+685,9th,C,15,Male,4.4,7,PUC,Frequent,Yes,87.0,67,54,85,No,74,82,girish@mailinator.com,8099523999.0
+686,9th,C,15,Male,1.9,6,PUC,Minor,Yes,84.5,71,65,54,Yes,55,64,manjunath@mailinator.com,6515412059.0
+687,9th,A,15,Male,5.5,8,PUC,None,Yes,87.4,81,93,92,Yes,61,94,pradeep@mailinator.com,9391617776.0
+688,9th,A,15,Male,5.7,5,High School,Minor,Yes,85.6,81,75,70,Yes,63,88,manjunath@mailinator.com,8540457954.0
+689,8th,B,15,Male,5.8,7,High School,Minor,No,100.6,43,53,85,Yes,73,74,mohan@mailinator.com,9544768278.0
+690,8th,C,15,Male,4.7,6,High School,Minor,Yes,68.0,41,63,85,Yes,52,69,mohan@mailinator.com,6493478481.0
+691,9th,B,15,Female,3.0,6,Degree,Minor,Yes,91.0,45,95,64,Yes,93,78,lakshmi@mailinator.com,8392337100.0
+692,9th,C,13,Female,4.7,5,Postgraduate,None,Yes,97.0,46,54,50,No,88,68,shankar@mailinator.com,8227595195.0
+693,9th,A,15,Female,2.4,6,PUC,Minor,Yes,65.0,44,43,54,Yes,51,54,shivappa@mailinator.com,8223479265.0
+694,9th,B,14,Female,2.6,9,PUC,None,Yes,80.0,94,54,69,Yes,83,84,anand@mailinator.com,8622937098.0
+695,9th,B,15,Female,4.0,6,Degree,None,Yes,79.7,46,68,70,Yes,73,76,suresh@mailinator.com,6293351725.0
+696,10th,C,14,Male,4.0,5,Postgraduate,Frequent,Yes,93.0,85,75,50,No,73,81,prakash@mailinator.com,9595321768.0
+697,8th,C,15,Female,5.4,7,Degree,Frequent,Yes,89.0,87,40,58,No,59,75,venkatesh@mailinator.com,6250319343.0
+698,10th,C,15,Female,2.3,6,High School,Frequent,No,83.0,89,93,86,Yes,87,90,nagaraj@mailinator.com,8179619485.0
+699,10th,B,16,Male,4.8,7,Degree,Frequent,Yes,80.8,76,60,74,Yes,66,82,anand@mailinator.com,9735292343.0
+700,10th,B,14,Male,5.7,5,Degree,Minor,Yes,90.0,80,83,57,No,94,87,devraj@mailinator.com,7286658883.0
+701,10th,C,13,Female,1.0,8,Postgraduate,Frequent,Yes,67.0,76,89,94,Yes,73,84,kumar@mailinator.com,8255973785.0
+702,8th,C,13,Male,3.4,6,High School,Frequent,Yes,65.0,77,52,64,Yes,60,65,jagadish@mailinator.com,8623896422.0
+703,8th,A,14,Female,4.3,6,Degree,Frequent,Yes,86.0,91,94,86,No,82,100,ramesh@mailinator.com,9748065711.0
+704,8th,A,14,Male,5.2,5,Primary,Frequent,No,68.0,64,92,100,No,53,86,suresh@mailinator.com,9345276718.0
+705,8th,B,16,Male,1.9,8,High School,None,No,82.0,88,63,58,Yes,49,75,dinesh@mailinator.com,8908817062.0
+706,10th,C,15,Male,5.3,7,Primary,None,Yes,80.0,53,43,57,No,87,74,manjunath@mailinator.com,7529445609.0
+707,8th,A,14,Male,2.8,6,Degree,Frequent,Yes,74.0,63,85,73,No,50,73,dinesh@mailinator.com,8475255711.0
+708,10th,A,14,Female,5.5,9,High School,Minor,Yes,83.0,81,54,76,No,60,83,suresh@mailinator.com,9924446690.0
+709,8th,B,15,Female,1.1,9,Postgraduate,Minor,Yes,92.0,75,49,62,No,50,60,ramesh@mailinator.com,6427310986.0
+710,10th,B,14,Male,1.4,7,Primary,Frequent,No,78.0,58,60,86,No,61,66,basavaraj@mailinator.com,9139466103.0
+711,8th,B,16,Female,5.9,6,Degree,Minor,Yes,95.0,45,94,97,Yes,81,93,prakash@mailinator.com,7716675782.0
+712,8th,C,16,Female,4.0,5,Primary,None,Yes,81.0,54,54,70,Yes,86,78,girish@mailinator.com,6763862174.0
+713,8th,C,14,Female,3.1,5,Postgraduate,None,No,84.0,80,77,52,Yes,54,79,ramesh@mailinator.com,8023398142.0
+714,9th,A,15,Female,1.8,8,High School,None,Yes,68.0,63,69,53,No,65,69,venkatesh@mailinator.com,6169238029.0
+715,8th,B,16,Male,4.2,6,High School,Frequent,No,66.0,42,88,79,Yes,53,78,raghav@mailinator.com,6103745883.0
+716,8th,A,15,Male,1.2,7,Degree,Minor,Yes,86.0,62,80,66,Yes,65,71,ramesh@mailinator.com,6947812090.0
+717,8th,B,14,Female,2.6,9,PUC,None,No,89.0,48,56,66,Yes,65,70,manohar@mailinator.com,8056014811.0
+718,10th,A,16,Female,2.6,9,Postgraduate,None,No,97.0,67,62,55,Yes,57,69,mohan@mailinator.com,6149556363.0
+719,8th,A,16,Male,4.0,5,Degree,None,No,72.0,50,77,98,Yes,40,71,mahesh@mailinator.com,9616343277.0
+720,10th,B,16,Male,4.3,8,High School,Frequent,Yes,97.0,95,41,56,Yes,47,69,anand@mailinator.com,6407906196.0
+721,9th,B,15,Male,5.2,7,High School,Minor,No,79.0,81,48,93,Yes,78,82,raghavendra@mailinator.com,7127708754.0
+722,8th,C,14,Female,5.6,6,High School,None,No,92.0,60,87,56,No,55,82,jagadish@mailinator.com,9095443841.0
+723,8th,B,16,Female,4.3,6,Primary,Minor,No,96.1,84,65,51,Yes,40,69,shivappa@mailinator.com,6153005632.0
+724,9th,B,16,Male,3.9,5,Primary,Minor,No,97.0,46,52,89,Yes,92,73,raghav@mailinator.com,6633361370.0
+725,9th,B,13,Male,3.0,7,PUC,None,No,93.6,65,60,96,Yes,41,73,mahesh@mailinator.com,9064597733.0
+726,8th,A,13,Female,5.8,5,High School,Minor,Yes,96.0,70,87,95,Yes,63,95,basavaraj@mailinator.com,6130239594.0
+727,10th,C,14,Male,1.8,8,Primary,None,Yes,85.7,64,75,78,No,56,70,chandru@mailinator.com,6140969546.0
+728,8th,B,13,Male,5.5,5,Degree,Minor,Yes,87.0,63,50,50,Yes,59,66,mohan@mailinator.com,7210951795.0
+729,8th,A,14,Female,2.6,5,PUC,None,No,66.5,82,82,72,Yes,94,89,raghavendra@mailinator.com,8979557149.0
+730,10th,A,14,Male,3.7,7,Postgraduate,Frequent,Yes,65.0,52,70,65,Yes,74,74,venkatesh@mailinator.com,6009975772.0
+731,9th,C,15,Female,4.4,9,PUC,Frequent,No,77.0,95,70,73,No,43,79,mahesh@mailinator.com,7757501768.0
+732,9th,A,15,Male,2.2,6,Primary,Frequent,Yes,92.0,76,54,51,Yes,85,73,jagadish@mailinator.com,8664898894.0
+733,10th,B,16,Male,1.8,5,High School,None,Yes,70.6,45,90,98,Yes,47,75,shankar@mailinator.com,9954922316.0
+734,10th,A,15,Female,3.5,7,Primary,None,Yes,66.7,58,53,59,No,79,73,raju@mailinator.com,6928214400.0
+735,9th,C,13,Female,5.0,8,Postgraduate,Frequent,No,90.5,84,58,63,Yes,62,80,prakash@mailinator.com,9054731999.0
+736,9th,B,13,Female,4.5,6,PUC,Frequent,Yes,72.0,51,64,57,Yes,83,72,shivappa@mailinator.com,8665333230.0
+737,8th,C,15,Female,1.6,7,Primary,Minor,Yes,70.3,86,72,58,Yes,81,75,srinivas@mailinator.com,7099055879.0
+738,9th,C,13,Male,5.5,7,High School,Frequent,Yes,99.0,54,56,64,Yes,54,74,srinivas@mailinator.com,8256484428.0
+739,10th,C,15,Female,3.4,7,Degree,Minor,Yes,84.0,83,54,87,No,66,77,raghav@mailinator.com,8814502536.0
+740,9th,B,16,Male,5.7,8,Degree,None,Yes,68.0,90,92,56,No,50,89,jagadish@mailinator.com,9967084791.0
+741,9th,C,16,Male,3.8,7,Degree,Frequent,Yes,94.0,95,64,77,No,62,81,mahesh@mailinator.com,6908982504.0
+742,9th,B,14,Male,1.4,7,Primary,Frequent,No,98.0,51,61,57,Yes,68,61,mohan@mailinator.com,7261295697.0
+743,9th,A,15,Female,2.0,8,Postgraduate,Frequent,Yes,90.3,40,48,82,No,65,65,chandru@mailinator.com,8845404866.0
+744,10th,A,13,Female,5.3,8,PUC,Frequent,Yes,96.0,63,94,58,No,66,85,chandru@mailinator.com,7360729054.0
+745,9th,C,14,Male,4.5,9,Primary,None,Yes,73.0,69,44,53,Yes,74,72,raghav@mailinator.com,9532785973.0
+746,9th,B,13,Female,5.5,9,High School,Frequent,Yes,76.0,42,89,55,No,90,79,raghav@mailinator.com,9256149412.0
+747,9th,A,16,Male,2.6,6,Primary,None,Yes,74.0,47,51,97,No,71,71,raghavendra@mailinator.com,8092575162.0
+748,9th,C,13,Female,3.6,5,Postgraduate,Minor,Yes,99.7,40,50,51,No,40,53,prakash@mailinator.com,9073405843.0
+749,8th,B,15,Female,4.3,9,High School,Minor,No,79.0,57,86,80,No,86,82,srinivas@mailinator.com,7424691934.0
+750,9th,A,14,Female,4.0,5,PUC,Frequent,Yes,98.0,85,57,93,Yes,78,87,krishna@mailinator.com,9162784451.0
+751,8th,B,16,Female,2.2,6,Primary,Minor,Yes,83.0,50,51,61,No,83,62,devraj@mailinator.com,9787675256.0
+752,9th,A,16,Female,3.1,8,Postgraduate,Minor,Yes,67.0,81,73,58,Yes,43,69,basavaraj@mailinator.com,9826135279.0
+753,9th,A,15,Male,2.2,8,Degree,Minor,Yes,98.0,78,65,78,Yes,85,83,krishna@mailinator.com,8875813124.0
+754,8th,A,16,Female,5.2,9,Primary,Frequent,Yes,71.0,92,79,76,Yes,68,86,kumar@mailinator.com,7770971388.0
+755,9th,B,13,Female,5.9,5,Postgraduate,Minor,No,75.0,85,53,74,Yes,58,78,manjunath@mailinator.com,6144957696.0
+756,9th,C,15,Female,1.3,7,Degree,Frequent,Yes,81.0,49,79,80,Yes,64,68,raju@mailinator.com,6137650393.0
+757,8th,B,13,Female,4.6,7,High School,Minor,No,97.0,52,92,86,No,81,88,mohan@mailinator.com,7047976329.0
+758,10th,C,14,Male,2.7,8,Degree,Minor,Yes,78.7,82,42,63,Yes,76,68,mohan@mailinator.com,6019843980.0
+759,10th,B,16,Female,4.1,7,Postgraduate,Minor,Yes,86.0,81,90,100,Yes,78,95,venkatesh@mailinator.com,6637690178.0
+760,10th,C,16,Female,2.3,7,High School,None,No,80.0,80,76,92,Yes,52,82,mohan@mailinator.com,7105264425.0
+761,10th,A,16,Female,4.3,5,High School,Frequent,Yes,91.1,63,52,79,No,54,77,raju@mailinator.com,9975860241.0
+762,8th,A,13,Female,2.9,8,Degree,Minor,Yes,66.0,46,59,96,Yes,62,71,raju@mailinator.com,9032141684.0
+763,10th,B,16,Female,2.5,8,Primary,Minor,Yes,96.7,51,47,51,No,74,65,lakshmi@mailinator.com,8747283722.0
+764,9th,C,13,Female,5.6,7,PUC,Frequent,No,69.0,63,83,94,No,89,90,lakshmi@mailinator.com,7391604305.0
+765,9th,A,16,Female,5.7,5,Degree,Frequent,Yes,100.5,90,84,73,Yes,79,100,pradeep@mailinator.com,8254829987.0
+766,9th,A,13,Female,4.1,8,Primary,Frequent,No,66.0,94,45,60,Yes,84,81,dinesh@mailinator.com,7542539850.0
+767,9th,A,13,Male,2.1,9,PUC,Minor,No,85.0,66,72,61,Yes,44,63,raju@mailinator.com,8584561166.0
+768,9th,A,15,Male,5.7,7,Primary,Minor,Yes,76.4,41,81,56,No,75,74,raghavendra@mailinator.com,9182801599.0
+769,8th,A,15,Female,4.8,5,High School,None,Yes,91.0,90,94,62,No,67,94,basavaraj@mailinator.com,9684185675.0
+770,10th,B,16,Male,4.8,8,Primary,Minor,Yes,78.0,50,54,90,No,74,75,pradeep@mailinator.com,7438179391.0
+771,9th,B,13,Female,2.1,8,High School,Frequent,No,79.0,48,59,53,Yes,76,60,venkatesh@mailinator.com,8818995666.0
+772,8th,C,15,Male,5.2,5,High School,Frequent,No,91.0,40,46,69,Yes,87,71,chandru@mailinator.com,8606839806.0
+773,8th,A,15,Female,2.2,9,Primary,Minor,Yes,95.8,45,77,91,Yes,80,77,raju@mailinator.com,9379820114.0
+774,8th,B,14,Female,4.2,7,High School,Minor,No,72.0,51,80,55,Yes,40,63,dinesh@mailinator.com,7225558035.0
+775,9th,A,16,Male,4.6,8,Primary,Minor,No,96.0,88,54,86,No,51,82,anand@mailinator.com,7862839089.0
+776,8th,A,16,Male,4.7,7,Degree,Frequent,Yes,81.2,72,77,95,No,90,91,prakash@mailinator.com,9071172179.0
+777,8th,C,14,Female,3.0,9,Postgraduate,Frequent,Yes,79.5,62,83,81,Yes,59,77,girish@mailinator.com,7277797400.0
+778,10th,C,15,Male,4.8,9,Degree,Frequent,Yes,88.0,53,68,60,Yes,44,69,shankar@mailinator.com,6094747437.0
+779,9th,A,13,Female,5.5,6,Postgraduate,Frequent,Yes,90.0,68,79,92,Yes,76,93,chandru@mailinator.com,7659833511.0
+780,9th,A,13,Male,3.9,7,PUC,Minor,Yes,80.0,53,55,69,No,91,73,pradeep@mailinator.com,7167202748.0
+781,10th,A,14,Male,1.5,7,Postgraduate,Frequent,Yes,76.0,82,52,90,No,50,76,prakash@mailinator.com,9563754241.0
+782,10th,A,15,Female,1.6,8,PUC,Frequent,Yes,96.3,73,94,50,Yes,67,78,ashok@mailinator.com,9877039942.0
+783,10th,B,15,Female,1.5,5,Degree,Frequent,Yes,99.0,69,52,83,Yes,91,78,chandru@mailinator.com,9693632097.0
+784,9th,C,15,Female,1.9,8,Degree,Frequent,Yes,70.7,83,83,64,Yes,68,76,girish@mailinator.com,8097543101.0
+785,8th,C,14,Female,1.6,6,Postgraduate,None,Yes,95.0,87,55,50,Yes,91,78,mohan@mailinator.com,7117982121.0
+786,9th,A,14,Female,4.9,7,Postgraduate,Minor,Yes,67.0,91,50,72,Yes,60,79,lakshmi@mailinator.com,7772552366.0
+787,8th,A,15,Male,1.2,5,Degree,None,Yes,78.0,61,82,83,No,53,73,shivappa@mailinator.com,6832016113.0
+788,10th,B,13,Male,2.2,6,Postgraduate,Frequent,No,89.0,94,95,54,Yes,58,85,ashok@mailinator.com,7323211264.0
+789,9th,B,15,Male,5.4,7,Degree,None,Yes,81.0,72,87,76,No,90,87,girish@mailinator.com,6890192628.0
+790,9th,C,16,Female,5.9,7,Postgraduate,Frequent,Yes,97.0,77,46,71,No,62,77,kumar@mailinator.com,8987264261.0
+791,10th,A,14,Male,4.0,5,PUC,None,Yes,81.0,47,85,98,No,65,79,prakash@mailinator.com,9707204516.0
+792,9th,C,15,Female,5.9,5,Degree,None,Yes,91.0,67,82,65,Yes,59,78,pradeep@mailinator.com,7019071096.0
+793,8th,A,16,Male,1.2,5,Primary,Frequent,No,94.0,82,56,90,Yes,76,75,mohan@mailinator.com,7031265856.0
+794,8th,A,14,Female,5.7,7,PUC,None,Yes,94.0,49,66,53,Yes,49,65,lakshmi@mailinator.com,9757572035.0
+795,9th,C,14,Male,2.6,8,Postgraduate,Frequent,No,74.0,57,54,87,Yes,90,77,srinivas@mailinator.com,7397636250.0
+796,10th,A,14,Female,5.0,8,Degree,Minor,No,99.0,61,47,62,Yes,83,74,lakshmi@mailinator.com,9281412828.0
+797,9th,B,16,Female,5.1,9,PUC,None,Yes,93.0,61,63,97,Yes,76,84,manohar@mailinator.com,6314889197.0
+798,8th,C,16,Female,5.3,7,High School,None,Yes,72.0,93,49,95,Yes,52,84,shankar@mailinator.com,9539252350.0
+799,9th,A,15,Female,3.3,5,Postgraduate,Frequent,Yes,96.0,68,60,93,No,50,79,lakshmi@mailinator.com,6264027788.0
+800,10th,B,16,Male,5.7,7,Degree,Frequent,Yes,69.0,70,47,82,Yes,53,75,raghav@mailinator.com,8145694439.0
+801,10th,A,16,Male,2.3,8,High School,Frequent,Yes,76.5,77,40,95,Yes,77,74,srinivas@mailinator.com,6953777806.0
+802,10th,C,13,Female,5.7,8,Degree,Frequent,Yes,88.0,59,90,82,Yes,86,94,girish@mailinator.com,6172554791.0
+803,10th,C,13,Male,4.1,6,PUC,Minor,No,71.0,47,53,74,No,50,67,mahesh@mailinator.com,6523499929.0
+804,9th,A,16,Male,5.9,8,Postgraduate,None,Yes,72.0,42,76,94,Yes,54,78,girish@mailinator.com,9129676608.0
+805,9th,B,16,Male,1.2,9,Degree,None,Yes,72.0,83,82,81,Yes,66,79,nagaraj@mailinator.com,8849716124.0
+806,8th,B,14,Female,4.6,6,High School,Frequent,Yes,84.4,56,48,72,No,61,65,lakshmi@mailinator.com,9954165261.0
+807,10th,A,16,Male,3.8,5,High School,None,Yes,94.0,88,43,98,No,54,81,basavaraj@mailinator.com,7715973592.0
+808,9th,B,16,Male,3.5,9,Primary,None,Yes,67.0,68,95,69,Yes,86,82,mohan@mailinator.com,7326703927.0
+809,9th,C,16,Female,2.3,9,PUC,Minor,No,65.0,74,67,75,No,75,71,lakshmi@mailinator.com,8911431018.0
+810,10th,A,15,Female,2.6,7,Postgraduate,Minor,Yes,85.0,46,75,98,No,40,71,suresh@mailinator.com,7838011602.0
+811,8th,C,13,Male,2.2,8,Degree,Frequent,No,100.0,50,69,69,Yes,92,74,prakash@mailinator.com,6834703702.0
+812,9th,B,15,Female,2.1,6,Postgraduate,None,Yes,75.0,92,42,74,Yes,73,69,prakash@mailinator.com,8648942945.0
+813,8th,B,15,Female,5.0,8,Postgraduate,Minor,Yes,66.0,48,64,75,Yes,90,80,srinivas@mailinator.com,9221532958.0
+814,10th,B,16,Male,3.5,6,Degree,Minor,Yes,97.2,44,50,98,No,69,69,basavaraj@mailinator.com,6080987637.0
+815,9th,B,14,Male,1.4,5,Primary,Minor,No,78.0,83,77,93,No,81,88,dinesh@mailinator.com,8937233218.0
+816,9th,B,14,Male,4.9,5,Postgraduate,Minor,No,90.0,50,62,84,Yes,84,81,raghavendra@mailinator.com,8916771584.0
+817,9th,B,14,Female,3.7,7,PUC,Minor,No,91.0,90,70,59,Yes,93,85,umesh@mailinator.com,7481677643.0
+818,10th,A,16,Female,4.7,9,High School,None,Yes,88.0,71,83,97,No,90,90,shivappa@mailinator.com,9443257904.0
+819,8th,A,16,Female,3.6,7,Degree,Minor,No,95.0,61,88,79,Yes,56,80,suresh@mailinator.com,6467582373.0
+820,9th,A,15,Male,3.0,7,Degree,None,Yes,100.3,50,58,89,No,90,77,krishna@mailinator.com,7567365967.0
+821,8th,A,15,Male,5.9,8,PUC,Frequent,Yes,81.7,40,46,59,Yes,70,65,raghavendra@mailinator.com,6779191027.0
+822,10th,A,14,Male,1.1,7,Primary,Minor,Yes,93.0,91,60,86,Yes,46,78,raghav@mailinator.com,6781155289.0
+823,9th,B,16,Male,5.7,8,PUC,Frequent,No,78.0,79,59,91,No,54,86,shivappa@mailinator.com,8998814683.0
+824,10th,C,16,Female,5.7,7,High School,Minor,Yes,89.3,84,65,74,No,67,84,mohan@mailinator.com,9722378251.0
+825,9th,A,15,Male,3.0,6,PUC,Frequent,Yes,100.0,42,46,61,No,79,66,girish@mailinator.com,7067177679.0
+826,10th,B,15,Male,2.1,8,Primary,Frequent,Yes,94.0,83,92,96,No,76,90,shankar@mailinator.com,8136556894.0
+827,10th,C,14,Male,4.1,8,Degree,Frequent,Yes,72.0,82,44,52,No,47,64,basavaraj@mailinator.com,7979693396.0
+828,9th,B,16,Male,1.9,5,Postgraduate,Minor,Yes,66.0,88,69,62,No,63,72,kumar@mailinator.com,6283105332.0
+829,10th,C,15,Female,5.0,9,High School,Frequent,Yes,79.0,44,70,59,Yes,77,76,manjunath@mailinator.com,8217699232.0
+830,8th,C,13,Male,2.3,9,Primary,None,Yes,100.5,90,79,62,Yes,46,75,krishna@mailinator.com,9169942829.0
+831,9th,C,13,Male,2.5,5,PUC,None,Yes,88.0,76,44,84,No,82,81,pradeep@mailinator.com,8564709069.0
+832,10th,A,13,Male,5.6,9,Primary,None,No,89.2,91,59,90,No,66,86,pradeep@mailinator.com,7059524318.0
+833,10th,A,14,Female,5.5,7,Postgraduate,Minor,Yes,91.0,78,54,90,No,70,85,krishna@mailinator.com,9391701186.0
+834,8th,B,16,Female,3.7,6,Primary,Frequent,No,79.0,66,94,58,No,90,87,mahesh@mailinator.com,6248566939.0
+835,8th,C,13,Female,5.3,8,Degree,None,Yes,74.0,71,47,94,Yes,41,75,raju@mailinator.com,8433725363.0
+836,10th,A,15,Male,2.8,5,High School,Frequent,Yes,79.0,45,47,50,No,82,64,raghavendra@mailinator.com,9469058578.0
+837,9th,A,13,Female,6.0,8,PUC,None,Yes,100.0,76,88,63,No,83,89,devraj@mailinator.com,6373389705.0
+838,9th,A,13,Male,3.2,8,Postgraduate,Frequent,No,86.0,77,60,100,Yes,78,86,shankar@mailinator.com,7929516411.0
+839,10th,A,14,Male,2.5,6,PUC,Frequent,Yes,67.0,76,58,75,No,46,66,shankar@mailinator.com,6476585677.0
+840,8th,C,15,Female,1.2,8,Primary,None,Yes,79.0,83,42,83,No,42,71,prakash@mailinator.com,6434969160.0
+841,9th,B,16,Female,5.9,7,PUC,None,No,89.0,41,92,96,Yes,93,95,manjunath@mailinator.com,8965143273.0
+842,10th,C,16,Male,3.3,8,Postgraduate,None,Yes,85.0,43,57,68,No,75,64,ramesh@mailinator.com,6584230418.0
+843,8th,A,13,Male,4.7,7,Degree,Frequent,Yes,88.0,65,91,63,Yes,83,85,manjunath@mailinator.com,6660007399.0
+844,10th,C,15,Female,4.2,7,Postgraduate,Minor,Yes,74.0,67,51,83,No,49,68,raghav@mailinator.com,6884580311.0
+845,8th,C,13,Female,4.6,7,High School,None,Yes,95.0,89,91,68,No,65,93,prakash@mailinator.com,7303659536.0
+846,9th,B,15,Male,1.3,5,PUC,Frequent,Yes,97.0,42,68,86,Yes,63,74,venkatesh@mailinator.com,7528753440.0
+847,8th,B,13,Female,5.6,6,High School,Frequent,No,90.0,76,88,60,No,49,85,raghav@mailinator.com,9157619200.0
+848,9th,C,14,Female,5.6,7,High School,Frequent,Yes,65.0,79,73,79,No,47,84,anand@mailinator.com,8200491610.0
+849,10th,A,13,Male,3.8,7,Degree,None,No,88.0,86,93,78,Yes,69,86,basavaraj@mailinator.com,9707264110.0
+850,9th,B,13,Male,5.8,6,High School,Frequent,Yes,88.0,66,71,86,No,85,87,ramesh@mailinator.com,6939258443.0
+851,10th,A,14,Female,2.4,5,Postgraduate,Frequent,Yes,72.0,53,86,64,Yes,60,73,ramesh@mailinator.com,7579682527.0
+852,8th,A,15,Female,4.0,8,PUC,Minor,Yes,93.0,84,91,55,No,41,76,suresh@mailinator.com,6447179855.0
+853,9th,B,15,Female,3.0,5,PUC,Minor,No,65.0,54,44,85,Yes,45,62,manohar@mailinator.com,7032759712.0
+854,10th,C,15,Male,4.1,8,High School,None,Yes,79.0,88,43,81,No,65,77,venkatesh@mailinator.com,6343098356.0
+855,10th,A,14,Male,2.5,7,Primary,None,No,77.0,59,64,80,No,87,72,raghavendra@mailinator.com,7212955633.0
+856,9th,C,13,Male,5.1,5,Primary,Frequent,Yes,71.5,53,42,79,Yes,55,71,srinivas@mailinator.com,7034458483.0
+857,8th,B,16,Male,1.3,9,PUC,None,No,94.0,86,70,86,No,42,79,raghav@mailinator.com,8916869010.0
+858,10th,C,13,Male,1.2,5,High School,Frequent,No,73.8,69,94,50,Yes,90,80,jagadish@mailinator.com,6762709264.0
+859,9th,B,15,Female,1.2,8,Primary,None,Yes,99.0,88,68,85,Yes,48,75,jagadish@mailinator.com,9580256244.0
+860,8th,B,15,Male,1.8,9,High School,Minor,Yes,84.8,52,67,57,Yes,57,69,manjunath@mailinator.com,9120727978.0
+861,9th,C,14,Female,3.0,8,High School,None,Yes,97.0,85,81,54,No,81,85,suresh@mailinator.com,8629817622.0
+862,10th,C,16,Male,5.8,7,PUC,Minor,Yes,89.0,88,90,86,Yes,44,89,ramesh@mailinator.com,9125963435.0
+863,8th,A,16,Female,1.6,7,Postgraduate,Minor,Yes,94.0,42,79,89,Yes,77,71,dinesh@mailinator.com,7623198297.0
+864,8th,A,14,Female,4.2,9,High School,None,Yes,84.0,86,78,66,No,55,85,manjunath@mailinator.com,9014037354.0
+865,8th,A,13,Male,3.6,5,High School,Frequent,Yes,91.0,52,86,88,Yes,91,82,lakshmi@mailinator.com,6462306928.0
+866,9th,A,13,Male,2.8,5,Postgraduate,Minor,Yes,65.6,84,62,82,No,60,76,pradeep@mailinator.com,8279597061.0
+867,8th,B,13,Female,2.0,6,Degree,Frequent,Yes,79.0,44,59,73,Yes,42,63,ramesh@mailinator.com,7303254759.0
+868,10th,B,14,Male,2.1,9,High School,Frequent,Yes,85.5,47,71,79,No,75,72,mohan@mailinator.com,7935329147.0
+869,8th,B,13,Female,1.2,7,Degree,Minor,No,100.0,43,56,100,Yes,61,70,nagaraj@mailinator.com,7837442381.0
+870,10th,B,14,Male,4.6,6,High School,Frequent,No,67.0,69,91,59,Yes,87,81,srinivas@mailinator.com,9136371403.0
+871,10th,A,13,Female,4.3,6,PUC,Minor,Yes,93.0,85,44,96,Yes,88,86,umesh@mailinator.com,8658356658.0
+872,8th,A,16,Female,3.2,6,Primary,Frequent,Yes,83.0,62,83,67,No,58,72,girish@mailinator.com,8430867336.0
+873,9th,A,16,Female,4.6,7,Degree,Frequent,Yes,70.0,94,71,55,Yes,76,78,pradeep@mailinator.com,6961285920.0
+874,10th,A,15,Female,1.5,6,PUC,None,Yes,71.0,94,85,70,No,73,81,krishna@mailinator.com,7300513785.0
+875,8th,B,14,Male,5.7,5,High School,Minor,Yes,69.0,75,70,78,No,84,87,srinivas@mailinator.com,9180256795.0
+876,10th,A,15,Female,5.2,5,Degree,None,Yes,94.0,47,56,55,No,76,69,srinivas@mailinator.com,9278367006.0
+877,10th,C,16,Female,4.3,8,High School,Frequent,Yes,69.0,82,93,70,Yes,90,89,raju@mailinator.com,6425957728.0
+878,10th,A,15,Male,2.9,8,Primary,None,No,99.0,95,65,83,No,68,90,suresh@mailinator.com,7392389414.0
+879,9th,C,13,Female,3.1,7,PUC,None,Yes,78.0,51,75,78,Yes,47,68,krishna@mailinator.com,9849589905.0
+880,9th,B,14,Female,3.4,7,High School,None,No,91.0,72,83,90,No,62,80,mahesh@mailinator.com,7618910941.0
+881,10th,A,14,Female,5.7,6,Degree,None,Yes,74.0,41,91,68,Yes,51,79,mahesh@mailinator.com,6072089980.0
+882,8th,B,15,Female,5.3,6,PUC,Minor,Yes,71.0,81,86,59,No,80,88,mohan@mailinator.com,9184451478.0
+883,9th,B,16,Female,3.4,5,Primary,Minor,Yes,96.0,63,40,94,No,90,82,nagaraj@mailinator.com,7626190755.0
+884,8th,C,15,Male,3.8,9,Postgraduate,Frequent,Yes,69.0,88,91,82,Yes,65,88,venkatesh@mailinator.com,7185472465.0
+885,8th,A,13,Male,5.4,9,Postgraduate,Frequent,Yes,76.0,79,40,59,Yes,92,75,dinesh@mailinator.com,9719900320.0
+886,10th,A,14,Male,5.7,5,PUC,Frequent,No,75.0,85,73,51,No,80,82,pradeep@mailinator.com,6676770763.0
+887,9th,B,15,Female,4.2,7,Postgraduate,Minor,Yes,94.0,41,71,68,Yes,79,76,raju@mailinator.com,8658758864.0
+888,10th,C,13,Male,4.7,7,Primary,Minor,Yes,96.0,56,63,70,No,88,76,mohan@mailinator.com,7759546193.0
+889,9th,C,14,Male,2.8,5,High School,Frequent,No,66.5,92,93,69,Yes,63,86,basavaraj@mailinator.com,6574889608.0
+890,9th,B,15,Female,5.6,6,Primary,Minor,No,68.3,85,80,73,No,49,79,lakshmi@mailinator.com,7391196474.0
+891,10th,B,14,Male,5.2,8,Postgraduate,None,No,97.0,71,61,50,Yes,95,77,pradeep@mailinator.com,8361817847.0
+892,9th,C,13,Male,3.8,6,High School,None,Yes,72.0,75,49,88,Yes,63,77,shivappa@mailinator.com,9899399005.0
+893,8th,A,16,Female,5.3,7,High School,Minor,Yes,93.2,61,64,86,No,41,72,raghavendra@mailinator.com,7658507338.0
+894,8th,B,13,Male,5.2,9,Postgraduate,Minor,Yes,71.0,65,51,70,No,79,77,umesh@mailinator.com,9459378391.0
+895,8th,B,16,Female,5.0,7,PUC,Frequent,Yes,65.0,49,73,59,No,70,76,prakash@mailinator.com,6989949787.0
+896,10th,A,14,Female,1.7,5,High School,Minor,No,67.0,47,64,68,Yes,59,67,raju@mailinator.com,6118570279.0
+897,10th,B,14,Female,3.7,8,Primary,Minor,Yes,83.9,40,47,93,No,53,66,raju@mailinator.com,9205572192.0
+898,10th,B,16,Female,5.5,9,Postgraduate,Minor,Yes,73.0,54,82,94,No,56,84,pradeep@mailinator.com,7710539579.0
+899,9th,B,14,Female,4.9,9,High School,Frequent,No,95.0,73,65,54,Yes,52,75,shivappa@mailinator.com,9893030742.0
+900,8th,C,14,Male,3.1,9,Postgraduate,Frequent,Yes,78.0,54,41,69,Yes,47,64,kumar@mailinator.com,6077237218.0
+901,8th,A,14,Male,2.0,89,Primary,None,Yes,98.0,87,90,100,Yes,89,0,nagaraj@mailinator.com,6224011255.0

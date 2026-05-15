@@ -1830,219 +1830,198 @@ def get_attendance_analysis_fallback(df):
     except Exception as e:
         print("Error calculating attendance fallback:", e)
     return "📅 Attendance analysis is currently unavailable."
-
 @app.route("/chatbot", methods=["POST"])
 def chatbot():
     try:
         user_message = request.json.get("message", "").strip()
         user_message_lower = user_message.lower()
 
-        # Log User Query
-        print(f"\n[CHATBOT REQUEST] Message: '{user_message}'")
+        print(f"\n[CHATBOT REQUEST] {user_message}")
 
-        # Check login
+        # Login check
         if "user_id" not in session:
-            print("[CHATBOT INFO] Blocked: No active session")
             return jsonify({"reply": "🔒 Please login first."})
 
         role = session.get("role")
-        print(f"[CHATBOT INFO] User ID: {session['user_id']} | Role: {role}")
 
-
-
-        # Load CSV for context
+        # Load dataset
         try:
             df = load_csv()
-        except Exception as e:
-            print(f"[CHATBOT ERROR] Failed to load CSV: {e}")
-            return jsonify({"reply": "⚠️ Error loading system database file. Please try again later."})
+        except Exception:
+            return jsonify({"reply": "⚠️ Data loading error."})
 
-        # Benchmark Data
         df_with_display = calculate_display_risk(df.copy())
         class_avg = round(df_with_display["display_score"].mean(), 1) if not df.empty else 0
         top_score = df_with_display["display_score"].max() if not df.empty else 0
 
-        # Context collection
         student_id = None
         row = {}
-        context_text = ""
         score = None
         risk = "Unknown"
-        suggestions = []
 
-        if role == "student" or role == "parent":
+        # Get student ID
+        if role in ["student", "parent"]:
             user_record = db.get_student_by_user_id(session["user_id"]) if role == "student" else db.get_parent_by_user_id(session["user_id"])
             if user_record:
                 student_id = str(user_record.get("student_code", "")).strip().upper()
-        
-        # Parse student ID mentioned in message (useful for teachers)
-        if not student_id:
-            import re
-            match_id = re.search(r"student\s*(\d+)", user_message_lower)
-            if match_id:
-                student_id = match_id.group(1).upper()
 
+        import re
+        if not student_id:
+            match = re.search(r"student\s*(\d+)", user_message_lower)
+            if match:
+                student_id = match.group(1).upper()
+
+        # Fetch student data
         if student_id:
             df["Student_ID"] = df["Student_ID"].astype(str).str.strip().str.upper()
             match = df[df["Student_ID"] == student_id]
+
             if not match.empty:
                 row = match.iloc[0].to_dict()
                 score = predict_score(row)
                 risk = risk_label(score)
-                suggestions = generate_suggestions(score if score else 0, row)
-                
-                context_text = f"""
-Student Profile ({student_id}):
-- Predicted Score: {score}/100
-- Risk Status: {risk}
-- Attendance: {row.get('Attendence')}%
-- Study Hours: {row.get('Study_hours')}
-- Internal Marks: IT1={row.get('internal_test 1')}, IT2={row.get('internal_test 2')}, Assignment={row.get('Assignment_score')}
-- Benchmarks: Class Avg is {class_avg}, Top Score is {top_score}
-- Key Advice: {', '.join([tip[1] for tip in suggestions[:3]])}
-"""
-                print(f"[CHATBOT INFO] Found context for Student ID: {student_id}")
 
-        # Conversation History
-        if "chat_history" not in session:
-            session["chat_history"] = []
-        
-        history = session["chat_history"][-6:]  # Last 3 turns
+        # Context
+        context_text = f"""
+Class Average: {class_avg}
+Top Score: {top_score}
+"""
+
+        history = session.get("chat_history", [])[-6:]
         history_str = "\n".join([f"{h['role']}: {h['content']}" for h in history])
 
-        # AI Prompt Engineering
+        # ⭐ GEMINI PROMPT (SCHOOL SIMPLE + IMPROVE MODE)
         prompt = f"""
-You are "AI Academic Assistant", a world-class educational counselor.
-Provide data-driven, highly encouraging, structured, and helpful responses.
+You are a School AI Academic Assistant.
 
-Context Information:
-{context_text if context_text else "General analytics: Class Average is " + str(class_avg) + ", Top Score is " + str(top_score)}
+Rules:
+- Most answers: SIMPLE (2–5 lines)
+- If user asks "how can I improve":
+  give DETAILED study plan:
+  1. Weak areas
+  2. Study strategy
+  3. Daily routine
+  4. Tips
 
-Conversation History:
+Be friendly and easy for students.
+
+Context:
+{context_text}
+
+Conversation:
 {history_str}
 
-User's Latest Message: {user_message}
-
-Instructions:
-1. Speak professionally, encouragingly, and naturally. Do not mention system variables, prompts, or JSON data.
-2. If asked about student scores, tips, or trends, rely heavily on the Context Profile.
-3. If no specific student is found and you need one to answer, politely ask for the Student ID.
-4. Keep answers relatively short, professional, and directly helpful.
+User Question:
+{user_message}
 """
 
-        # Call Gemini API
         try:
-            print(f"[CHATBOT INFO] Invoking Gemini API...")
             response = client.models.generate_content(
                 model="gemini-2.0-flash",
                 contents=prompt
             )
-            reply = response.text.strip()
+
+            reply = response.text.strip() if response.text else ""
+
             if not reply:
-                raise ValueError("Empty response from Gemini")
-            
-            # Save history
-            session["chat_history"].append({"role": "user", "content": user_message})
-            session["chat_history"].append({"role": "bot", "content": reply})
-            session.modified = True
-            print(f"[CHATBOT RESPONSE] Gemini Success: '{reply[:60]}...'")
+                raise ValueError("Empty response")
+
+            # keep response controlled
+            sentences = reply.split(".")
+            if len(sentences) > 6:
+                reply = ".".join(sentences[:6]) + "."
 
         except Exception as e:
-            print(f"[CHATBOT ERROR] Gemini failed ({e}). Activating local smart fallback...")
-            
-            # Smart Fallbacks based on keywords
-            if "at risk" in user_message_lower or "at-risk" in user_message_lower:
-                reply = get_at_risk_students_fallback(df)
-            elif "best class" in user_message_lower or "performing best" in user_message_lower or "class performs best" in user_message_lower:
-                reply = get_best_performing_class(df)
-            elif "explain analytics" in user_message_lower or "analytics" in user_message_lower or "class average" in user_message_lower:
-                reply = get_analytics_summary_fallback(df)
-            elif "attendance" in user_message_lower:
-                if student_id and row:
+            print("Gemini error:", e)
+
+            # ⭐ SCHOOL FALLBACK RESPONSE
+            if student_id and row:
+
+                if "improve" in user_message_lower or "how can i improve" in user_message_lower:
+                    reply = f"""
+📌 Improvement Plan for Student {student_id}
+
+1️⃣ Weak Areas:
+- Revise difficult subjects daily
+
+2️⃣ Study Strategy:
+- Focus on understanding concepts
+
+3️⃣ Daily Routine:
+- 2–3 hours study time
+- Practice questions
+
+4️⃣ Tips:
+- Attend classes regularly
+- Avoid distractions
+"""
+
+                elif "attendance" in user_message_lower:
                     att = row.get("Attendence", 0)
-                    reply = f"📅 **Student {student_id} Attendance:** {att}% (Threshold: 75%). " + ("This is in the safe zone! Excellent." if float(att) >= 75 else "⚠️ This is below the required 75% threshold. Attendance needs immediate improvement.")
+                    reply = f"📅 Attendance: {att}%"
+
+                elif "score" in user_message_lower:
+                    reply = f"📊 Score: {score}/100 ({risk})"
+
+                elif "why" in user_message_lower:
+                    reply = "📌 Low performance due to study time, attendance, or weak subjects."
+
                 else:
-                    reply = get_attendance_analysis_fallback(df)
-            elif student_id and row:
-                if "score" in user_message_lower or "predicted" in user_message_lower or "result" in user_message_lower or "marks" in user_message_lower:
-                    reply = f"📊 **SPS Prediction:** Based on Student **{student_id}**'s data, the predicted final exam score is **{score}/100** ({risk})."
-                elif "why" in user_message_lower or "low" in user_message_lower or "performance" in user_message_lower:
-                    reasons = explain_prediction(row)
-                    reply = f"📌 **Performance Analysis for Student {student_id}:**\n" + "\n".join([f"• {r}" for r in reasons])
-                elif any(kw in user_message_lower for kw in ["improve", "tips", "suggest", "plan", "study"]):
-                    reply = f"💡 **Recommended Action Plan for Student {student_id}:**\n" + "\n".join([f"• **{tip[0]}**: {tip[1]}" for tip in suggestions])
-                else:
-                    reply = f"📊 **Student {student_id} Profile Overview:**\n• **Predicted Score:** {score}/100 ({risk})\n• **Attendance:** {row.get('Attendence')}%\n• **Study Hours:** {row.get('Study_hours')} hrs/day\n• **IT1 / IT2:** {row.get('internal_test 1')} / {row.get('internal_test 2')}\n\nAsk about 'score', 'reasons', or 'improvement tips' for a deep dive!"
+                    reply = f"📊 Student {student_id}: {score}/100 ({risk})"
+
             else:
-                if role == "teacher":
-                    reply = "🧑‍🏫 **SPS Smart Assistant is online (local fallback mode).**\n\nYou can ask me:\n• 'Show at-risk students'\n• 'Which class performs best?'\n• 'Explain analytics'\n• 'Why is attendance low?'\n\nYou can also query a specific student by typing 'Student <ID>' (e.g., 'student 12345')."
-                else:
-                    reply = "⚠️ **AI Brain is temporarily offline (SPS Safe Fallback Mode).**\n\nI can still help you! Please try asking about 'predicted score', 'why is my performance low', or 'improvement tips' to get real-time statistics from your record."
+                reply = "💡 Ask about score, attendance, or improvement."
 
-            # Save fallback history
-            session["chat_history"].append({"role": "user", "content": user_message})
-            session["chat_history"].append({"role": "bot", "content": reply})
-            session.modified = True
-            print(f"[CHATBOT RESPONSE] Smart Fallback Success: '{reply[:60]}...'")
+        # ⭐ SCHOOL STUDY LINKS
+        links_text = ""
 
-        # Generate dynamic suggestions
-        user_message_lower = user_message.lower()
+        if "improve" in user_message_lower:
+            links_text = """
+📚 Study Resources:
+- Maths & Science: https://www.khanacademy.org
+- Computer: https://www.geeksforgeeks.org
+"""
+
+        elif "math" in user_message_lower:
+            links_text = "📘 Maths: https://www.khanacademy.org/math"
+
+        elif "science" in user_message_lower:
+            links_text = "🔬 Science: https://www.khanacademy.org/science"
+
+        elif "english" in user_message_lower:
+            links_text = "📖 English: https://www.britishcouncil.org/english"
+
+        elif "computer" in user_message_lower:
+            links_text = "💻 Computer: https://www.geeksforgeeks.org"
+
+        # Save chat history
+        session.setdefault("chat_history", [])
+        session["chat_history"].append({"role": "user", "content": user_message})
+        session["chat_history"].append({"role": "bot", "content": reply})
+        session.modified = True
+
+        # Suggestions
         if role == "teacher":
-            if student_id:
-                suggested_qs = [
-                    f"Why is Student {student_id} at risk?",
-                    f"Show improvement tips for Student {student_id}",
-                    "Which class performs best?"
-                ]
-            elif "at risk" in user_message_lower or "at-risk" in user_message_lower:
-                suggested_qs = [
-                    "Why is attendance low?",
-                    "Which class performs best?",
-                    "Explain analytics"
-                ]
-            elif "attendance" in user_message_lower:
-                suggested_qs = [
-                    "Show at-risk students",
-                    "Explain analytics",
-                    "Which class performs best?"
-                ]
-            elif "analytics" in user_message_lower or "class average" in user_message_lower:
-                suggested_qs = [
-                    "Show at-risk students",
-                    "Why is attendance low?",
-                    "Which class performs best?"
-                ]
-            else:
-                suggested_qs = [
-                    "Show at-risk students",
-                    "Which class performs best?",
-                    "Explain analytics"
-                ]
-        else: # student or parent
-            if "score" in user_message_lower or "predicted" in user_message_lower or "result" in user_message_lower or "marks" in user_message_lower:
-                suggested_qs = [
-                    "How can I improve?",
-                    "Why am I at risk?",
-                    "What is my attendance?"
-                ]
-            elif "improve" in user_message_lower or "tips" in user_message_lower or "suggest" in user_message_lower:
-                suggested_qs = [
-                    "What is my attendance?",
-                    "What are my test scores?",
-                    "Show study tips"
-                ]
-            else:
-                suggested_qs = [
-                    "What is my predicted score?",
-                    "How can I improve?",
-                    "What is my attendance?"
-                ]
+            suggested_qs = [
+                "Show at-risk students",
+                "Which class performs best?",
+                "Explain analytics"
+            ]
+        else:
+            suggested_qs = [
+                "How can I improve my score?",
+                "What is my attendance?",
+                "What is my score?"
+            ]
 
-        return jsonify({"reply": reply, "suggestions": suggested_qs})
+        return jsonify({
+            "reply": reply + ("\n\n" + links_text if links_text else ""),
+            "suggestions": suggested_qs
+        })
 
     except Exception as e:
         print("Chatbot Error:", e)
-        return jsonify({"reply": "❌ Something went wrong. Please try again."})
+        return jsonify({"reply": "⚠️ Something went wrong."})
 
 @app.route("/teacher/feedback")
 @login_required("teacher")
